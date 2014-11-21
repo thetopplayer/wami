@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="assets/ico/wami.png">
+
+	<title>Wami</title>
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/wami.css" rel="stylesheet">
+	<script src="js/jquery-1.11.0.min.js"></script>
+
+	<script>
+		$(function(){
+			$("#includedNavbar").load("partials/wami-navbar.html");
+			$("#includedFooter").load("partials/footer.html");
+			localStorage.setItem("current_page", "collection");
+		});
+	</script>
+
+	<script>
+		function search() {
+			var selected_item = wamiSearchSelect.value;
+			var search_str = searchStr.value;
+			var radios = document.getElementsByName('optionsRadios');
+			var search_context = '';
+			if (radios[0].checked) {
+				search_context = radios[0].value;
+			}
+			else search_context = radios[1].value;
+
+			localStorage.setItem("selected_item", selected_item);
+			localStorage.setItem("search_str", search_str);
+			localStorage.setItem("search_context", search_context);
+			window.document.location.href = 'search_for_profiles.html';
+		};
+	</script>
+
+	<script type="text/javascript" src="js/processData.js"></script>
+	<script type="text/javascript" src="js/profileCollection.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+
+</head>
+<body style="background-color: rgba(204, 255, 254, 0.13)">
+	<div id="includedNavbar"></div>
+	<div style="padding-left: 40px; width: 1200px">
+		<div id="list_alert_message" style="width: 500px"></div>
+		<div class="row" style="width: 1200px">
+
+			<div id="list_id"></div>
+			<div class="col-md-4" style="padding-left: 70px;  max-width: 380px">
+				<div class="panel panel-primary" style="border-color: #4c4c4c">
+					<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+						<h3 class="panel-title">Actions</h3>
+					</div>
+					<div style="width: 292px; height: 80px; padding: 15px">
+						<div class="clearfix">
+							<label for="identityProfileDropDown">Select a Profile Collection</label>
+							<div class="input" id="identityProfileDropDown"></div>
+						</div>
+					</div>
+					<hr>
+					<div style="width: 292px; height: 80px; padding: 15px">
+						<div class="clearfix">
+							<p style="margin-bottom: 3px">Select a Group to display </p>
+							<div class="input">
+								<select name="groupSelect" id="groupSelect" class="dropdown-wami">
+									<option>All</option>
+									<option>family</option>
+									<option>friends</option>
+									<option>clients</option>
+									<option>musicians</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<hr class="hr1">
+					<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">
+						<p style="margin-bottom: 3px"><strong> Transmit chosen Wami Profile(s) </strong></p>
+						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Transmit</button>
+					</div>
+					<hr>
+					<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">
+						<p style="margin-bottom: 3px"><strong>  Remove chosen Wami Profile(s) </strong></p>
+						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('remove')">Remove</button>
+					</div>
+					<hr>
+					<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">
+						<p style="margin-bottom: 5px"><strong>  Refresh your Wami Collection </strong></p>
+						<button type="button" style="margin-bottom: 5px" class="btn btn-sm btn-primary btn-block" onclick="refreshCollection()">Refresh List</button>
+					</div>
+				</div>
+				<div class="text-left" id="no_profile_selected_alert" style="margin-top: 10px;"></div>
+
+				<!--Modal Transmit-->
+				<div class="modal fade" id="transmit_wami" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header" style="background-color: #d9d9d9">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Transmit Profile(s)</h4>
+							</div>
+							<div class="modal-body">
+								<h5>The following Profile(s) will be transmitted:</h5>
+								<input readonly class='input-wami form-control' id="transmit_list" name="transmit_list" size="77" type="text" style="background-color: #D3D3D3">
+								<h5>To Profile name(s)</h5>
+								<input class='input-wami form-control' id="transmit_to_profile_name" placeholder="Enter Profile name(s) separated by semi-colons" name="transmit_to_profile_name" size="77" type="text">
+								<h5>Email Address(es)</h5>
+								<input class='input-wami form-control' id="transmit_to_email_address" placeholder="Enter email address(es) separated by semi-colons" name="transmit_to_email_address" size="77" type="text">
+								<h5>Profile Group Name(s)</h5>
+								<input readonly class='input-wami form-control' id="group_name" placeholder="Enter Profile group name(s) separated by semi-colons" name="group_name" size="77" type="text" style="background-color: #D3D3D3">
+							</div>
+							<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+								<span class="pull-left">
+									<button type="button" class="btn btn-primary" onclick="transmitProfiles()">Transmit</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</span>
+								<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+								<div class="text-left" id="transmit_alert_message" style="margin-top: 50px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Modal Remove Profiles-->
+				<div class="modal fade" id="remove_profiles" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header" style="background-color: #d9d9d9">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Profile(s)</span></strong></h4>
+							</div>
+							<div class="modal-body">
+								<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen profile(s) from your collection.</h5>
+								<h5>Are you sure?</h5>
+							</div>
+							<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+								<span class="pull-left">
+									<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="removeProfiles()">Remove</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+								</span>
+								<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+								<div class="text-left" id="remove_alert_message" style="margin-top: 50px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--<div class="panel panel-primary" style="border-color: #4c4c4c">-->
+					<!--<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">-->
+						<!--<h3 class="panel-title">Search For Wami(s)</h3>-->
+					<!--</div>-->
+					<!--<div class="panel-body" style="padding-bottom: 0px; padding-top: 8px">-->
+						<!--<ul class="inputs-list" style="list-style: none;">-->
+							<!--<li>-->
+								<!--<label>-->
+									<!--<input type="radio" checked="" name="optionsRadios" value="mywami">-->
+									<!--<span>My Wami Collection</span>-->
+								<!--</label>-->
+							<!--</li>-->
+							<!--<li>-->
+								<!--<label>-->
+									<!--<input type="radio" name="optionsRadios" value="allwami">-->
+									<!--<span>Entire Wami Network</span>-->
+								<!--</label>-->
+							<!--</li>-->
+						<!--</ul>-->
+					<!--</div>-->
+					<!--<hr>-->
+					<!--<div class="panel-body" style="padding-top: 8px; padding-bottom: 4px">-->
+						<!--<div class="clearfix">-->
+							<!--<label for="wamiSearchSelect">Search By</label>-->
+							<!--<div class="input">-->
+								<!--<select name="wamiSearchSelect" id="wamiSearchSelect" class="dropdown-wami">-->
+									<!--<option value="profile_name">Profile Name</option>-->
+									<!--<option value="first_name">First Name</option>-->
+									<!--<option value="last_name">Last Name</option>-->
+									<!--<option value="tag_keyword">Tag Keywords</option>-->
+									<!--<option value="description">Description</option>-->
+								<!--</select>-->
+								<!--<div class="clearfix" style="padding-top: 10px; padding-bottom: 5px">-->
+									<!--<label for="searchStr">For Search Text</label>-->
+									<!--<div class="input">-->
+										<!--<input class='input-wami' placeholder="Search Text including wild cards, (*)" id="searchStr" name="searchStr" size="34" type="text">-->
+									<!--</div>-->
+								<!--</div>-->
+								<!--<br>-->
+								<!--<hr>-->
+								<!--<div style="padding-top: 7px" class="text-center">-->
+									<!--<button type="button" style="font-size: 17px" class="btn-link" onclick="return search()"><strong>Search >></strong></button>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+
+			</div>
+		</div>
+		<br><br>
+		<hr>
+		<footer>
+			<div id="includedFooter"></div>
+		</footer>
+		<br><br>
+	</div>
+
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
+

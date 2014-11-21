@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@drawable/wami_list_background"
+              android:padding="6dp" >
+
+	<CheckBox android:id="@+id/checkbox1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:checked="false"
+	    android:focusable="false"
+	    android:focusableInTouchMode="false"
+	    android:layout_centerVertical="true"
+	    android:layout_alignParentLeft="true">
+	</CheckBox>
+
+	<ImageView
+			android:id="@+id/list_image"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="5dp"
+			android:paddingBottom="5dp"
+			android:layout_toRightOf="@id/checkbox1">
+	</ImageView>
+
+	<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/list_image"
+			android:layout_centerVertical="true">
+
+		<TextView
+				android:id="@+id/list_text_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:textStyle="bold"
+				android:textColor="#ff767676">
+		</TextView>
+
+		<TextView
+				android:id="@+id/list_text_profile_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="16sp"
+				android:textStyle="bold|italic"
+				android:textColor="@color/text_color"
+				android:layout_below="@+id/list_text_name">
+		</TextView>
+
+		<Button
+				android:id="@+id/list_transmit_btn"
+				android:layout_width="70dp"
+				android:layout_height="30dp"
+				android:paddingBottom="8dp"
+				android:textStyle="bold"
+				android:textSize="11sp"
+				android:textColor="#FFFFFF"
+				android:background="@drawable/button_state"
+				android:layout_marginTop="5dp"
+				android:text="Transmit"
+				android:focusable="false"
+				android:layout_below="@+id/list_text_profile_name"/>
+	</RelativeLayout>
+
+	<ImageView
+			android:id="@+id/list_icon"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/next_item_right"
+			android:layout_centerVertical="true"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentEnd="true">
+	</ImageView>
+
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="horizontal" >
+
+	<ImageView
+			android:id="@+id/actionBarLogo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="30dp"
+			android:layout_marginLeft="40dp"
+			android:clickable="false"
+			android:focusable="false"
+			android:longClickable="false"
+			android:src="@drawable/actionbar_wami_info" />
+
+	<ImageView
+			android:id="@+id/actionBarHome"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:clickable="true"
+			android:focusable="true"
+			android:src="@drawable/ic_action_home3" />
+
+	<ImageView
+			android:id="@+id/actionList"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:clickable="true"
+			android:focusable="true"
+			android:layout_marginLeft="5dp"
+			android:src="@drawable/ic_action_list" />
+
+</LinearLayout>

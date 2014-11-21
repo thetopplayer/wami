@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.MyWami.WamiListActivity"
+      xmlns:wami="http://schemas.android.com/apk/res-auto" >
+
+	<item android:id="@+id/action_transmit_wami"
+	      android:title="@string/action_transmit_this_wami"/>
+
+	<item android:id="@+id/action_home"
+	      android:title="@string/action_home"/>
+	      <!--wami:showAsAction="always"/>-->
+
+	<item android:id="@+id/action_logout"
+	      android:title="@string/action_logout"/>
+
+	<!-- Settings, should always be in the overflow -->
+	<!--<item android:id="@+id/action_settings"-->
+	      <!--android:icon="@drawable/ic_action_overflow"-->
+	      <!--android:title="@string/action_settings"-->
+	      <!--android:showAsAction="always"/>-->
+
+</menu>

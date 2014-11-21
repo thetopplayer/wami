@@ -1,0 +1,153 @@
+Rob Lanter
+												679 Vanderbilt Av, #1L
+ 												Brooklyn, N.Y., 11238
+												(646) 479-8394
+												rob@roblanter.com
+
+OVERVIEW
+Extensive programming, system analysis experience, team leader and manager. Responsible for full development life-cycles including requirements analysis, development, and implementation. Excellent interpersonal and communication skills. Strong  analytic skills, with a BS in Comp Sci and an MS in Finance and Economics. 
+
+Team and project leader with over 25 years experience in data-modeling, systems architecture and design, with an emphasis in financial applications including risk management and derivatives.
+
+
+TECHNICAL SUMMARY
+
+Software:	Java, JSP, Servlets, Beans, SWT and Rich Client Platform (RCP), Swing, JSF, J2EE, RMI, JMS, XML, SOAP, XDoclet, JavaScript, jQuery, Ajax, JSON, Backbone.js, Underscore.js. C, CSS, Unix Shell scripting, Spring
+Mobile:	JQuery Mobile, Android SDK, Spring Mobile
+Application Servers: WebSphere, WebLogic, JBoss, JRun, Tomcat, Drupal
+OS:		AIX Unix, Sun Solaris Unix, Mac OS, Linux, NT, Windows, DOS, VAX/VMS
+Databases:		Oracle, Sybase, MySQL, SQL Server, SQLite
+Miscellaneous: 	Drupal Content Management System, Content Delivery Networks, Flash Video server, ffmpeg, ETL
+
+
+
+EMPLOYMENT HISTORY
+
+WorkMarket			06/13 – 11/13
+Programmer Analyst – Contractor
+Programmer Analyst
+Developed mobile app using JQueryMobile, JavaScript, Backbone.js, Underscore.js, CSS, Java, JSP’s, Spring, and JSON. App allowed users to complete work assignments using any Android or iOS device. Backend was a MySQL database using Tomcat as the application sever.
+
+
+
+MetLife												03/11 – 03//13
+Programmer/Business Analyst/Technical Lead/Manager – Consultant
+Technical Lead/Manager/Business Analyst
+Designed, developed and led a technology team to create a web based enterprise wide Solvency 2 application. Application was international in nature and required extensive meetings with business and technology experts from many European countries. In order to fulfill the regulatory Solvency 2 requirements, a complete analysis of the whole corporation was required. This included all risk categories. Investment risks, derivatives exposure, all assets and liabilities had to be accounted for to determine the corporation's solvency position.  Application was developed on a Unix/Windows environment. Extensive use of Oracle database server and WebSphere Application server technologies. Full project life-cycle from design to implementation including documentation. Extensive use of Java, Java Beans, JSF, Spring, CSS, data modeling, messaging, requirements analysis, and application server services.  
+
+
+
+
+
+
+
+DRL Media											12/08 - 08/10
+Linux Systems Admin/Manager, Drupal Content Management System Admin/Manager – Consultant
+
+Set up, administered, and managed LAMP environment utilizing cloud technologies. Set up included configuring Linux servers for email, web, MySql,and multi-media as well as configuring Apache, MySql, and PHP being used for a Drupal content management environment. Development and design was accomplished from the bottom up starting with a clean Linux server running Ubuntu. Server had to be configured and optimized for a Drupal environment capable of serving Flash videos via a Content Delivery Network.
+Set up, administered and managed Drupal Content Management System serving audio and video assets. Extensive use of PHP, CSS, MySql,  Javascript. and Flash. Also, full understanding of audio and video conversion processes. Drupal front-end design and implementation based on business users specifications and needs.  Integration of Content Management System with Content Delivery Network to access, manage and serve videos assets.
+Manage team development for multiple websites. Team included designers, programmers, and third party vendors  with the goal of presenting multi- media websites utilizing a Content Management System and Content Delivery Network optimized for video. This involved coordination of themers, (Drupal front end design programmers), graphic artists,  CSS/Javascript/PHP programmers, and third party Content Delivery Network vendor.
+
+
+
+MetLife												05/05 - 04/08
+Programmer/Business Analyst/Technical Lead/Manager – Consultant
+Technical Lead/Manager/Business Analyst
+Designed, developed and led a technology team to create a web based enterprise wide Treasury Receipt application. Application was distributed, capable of access by any user within the corporate intranet. Application was developed on a Unix/Windows environment. Extensive use of Oracle database server and WebSphere Application server technologies. Full project life-cycle from design to implementation including documentation. Extensive use of Java, Java Beans, SWT and Rich Client technologies, data modeling, messaging, requirements analysis, and application server services.  Data was extracted from scanned checks, transformed and loaded into an Oracle database, then reported upon.
+Designed, developed and led a technology team to create a web based enterprise wide Risk Management application. Application was distributed, capable of access by any user within the corporate intranet. Comprehensive business and financial analysis to create requirements document including extensive meetings with users. Application was designed to allow management and reporting of all corporate risk categories. Extensive use of Oracle database server and WebSphere Application server technologies. Full project life-cycle from design to implementation including documentation. Extensive use of Java, Java Beans, SWT and Rich Client technologies, data modeling, requirements analysis, SOAP, and application server services. Application consisted of interface allowing users to enter corporate risk management data. Data was then transformed to create a set of quarterly reports reviewed by the Board of Directors to evaluate corporate exposures and liabilities. Risk categories reported included Market Risk, Credit Risk, Solvency Risk, as well as Cyber Risk.
+Designed, developed and led a technology team to create a web based enterprise wide Rating Agency Survey analysis. Application was distributed, capable of access by any user within the corporate intranet. Comprehensive business and financial rules analysis to create requirements document including extensive meetings with users. Application was designed to allow management to control the flow and proliferation of spreadsheets being used to answer survey questions sourced by the different rating agencies such as Moodys, S&P, AMBest, and Fitch. Extensive use of Oracle database server and WebSphere Application server technologies. Full project life-cycle from design to implementation including documentation. Extensive use of Java, Java Beans, SWT and Rich Client technologies, data modeling, requirements analysis, SOAP, and application server services. 
+
+
+
+
+
+
+Options/Equity Trader 	07/04 – 05/05
+Comprehensive understanding of options strategies and positions.
+Option trading analysis included extensive use of put/call ratios, volatility analysis (implied and historical), open interest,   volume, Black Scholes, and the greeks when establishing trading positions.
+
+
+First New York Securities                                                                                                                  	06/03 – 07/04
+Programmer/Analyst – Consultant//Business Analyst
+Developed equity trading software. 
+Intensive technical market analysis.
+Comprehensive discussions with traders to define system requirements as well as user training on how to use the system.  
+Project required extensive business and technical analysis including hardware and software needs, as well as system architecture and design.
+Developed technical and statistical analysis software tools. Strategies programmed included intraday volume comparisons, standard deviation bands, and equity reversal analysis. Overall goal was to create an abstraction of the Multi-Factor risk management model whereby each ‘black box’ or module would produce a factor that could then be correlated and further analyzed resulting in a buy/hold/sell recommendation.
+Extensive use of Java Swing, Servlets, JDBC, and Oracle.
+Extensive data modeling.
+Various Java patterns were used including MVC, Singleton, and Factory.
+
+Executive M.S. in Finance And Economics – Zicklin School of Business , Baruch College	09/02 – 06/03
+Student
+One of thirty people chosen to participate in a full time Masters of Science in Finance and Economics program. 
+ Major areas of study included Options, statistics, investment analysis, risk analysis, fixed income, and market analysis.
+
+Sony Music	04/01 – 09/02
+Programmer/Analyst
+Developed an online multi-tiered Content Management system to maintain Sony’s audio and graphical assets. Application was a distributed process that was Java based accessing an Oracle database utilizing Java RMI to communicate between the different platforms. 
+Application was running on multi-platforms. Database server was running on Sun Solaris Unix, Audio Conversion modules were running on Linux servers, and JSP/servlets were running on Windows XP.
+Extensive use of XML, JSP, Servlet, JavaScript, Java Beans, RMI, MVC patterns, and multi-media technologies used to convert different media formats.
+Comprehensive system analysis, system architecture and design, as well as user requirements analysis.
+
+Applied Technology Group	03/00 – 04/01
+Programmer/Analyst
+Consultant on projects for the following clients:
+Lucent Technologies
+Developed a web based enterprise wide Time Accountability System for a Project Tracking Application. Application was developed on a Linux environment. Extensive use of Oracle 8i database server and Weblogic Application server technologies. Full project life-cycle from design to implementation including documentation. Extensive use of JSP, JavaScript, Java Beans, and Java Tag technology within Linux environment.
+Health Pages, Inc
+Developed and debugged Java Servlets for online health services application. Use of JRun application server and Sybase database server. Application was programmed within Linux environment.
+Massey-Hogan, Inc
+Developed stand-alone Java application creating invoices for Jewelry company. Incorporated the use of JDBC, Java Beans and extensive Swing development. Application was programmed on Win 98 platform using JBuilder IDE.
+J&W Seligman Mutual Funds	10/95 - 02/00
+Programmer/Analyst – Consultant/Business Analyst
+
+Y2K Project Facilitator, Technical Infrastructure Compliance Coordinator, and Quality Assurance Technical Lead
+Responsibilities and projects included managing the tracking and maintaining an inventory of all hardware and software used at JWS. Developed and implemented methodology to test infrastructure for Y2K compliance. Designed and facilitated the creation of a QA/Y2K testing environment as a scaled down version of the current production network currently being used at JWS. Coordinated and performed all technical aspects of SIA Y2K Street Test. Managed group of WinRunner testers.
+
+Quality Assurance Technical Lead
+Responsibilities included managing the set up and design of QA environment to test and maintain Portfolio Management System. QA procedures had to be created for the testing of PowerBuilder and Java objects. Java batch processes, PowerBuilder, and Sybase, in an AIX Unix environment had to be tested according to strict QA guidelines.
+Institutional Sales and Marketing Group Technical Lead
+Responsibilities and projects included indepth analysis of ISMG's business practices culminating with a PowerPoint presentation to senior management proposing a redesign of business process flow based on the use of new technical tools to help facilitate business analysis and elimination of manual tasks. Indepth analysis of current Sales Force Automation and Opportunity Management tools. This included coordinating vendor demos, evaluation and ultimately choosing he software that best fit business needs. 
+Lead Programmer Analyst
+Developed methodology and technology to move Sales Force Automation package from proprietary software to relational database. Developed processes written in C, Sybase stored procedures and triggers, PowerBuilder, and Unix shell scripts on RS6000 AIX Unix. Data had to be transformed from a proprietary format, loaded into a Sybase database, then reported upon.
+
+Lead Programmer Analyst
+Developed Asset Allocation software to be released as a commercial product.  System was a Client/Server application written in PowerBuilder as the client and Sybase Anywhere as the server. Data model developed using Erwin. Extensive use of Object Oriented design and programming concepts as well as system architecture and design.
+
+Miscellaneous Projects
+Assisted with the setup and implementation of the first RS6000's at JWS. This included developing a Production and Development environment. Developed Unix shell scripts for compiling C code with Sybase Embedded SQL, DBLIB and CTLIB routines. Assisted with the initial installation of Sybase. Developed methodology facilitating communication between Unix on RS6000 and Novell file system. Developed JWS website to demonstrate future potential of internet/intranet technology.
+
+Societe Generale	8/94 - 10/95
+Senior Programmer Analyst
+Developed Investment Banking applications such as Security Clearing, Guaranteed Investment Contracts. Also developed standard object class library to enforce development standards across applications. Projects were written in PowerBuilder and C using Sybase in a Sun Solaris Unix environment. Extensive use of stored procedures and triggers to enforce referential integrity. Erwin was used to develop data models. Use of Object Oriented design and programming concepts.
+
+AMBAC Indemnity	4/93 - 8/94
+Programmer Analyst
+Developed and maintained Municipal Bond Insurance applications. Projects involved analysis of new technologies, redesign of systems using object oriented analysis, Gupta SQL Windows, PowerBuilder and C. Major redesign of a legacy Client Server system to a new technology based on Windows as the client and Oracle as the server. Use of Object Oriented design and programming concepts.
+
+Lipper Analytics	10/92 - 4/93
+Consultant
+Created file download process for Bond Activity Notifications. System captured files from financial electronic information service. Process was written in C within a DOS environment. User interface as well as various reports had to be developed.	
+Citibank 	12/91 – 3/93
+Consultant
+Developed management report processes and maintained the Corporate accounting databases. Involved in full project life cycles. Developed front-end user interfaces. Processes were written in DCL and REINS (Relational Information System) in a VAX/VMS environment.
+
+Quotient Inc.	11/87 - 11/91
+Programmer Analyst
+Developed products for Investment Banking applications. Assignments included development and maintenance of SWAPS and futures modules and other risk management products. Programs were written in C in a VAX/VMS and PC environment. Interaction with users from many parts of the world due to international nature of business. 
+
+Citibank	4/84 - 10/87
+Lead Programmer Analyst
+Developed and maintained financial applications involving major database design work.
+Applications were written in REINS, a 4GL relational database language, within a VAX/VMS environment. Extensive use of shell scripting procedures.
+
+
+EDUCATION
+1/84 	B.S. (cum laude), Computer Science - Brooklyn College.
+12/99	Interactive Web Programming Using CGI and Java - New York University
+02/2000	Expert Java - IAM Consulting.
+09/2000	Advanced Topics in Java – New York University
+02/2001	Distributed Computing Using CORBA – New York University
+06/2003	Executive M.S. in Finance And Economics – Zicklin School of Business, Baruch College
+12/09/04	Enterprise Java Beans – New York University

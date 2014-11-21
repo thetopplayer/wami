@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="assets/ico/wami.png">
+
+	<title>Wami</title>
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/wami.css" rel="stylesheet">
+	<script src="js/jquery-1.11.0.min.js"></script>
+
+	<script>
+		$(function(){
+			$("#includedNavbar").load("partials/wami-navbar.html");
+			$("#includedFooter").load("partials/footer.html");
+			localStorage.setItem("current_page", "mywami");
+		});
+	</script>
+
+	<script type="text/javascript">
+		function removeProfileConfirm () {
+			var remove_message = "You are about to " + '<strong> <span style="color: #e00004">DELETE </span></strong>' + " the current profile: " + '<strong> ' + localStorage.getItem("current_profile_name") + ' </strong>';
+			document.getElementById("remove_message").innerHTML = remove_message;
+			$('#remove_profile').modal();
+		}
+
+		function newProfileDialog() {
+			$('#new_profile').modal();
+		}
+
+		function upload_profile_image() {
+			upload_new_profile_image();
+		}
+
+		function add_flash() {
+			add_flash_announcement();
+		}
+
+		function save_flash() {
+			save_new_flash();
+		}
+
+		function remove_checked_flash() {
+			remove_flash_announcements();
+		}
+
+		function remove_checked_gallery_images() {
+			remove_gallery_images();
+		}
+	</script>
+
+
+	<script type="text/javascript" src="js/processData.js"></script>
+	<script type="text/javascript" src="js/myWami.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/identityProfiler.js"></script>
+
+</head>
+
+<body style="background-color: rgba(204, 255, 254, 0.13)">
+<div id="includedNavbar"></div>
+
+<!--Header section-->
+<div class="col-md-12" style="width: 1200px; padding-left: 40px">
+	<div class="panel panel-primary" style="border-color: #4c4c4c">
+		<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+			<h3 class="panel-title">My Wami Profiles</h3>
+		</div>
+		<div style="padding-bottom: 15px; padding-left: 15px; padding-right: 15px; padding-top: 10px; background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+			<div class="row"  style="height: 50px">
+				<div class="col-md-2" style="width: 230px; padding-right: 0px">
+					<div class="clearfix">
+						<label for="identityProfileDropDown">Choose an Identity Profile</label>
+						<div class="input" id="identityProfileDropDown"></div>
+					</div>
+				</div>
+				<div class="col-md-1" style="width: 240px; margin-left: 30px">
+					<h5 class="wami-margin-t2 wami-margin-b4" style="width: 240px; padding-bottom: 3px; font-weight: bold">Number of Collected Wamis</h5>
+					<label>
+						<div id="total_collected_profiles" style="margin-left: 70px"> </div>
+					</label>
+				</div>
+				<div class="col-md-1" style="width: 200px">
+					<h5 class="wami-margin-t2 wami-margin-b4" style="width: 200px; padding-bottom: 3px; font-weight: bold">Overall Profile Rating</h5>
+					<label>
+						<div id="rating" style="margin-left: 45px"> </div>
+					</label>
+				</div>
+			</div>
+			<div style="padding-bottom: 10px; padding-top: 20px">
+				<hr>
+			</div>
+			<div style="padding-top: 10px">
+				<button type="button" class="btn btn-md btn-primary" style="margin-right: 30px" onclick="return updateDefaultProfile()">Save As Default Profile</button>
+				<button type="button" class="btn btn-md btn-primary" style="margin-right: 30px" onclick="return newProfileDialog()">Create New Profile</button>
+				<button type="button" class="btn btn-md btn-danger" onclick="return removeProfileConfirm()">Delete Profile</button>
+				<div id="header_alerts" style="padding-top: 20px"></div>
+			</div>
+		</div>
+	</div>
+
+<!--My Wami info-->
+	<div class="panel-group" id="accordionMyWami">
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionMyWami" href="#collapseMyWami">	My Wami Profile
+						<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+					</a>
+				</h3>
+			</div>
+			<div id="collapseMyWami" class="panel-collapse collapse out">
+				<div class="panel-body"  style="padding-left: 25px; background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+					<div class="row"  style="height: 330px">
+						<div class="col-md-2" style="width: 250px">
+							<div id="image"></div>
+							<div style="vertical-align: top; margin-top: 10px;">
+								<span class="btn btn-sm btn-primary btn-file">Upload New Image <input id="new_profile_image" type="file" onchange="upload_profile_image()"></span>
+							</div>
+							<div id="image_upload_alerts" style="padding-top: 15px"></div>
+						</div>
+						<div class="col-md-2" style="width: 230px">
+							<div style='vertical-align: top'>
+								<h5 class='wami-margin-t2 wami-margin-b2' style='width: 100px'><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>Profile Name</h5>
+							</div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="profile_name"></div>
+
+							<div style='padding-top: 7px'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 100px'>First Name</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="first_name"></div>
+
+							<div style='padding-top: 7px'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 100px'>Last Name</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="last_name"></div>
+
+							<div style='vertical-align: top'>
+								<h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>Email</h5>
+							</div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="email"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Profile Type</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text'id="profile_type"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-t4 wami-margin-b2' style='width: 90px; margin-top: 7px'>Description</h5></div>
+							<div><textarea  class='input-wami' style='width: 200px; resize: none; height: 50px' id="description"></textarea></div>
+						</div>
+						<div class="col-md-2" style="width: 230px">
+							<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 120px'>Street Address</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="street_address"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>City</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="city"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>State</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="state"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Zip Code</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="zipcode"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Country</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text' id="country"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Telephone</h5></div>
+							<div><input style='width: 200px' class='input-wami' type='text'  id="telephone"></div>
+						</div>
+
+						<div class="col-md-3">
+							<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2'>Tags</h5></div>
+							<div><input class='input-wami' style='width: 340px' type='text' id="tags"></div>
+
+							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 1200px; margin-top: 7px'>Profile Create Date</h5></div>
+							<div><input readonly style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' id="create_date"></div>
+
+							<div style="width: 280px; height: 70px; border: 2px solid #ff9933; padding-top: 10px; padding-left: 10px; margin-top: 15px">
+								<h5 class="wami-margin-t2 wami-margin-b2" style="width: 130px;">Profile Status</h5>
+								<label style="padding-top: 5px; padding-right: 15px">
+									<input id="active" type="radio" value="active" name="optionsProfileState">
+									<span style="color: #525252">Active</span>
+								</label>
+								<label style="padding-top: 5px;">
+									<input id="inactive" type="radio" value="inactive" name="optionsProfileState">
+									<span style="color: #525252">InActive</span>
+								</label>
+							</div>
+							<div style="width: 280px; height: 70px; border: 2px solid #ff9933; padding: 10px; margin-top: 15px">
+								<h5 class="wami-margin-t2 wami-margin-b2" style="width: 130px;">Searchable</h5>
+								<label style="padding-top: 5px; padding-right: 15px">
+									<input id="search_allowed" type="radio" name="optionsSearchStatus" value="search_allowed">
+									<span style="color: #525252">Yes</span>
+								</label>
+								<label style="padding-top: 5px;">
+									<input id="search_notallowed" type="radio" name="optionsSearchStatus" value="search_notallowed">
+									<span style="color: #525252">No</span>
+								</label>
+							</div>
+							<h6 style="color: #858585">Fields with an<span style="color: #ff9933; font-weight: bolder; font-size: 20px; padding-top: 15px">&nbsp;*&nbsp;</span>are mandotory. </h6>
+						</div>
+					</div>
+					<div style="padding-bottom: 10px; padding-top: 10px">
+						<hr>
+					</div>
+					<button type="button" class="btn btn-md btn-primary" onclick="return save_my_wami_data()">Save</button>
+					<div id="mywami_alerts" style="padding-top: 20px"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Profiler-->
+	<div class="panel-group" id="accordionMyProfile">
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordionMyProfile" href="#collapseMyProfile">My Identity Profiler
+						<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+					</a>
+				</h3>
+			</div>
+			<div id="collapseMyProfile" class="panel-collapse collapse out">
+				<div class="panel-body" style="background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+					<div id="profiler_id"></div>
+					<div style="padding-bottom: 10px; padding-top: 10px"><hr></div>
+					<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="return add_category()">Add New Category</button>
+					<button type="button" class="btn btn-sm btn-danger" style="margin-left: 25px"onclick="return remove_category()">Remove Checked Category</button>
+					<div class="text-left" id="profiler_category_alerts" style="margin-top: 20px; width: 750px"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Flash announcements-->
+	<div class="panel-group" id="accordionFlash">
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordionFlash" href="#collapse">My Flash Announcements
+						<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+					</a>
+				</h3>
+			</div>
+			<div id="collapse" class="panel-collapse collapse out">
+				<div class="panel-body" style="padding-top: 5px; background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+					<div>
+						<h6 style="margin-left: 15px; margin-bottom: 5px"> Remove </h6>
+					</div>
+					<span class="span-scroll-flash" id="flash_id"></span>
+					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-left: 5px" onclick="add_flash()">Add Flash</button>
+					<button type="button" class="btn btn-sm btn-danger" style="margin-top: 10px; margin-left: 25px" onclick="remove_checked_flash()">Remove Checked</button>
+					<div class="text-left" id="flash_alerts" style="margin-top: 20px; width: 750px"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Groups-->
+	<div class="panel-group" id="accordionGroups">
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionGroups" href="#collapseGroups">My Wami Groups
+						<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+					</a>
+				</h3>
+			</div>
+			<div id="collapseGroups" class="panel-collapse collapse out">
+				<div class="panel-body" style="padding-top: 5px">
+					<div>
+						<h6 style="margin-left: 15px; margin-bottom: 5px"> Remove </h6>
+					</div>
+					<span class="span-scroll-groups" id="group_id"></span>
+					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px">Save</button>
+					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-left: 5px">Add Group</button>
+					<button type="button" class="btn btn-sm btn-danger" style="margin-top: 10px; margin-left: 25px">Remove Checked</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Validations, verifications, reviews-->
+	<div class="panel-group" id="accordionValidation">
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionValidation" href="#collapseValidation">My Wami Profile Validations, Verifications, and Reviews
+						<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+					</a>
+				</h3>
+			</div>
+			<div id="collapseValidation" class="panel-collapse collapse out">
+				<div class="panel-body" style="padding-top: 5px">
+					<div class="col-md-1" style="width: 240px; margin-left: 30px">
+						<div style="vertical-align: top; margin-top: 10px; padding-left: 20px; font-size:20px;">
+							<a href="#"><strong>Profile Reviews</strong></a>
+						</div>
+					</div>
+					<div class="col-md-1" style="width: 240px; margin-left: 30px">
+						<div style="vertical-align: top; margin-top: 10px; padding-left: 20px; font-size:20px;">
+							<a href="#"><strong>Offline Verification</strong></a>
+						</div>
+					</div>
+					<div class="col-md-1" style="width: 240px; margin-left: 30px">
+						<div style="vertical-align: top; margin-top: 10px; padding-left: 20px; font-size:20px;">
+							<a href="#"><strong>Online Verification</strong></a>
+						</div>
+					</div>
+					<div class="col-md-1" style="width: 240px; margin-left: 30px">
+						<div style="vertical-align: top; margin-top: 10px; padding-left: 20px; font-size:20px;">
+							<a href="#"><strong>Profile Metrics</strong></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!---->
+<!--Modal Dialog section-->
+<!---->
+
+	<!--Modal Remove Profiles-->
+	<div class="modal fade" id="remove_profile" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong> <span style="color: #e00004">Delete Profile</span></strong></h4>
+				</div>
+				<div class="modal-body">
+					<h5 id="remove_message"></h5>
+					<h5>Are you sure?</h5>
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="remove_profile()">Delete</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--Create new profile dialog-->
+	<div class="modal fade" id="new_profile" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong>Create New Profile</strong></h4>
+				</div>
+				<div class="modal-body">
+					<h5>Please Enter a Profile Name:</h5>
+					<input class='input-wami form-control' id="new_profile_name" placeholder="Enter a Profile Name" name="new_profile_name" size="77" type="text">
+					<h5 style="padding-top: 5px">Please Enter an Email Address:</h5>
+					<input class='input-wami form-control' id="new_email" placeholder="Enter an Email Address" name="new_email" size="77" type="text">
+				</div>
+				<div id="new_profile_alerts"></div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="new_profile(new_profile_name.value, new_email.value)">Create</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--New Flash announcement dialog-->
+	<div class="modal fade" id="new_flash_dialog" role="dialog">
+		<div class="modal-dialog" style="width: 900px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">New Flash Announcement</h4>
+				</div>
+				<div class="modal-body">
+					<h5>Create New Flash Annoucement</h5>
+					<input type="text" class="input-wami" placeholder="Enter flash announcement up to 110 characters, then hit Create" name="new_flash" id="new_flash" style="width: 860px">
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="save_flash()">Create</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="flash_dialog_alerts" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!---->
+	<!--UPLOAD Dialog section-->
+	<!---->
+
+	<!--Upload mew audio file for audio jukebox dialog-->
+	<div class="modal fade" id="new_audio_file_dialog" role="dialog">
+		<div class="modal-dialog" style="width: 450px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Upload New Audio File For Audio Jukebox</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="category_id_audio_new" value="">
+					<h5>File Name</h5>
+					<input type="text" class="input-wami" placeholder="Enter File Name" name="audio_file_name" id="audio_file_name" style="width: 400px">
+					<h5 style="padding-top: 5px">File Description</h5>
+					<span style="text-align: left">
+						<textarea class="input-wami" rows="3" name="audio_file_description" id="audio_file_description" style="width: 400px"></textarea>
+					</span>
+					<span class="btn btn-sm btn-primary btn-file" style="margin-top: 10px">Browse For New Audio File
+						<input id="new_audio_file" type="file" onchange="get_audio_file()">
+					</span>
+					<input  type="text" readonly value="" id="audio_file_file_name" style="background-color: #cccccc; margin-top: 10px; margin-left: 5px; width: 220px; height: 30px; vertical-align: bottom">
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="upload_audio_file()">Upload</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cleanup_audio_file_dialog()">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="new_audio_file_dialog_alerts" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Upload mew image for image gallery dialog-->
+	<div class="modal fade" id="new_image_dialog" role="dialog">
+		<div class="modal-dialog" style="width: 450px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Upload New Image For Image Gallery</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="category_id_image" value="">
+					<h5>Image Name</h5>
+					<input type="text" class="input-wami" placeholder="Enter Image Name" name="gallery_image_name" id="gallery_image_name" style="width: 400px">
+					<h5 style="padding-top: 5px">Image Description</h5>
+					<span style="text-align: left">
+						<textarea class="input-wami" rows="3" name="gallery_image_description" id="gallery_image_description" style="width: 400px"></textarea>
+					</span>
+					<span class="btn btn-sm btn-primary btn-file" style="margin-top: 10px">Browse For New Image File
+						<input id="new_gallery_image" type="file" onchange="get_gallery_image()">
+					</span>
+					<input  type="text" readonly value="" id="image_gallery_file_name" style="background-color: #cccccc; margin-top: 10px; margin-left: 5px; width: 220px; height: 30px; vertical-align: bottom">
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="upload_gallery_image()">Upload</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cleanup_image_gallery_dialog()">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="new_image_dialog_alerts" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Upload mew text file for profiler dialog-->
+	<div class="modal fade" id="new_text_file_dialog" role="dialog">
+		<div class="modal-dialog" style="width: 450px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Upload New File</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="category_id_text" value="">
+					<h5>File Name</h5>
+					<input type="text" class="input-wami" placeholder="Enter File Name" name="text_file_name" id="text_file_name" style="width: 400px">
+					<h5 style="padding-top: 5px">File Description</h5>
+					<span style="text-align: left">
+						<textarea class="input-wami" rows="3" name="text_file_description" id="text_file_description" style="width: 400px"></textarea>
+					</span>
+					<span class="btn btn-sm btn-primary btn-file" style="margin-top: 10px">Browse For New File
+						<input id="new_text_file" type="file" onchange="get_text_file()">
+					</span>
+					<input  type="text" readonly value="" id="text_file_file_name" style="background-color: #cccccc; margin-top: 10px; margin-left: 5px; width: 220px; height: 30px; vertical-align: bottom">
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="save_text_file()">Upload</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cleanup_text_file_dialog()">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="text_file_dialog_alerts" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Upload mew PDF file for profiler dialog-->
+	<div class="modal fade" id="new_pdf_file_dialog" role="dialog">
+		<div class="modal-dialog" style="width: 450px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Upload New PDF File</h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="category_id_pdf" value="">
+					<h5>File Name</h5>
+					<input type="text" class="input-wami" placeholder="Enter File Name" name="pdf_file_name" id="pdf_file_name" style="width: 400px">
+					<h5 style="padding-top: 5px">File Description</h5>
+					<span style="text-align: left">
+						<textarea class="input-wami" rows="3" name="pdf_file_description" id="pdf_file_description" style="width: 400px"></textarea>
+					</span>
+		<!--<form action="" method="POST" id="pdf_upload" name="pdf_upload" enctype="multipart/form-data">-->
+					<span class="btn btn-sm btn-primary btn-file" style="margin-top: 10px">Browse For New File
+						<input id="new_pdf_file" type="file" name="new_pdf_file" onchange="get_pdf_file()">
+					</span>
+					<input type="text" readonly value="" id="pdf_file_file_name" style="background-color: #cccccc; margin-top: 10px; margin-left: 5px; width: 220px; height: 30px; vertical-align: bottom">
+	  <!--</form>-->
+					</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="save_pdf_file()">Upload</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cleanup_pdf_file_dialog()">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="pdf_file_dialog_alerts" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal add category-->
+	<div class="modal fade" id="new_category_dialog" role="dialog" >
+		<div class="modal-dialog" style="width: 900px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong>Add New Categories</strong></h4>
+				</div>
+				<div class="modal-body" style="padding-top: 0px">
+					<div class="row" style="width: 800px; margin-left: 20px">
+						<span style="color: #808080">
+							<h6 style="margin: 4px">Directions:</h6>
+							<h6 style="margin: 4px">1. Create categories by using Templated Categories and/or Create Your Own Categories.</h6>
+							<h6 style="margin: 4px">2. Hit the Save button.</h6>
+							<h6 style="margin: 4px">3. Go to My Identity Profiler to upload files.</h6>
+						</span>
+					</div>
+					<hr class="hr1">
+
+					<!--Templated categories-->
+					<div class="row" style="width: 350px">
+						<div class="col-md-1" style="width: 350px">
+							<h4 style="margin-top: 5px; margin-bottom: 5px">Pre-Formatted Templated Categories:</h4>
+						</div>
+					</div>
+					<div class="row" style="width: 800px">
+						<div class="col-md-1" style="width: 150px">
+							<h5>Templates</h5>
+							<div id="templateListDropDown"></div>
+						</div>
+						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
+							<h5>Include</h5>
+							<hr>
+							<div id="checkboxList" style="font-size: 15px"></div>
+						</div>
+						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
+							<h5>Category Name</h5>
+							<hr>
+							<div id="categoryList" style="font-size: 15px"></div>
+						</div>
+						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
+							<h5>Media Type</h5>
+							<hr>
+							<div id="mediaTypeList" style="font-size: 15px"></div>
+						</div>
+					</div>
+					<br><hr class="hr1">
+
+					<!--User defined categories-->
+					<div class="row" style="width: 300px">
+						<div class="col-md-1" style="width: 300px">
+							<h4>Create Your Own Categories:</h4>
+						</div>
+					</div>
+					<div class="row" style="width: 800px">
+						<div class="col-md-1" style="width: 150px">
+							<h5></h5>
+						</div>
+						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
+							<h5>Remove</h5>
+							<hr>
+						</div>
+						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
+							<h5>Category Name</h5>
+							<hr>
+						</div>
+						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
+							<h5>Media Type</h5>
+							<hr>
+						</div>
+					</div>
+					<div id="newUserDefinedCategory0"></div>
+					<div id="newUserDefinedCategory1"></div>
+					<div id="newUserDefinedCategory2"></div>
+					<div id="newUserDefinedCategory3"></div>
+					<div id="newUserDefinedCategory4"></div>
+					<div id="newUserDefinedCategory5"></div>
+					<div id="newUserDefinedCategory6"></div>
+					<div id="newUserDefinedCategory7"></div>
+					<div id="newUserDefinedCategory8"></div>
+					<div id="newUserDefinedCategory9"></div>
+					<div id="newUserDefinedCategory10"></div>
+					<div id="newUserDefinedCategory11"></div>
+					<div id="newUserDefinedCategory12"></div>
+					<div id="newUserDefinedCategory13"></div>
+					<div id="newUserDefinedCategory14"></div>
+					<div id="newUserDefinedCategory15"></div>
+					<div id="newUserDefinedCategory16"></div>
+					<div id="newUserDefinedCategory17"></div>
+					<div id="newUserDefinedCategory18"></div>
+					<div id="newUserDefinedCategory19"></div>
+
+					<div class="row" style="width: 1100px; padding-bottom: 10px; padding-top: 15px">
+						<div class="col-md-1" style="width: 150px">
+							<h5></h5>
+						</div>
+						<hr style="width: 600px; margin:0px">
+						<div class="col-md-1" style="width: 270px; padding-top: 10px; margin-left: 20px; padding-right: 0px">
+							<button style="margin-right: 10px" type="button" class="btn btn-primary btn-xs" onclick="add_user_defined_category()">Add Category</button>
+							<button type="button" class="btn btn-danger btn-xs"  onclick="remove_user_defined_category()">Remove Categories</button>
+						</div>
+						<div class="col-md-1" style="width: 430px; padding-top: 10px; padding-left: 0px">
+							<div id="new_category_alerts" style="width: 430px; height: 10px; "></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="save_categories()">Save</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!---->
+	<!-- End UPLOAD -->
+	<!---->
+
+	<!---->
+	<!--REMOVE Dialog section-->
+	<!---->
+
+	<!--Modal remove audio files from audio jukebox dialog-->
+	<div class="modal fade" id="remove_audio_files" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Audio Files</span></strong></h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="category_id_audio_remove" value="">
+					<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen audio files. This is permanent</h5>
+					<h5>Are you sure?</h5>
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+						<span class="pull-left">
+							<button type="button" class="btn btn-danger" onclick="return update_for_delete_audio_files()">Remove</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" onClick="clean_remove_audio_files_dialog()">Close</button>
+						</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="remove_audio_files_alert" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal remove image from image gallery dialog-->
+	<div class="modal fade" id="remove_images" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Gallery Images</span></strong></h4>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="category_id_image_remove" value="">
+					<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen images from your gallery. This is permanent</h5>
+					<h5>Are you sure?</h5>
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+						<span class="pull-left">
+							<button type="button" class="btn btn-danger" onclick="return update_for_delete_gallery_images()">Remove</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" onClick="clean_remove_gallery_image_dialog()">Close</button>
+						</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="remove_gallery_image_alert" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal remove Flash dialog-->
+	<div class="modal fade" id="remove_flash" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Flash Announcement(s)</span></strong></h4>
+				</div>
+				<div class="modal-body">
+					<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen flash announcement(s).</h5>
+					<h5>Are you sure?</h5>
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+						<span class="pull-left">
+							<button type="button" class="btn btn-danger" onclick="return update_for_delete_flash()">Remove</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" onClick="clean_remove_flash_dialog()">Close</button>
+						</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="remove_flash_alert" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal remove profiler category-->
+	<div class="modal fade" id="remove_profiler_category" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Profiler Category(s)</span></strong></h4>
+				</div>
+				<div class="modal-body">
+					<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen profiler category(s).</h5>
+					<h5>Are you sure?</h5>
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+						<span class="pull-left">
+							<button type="button" class="btn btn-danger" onclick="return update_for_delete_profiler_category()">Remove</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" onClick="clean_remove_profiler_category_dialog()">Close</button>
+						</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="remove_profiler_category_alert" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>  <br>
+	<hr>
+	<footer>
+		<div id="includedFooter"></div>
+	</footer>
+	<br><br>
+
+</div>
+
+<script src="js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	function toggleChevron(e) {
+		$(e.target)
+				.prev('.panel-heading')
+				.find("i.indicator")
+				.toggleClass('glyphicon-plus-sign glyphicon-minus-sign');
+	}
+	$('#accordionMyWami').on('hidden.bs.collapse', toggleChevron);
+	$('#accordionMyWami').on('shown.bs.collapse', toggleChevron);
+
+	$('#accordionValidation').on('hidden.bs.collapse', toggleChevron);
+	$('#accordionValidation').on('shown.bs.collapse', toggleChevron);
+
+	$('#accordionGroups').on('hidden.bs.collapse', toggleChevron);
+	$('#accordionGroups').on('shown.bs.collapse', toggleChevron);
+
+	$('#accordionFlash').on('hidden.bs.collapse', toggleChevron);
+	$('#accordionFlash').on('shown.bs.collapse', toggleChevron);
+
+	$('#accordionMyProfile').on('hidden.bs.collapse', toggleChevron);
+	$('#accordionMyProfile').on('shown.bs.collapse', toggleChevron);
+
+</script>
+
+</body>
+</html>
+

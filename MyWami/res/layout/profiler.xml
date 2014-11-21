@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profile_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/black">
+
+	<RelativeLayout
+			android:id="@+id/profile_list"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:background="@color/black">
+		<TextView
+				android:id="@+id/profile_text"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:textSize="18sp"
+				android:textStyle="bold"
+				android:textColor="@color/text_color"
+				android:gravity="center_vertical"
+				android:background="@drawable/wami_list_background">
+		</TextView>
+
+		<ImageView
+				android:id="@+id/list_icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/next_item_right"
+				android:layout_centerVertical="true"
+				android:layout_alignParentRight="true"
+				android:layout_alignParentEnd="true">>
+		</ImageView>
+	</RelativeLayout>
+
+</LinearLayout>

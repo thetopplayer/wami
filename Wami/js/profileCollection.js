@@ -1,0 +1,445 @@
+/*
+ * profileCollection.js
+ * Created by robertlanter on 3/19/14.
+ *
+ * Load profile collection
+ */
+//function load_profile_collection() {
+$(document).ready(function() {
+	var data = localStorage.getItem("user_info");
+	var obj = JSON.parse(data)
+	var user_id = obj.user_info[0].user_id;
+
+	//from common.js, loads list of profiles for the current user
+	load_profile_list(user_id);
+
+	//Determine which collection profile is being used
+	var identity_profile_id = localStorage.getItem("identity_profile_id");
+	var current_identity_profile_id = localStorage.getItem("current_identity_profile_id");
+	var extended_info_ind = localStorage.getItem("extended_info_ind");
+	if ((current_identity_profile_id !== null) && (extended_info_ind === "true")) {
+		localStorage.setItem("extended_info_ind", false);
+		var objSelect = document.getElementById("identityProfileList");
+		for (var i = 0; i < objSelect.options.length; i++) {
+			if (objSelect.options[i].value === current_identity_profile_id) {
+				objSelect.options[i].selected = true;
+			}
+		}
+
+		loadData(current_identity_profile_id);
+	}
+	else loadData(identity_profile_id);
+});
+
+function loadData(identity_profile_id) {
+	localStorage.setItem("extended_info_ind", false);
+	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
+	processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
+
+	try {
+		var wami_data = localStorage.getItem("profile_collection");
+		var wami_obj = JSON.parse(wami_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_profile_collection: Problem getting profile collections = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		return;
+	}
+
+	var profile_ret_code = wami_obj.profile_ret_code;
+	if (profile_ret_code === 1) {
+		var message = wami_obj.message;
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "list");
+	}
+
+	var list = '<div class="col-sm-7" style="max-width: 800px; min-width: 800px"><div class="panel panel-primary" style="border-color: #4c4c4c">' +
+			'<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D"><h3 class="panel-title">Profile Collection</h3></div><span class="span-scroll-wami-list">';
+
+	var num_list_elements = wami_obj.profile_collection.length;
+	localStorage.setItem("num_list_elements", num_list_elements);
+	for (var i = 0; i < num_list_elements; i++) {
+		var list_identity_profile_id = wami_obj.profile_collection[i].identity_profile_id;
+		var profile_name = wami_obj.profile_collection[i].profile_name;
+		if (list_identity_profile_id === identity_profile_id) localStorage.setItem("current_profile_name", profile_name);
+
+		var image_url = "assets/main_image/" + wami_obj.profile_collection[i].image_url + ".png";
+		var first_name = wami_obj.profile_collection[i].first_name;
+		if (first_name === null) first_name = '';
+		var last_name = wami_obj.profile_collection[i].last_name;
+		if (last_name === null) last_name = '';
+		var contact = first_name + " "  + last_name;
+		var tags = wami_obj.profile_collection[i].tags;
+		var rating = wami_obj.profile_collection[i].rating;
+		var default_profile_ind = wami_obj.profile_collection[i].default_profile_ind;
+		if (default_profile_ind === 1) profile_name = profile_name  + '&nbsp;  ' + '<strong>(Default)</strong>';
+		if (tags === null) tags = '';
+
+		var groups = '';
+		var num_groups = wami_obj.profile_group_assign_data.length;
+		for (var j = 0; j < num_groups; j++) {
+			var profile_group_id = wami_obj.profile_group_assign_data[j].identity_profile_id;
+			if (profile_group_id == list_identity_profile_id) {
+				groups = wami_obj.profile_group_assign_data[j].group + ', ' + groups;
+			}
+		}
+		groups = groups.substr(0, groups.length - 2);
+
+		list = list +
+				'<div class="panel-body wami-panel">' +
+					'<div class="col-md-5" style="width: 38%; padding: 0px">' +
+						'<label style="vertical-align: top">' +
+							'<input type="checkbox" name="' + profile_name + '" value=' + list_identity_profile_id + ' id="checkbox' + i + '">  Choose' +
+						'</label>' +
+						'<img src="' + image_url  +  '" style="padding-left: 20px">' +
+					'</div>' +
+					'<div class="col-md-4" style="padding: 0px">' +
+						'<div style="vertical-align: top; max-width: 300px; min-width: 280px">' +
+							'<strong>Profile Name: </strong> ' + profile_name + '<br> ' +
+							'<strong>Contact Name: </strong> ' + contact + '<br> ' +
+							'<strong>Tags: </strong> ' + tags + '<br> ' +
+							'<strong>Groups: </strong> ' + groups + '<br> ' +
+							'<strong>Profile Rating: </strong> ' + rating + '<br> ' +
+						'</div>' +
+					'</div>' +
+				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +
+					'<div style="vertical-align: top">' +
+						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="' + i + '" onclick="showExtendedInfo(' + i + ')" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px; margin-bottom: 10px">Assign to Groups</button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px">Rate/Review Profile</button>' +
+					'</div>' +
+				'</div></div><hr>';
+	}
+	list += "</span></div></div>";
+	document.getElementById("list_id").innerHTML=list;
+}
+
+function showExtendedInfo(id) {
+	var selected_profile_id = document.getElementById(id).value;
+	localStorage.setItem("selected_profile_id", selected_profile_id);
+
+	var element_id = document.getElementById("identityProfileList");
+	var current_identity_profile_id = element_id.value;
+	localStorage.setItem("current_identity_profile_id", current_identity_profile_id);
+	localStorage.setItem("extended_info_ind", true);
+	window.document.location.href = 'extended_profile_info.html';
+}
+
+function removeProfiles() {
+	var message = '';
+	var list_identity_profile_id = '';
+	var param_str = '';
+	var assign_to_identity_profile_id = localStorage.getItem("assign_to_identity_profile_id");
+	var num_list_elements = localStorage.getItem("num_list_elements");
+	var num_profiles_to_remove = 0;
+	for (var i = 0; i < num_list_elements; i++) {
+		var checkbox_id = "checkbox" + i;
+		if (document.getElementById(checkbox_id).checked) {
+			list_identity_profile_id = document.getElementById(checkbox_id).value;
+
+			// not allowed to delete default profile from collection
+			if (list_identity_profile_id === assign_to_identity_profile_id) {
+				message = "<strong>Default Profile </strong>cannot be removed.";
+				continue;
+			}
+
+			param_str = param_str + "identity_profile_id" + num_profiles_to_remove + "=" + list_identity_profile_id + "&";
+			num_profiles_to_remove = num_profiles_to_remove + 1;
+		}
+	}
+	if (num_profiles_to_remove == 0) {
+		if (message !== '')	my_profile_collection_alert(message, "alert-info", "Info Alert!" +  '&nbsp;  ', "list");
+		return;
+	}
+	param_str = param_str.substr(0, param_str.length -1);
+	param_str = "assign_to_identity_profile_id=" + assign_to_identity_profile_id + "&num_profiles_to_remove=" + num_profiles_to_remove + "&" + param_str;
+
+	processData(param_str, "update_for_delete_profile_collection.php", "ret_code", false);
+	try {
+		var collection_data = localStorage.getItem("ret_code");
+		var collection_obj = JSON.parse(collection_data);
+} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("update_for_delete_profile_collection: Problem deleting profiles = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		return;
+	}
+
+	var ret_code = collection_obj.ret_code;
+	if (ret_code === -1) {
+		var message = collection_obj.message;
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "list");
+	}
+
+	loadData(assign_to_identity_profile_id);
+	if (message !== '')	my_profile_collection_alert(message, "alert-info", "Info Alert! ", "list");
+}
+
+function checkForChosenProfiles(action) {
+	my_profile_collection_alert("", "", "", "no_selected_profiles");
+	var num_list_elements = localStorage.getItem("num_list_elements");
+	for (var i = 0; i < num_list_elements; i++) {
+		var checkbox_id = "checkbox" + i;
+		if (document.getElementById(checkbox_id).checked) {
+			if (action == "remove") {
+				$('#remove_profiles').modal();
+			}
+			if (action == "transmit") {
+				var transmit_list = getProfilesToTransmit();
+				if (transmit_list == false) return false;
+				$("#transmit_list").val(transmit_list);
+				$('#transmit_wami').modal();
+			}
+			return true;
+		}
+	}
+	my_profile_collection_alert("No Profiles selected. Please select profile(s) to perform action.", "alert-info", "Info Alert! ", "no_selected_profiles");
+	return false;
+}
+
+function getProfilesToTransmit () {
+	var profile_ids_to_transmit = [];
+	var profiles_to_transmit = [];
+	var num_list_elements = localStorage.getItem("num_list_elements");
+	var element_number = 0;
+	for (var i = 0; i < num_list_elements; i++) {
+		var checkbox_id = "checkbox" + i;
+		if (document.getElementById(checkbox_id).checked) {
+			profile_ids_to_transmit[element_number] = document.getElementById(checkbox_id).value;
+			profiles_to_transmit[element_number] = document.getElementById(checkbox_id).name;
+			profiles_to_transmit[element_number] = check_for_and_clean_up_default_string(profiles_to_transmit[element_number]);
+			element_number++;
+		}
+	}
+	var num_profiles_to_transmit = profiles_to_transmit.length;
+	if (num_profiles_to_transmit == 0) return false;
+	localStorage.setItem("profiles_to_transmit", JSON.stringify(profiles_to_transmit));
+	localStorage.setItem("profile_ids_to_transmit", JSON.stringify(profile_ids_to_transmit));
+	var transmit_list = '';
+	for (var i = 0; i < num_profiles_to_transmit; i++) {
+		transmit_list = transmit_list + "; " + profiles_to_transmit[i];
+	}
+	return transmit_list.substr(2, transmit_list.length);
+}
+
+function check_for_and_clean_up_default_string(profile_name) {
+	if (profile_name.indexOf('Default') === -1) {
+		return profile_name;
+	}
+	return profile_name.substr(0, profile_name.indexOf(' ') -1);
+}
+
+function refreshCollection() {
+	var identity_profile_id = localStorage.getItem("assign_to_identity_profile_id");
+	loadData(identity_profile_id);
+}
+
+function transmitProfiles() {
+	var param_str = '';
+
+	//From profile id
+	var from_profile_id = localStorage.getItem("assign_to_identity_profile_id");
+	param_str = "from_profile_id=" + from_profile_id  + "&";
+
+	//Profiles chosen to transmit
+	var profile_ids_to_transmit = JSON.parse(localStorage.getItem("profile_ids_to_transmit"));
+	var num_profiles_to_transmit = profile_ids_to_transmit.length;
+	for (var i = 0; i < num_profiles_to_transmit; i++) {
+		param_str = param_str + "profile_ids_to_transmit" + i + "=" + profile_ids_to_transmit[i] + "&";
+	}
+	param_str = "num_profiles_to_transmit=" + num_profiles_to_transmit + "&" + param_str;
+
+	//Transmit to profiles from the Transmit dialog
+	var transmit_to_profile_name = document.getElementById("transmit_to_profile_name").value;
+	if (transmit_to_profile_name.length > 0) {
+		transmit_to_profile_name = transmit_to_profile_name.replace(/\s+/g, '');   //remove all spaces.
+		var pos = [];
+		// remove last character if its a semi-colon
+		if (transmit_to_profile_name.slice(-1) === ";") {
+			transmit_to_profile_name = transmit_to_profile_name.slice(0, -1);
+		}
+		for (var i = 0; i < transmit_to_profile_name.length; i++) {
+			if (transmit_to_profile_name[i] === ";") pos.push(i);
+		}
+		var transmit_str = '';
+		var num_transmit_to_profile = pos.length + 1;
+		var start_pos = 0;
+		var end_pos = 0;
+		param_str = param_str + "num_transmit_to_profile=" + num_transmit_to_profile + "&";
+		for (var i = 0; i < num_transmit_to_profile; i++) {
+			end_pos = pos[i];
+			transmit_str = transmit_to_profile_name.slice(start_pos, end_pos);
+			if (transmit_str.length < 7) {
+				my_profile_collection_alert("Profile names must be seven or more characters: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
+				return;
+			}
+			var result = transmit_str.match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
+			if (result !== null) {
+				my_profile_collection_alert("Profile names must only contain letters, numbers, dashes and hyphens: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
+				return;
+			}
+			start_pos = end_pos + 1;
+			param_str = param_str + "transmit_to_profile" + i + "=" + transmit_str + "&"
+		}
+		param_str = param_str.slice(0, param_str.length - 1);
+
+	//Insert records
+		processData(param_str, "insert_transmitted_profile_data.php", "transmit_messages", false);
+
+		//Check results
+		var alert_message = [];
+		var alert_message_type_class = [];
+		var alert_message_type_string = [];
+		var alert_message_index = 0;
+
+		try {
+			var transmit_messages_data = localStorage.getItem("transmit_messages");
+			var transmit_messages_obj = JSON.parse(transmit_messages_data);
+		} catch (err) {
+			console.log(err.message)
+			my_profile_collection_alert("insert_transmitted_profile_data: Problem transmitting profile(s) = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
+			return;
+		}
+
+		var num_profile_name_not_exist = transmit_messages_obj.num_profile_name_not_exist;
+		if (num_profile_name_not_exist > 0) {
+			var message = '';
+			for (var i = 0; i < num_profile_name_not_exist; i++) {
+				alert_message[alert_message_index] = transmit_messages_obj.no_records_found[i];
+				alert_message_type_class[alert_message_index] =  "alert-danger";
+				alert_message_type_string[alert_message_index] =  "Alert! ";
+				alert_message_index++;
+			}
+		}
+		var record_already_exist = transmit_messages_obj.record_already_exist;
+		if (record_already_exist.length > 0) {
+			for (var i = 0; i < record_already_exist.length; i++) {
+				alert_message[alert_message_index] = record_already_exist[i];
+				alert_message_type_class[alert_message_index] =  "alert-danger";
+				alert_message_type_string[alert_message_index] =  "Alert! ";
+				alert_message_index++;
+			}
+		}
+		var num_profiles_transmitted = transmit_messages_obj.num_profiles_transmitted;
+		if (num_profiles_transmitted > 0) {
+			alert_message[alert_message_index] = "Profile(s) successfully transmitted!";
+			alert_message_type_class[alert_message_index] =  "alert-success";
+			alert_message_type_string[alert_message_index] =  "Success! ";
+		}
+		my_profile_collection_alert(alert_message, alert_message_type_class, alert_message_type_string, "transmit");
+	}
+
+	// Email profiles
+	var transmit_to_email_address = document.getElementById("transmit_to_email_address").value;
+	if (transmit_to_email_address.length > 0) {
+		transmit_to_email_address = transmit_to_email_address.replace(/\s+/g, '');   //remove all spaces.
+		pos = [];
+		for (var i = 0; i < transmit_to_email_address.length; i++) {
+			if (transmit_to_email_address[i] === ";") pos.push(i);
+		}
+		transmit_str = '';
+		var num_emails = pos.length + 1;
+		start_pos = 0;
+		end_pos = 0;
+		for (var i = 0; i < num_emails; i++) {
+			end_pos = pos[i];
+			transmit_str = transmit_to_email_address.slice(start_pos, end_pos) + "," + transmit_str;
+			start_pos = end_pos + 1;
+		}
+		transmit_str = transmit_str.slice(0, transmit_str.length - 1);
+		var body = '';
+		for (var j = 0; j < profile_ids_to_transmit.length; j++) {
+			body = getEmailBody(profile_ids_to_transmit[j]) + body;;
+		}
+		window.location.href = 'mailto:' + transmit_str + '?subject=Wami Profile(s)&body=' + encodeURI(body);
+	}
+}
+
+function getEmailBody(identity_profile_id) {
+	var param_str = "identity_profile_id=" + identity_profile_id;
+	processData(param_str, "get_identity_profile_data.php", "identity_profile_data", false);
+
+	try {
+		var profile_data = localStorage.getItem("identity_profile_data");
+		var profile_data_obj = JSON.parse(profile_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_identity_profile_data: Problem getting identoty profile data = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
+		return;
+	}
+
+	var ret_code = profile_data_obj.ret_code;
+	if (ret_code === 1) {
+		var message = profile_data_obj.message;
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "transmit");
+	}
+
+	var profile_name = profile_data_obj.identity_profile_data[0].profile_name;
+	var contact_name = profile_data_obj.identity_profile_data[0].first_name + ' ' + profile_data_obj.identity_profile_data[0].last_name;
+	var email = profile_data_obj.identity_profile_data[0].email;
+	var profile_type = profile_data_obj.identity_profile_data[0].profile_type;
+	var description = profile_data_obj.identity_profile_data[0].description;
+	var street_address = profile_data_obj.identity_profile_data[0].street_address;
+	var city = profile_data_obj.identity_profile_data[0].city;
+	var state = profile_data_obj.identity_profile_data[0].state;
+	var zipcode = profile_data_obj.identity_profile_data[0].zipcode;
+	var country = profile_data_obj.identity_profile_data[0].country;
+	var telephone = profile_data_obj.identity_profile_data[0].telephone;
+	var tags = profile_data_obj.identity_profile_data[0].tags;
+	var create_date = profile_data_obj.identity_profile_data[0].create_date.substr(0, 10);
+
+	var body =
+					"\n" +
+					"Profile Name: " + profile_name + "\n" +
+					"Contact Name: " + contact_name + "\n" +
+					"Email Address: " + email + "\n"        +
+					"Profile Type: " + profile_type + "\n" +
+					"Description: " + description + "\n"  +
+					"Street Address: " + street_address + "\n" +
+					"City: " + city + "\n"         +
+					"State: " + state + "\n"        +
+					"Zipcode: " + zipcode + "\n"      +
+					"Country: " + country + "\n"      +
+					"Telephone Number: " + telephone + "\n"    +
+					"Tags: " + tags + "\n"         +
+					"Profile Create Date: " + create_date + "\n\n" +
+					"For more info download the Wami app from the Apple App Store or Google Play! \n" +
+					"-----------------------------------------------------------------------------\n";
+	return(body);
+}
+
+// Alert messages
+function my_profile_collection_alert (message, message_type_class, message_type_string, message_placement) {
+	var full_message = '';
+
+	if (message_placement === "no_selected_profiles")  {
+		if (message === '') {
+			document.getElementById("no_profile_selected_alert").innerHTML = message;
+			return;
+		}
+	}
+
+	if (message_placement === "transmit") {
+		if (Array.isArray(message)) {
+			for (var i = 0; i < message.length; i++) {
+				var message_clean = message[i];
+				full_message = full_message + "<div class='alert " + message_type_class[i] + " alert-dismissable'> " +
+						"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
+						"<strong>" + message_type_string[i] + "</strong> " + message_clean + "</div>";
+			}
+			document.getElementById("transmit_alert_message").innerHTML = full_message;
+		}
+		else {
+			full_message = "<div class='alert " + message_type_class + " alert-dismissable'> " +
+					"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
+					"<strong>" + message_type_string + "</strong> " + message + "</div>";
+
+			document.getElementById("transmit_alert_message").innerHTML = full_message;
+		}
+		return;
+	}
+
+	full_message = "<div class='alert " + message_type_class + " alert-dismissable'> " +
+			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
+			"<strong>" + message_type_string + "</strong> " + message + "</div>";
+	if (message_placement === "remove") document.getElementById("remove_alert_message").innerHTML = full_message;
+	if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
+	if (message_placement === "no_selected_profiles") document.getElementById("no_profile_selected_alert").innerHTML = full_message;
+}

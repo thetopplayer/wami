@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="320dp"
+              android:layout_height="400dp"
+              android:background="@color/white">
+
+	<ImageView
+			android:src="@drawable/dialog_header_transmit_wami"
+			android:layout_width="match_parent"
+			android:layout_height="34dp"
+			android:scaleType="center"
+			android:background="#000000"/>
+
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginRight="10dp"
+			android:layout_marginLeft="10dp">
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="TO"
+				android:gravity="center_horizontal"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="7dp"
+				android:textSize="18sp"
+				android:textStyle="bold"
+				android:textColor="@color/text_color"/>
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="5dp"
+				android:layout_marginLeft="5dp"
+				android:textColor="#000000"
+				android:textStyle="bold"
+				android:textSize="14sp"
+				android:text="Profile name(s)"/>
+
+		<AutoCompleteTextView
+				android:id="@+id/profile_name"
+				android:layout_width="match_parent"
+				android:layout_height="35dp"
+				android:layout_marginTop="4dp"
+				android:layout_marginBottom="20dp"
+				android:textColor="#000000"
+				android:textSize="14sp"
+				android:padding="5dp"
+				android:background="@drawable/edittext_background"
+				android:singleLine="true"
+				android:completionThreshold="1"
+				android:hint="@string/profile_name"/>
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="5dp"
+				android:layout_marginLeft="5dp"
+				android:textColor="#000000"
+				android:textStyle="bold"
+				android:textSize="14sp"
+				android:text="Email Address(s)"/>
+
+		<EditText
+				android:id="@+id/email_address"
+				android:layout_width="match_parent"
+				android:layout_height="35dp"
+				android:layout_marginTop="4dp"
+				android:layout_marginBottom="20dp"
+				android:textSize="14sp"
+				android:background="@drawable/edittext_background"
+				android:padding="5dp"
+				android:textColor="#000000"
+				android:singleLine="true"
+				android:hint="@string/email_address"/>
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="5dp"
+				android:layout_marginLeft="5dp"
+				android:textColor="#000000"
+				android:textStyle="bold"
+				android:textSize="14sp"
+				android:text="Wami Group(s)"/>
+
+		<EditText
+				android:id="@+id/wami_group"
+				android:layout_width="match_parent"
+				android:layout_height="35dp"
+				android:layout_marginTop="4dp"
+				android:layout_marginBottom="20dp"
+				android:textSize="14sp"
+				android:background="@drawable/edittext_background"
+				android:padding="5dp"
+				android:textColor="#000000"
+				android:singleLine="true"
+				android:hint="@string/wami_group"/>
+
+		<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center_horizontal"
+				android:layout_marginTop="30dp"
+				android:layout_marginBottom="5dp">
+			<Button
+					android:layout_weight="1"
+					android:id="@+id/dialogButtonTransmitWami"
+					android:layout_width="80dp"
+					android:layout_height="30dp"
+					android:text=" Transmit "
+					android:textColor="#FFFFFF"
+					android:textSize="16sp"
+					android:background="@drawable/button_state"
+					android:layout_marginTop="5dp"
+					android:layout_marginRight="15dp"/>
+
+			<Button
+				android:layout_weight="1"
+				android:id="@+id/closeTransmitWami"
+				android:layout_width="80dp"
+				android:layout_height="30dp"
+				android:text=" Close "
+				android:textColor="#FFFFFF"
+				android:textSize="16sp"
+				android:background="@drawable/button_state"
+				android:layout_marginTop="5dp"
+				android:layout_toRightOf="@id/dialogButtonTransmitWami"/>
+		</RelativeLayout>
+
+	</LinearLayout>
+</LinearLayout>

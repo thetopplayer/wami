@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="SQLite -" uuid="1a440ff3-a32d-42e0-8116-525e670c7d62">
+    <database-info product="SQLite" version="3.6.23.1" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="pure"/>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
+    <schema name="" catalog=""/>
+    <table name="android_metadata" schema="" catalog="" type="TABLE">
+      <column name="locale" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="user" schema="" catalog="" type="TABLE">
+      <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="username" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+    </table>
+  </data-source>
+</component>

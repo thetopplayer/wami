@@ -1,0 +1,211 @@
+.navbar-inverse {
+	/*background-color: #5e5e5e;*/
+	background: linear-gradient(#868686, #3a3a3a);
+	border-color: #515151;
+}
+
+.jumbotron {
+	padding: 30px;
+	margin-bottom: 30px;
+	color: inherit;
+	background-color: #a4d6d5;
+}
+.btn-success {
+	color: #ffeddf;
+	background: -webkit-linear-gradient(#be0900, #5b0401); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#be0900, #5b0401); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#be0900, #5b0401); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#be0900, #5b0401); /* Standard syntax (must be last) */
+	border-color: #5b0401;
+}
+img.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.dropdown-menu .divider {
+	height: 2px;
+	margin: 9px 0;
+	overflow: hidden;
+	background-color: #dbdbdb;
+}
+
+li.dropdown:hover > ul.dropdown-menu {
+	display: block;
+	background-color: #fdfdfd;
+}
+
+.dropdown-menu li a:hover {
+	display: block;
+	cursor: pointer;
+	background-color: #c7c7c7;
+}
+
+.dropdown-wami {
+	height: 25px;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.63);
+}
+
+.dropdown-wami1 {
+	height: 23px;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.63);
+}
+
+ul.dropdown-menu-form {
+	padding: 5px 10px 0;
+	max-height: 300px;
+	overflow-y: scroll;
+}
+.btn-primary {
+	color: #ffffff;
+	background: -webkit-linear-gradient(#51cfff, #3c6bb4); /**//* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#51cfff, #3c6bb4); /**//* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient#51cfff, #3c6bb4); /**//* For Firefox 3.6 to 15 */
+	background: linear-gradient(#51cfff, #3c6bb4); /* Standard syntax (must be last) */
+	border-color: #407dba;
+	border-radius: 4px;
+}
+.btn-primary:hover {
+	color: #000000;
+}
+
+.btn-danger {
+	color: #ffffff;
+	background: -webkit-linear-gradient(#ff9f9f, #f11329); /**//* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#ff9f9f, #f11329); /**//* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient#ff9f9f, #f11329); /**//* For Firefox 3.6 to 15 */
+	background: linear-gradient(#ff9f9f, #f11329); /* Standard syntax (must be last) */
+	border-color: #970d13;
+	border-radius: 4px;
+}
+.btn-danger:hover {
+	color: #000000;
+}
+
+.btn-default {
+	color: #5d5d5d;
+	background: -webkit-linear-gradient(#ffffff, #d7d7d7); /**//* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#ffffff, #d7d7d7); /**//* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient#ffffff, #d7d7d7); /**//* For Firefox 3.6 to 15 */
+	background: linear-gradient(#ffffff, #d7d7d7); /* Standard syntax (must be last) */
+	border-color: #989898;
+	border-radius: 4px;
+}
+.btn-default:hover {
+	color: #000000;
+}
+
+.wami-panel:hover {
+	background-color: #f5f5f5;
+}
+hr {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border-top: 2px solid #c9c9c9;
+}
+.hr1 {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	border-top: 3px solid #616161;
+}
+.span-scroll {
+	display:block;
+	max-height: 190px;
+	overflow-y:scroll;
+}
+.span-scroll-groups {
+	display:block;
+	max-height: 150px;
+	overflow-y:scroll;
+}
+.span-scroll-flash {
+	display:block;
+	max-height: 250px;
+	overflow-y:scroll;
+}
+.span-scroll-wami-list {
+	display:block;
+	max-height: 700px;
+	overflow-y:scroll;
+}
+.span-scroll-profile {
+	display:block;
+	/*height: 330px;*/
+	overflow-y:scroll;
+	border: 1px solid #888;
+	border-radius:3px;
+}
+
+.list-group-item-wami-news {
+	padding: 7px;
+}
+.wami-margin-b2 {
+	margin-bottom: 2px;
+}
+.wami-margin-t2 {
+	margin-top: 2px;
+}
+.wami-margin-b4 {
+	margin-bottom: 4px;
+}
+.wami-margin-t4 {
+	margin-top: 4px;
+}
+.input-wami {
+	background-color: #f4f4f4;
+	padding-left: 3px;
+	border-radius: 4px;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.63);
+}
+.panel-group, .panel-primary {
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.63);
+}
+.panel-heading {
+	background: #c9c9c9;
+	/*background: linear-gradient(#c9c9c9, #c9c9c9);*/
+	border-color: #080808;
+}
+.panel-body {
+	background: #fafafa
+}
+.centering {
+	float:none;
+	margin:0 auto;
+}
+
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 999px;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+
+/************/
+
+.preview{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.thumbnail{
+	margin: 0;
+}
+
+.label {
+	display: block;
+	font-family:"Arial Black", Gadget, sans-serif;
+}

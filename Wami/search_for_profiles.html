@@ -1,0 +1,192 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="search_for_profiles.html; search for profiles">
+	<meta name="author" content="Rob Lanter">
+	<link rel="shortcut icon" href="assets/ico/wami.png">
+
+	<title>Wami</title>
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/wami.css" rel="stylesheet">
+	<script src="js/jquery-1.11.0.min.js"></script>
+
+	<script>
+		$(function(){
+			$("#includedNavbar").load("partials/wami-navbar.html");
+			$("#includedFooter").load("partials/footer.html");
+			localStorage.setItem("current_page", "search");
+		});
+	</script>
+
+	<script type="text/javascript" src="js/processData.js"></script>
+	<script type="text/javascript" src="js/searchForProfiles.js"></script>
+
+	<!--<script>-->
+		<!--function goBack() {-->
+			<!--window.history.back();-->
+		<!--}-->
+	<!--</script>-->
+
+	<script>
+		function search() {
+			var selected_item = wamiSearchSelect.value;
+			var search_str = searchStr.value;
+			var radios = document.getElementsByName('optionsRadios');
+			var search_context = '';
+			if (radios[0].checked) {
+				search_context = radios[0].value;
+			}
+			else search_context = radios[1].value;
+			loadData(selected_item, search_str, search_context);
+			return false;
+		}
+
+		function request() {
+			if (checkForChosen() === true) {
+				$('#request_profiles').modal();
+			}
+			return false;
+		}
+	</script>
+
+</head>
+
+<body style="background-color: rgba(204, 255, 254, 0.13)">
+	<div id="includedNavbar"></div>
+	<div class="col-md-12" style="width: 1100px; padding-left: 40px">
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">Search For Profiles</h3>
+			</div>
+			<div class="panel-body"  style="padding-left: 15px">
+				<div class="row" style="height: 60px">
+					<div class="col-md-1" style="width: 60px;">
+						<div style="vertical-align: top; margin-top: 10px;">
+							<strong>Search In: </strong>
+						</div>
+					</div>
+					<div class="col-md-2" style="width: 200px;">
+						<div style="vertical-align: top; margin-top: 10px;" class="clearfix">
+							<div class="input">
+								<select name="wamiSearchSelect" id="wamiSearchSelect" class="dropdown-wami">
+									<option value="profile_name">Profile Name</option>
+									<option value="first_name">First Name</option>
+									<option value="last_name">Last Name</option>
+									<option value="tag_keyword">Tag Keywords</option>
+									<option value="description">Description</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-2" style="width: 125px; padding-right: 0px">
+						<div style="vertical-align: top; margin-top: 10px;">
+							<strong>Search String Like: </strong>
+						</div>
+					</div>
+					<div class="col-md-2" style="width: 320px;padding-left: 0px">
+						<div style="vertical-align: top; margin-top: 10px;" class="clearfix">
+							<div class="input">
+								<input class='input-wami' placeholder="Enter Search Text" id="searchStr" name="searchStr" size="34" type="text">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-1" style="width: 70px; padding-right: 0px">
+						<div style="vertical-align: top; margin-top: 10px;">
+							<strong>Within: </strong>
+						</div>
+					</div>
+					<div class="col-md-2" style="width: 220px; padding-left: 0px;">
+						<ul class="inputs-list" style="list-style: none; padding-left: 10px">
+							<li>
+								<label>
+									<input type="radio" checked="" name="optionsRadios" value="mywami">
+									<span>My Wami Collection</span>
+								</label>
+							</li>
+							<li>
+								<label>
+									<input type="radio" name="optionsRadios" value="allwami">
+									<span>Entire Wami Network</span>
+								</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div id="search_alert"></div>
+				<hr>
+				<div class="row" style="height: 40px">
+					<!--<div class="col-md-2" style="width: 250px; padding-right: 0px">-->
+						<!--<div style="padding-top: 10px; padding-left: 10px">-->
+							<!--<button type="button" class="btn-link" onclick="goBack()"><strong><< Back to Profile Collection</strong></button>-->
+						<!--</div>-->
+					<!--</div>-->
+					<div class="col-md-4" style="width: 180px; padding-left: 25px">
+						<div style="vertical-align: top; margin-top: 15px;">
+							<button type="button" style="font-size: 14px" class="btn-primary" onclick="return search()">Search For Profiles</button>
+						</div>
+					</div>
+					<div class="col-md-4" style="width: 210px; padding-left: 10px">
+						<div style="vertical-align: top; margin-top: 15px;">
+							<button type="button" style="font-size: 14px" class="btn-primary" onclick="return request()">Request Chosen Profiles</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Modal Request Profiles-->
+		<div class="modal fade" id="request_profiles" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color: #d9d9d9">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"><strong>Request Profile(s)</strong></h4>
+					</div>
+					<div class="modal-body">
+						<h5>You are about to send <strong>REQUEST(s)</strong> to add the chosen profile(s) to your collection.</h5>
+						<h5>Are you sure?</h5>
+					</div>
+					<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+								<span class="pull-left">
+									<button type="button" class="btn btn-primary" onclick="requestProfiles()">Send Request(s)</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</span>
+						<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+						<div class="text-left" id="request_alert_message" style="margin-top: 50px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Display list-->
+		<div class="row" style="width: 1060px; padding-left: 15px">
+			<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">
+					<div id="profile_title_id"></div>
+				</h3>
+			</div>
+				<span class="span-scroll-wami-list">
+					<div id="list_id" ></div>
+				</span>
+			</div>
+		</div>
+
+		<div class="row" style="padding-left: 13px; padding-right: 16px">
+			<br><br>
+			<hr>
+		</div>
+		<footer>
+			<div id="includedFooter"></div>
+		</footer>
+		<br><br>
+	</div>
+
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="extended_profile_info.html; displays profile info not found in the profile_collection page">
+	<meta name="author" content="Rob Lanter">
+	<link rel="shortcut icon" href="assets/ico/wami.png">
+
+	<title>Wami</title>
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/wami.css" rel="stylesheet">
+	<script src="js/jquery-1.11.0.min.js"></script>
+
+	<script>
+		$(function(){
+			$("#includedNavbar").load("partials/wami-navbar.html");
+			$("#includedFooter").load("partials/footer.html");
+			localStorage.setItem("current_page", "extended_info");
+		});
+	</script>
+
+	<script type="text/javascript" src="js/processData.js"></script>
+	<script type="text/javascript" src="js/extendedProfileInfo.js"></script>
+
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+	</script>
+
+
+</head>
+
+<body style="background-color: rgba(204, 255, 254, 0.13)">
+	<div id="includedNavbar"></div>
+
+	<div class="col-md-12" style="width: 1200px; padding-left: 40px">
+
+		<!--Extneded profile info-->
+		<div class="panel panel-primary" style="border-color: #4c4c4c">
+			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+				<h3 class="panel-title">Extended Profile Info</h3>
+			</div>
+			<div class="panel-body"  style="padding-left: 25px; background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+				<div class="row"  style="height: 310px">
+					<div class="col-md-2" style="width: 250px">
+						<div id="image"></div>
+						<div style="padding-top: 140px">
+							<button type="button" class="btn-link" onclick="goBack()"><strong><< Back to Profile Collection</strong></button>
+						</div>
+					</div>
+
+					<div class="col-md-2" style="width: 230px">
+						<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 90px'>Profile Name</h5></div>
+						<input readonly id="profile_name" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' >
+
+						<div style='padding-top: 7px'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 100px'>Contact Name</h5></div>
+						<input readonly id="contact_name" class="input-wami" type="text" style='width: 200px; background-color: #d1d1d1'>
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Email</h5></div>
+						<input readonly id="email" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text'>
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Profile Type</h5></div>
+						<input readonly id="profile_type" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text'>
+
+						<div style='vertical-align: top'><h5 class='wami-margin-t4 wami-margin-b2' style='width: 90px; margin-top: 7px'>Description</h5></div>
+						<textarea  readonly id="description" class='input-wami' style='width: 200px; background-color: #d1d1d1'></textarea>
+					</div>
+					<div class="col-md-2" style="width: 230px">
+						<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 120px'>Street Address</h5></div>
+						<input readonly id="street_address" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' >
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>City</h5></div>
+						<input readonly id="city" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' >
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>State</h5></div>
+						<input readonly id="state" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' >
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Zip Code</h5></div>
+						<input readonly id="zipcode" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' >
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Country</h5></div>
+						<input readonly id="country" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text' >
+					</div>
+					<div class="col-md-3">
+						<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 90px'>Telephone</h5></div>
+						<input readonly id="telephone" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text'>
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='margin-top: 7px'>Tags</h5></div>
+						<input readonly id="tags" class='input-wami' style='width: 340px; background-color: #d1d1d1' type='text'>
+
+						<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 1200px; margin-top: 7px'>Profile Create Date</h5></div>
+						<input readonly id="create_date" style='width: 200px; background-color: #d1d1d1' class='input-wami' type='text'>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="extended_info_alert" style="padding-top: 20px"></div>
+
+		<!--Flash announcements-->
+		<div class="panel-group" id="accordionFlash">
+			<div class="panel panel-primary" style="border-color: #4c4c4c">
+				<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+					<h3 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordionFlash" href="#collapse">Flash Announcements
+							<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+						</a>
+					</h3>
+				</div>
+				<div id="collapse" class="panel-collapse collapse out">
+					<div class="panel-body" style="padding-top: 5px; background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+						<span class="span-scroll-flash" id="flash_id"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Profiler-->
+		<div class="panel-group" id="accordionProfile">
+			<div class="panel panel-primary" style="border-color: #4c4c4c">
+				<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+					<h3 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordionProfile" href="#collapseProfile">My Identity Profile
+							<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+						</a>
+					</h3>
+				</div>
+				<div id="collapseProfile" class="panel-collapse collapse out">
+					<div class="panel-body" style="background-image: url(assets/seamlesstexture24_1200.jpg); background-repeat: repeat">
+						<div id="profiler_id"></div>
+						<div style="padding-bottom: 10px; padding-top: 10px"><hr></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br><br>
+		<hr>
+		<footer>
+			<div id="includedFooter"></div>
+		</footer>
+		<br><br>
+	</div>
+
+<script src="js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		function toggleChevron(e) {
+			$(e.target)
+					.prev('.panel-heading')
+					.find("i.indicator")
+					.toggleClass('glyphicon-plus-sign glyphicon-minus-sign');
+		}
+
+		$('#accordionFlash').on('hidden.bs.collapse', toggleChevron);
+		$('#accordionFlash').on('shown.bs.collapse', toggleChevron);
+
+		$('#accordionProfile').on('hidden.bs.collapse', toggleChevron);
+		$('#accordionProfile').on('shown.bs.collapse', toggleChevron);
+
+	</script>
+
+</body>
+</html>

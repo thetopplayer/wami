@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#a4d6d5"
+		android:padding="20dp">
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="#000000"
+			android:textStyle="bold"
+			android:textSize="15sp"
+			android:text="Wami Username"/>
+
+	<EditText
+			android:id="@+id/login_username"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:layout_marginTop="5dp"
+			android:layout_marginBottom="20dp"
+			android:textColor="#000000"
+			android:textSize="15sp"
+			android:padding="10dp"
+			android:background="@drawable/edittext_background"
+			android:singleLine="true"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="#000000"
+			android:textStyle="bold"
+			android:textSize="15sp"
+			android:text="Password"/>
+
+	<EditText
+			android:id="@+id/login_password"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:layout_marginTop="5dp"
+			android:singleLine="true"
+			android:textColor="#000000"
+			android:textSize="15sp"
+			android:padding="10dp"
+			android:background="@drawable/edittext_background"
+			android:password="true"/>
+
+	<Button
+			android:id="@+id/btnLogin"
+			android:layout_width="120dp"
+			android:layout_height="35dp"
+			android:layout_marginTop="30dp"
+			android:layout_gravity="center_horizontal"
+			android:textStyle="bold"
+			android:textSize="15sp"
+			android:textColor="#FFFFFF"
+			android:background="@drawable/button_state"
+			android:text="Login"/>
+
+	<Button
+			android:id="@+id/btnTransmit"
+			android:layout_width="170dp"
+			android:layout_height="35dp"
+			android:layout_marginTop="30dp"
+			android:layout_gravity="center_horizontal"
+			android:textStyle="bold"
+			android:textSize="15sp"
+			android:textColor="#FFFFFF"
+			android:background="@drawable/button_state"
+			android:text="Transmit Wami Identity"/>
+
+	<ImageView
+			android:layout_width="400dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_horizontal"
+			android:background="@drawable/logo"/>
+
+</LinearLayout>

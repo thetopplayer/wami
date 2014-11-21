@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Create new account">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="assets/ico/wami.png">
+
+	<title>Wami</title>
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/wami.css" rel="stylesheet">
+
+	<script src="js/jquery-1.11.0.min.js"></script>
+
+	<script>
+		$(function(){
+			$("#includedFooter").load("partials/footer.html");
+			$("#includedHeader").load("partials/wami_header.html");
+		});
+	</script>
+
+	<script>
+		function process(params) {
+			// call method in common.js
+			var ret_code = ogin(params);
+			return ret_code;
+		}
+	</script>
+
+	<script type="text/javascript" src="js/processData.js"></script>
+	<script type="text/javascript" src="js/processAccount.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+
+</head>
+
+<body style="background-color: rgba(204, 255, 254, 0.13)">
+<div id="includedHeader"></div>
+
+<hr style="height: 5px; border-top: 4px solid #ff9933">
+
+<div class="container" style="margin-top: 40px">
+	<div class="row centering" style="height: 350px; width: 650px; border: 3px solid #ff9933; background-color: #efefef">
+
+		<form action="account_profile.html" method="post">
+			<div class="col-md-12">
+				<h3 style="color: #8a8a8a; margin-bottom: 20px">Create Account</h3>
+				<hr style="height: 5px; border-top: 2px solid #969696; margin-bottom: 10px">
+				<div class="col-md-4" style="width: 300px;" >
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> First Name</h5>
+					<label for="first_name"></label><input id="first_name" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Last Name</h5>
+					<label for="last_name"></label><input id="last_name" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Email</h5>
+					<label for="email"></label><input id="email" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+
+					<input type="submit" class="btn btn-md btn-primary" style="margin-top: 15px" value="Sign-up" onclick="return validateAccountData()">
+				</div>
+				<div class="col-md-4" style="width: 300px;">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Username</h5>
+					<label for="username_val"></label><input id="username_val" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Password</h5>
+					<label for="password_val"></label><input id="password_val" name="password_val" class="input-wami" type="password" style="margin-bottom: 10px; width: 250px">
+
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Retype Password</h5>
+					<label for="retype_password"></label><input id="retype_password" name="retype_password" class="input-wami" type="password" style="margin-bottom: 10px; width: 250px">
+
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> First Profile Name</h5>
+					<label for="first_profile_name"></label><input id="first_profile_name" class="input-wami" type="text" style="margin-bottom: 20px; width: 250px">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div style="margin-top: 20px; margin-left:330px; width: 500px" id="account_alert"></div>
+
+	<br><br><br>
+	<hr>
+	<footer>
+		<div id="includedFooter"></div>
+	</footer>
+</div>
+
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

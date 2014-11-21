@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/white">
+
+	<CheckBox
+			android:id="@+id/checkbox1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:checked="false"
+			android:focusable="false"
+			android:focusableInTouchMode="false"
+			android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true">
+	</CheckBox>
+	<TextView
+			android:id="@+id/profile_name_text"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginTop="5dp"
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:textColor="@color/black"
+			android:layout_toRightOf="@+id/checkbox1">
+	</TextView>
+
+</RelativeLayout>

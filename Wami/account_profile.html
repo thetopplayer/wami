@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Manage account">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="assets/ico/wami.png">
+
+	<title>Wami</title>
+
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/wami.css" rel="stylesheet">
+	<script src="js/jquery-1.11.0.min.js"></script>
+
+	<script>
+		$(function(){
+			$("#includedNavbar").load("partials/wami-navbar.html");
+			$("#includedFooter").load("partials/footer.html");
+		});
+	</script>
+
+	<script>
+		function loadForm() {
+			loadData();
+			return false;
+		}
+		function createProfile() {
+			alert("createProfile");
+			return false;
+		}
+		function saveForm() {
+			var ret_code  = validateAccount();
+			if (ret_code === true) saveAccountData();
+			return false;
+		}
+		function clearForm() {
+			clearAccountData();
+			return false;
+		}
+		function deleteForm() {
+			$('#delete_account').modal();
+			return false;
+		}
+	</script>
+
+	<script type="text/javascript" src="js/processData.js"></script>
+	<script type="text/javascript" src="js/processAccount.js"></script>
+
+</head>
+
+<body style="background-color: rgba(204, 255, 254, 0.13)" onload="loadForm()">
+<div id="includedNavbar"></div>
+
+<div style="padding-left: 70px; width: 1040px">
+
+	<div class="row" style="height: 620px; border: 3px solid #969696; background-color: #efefef ">
+		<form method="post">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-4">
+						<h3 style="color: #8a8a8a">Account Settings</h3>
+					</div>
+					<div class="col-md-2">
+						<div style="margin-top: 10px; width: 450px; height: 50px" id="account_alert"></div>
+					</div>
+				</div>
+				<br>
+				<div class="col-md-4" style="width: 300px; height: 450px; border: 2px solid #ff9933">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px;"><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span> First Name</h5>
+					<label for="first_name"></label><input id="first_name" class="input-wami" type="text" style="margin-bottom: 10px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span> Last Name</h5>
+					<label for="last_name"></label><input id="last_name" class="input-wami" type="text" style="margin-bottom: 20px">
+					<hr>
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px; margin-top: 10px"><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span> Username</h5>
+					<label for="username_val"></label><input readonly id="username_val" class="input-wami" type="text" style="margin-bottom: 10px; background-color: #d1d1d1">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px;"><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span> Password</h5>
+					<label for="password_val"></label><input id="password_val" class="input-wami" type="password" style="margin-bottom: 10px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px;"><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span> Retype Password</h5>
+					<label for="retype_password"></label><input id="retype_password" class="input-wami" type="password" style="margin-bottom: 20px">
+					<hr>
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px; margin-top: 10px"><span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span> Email</h5>
+					<label for="email"></label><input id="email" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+					<h6 style="color: #858585">Fields with an<span style="color: #ff9933; font-weight: bolder; font-size: 20px; padding-top: 15px">&nbsp;*&nbsp;</span>are required. </h6>
+				</div>
+
+				<div class="col-md-4" style="width: 340px; height: 450px; border: 2px solid #ff9933; margin-left: 20px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px; margin-top: 10px">Street Address</h5>
+					<label for="street_address"></label><input id="street_address" class="input-wami" type="text" style="margin-bottom: 10px; width: 300px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px;">City</h5>
+					<label for="city"></label><input id="city" class="input-wami" type="text" style="margin-bottom: 10px; width: 300px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px;">State/Province</h5>
+					<label for="state"></label><input id="state" class="input-wami" type="text" style="margin-bottom: 10px; width: 300px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px;">Country</h5>
+					<label for="country"></label><input id="country" class="input-wami" type="text" style="margin-bottom: 10px; width: 300px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 130px;">Zip/Postal Code</h5>
+					<label for="zipcode"></label><input id="zipcode" class="input-wami" type="text" maxlength="15" style="margin-bottom: 10px; width: 150px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 130px;">Telephone Number</h5>
+					<label for="telephone"></label><input id="telephone" class="input-wami" type="text" style="margin-bottom: 10px; width: 150px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px;">Account Create Date</h5>
+					<label for="create_date"></label><input id="create_date" readonly class="input-wami" type="text" style="margin-bottom: 10px; width: 150px; background-color: #d1d1d1">
+				</div>
+
+				<div class="col-md-4" style="width: 280px; height: 70px; border: 2px solid #ff9933; margin-left: 20px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 300px; margin-top: 10px">Number of Identity Profiles</h5>
+					<label>
+						<input readonly class="input-wami" id="profile_count" type="text" style="margin-bottom: 10px; text-align: center; width: 50px; background-color: #d1d1d1">
+					</label>
+				</div>
+				<div class="col-md-4" style="width: 280px; height: 70px; border: 2px solid #ff9933; margin-left: 20px; padding-top: 10px; margin-top: 15px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 130px;">Account Status</h5>
+					<label style="padding-top: 5px; padding-right: 15px">
+						<input id="active" type="radio" value="active" name="optionsRadios">
+						<span style="color: #525252">Active</span>
+					</label>
+					<label style="padding-top: 5px;">
+						<input id="inactive" type="radio" value="inactive" name="optionsRadios">
+						<span style="color: #525252">InActive</span>
+					</label>
+				</div>
+			</div>
+			<div class="row" style="height: 50px; width: 850px">
+				<div class="col-md-3" style="margin-top: 20px; margin-left: 15px; width: 450px; float:left">
+					<hr style="margin-bottom: 20px; width: 970px; border: 2px solid #bababa;">
+					<input id="save" type="submit" class="btn btn-sm btn-primary" value="Save" onclick="return saveForm()">
+					<input id="clear" type="submit" class="btn btn-sm btn-primary" value="Clear" style="margin-left: 10px" onclick="return clearForm()">
+					<input id="createProfile" type="submit" class="btn btn-sm btn-primary" value="Create New Profile" style="margin-left: 10px" onclick="return createProfile()">
+					<input id="delete" type="submit" class="btn btn-sm btn-danger" value="Delete Account" style="margin-left: 55px" onclick="return deleteForm()">
+				</div>
+				<div class="col-md-1" >
+					<div id="update_account_alert" style="margin-top: 30px; margin-left:10px; width: 320px; height: 20px"></div>
+				</div>
+			</div>
+		</form>
+
+		<!--Modal Remove Account-->
+		<div class="modal fade" id="delete_account" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color: #d9d9d9">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"><strong> <span style="color: #e00004">Delete Account</span></strong></h4>
+					</div>
+					<div class="modal-body">
+						<h5>You are about to <strong> <span style="color: #e00004">DELETE </span></strong> your account. Deleting your account will also delete all your profiles and collections.</h5>
+						<h5>Are you sure?</h5>
+					</div>
+					<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+						<span class="pull-left">
+							<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAccount()">Delete</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</span>
+						<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<br><br>
+	<hr>
+	<footer>
+		<div id="includedFooter"></div>
+	</footer>
+	<br><br>
+</div>
+
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
