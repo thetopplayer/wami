@@ -89,8 +89,8 @@ function get_text_data($identity_profile_id, $category, $con) {
         $file["text_file_description"]  = $row_file[3];
         $file["category"] = $category;
 
-        $contents = file_get_contents($row_file[0] .$row_file[1]);
-        $file["contents"]  = $contents;
+//        $contents = file_get_contents($row_file[0] .$row_file[1]);
+//        $file["contents"]  = $contents;
 
 //        array_push($response_file["file"], $file);
     } else {
