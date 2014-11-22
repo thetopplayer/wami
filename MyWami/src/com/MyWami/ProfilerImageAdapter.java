@@ -4,8 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.os.Environment;
-import android.os.NetworkOnMainThreadException;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,9 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -32,6 +31,7 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 	private final String[] fileLocation;
 	private final String[] fileName;
 
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	public ProfilerImageAdapter(Context context, String[] imageName, String[] imageDescription, String[] fileLocation, String[] fileName) {
 		super(context, R.layout.profiler_image, imageName);
 		this.context = context;
@@ -39,6 +39,9 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 		this.imageDescription = imageDescription;
 		this.fileLocation = fileLocation;
 		this.fileName = fileName;
+
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
 	}
 
 	private class ViewHolder {
@@ -47,7 +50,6 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 		TextView listImageDescription;
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public View getView(int position, View row, ViewGroup parent) {
 		ViewHolder viewHolder;
@@ -66,54 +68,29 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 			viewHolder = (ViewHolder) row.getTag();
 		}
 
-		InputStream inputStream = null;
+		InputStream is = null;
 		try {
-//			String location = fileLocation[position] + fileName[position];
+			String location = fileLocation[position] + fileName[position];
 			// string off "assets" from the fileLocation
 //			location = location.substring(7);
-//			inputStream = getContext().getAssets().open(location);
+			location = Constants.ASSETS_IP + location;
 
-			String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-			File folder = new File(extStorageDirectory, "Image/thumbs");
-			folder.mkdir();
-
-			String path = Constants.ASSETS_IP + fileLocation + fileName;
-			URL url = new URL(path);
+			URL u = new URL(location);
 
 			HttpParams httpParameters = new BasicHttpParams();
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			HttpURLConnection c = (HttpURLConnection) u.openConnection();
 			int timeoutConnection = 3000;
 			int timeoutSocket = 5000;
 			HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 			HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 
-			inputStream = connection.getInputStream();
-			viewHolder.listImage.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-			FileOutputStream fos = new FileOutputStream(new File(folder + "/" + fileName));
-			int bytesRead = 0;
-			byte[] buffer = new byte[4096];
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				fos.write(buffer, 0, bytesRead);
-			}
-			fos.close();
-			inputStream.close();
-			connection.disconnect();
+			is = c.getInputStream();
 		}
-		catch (NetworkOnMainThreadException e) {
-			e.printStackTrace();
-		}
-		catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
+		catch (IOException ex) {
+			ex.printStackTrace();
 		}
 
-		viewHolder.listImage.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-//		viewHolder.listImage.setImageDrawable(is);
+		viewHolder.listImage.setImageBitmap(BitmapFactory.decodeStream(is));
 		viewHolder.listImageName.setText(imageName[position]);
 		viewHolder.listImageDescription.setText(imageDescription[position]);
 
