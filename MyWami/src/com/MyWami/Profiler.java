@@ -189,10 +189,10 @@ public class Profiler extends ListActivity {
 
 				if (mediaType.equals("Text")) {
 					JSONObject fileObj = jsonChildNode.getJSONObject("file");
-					textDoc = fileObj.getString("contents");
+//					textDoc = fileObj.getString("contents");
 					fileLocation = fileObj.getString("file_location");
 					fileName = fileObj.getString("file_name");
-					profilerModel[i].setTextDoc(textDoc);
+//					profilerModel[i].setTextDoc(textDoc);
 					profilerModel[i].setFileLocation(fileLocation);
 					profilerModel[i].setFileName(fileName);
 				}
@@ -260,14 +260,6 @@ public class Profiler extends ListActivity {
 		ProfilerAdapter profileAdapter = (ProfilerAdapter) getListAdapter();
 		String selectedValue = profileAdapter.getItem(position);
 		Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
-
-		if (profilerModel[position].getMediaType().equals("Text")) {
-			Intent intent = new Intent(Profiler.this, ProfilerTextView.class);
-			intent.putExtra("text_doc", profilerModel[position].getTextDoc());
-			intent.putExtra("file_location", profilerModel[position].getFileLocation());
-			intent.putExtra("file_name", profilerModel[position].getFileName());
-			startActivity(intent);
-		}
 
 		if (profilerModel[position].getMediaType().equals("Audio")) {
 			audioFileModel = profilerModel[position].getAudioFileModel();
@@ -347,10 +339,10 @@ public class Profiler extends ListActivity {
 					intent.setDataAndType(uri, "application/pdf");
 					startActivity(intent);
 				}
-			  catch (ActivityNotFoundException activityNotFoundException) {
+			  	catch (ActivityNotFoundException activityNotFoundException) {
 					activityNotFoundException.printStackTrace();
-				  Toast.makeText(this, "There doesn't seem to be a PDF reader installed.",	Toast.LENGTH_LONG).show();
-			  }
+					Toast.makeText(this, "There doesn't seem to be a PDF reader installed.",	Toast.LENGTH_LONG).show();
+			  	}
 				catch (Exception ex) {
 					ex.printStackTrace();
 					Toast.makeText(this, "Cannot open the selected file.",	Toast.LENGTH_LONG).show();
@@ -362,6 +354,50 @@ public class Profiler extends ListActivity {
 			catch (ExecutionException e) {
 				e.printStackTrace();
 			}
+		}
+
+		if (profilerModel[position].getMediaType().equals("Text")) {
+			GetFile task = new GetFile();
+			try {
+				String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+				File folder = new File(extStorageDirectory, "text");
+				folder.mkdir();
+				ArrayList<String> params = new ArrayList<String>();
+				params.add(profilerModel[position].getFileLocation());
+				params.add(profilerModel[position].getFileName());
+				params.add(String.valueOf(folder));
+				task.execute(new ArrayList[] { params }).get();
+
+				try {
+					Intent intent = new Intent();
+					intent.setAction(Intent.ACTION_VIEW);
+					File fileToRead = new File(folder + "/" + profilerModel[position].getFileName());
+					Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
+					intent.setDataAndType(uri, "text/plain");
+					startActivity(intent);
+				}
+				catch (ActivityNotFoundException activityNotFoundException) {
+					activityNotFoundException.printStackTrace();
+					Toast.makeText(this, "There doesn't seem to be a Text reader installed.",	Toast.LENGTH_LONG).show();
+				}
+				catch (Exception ex) {
+					ex.printStackTrace();
+					Toast.makeText(this, "Cannot open the selected file.",	Toast.LENGTH_LONG).show();
+				}
+
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+
+//			Intent intent = new Intent(Profiler.this, ProfilerTextView.class);
+//			intent.putExtra("text_doc", profilerModel[position].getTextDoc());
+//			intent.putExtra("file_location", profilerModel[position].getFileLocation());
+//			intent.putExtra("file_name", profilerModel[position].getFileName());
+//			startActivity(intent);
 		}
 	}
 
