@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -69,7 +72,11 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 		}
 
 		InputStream is = null;
+		HttpURLConnection connection = null;
 		try {
+			String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+			File folder = new File(extStorageDirectory, "Image/thumbs");
+			folder.mkdir();
 			String location = fileLocation[position] + fileName[position];
 			// string off "assets" from the fileLocation
 //			location = location.substring(7);
@@ -78,21 +85,35 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 			URL u = new URL(location);
 
 			HttpParams httpParameters = new BasicHttpParams();
-			HttpURLConnection c = (HttpURLConnection) u.openConnection();
+			connection = (HttpURLConnection) u.openConnection();
 			int timeoutConnection = 3000;
 			int timeoutSocket = 5000;
 			HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 			HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 
-			is = c.getInputStream();
+			is = connection.getInputStream();
+			viewHolder.listImage.setImageBitmap(BitmapFactory.decodeStream(is));
+			FileOutputStream fos = new FileOutputStream(new File(folder + "/" + fileName[position]));
+			int bytesRead = 0;
+			byte[] buffer = new byte[4096];
+			while ((bytesRead = is.read(buffer)) != -1) {
+				fos.write(buffer, 0, bytesRead);
+			}
+			fos.close();
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
 		}
 
-		viewHolder.listImage.setImageBitmap(BitmapFactory.decodeStream(is));
 		viewHolder.listImageName.setText(imageName[position]);
 		viewHolder.listImageDescription.setText(imageDescription[position]);
+		try {
+			is.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		connection.disconnect();
 
 		return row;
 	}
