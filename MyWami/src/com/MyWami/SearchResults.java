@@ -101,7 +101,7 @@ public class SearchResults extends ListActivity {
 				}
 				catch (JSONException e) {
 					Toast.makeText(getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_LONG).show();
-					Log.e("****Request Profile Error", e.toString(), e);
+//					Log.e("****Request Profile Error", e.toString(), e);
 					e.printStackTrace();
 				}
 
@@ -190,7 +190,7 @@ public class SearchResults extends ListActivity {
 		}
 		catch (JSONException e) {
 			Toast.makeText(getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_LONG).show();
-			Log.e("****Request Profile Error", e.toString(), e);
+//			Log.e("****Request Profile Error", e.toString(), e);
 			e.printStackTrace();
 		}
 

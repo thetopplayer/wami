@@ -183,7 +183,7 @@ public class TransmitWami {
 				return "";
 			}
 			if (ret_code == -1) {
-				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
+//				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
 				return "";
 			}
 
@@ -205,7 +205,7 @@ public class TransmitWami {
 			createDate = (jsonChildNode.optString("create_date")).substring(0, 10);
 		}
 		catch (JSONException e) {
-			Log.e("****TransmitWami Error", e.toString(), e);
+//			Log.e("****TransmitWami Error", e.toString(), e);
 			e.printStackTrace();
 			return "";
 		}
@@ -234,11 +234,11 @@ public class TransmitWami {
 		@Override
 		protected void onPostExecute(JSONObject resultObject) {
 			JSONObject jsonDbError = resultObject.optJSONObject("db_error");
-			Log.e("****TransmitWami DBError", String.valueOf(jsonDbError));
+//			Log.e("****TransmitWami DBError", String.valueOf(jsonDbError));
 
 			JSONArray jsonSQL = resultObject.optJSONArray("sql");
 			for (int i = 0; i < jsonSQL.length(); i++) {
-				Log.i("****TransmitWami SQL", jsonSQL.optString(i));
+//				Log.i("****TransmitWami SQL", jsonSQL.optString(i));
 			}
 
 			JSONArray jsonNoRecordsFound = resultObject.optJSONArray("no_records_found");
@@ -312,12 +312,12 @@ public class TransmitWami {
 				}
 			}
 			catch (IOException e) {
-				Log.e("****TransmitWami Error", e.toString(), e);
+//				Log.e("****TransmitWami Error", e.toString(), e);
 				e.printStackTrace();
 				return null;
 			}
 			catch (JSONException e) {
-				Log.e("****TransmitWami Error", e.toString(), e);
+//				Log.e("****TransmitWami Error", e.toString(), e);
 				e.printStackTrace();
 				return null;
 			}
@@ -338,7 +338,7 @@ public class TransmitWami {
 
 		catch (IOException e) {
 			e.printStackTrace();
-			Log.e("****TransmitWami Error", e.toString(), e);
+//			Log.e("****TransmitWami Error", e.toString(), e);
 		}
 		return answer;
 	}
@@ -426,7 +426,7 @@ public class TransmitWami {
 				return null;
 			}
 			if (ret_code == -1) {
-				Log.e("**** Get Profile Names list DBError", jsonResponse.optString("db_error"));
+//				Log.e("**** Get Profile Names list DBError", jsonResponse.optString("db_error"));
 				return null;
 			}
 			JSONArray jsonNode = jsonResponse.optJSONArray("profile_names");
@@ -437,7 +437,7 @@ public class TransmitWami {
 			}
 		}
 		catch (JSONException e) {
-			Log.e("****TransmitWami Error", e.toString(), e);
+//			Log.e("****TransmitWami Error", e.toString(), e);
 			e.printStackTrace();
 			return null;
 		}

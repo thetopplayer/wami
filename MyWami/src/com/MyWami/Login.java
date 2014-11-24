@@ -149,7 +149,7 @@ public class Login extends Activity {
 				return false;
 			}
 			if (ret_code == -1) {
-				Log.e("**** Get User data DBError", jsonResponse.optString("db_error"));
+//				Log.e("**** Get User data DBError", jsonResponse.optString("db_error"));
 				return false;
 			}
 
