@@ -218,7 +218,7 @@ function load_profiler_categories (identity_profile_id) {
 							audio_file_name = audio_files[j].file_name;
 						}
 						data_section_audio =
-								'<div class="col-md-2" style="width: 300px">' +
+								'<div class="col-md-2" style="width: 320px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
 									'<label style="padding-left: 5px; padding-bottom: 20px">' + audio_file_name + '</label>' +
