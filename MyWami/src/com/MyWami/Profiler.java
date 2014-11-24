@@ -170,7 +170,7 @@ public class Profiler extends ListActivity {
 				return null;
 			}
 			if (ret_code == -1) {
-				Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
+//				Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
 				return null;
 			}
 			JSONArray jsonMainNode = jsonResponse.optJSONArray("identity_profiler_data");
@@ -248,7 +248,7 @@ public class Profiler extends ListActivity {
 		}
 		catch (JSONException e) {
 			e.printStackTrace();
-			Log.e("**** Profiler: json error: ", e.toString(), e);
+//			Log.e("**** Profiler: json error: ", e.toString(), e);
 			return null;
 		}
 
