@@ -15,12 +15,16 @@ import android.view.View;
 import android.widget.*;
 import com.MyWami.dialogs.ActionList;
 import com.MyWami.dialogs.NewFlash;
+import com.MyWami.dialogs.TransmitWami;
 import com.MyWami.model.FlashModel;
+import com.MyWami.model.TransmitModel;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -35,6 +39,7 @@ public class Flash extends ListActivity {
 	private FlashModel[] flashModel;
 	private String userIdentityProfileId;
 	private boolean useDefault;
+	private ArrayList alWamiTransmitModel = new ArrayList();
 	private Context that;
 
 	final private String GET_PROFILE_FLASH_DATA = Constants.IP + "get_profile_flash_data.php";
@@ -210,6 +215,37 @@ public class Flash extends ListActivity {
 			case android.R.id.home:
 				super.onBackPressed();
 				return true;
+		}
+
+// New Flash
+		if (id == R.id.action_new_flash) {
+			NewFlash newFlash = new NewFlash();
+			newFlash.newFlash(that, identityProfileId);
+			String[] postData = { identityProfileId };
+			JsonGetData jsonGetData = new JsonGetData();
+			jsonGetData.jsonGetData(that, GET_PROFILE_FLASH_DATA, postData);
+			String jsonResult = jsonGetData.getJsonResult();
+			flashModel = assignData(jsonResult);
+			setListAdapter(new FlashAdapter(that, R.layout.flash, flashModel));
+		}
+
+// Transmit wami
+		if (id == R.id.action_transmit_wami) {
+			alWamiTransmitModel.clear();
+			TransmitModel transmitModel = new TransmitModel();
+			transmitModel.setWamiToTransmitId(Integer.parseInt(identityProfileId));
+			transmitModel.setFromIdentityProfileId(Integer.parseInt(userIdentityProfileId));
+			alWamiTransmitModel.add(transmitModel);
+			TransmitWami transmitWami = new TransmitWami();
+			transmitWami.transmitWami(alWamiTransmitModel, that, true);
+		}
+
+// My Wami Network
+		if (id == R.id.action_home) {
+			Intent i = new Intent(Flash.this, WamiListActivity.class);
+			i.putExtra("user_identity_profile_id", userIdentityProfileId);
+			i.putExtra("use_default", useDefault);
+			startActivity(i);
 		}
 
 // Logout

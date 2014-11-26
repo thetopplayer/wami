@@ -11,26 +11,29 @@
 	<string name="transmit">Transmit</string>
 	<string name="cancel">Cancel</string>
 
-	<string name="action_remove_wami">Remove Wami(s)</string>
+	<!--Menu Strings-->
+	<string name="action_select_profile_collection">Select a Profile Collection...</string>
+	<string name="action_transmit_wamis">Transmit Wami(s)...</string>
 	<string name="action_refresh_wami_list">Refresh Wami List</string>
-	<string name="action_request_wami">Request a Wami Profile</string>
+	<string name="action_search_for_profiles">Search for Profiles...</string>
+	<string name="action_group_wami">Set Up Wami Groups...</string>
 	<string name="action_logout">Logout</string>
-	<string name="action_group_wami">Set Up Wami Groups</string>
+
+	<string name="action_new_flash">New Flash Announcement...</string>
+	<string name="action_transmit_this_wami">Transmit This Wami...</string>
+	<string name="action_add_to_contact_list">Add To Contact List...</string>
+	<string name="action_home">My Wami Network...</string>
+
+	<string name="action_remove_wami">Remove Wami(s)</string>
+	<string name="action_request_wami">Request a Wami Profile</string>
 	<string name="action_settings">Settings</string>
-	<string name="action_search_for_profiles">Search for Profiles</string>
-	<string name="action_transmit_wamis">Transmit Wami(s)</string>
 	<string name="action_transmit_wami">Transmit My Wami</string>
-	<string name="action_select_profile_collection">Select a Profile Collection</string>
-	<string name="action_transmit_this_wami">Transmit This Wami</string>
 	<string name="action_create_flash">Create new flash</string>
 	<string name="action_filter">Filter Wami List</string>
-	<string name="action_add_to_contact_list">Add To Contact List</string>
 
-	<string name="action_home">My Wami Network</string>
 	<string name="search_str">Search String</string>
 	<string name="search_in">Search In</string>
 	<string name="search_within">Search Within</string>
-	<string name="action_new_flash">New Flash Announcement</string>
 	<string name="new_flash">New flash up to 110 characters</string>
 
 </resources>

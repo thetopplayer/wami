@@ -17,11 +17,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.MyWami.dialogs.ActionList;
+import com.MyWami.dialogs.TransmitWami;
+import com.MyWami.model.TransmitModel;
+import com.MyWami.model.WamiListModel;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class WamiInfoExtended extends Activity {
 	final private String GET_IDENTITY_PROFILE_DATA = Constants.IP + "get_identity_profile_data.php";
@@ -29,6 +34,7 @@ public class WamiInfoExtended extends Activity {
 	JsonGetData jsonGetData;
 	private String userIdentityProfileId;
 	private boolean useDefault;
+	private ArrayList alWamiTransmitModel = new ArrayList();
 	private Context that;
 
 	private String identityProfileId;
@@ -206,6 +212,26 @@ public class WamiInfoExtended extends Activity {
 				super.onBackPressed();
 				return true;
 		}
+
+//Transmit wami
+		if (id == R.id.action_transmit_wami) {
+			alWamiTransmitModel.clear();
+			TransmitModel transmitModel = new TransmitModel();
+			transmitModel.setWamiToTransmitId(Integer.parseInt(identityProfileId));
+			transmitModel.setFromIdentityProfileId(Integer.parseInt(userIdentityProfileId));
+			alWamiTransmitModel.add(transmitModel);
+			TransmitWami transmitWami = new TransmitWami();
+			transmitWami.transmitWami(alWamiTransmitModel, that, true);
+		}
+
+// My Wami Network
+		if (id == R.id.action_home) {
+			Intent i = new Intent(WamiInfoExtended.this, WamiListActivity.class);
+			i.putExtra("user_identity_profile_id", userIdentityProfileId);
+			i.putExtra("use_default", useDefault);
+			startActivity(i);
+		}
+
 // Logout
 		if (id == R.id.action_logout) {
 			this.finish();
