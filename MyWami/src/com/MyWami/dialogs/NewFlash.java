@@ -9,9 +9,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
+import com.MyWami.Flash;
 import com.MyWami.R;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by robertlanter on 7/29/14.
@@ -34,10 +38,11 @@ public class NewFlash {
 		dialog.getWindow();
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_new_flash);
+		dialog.setCancelable(false);
 
 		final EditText etNewFlash = (EditText) dialog.findViewById(R.id.new_flash_edit);
-		Button saveFlash = (Button) dialog.findViewById(R.id.save_flash_btn);
-		saveFlash.setOnClickListener(new View.OnClickListener() {
+		Button btnSaveFlash = (Button) dialog.findViewById(R.id.save_flash_btn);
+		btnSaveFlash.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				newFlashMsg = etNewFlash.getText().toString();
@@ -48,7 +53,19 @@ public class NewFlash {
 				String[] postData = { newFlashMsg, identityProfileId };
 				JsonGetData jsonGetData = new JsonGetData();
 				jsonGetData.jsonGetData(context, INSERT_FLASH, postData);
-				String jsonResult = jsonGetData.getJsonResult();
+				try {
+					Method m = Flash.class.getMethod("refreshFlash");
+					m.invoke(context);
+				}
+				catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				}
+				catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -65,7 +82,6 @@ public class NewFlash {
 			}
 		};
 		etNewFlash.addTextChangedListener(mTextEditorWatcher);
-
 
 		Button closeFlash = (Button) dialog.findViewById(R.id.close_flash_btn);
 		closeFlash.setOnClickListener(new View.OnClickListener() {

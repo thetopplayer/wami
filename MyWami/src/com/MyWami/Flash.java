@@ -121,25 +121,20 @@ public class Flash extends ListActivity {
 			}
 		});
 
-		Button newFlash = (Button) findViewById(R.id.new_flash_btn);
-		newFlash.setOnClickListener(new  Button.OnClickListener() {
+		Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
+		btnNewFlash.setOnClickListener(new  Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				NewFlash newFlash = new NewFlash();
-				newFlash.newFlash(that, identityProfileId);
+				NewFlash newFlashAnouncement = new NewFlash();
+				newFlashAnouncement.newFlash(that, identityProfileId);
 			}
 		});
 
-		Button refresh = (Button) findViewById(R.id.refresh_btn);
-		refresh.setOnClickListener(new  Button.OnClickListener() {
+		Button btnRefresh = (Button) findViewById(R.id.refresh_btn);
+		btnRefresh.setOnClickListener(new  Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String[] postData = { identityProfileId };
-				JsonGetData jsonGetData = new JsonGetData();
-				jsonGetData.jsonGetData(that, GET_PROFILE_FLASH_DATA, postData);
-				String jsonResult = jsonGetData.getJsonResult();
-				flashModel = assignData(jsonResult);
-				setListAdapter(new FlashAdapter(that, R.layout.flash, flashModel));
+				refreshFlash();
 			}
 		});
 
@@ -148,6 +143,9 @@ public class Flash extends ListActivity {
 		jsonGetData.jsonGetData(this, GET_PROFILE_FLASH_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
 		flashModel = assignData(jsonResult);
+		if (flashModel == null) {
+
+		}
 		setListAdapter(new FlashAdapter(this, R.layout.flash, flashModel));
 	}
 
@@ -156,19 +154,30 @@ public class Flash extends ListActivity {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray("profile_flash_data");
 
-			flashModel = new FlashModel[jsonMainNode.length()];
-			for (int i = 0; i < jsonMainNode.length(); i++) {
-				JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-				int identityProfileId = jsonChildNode.optInt("identity_profile_id");
-				String flash = jsonChildNode.optString("flash");
-				String createDate = jsonChildNode.optString("create_date");
-				String flashImageUrl = jsonChildNode.optString("media_url");
+			if (jsonMainNode == null) {
+				flashModel = new FlashModel[1];
+				flashModel[0] = new FlashModel();
+				flashModel[0].setIdentityProfileId(Integer.parseInt(userIdentityProfileId));
+				flashModel[0].setFlash("");
+				flashModel[0].setCreateDate("");
+				flashModel[0].setMedia_url("");
+			}
 
-				flashModel[i] = new FlashModel();
-				flashModel[i].setIdentityProfileId(identityProfileId);
-				flashModel[i].setFlash(flash);
-				flashModel[i].setCreateDate(createDate);
-				flashModel[i].setMedia_url(flashImageUrl);
+			else {
+				flashModel = new FlashModel[jsonMainNode.length()];
+				for (int i = 0; i < jsonMainNode.length(); i++) {
+					JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+					int identityProfileId = jsonChildNode.optInt("identity_profile_id");
+					String flash = jsonChildNode.optString("flash");
+					String createDate = jsonChildNode.optString("create_date");
+					String flashImageUrl = jsonChildNode.optString("media_url");
+
+					flashModel[i] = new FlashModel();
+					flashModel[i].setIdentityProfileId(identityProfileId);
+					flashModel[i].setFlash(flash);
+					flashModel[i].setCreateDate(createDate);
+					flashModel[i].setMedia_url(flashImageUrl);
+				}
 			}
 		}
 		catch (JSONException e) {
@@ -221,12 +230,6 @@ public class Flash extends ListActivity {
 		if (id == R.id.action_new_flash) {
 			NewFlash newFlash = new NewFlash();
 			newFlash.newFlash(that, identityProfileId);
-			String[] postData = { identityProfileId };
-			JsonGetData jsonGetData = new JsonGetData();
-			jsonGetData.jsonGetData(that, GET_PROFILE_FLASH_DATA, postData);
-			String jsonResult = jsonGetData.getJsonResult();
-			flashModel = assignData(jsonResult);
-			setListAdapter(new FlashAdapter(that, R.layout.flash, flashModel));
 		}
 
 // Transmit wami
@@ -256,5 +259,14 @@ public class Flash extends ListActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void refreshFlash () {
+		String[] postData = { identityProfileId };
+		JsonGetData jsonGetData = new JsonGetData();
+		jsonGetData.jsonGetData(that, GET_PROFILE_FLASH_DATA, postData);
+		String jsonResult = jsonGetData.getJsonResult();
+		flashModel = assignData(jsonResult);
+		setListAdapter(new FlashAdapter(that, R.layout.flash, flashModel));
 	}
 }

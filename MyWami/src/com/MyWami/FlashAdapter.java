@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.MyWami.model.FlashModel;
 
 /**
@@ -28,6 +29,10 @@ public class FlashAdapter extends ArrayAdapter<FlashModel> {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		View rowView = inflater.inflate(R.layout.flash, parent, false);
+
+		if (flashModel[position].getFlash() == "") {
+			return null;
+		}
 
 		String imageUrl = flashModel[position].getMedia_url();
 		if ((!imageUrl.equals("null")) && (!imageUrl.equals("")) && (imageUrl != null)) {
