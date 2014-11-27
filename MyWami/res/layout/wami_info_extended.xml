@@ -40,34 +40,35 @@
 					android:layout_below="@+id/wami_heading_image"
 					android:background="#aa000000" />
 
-			<TextView
-					android:id="@+id/profile_rating_title"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_below="@+id/line"
-					android:layout_marginTop="15dp"
-					android:textColor="#000000"
-					android:textStyle="bold"
-					android:textSize="15sp"
-					android:text="Profile Overall Rating"/>
+			<!--<TextView-->
+					<!--android:id="@+id/profile_rating_title"-->
+					<!--android:layout_width="match_parent"-->
+					<!--android:layout_height="wrap_content"-->
+					<!--android:layout_below="@+id/line"-->
+					<!--android:layout_marginTop="15dp"-->
+					<!--android:textColor="#000000"-->
+					<!--android:textStyle="bold"-->
+					<!--android:textSize="15sp"-->
+					<!--android:text="Profile Overall Rating"/>-->
 
-			<TextView
-					android:id="@+id/profile_rating"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_below="@+id/profile_rating_title"
-					android:layout_marginTop="3dp"
-					android:textColor="#ff5c5c5c"
-					android:textSize="17sp"
-					android:padding="5dp"
-					android:background="@drawable/textfield_background"
-					android:singleLine="true"/>
+			<!--<TextView-->
+					<!--android:id="@+id/profile_rating"-->
+					<!--android:layout_width="match_parent"-->
+					<!--android:layout_height="match_parent"-->
+					<!--android:layout_below="@+id/profile_rating_title"-->
+					<!--android:layout_marginTop="3dp"-->
+					<!--android:textColor="#ff5c5c5c"-->
+					<!--android:textSize="17sp"-->
+					<!--android:padding="5dp"-->
+					<!--android:background="@drawable/textfield_background"-->
+					<!--android:singleLine="true"/>-->
+			<!--android:layout_below="@+id/profile_rating"-->
 
 			<TextView
 					android:id="@+id/profile_name_title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_below="@+id/profile_rating"
+					android:layout_below="@+id/line"
 					android:layout_marginTop="15dp"
 					android:textColor="#000000"
 					android:textStyle="bold"

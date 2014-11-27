@@ -80,8 +80,8 @@ public class WamiInfoExtended extends Activity {
 		String jsonResult = getJsonData(identityProfileId);
 		boolean result = assignData(jsonResult);
 		if (result) {
-			TextView tvRating = (TextView) findViewById(R.id.profile_rating);
-			tvRating.setText(rating);
+//			TextView tvRating = (TextView) findViewById(R.id.profile_rating);
+//			tvRating.setText(rating);
 
 			TextView tvProfileName = (TextView) findViewById(R.id.profile_name);
 			tvProfileName.setText(profileName);
