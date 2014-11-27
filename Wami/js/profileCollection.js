@@ -97,14 +97,14 @@ function loadData(identity_profile_id) {
 							'<strong>Contact Name: </strong> ' + contact + '<br> ' +
 							'<strong>Tags: </strong> ' + tags + '<br> ' +
 							'<strong>Groups: </strong> ' + groups + '<br> ' +
-							'<strong>Profile Rating: </strong> ' + rating + '<br> ' +
+							//'<strong>Profile Rating: </strong> ' + rating + '<br> ' +
 						'</div>' +
 					'</div>' +
 				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +
 					'<div style="vertical-align: top">' +
 						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="' + i + '" onclick="showExtendedInfo(' + i + ')" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
 						'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px; margin-bottom: 10px">Assign to Groups</button>' +
-						'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px">Rate/Review Profile</button>' +
+						//'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px">Rate/Review Profile</button>' +
 					'</div>' +
 				'</div></div><hr>';
 	}
