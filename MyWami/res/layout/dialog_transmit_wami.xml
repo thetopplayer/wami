@@ -38,7 +38,7 @@
 				android:textColor="#000000"
 				android:textStyle="bold"
 				android:textSize="14sp"
-				android:text="Profile name(s)"/>
+				android:text="Profile name"/>
 
 		<AutoCompleteTextView
 				android:id="@+id/profile_name"
@@ -47,7 +47,7 @@
 				android:layout_marginTop="4dp"
 				android:layout_marginBottom="20dp"
 				android:textColor="#000000"
-				android:textSize="14sp"
+				android:textSize="13sp"
 				android:padding="5dp"
 				android:background="@drawable/edittext_background"
 				android:singleLine="true"
@@ -62,7 +62,7 @@
 				android:textColor="#000000"
 				android:textStyle="bold"
 				android:textSize="14sp"
-				android:text="Email Address(s)"/>
+				android:text="Email Address"/>
 
 		<EditText
 				android:id="@+id/email_address"
@@ -85,7 +85,7 @@
 				android:textColor="#000000"
 				android:textStyle="bold"
 				android:textSize="14sp"
-				android:text="Wami Group(s)"/>
+				android:text="Wami Group"/>
 
 		<EditText
 				android:id="@+id/wami_group"
