@@ -33,7 +33,7 @@ function loadData(identity_profile_id) {
 	}
 
 	document.getElementById("total_collected_profiles").innerHTML =
-			"<input readonly class='input-wami' type='text' value='" + wami_count + "' style='margin-bottom: 10px; text-align: center; width: 50px; background-color: #d1d1d1'>";
+			"<input readonly class='input-wami' type='text' value='" + wami_count + "' style='margin-bottom: 10px; text-align: center; width: 50px; background-color: #BBBBBB'>";
 
 // Get Validation and verification rating
 //	processData("identity_profile_id=" + identity_profile_id, "get_wami_rating_for_profile.php", "rating", false);

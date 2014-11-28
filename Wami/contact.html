@@ -16,10 +16,20 @@
 
     <script>
         $(function(){
-            $("#includedNavbar").load("partials/wami-navbar.html");
+            var page = localStorage.getItem("page");
+            if (page === "login") {
+                $("#includedNavbar").load("partials/wami_header.html");
+                localStorage.removeItem("page");
+            }
+            else {
+                $("#includedNavbar").load("partials/wami-navbar.html");
+            }
             $("#includedFooter").load("partials/footer.html");
         });
     </script>
+
+    <script type="text/javascript" src="js/processData.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
 
 </head>
 
