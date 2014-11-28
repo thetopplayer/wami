@@ -64,10 +64,11 @@ ul.dropdown-menu-form {
 }
 .btn-primary {
 	color: #ffffff;
-	background: -webkit-linear-gradient(#51cfff, #3c6bb4); /**//* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(#51cfff, #3c6bb4); /**//* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient#51cfff, #3c6bb4); /**//* For Firefox 3.6 to 15 */
-	background: linear-gradient(#51cfff, #3c6bb4); /* Standard syntax (must be last) */
+	background: #407dba;
+	/*background: -webkit-linear-gradient(#51cfff, #3c6bb4); *//**//**//* For Safari 5.1 to 6.0 */
+	/*background: -o-linear-gradient(#51cfff, #3c6bb4); *//**//**//* For Opera 11.1 to 12.0 */
+	/*background: -moz-linear-gradient#51cfff, #3c6bb4); *//**//**//* For Firefox 3.6 to 15 */
+	/*background: linear-gradient(#51cfff, #3c6bb4); *//* Standard syntax (must be last) */
 	border-color: #407dba;
 	border-radius: 0px;
 }
@@ -77,10 +78,11 @@ ul.dropdown-menu-form {
 
 .btn-danger {
 	color: #ffffff;
-	background: -webkit-linear-gradient(#ff9f9f, #f11329); /**//* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(#ff9f9f, #f11329); /**//* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient#ff9f9f, #f11329); /**//* For Firefox 3.6 to 15 */
-	background: linear-gradient(#ff9f9f, #f11329); /* Standard syntax (must be last) */
+	background: #ff6083;
+	/*background: -webkit-linear-gradient(#ff9f9f, #f11329); *//**//**//* For Safari 5.1 to 6.0 */
+	/*background: -o-linear-gradient(#ff9f9f, #f11329); *//**//**//* For Opera 11.1 to 12.0 */
+	/*background: -moz-linear-gradient#ff9f9f, #f11329); *//**//**//* For Firefox 3.6 to 15 */
+	/*background: linear-gradient(#ff9f9f, #f11329); *//* Standard syntax (must be last) */
 	border-color: #970d13;
 	border-radius: 0px;
 }
@@ -90,10 +92,11 @@ ul.dropdown-menu-form {
 
 .btn-default {
 	color: #5d5d5d;
-	background: -webkit-linear-gradient(#ffffff, #d7d7d7); /**//* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(#ffffff, #d7d7d7); /**//* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient#ffffff, #d7d7d7); /**//* For Firefox 3.6 to 15 */
-	background: linear-gradient(#ffffff, #d7d7d7); /* Standard syntax (must be last) */
+	background: #c6c6c6;
+	/*background: -webkit-linear-gradient(#ffffff, #d7d7d7); *//**//**//* For Safari 5.1 to 6.0 */
+	/*background: -o-linear-gradient(#ffffff, #d7d7d7); *//**//**//* For Opera 11.1 to 12.0 */
+	/*background: -moz-linear-gradient#ffffff, #d7d7d7); *//**//**//* For Firefox 3.6 to 15 */
+	/*background: linear-gradient(#ffffff, #d7d7d7); *//* Standard syntax (must be last) */
 	border-color: #989898;
 	border-radius: 0px;
 }
