@@ -121,15 +121,20 @@ public class Flash extends ListActivity {
 			}
 		});
 
-		Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
-		btnNewFlash.setOnClickListener(new  Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				NewFlash newFlashAnouncement = new NewFlash();
-				newFlashAnouncement.newFlash(that, identityProfileId);
-			}
-		});
-
+		if (!userIdentityProfileId.equals(identityProfileId)) {
+			Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
+			btnNewFlash.setVisibility(View.GONE);
+		}
+		if (userIdentityProfileId.equals(identityProfileId)) {
+			Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
+			btnNewFlash.setOnClickListener(new Button.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					NewFlash newFlashAnouncement = new NewFlash();
+					newFlashAnouncement.newFlash(that, identityProfileId);
+				}
+			});
+		}
 		Button btnRefresh = (Button) findViewById(R.id.refresh_btn);
 		btnRefresh.setOnClickListener(new  Button.OnClickListener() {
 			@Override
