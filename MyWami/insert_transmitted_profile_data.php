@@ -83,7 +83,7 @@ for ($i = 0; $i < $num_transmit_to; $i++) {
     $row_count = $result->num_rows;
     if ($row_count < 1) {
         $num_profile_name_not_exist++;
-        $no_profile_name_found = "insert_transmitted_profile_data: Profile Name does not exist: " .$to_profile_name. ". Either send to email address or choose another name.";
+        $no_profile_name_found = "Profile Name does not exist: " .$to_profile_name. ". Either send to email address or choose another name.";
         array_push($response["no_records_found"], $no_profile_name_found);
         continue;
     }
