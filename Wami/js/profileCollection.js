@@ -347,6 +347,7 @@ function transmitProfiles() {
 		var body = '';
 		for (var j = 0; j < profile_ids_to_transmit.length; j++) {
 			body = getEmailBody(profile_ids_to_transmit[j]) + body;;
+			if (body === 1) return;
 		}
 		window.location.href = 'mailto:' + transmit_str + '?subject=Wami Profile(s)&body=' + encodeURI(body);
 	}
@@ -369,6 +370,7 @@ function getEmailBody(identity_profile_id) {
 	if (ret_code === 1) {
 		var message = profile_data_obj.message;
 		my_profile_collection_alert (message, "alert-danger", "Alert! ", "transmit");
+		return 1;
 	}
 
 	var profile_name = profile_data_obj.identity_profile_data[0].profile_name;
@@ -402,7 +404,65 @@ function getEmailBody(identity_profile_id) {
 					"Profile Create Date: " + create_date + "\n\n" +
 					"For more info download the Wami app from the Apple App Store or Google Play! \n" +
 					"-----------------------------------------------------------------------------\n";
+	send_serverside_email(profile_data_obj);
 	return(body);
+}
+
+function send_serverside_email(profile_data_obj) {
+	var profile_name = profile_data_obj.identity_profile_data[0].profile_name;
+	var contact_name = profile_data_obj.identity_profile_data[0].first_name + ' ' + profile_data_obj.identity_profile_data[0].last_name;
+	var email = profile_data_obj.identity_profile_data[0].email;
+	var profile_type = profile_data_obj.identity_profile_data[0].profile_type;
+	var description = profile_data_obj.identity_profile_data[0].description;
+	var street_address = profile_data_obj.identity_profile_data[0].street_address;
+	var city = profile_data_obj.identity_profile_data[0].city;
+	var state = profile_data_obj.identity_profile_data[0].state;
+	var zipcode = profile_data_obj.identity_profile_data[0].zipcode;
+	var country = profile_data_obj.identity_profile_data[0].country;
+	var telephone = profile_data_obj.identity_profile_data[0].telephone;
+	var tags = profile_data_obj.identity_profile_data[0].tags;
+	var create_date = profile_data_obj.identity_profile_data[0].create_date.substr(0, 10);
+
+	var message_body =
+		'<html><body style="background-color: rgba(204, 255, 254, 0.13)">' +
+			'<link href="http://www.mywami.com/assets/css/bootstrap.css" rel="stylesheet">' +
+			'<link href="http://www.mywami.com/assets/css/wami.css" rel="stylesheet">' +
+			'<script src="http://www.mywami.com/assets/js/jquery-1.11.0.min.js"></script>' +
+			'<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">' +
+				'<div class="container" style="margin-left: 60px; margin-right: 400px">' +
+					'<div class="navbar-header">' +
+						'<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
+							'<span class="sr-only">Toggle navigation</span>' +
+							'<span class="icon-bar"></span>' +
+							'<span class="icon-bar"></span>' +
+							'<span class="icon-bar"></span>' +
+						'</button>' +
+						'<div><img src="http://www.mywami.com/assets/assets/wami-navbar.jpg"></div>' +
+					'</div>' +
+				'</div>' +
+			'</div>' +
+			'<br>' +
+			'<h3> Wami Profile for ' + profile_name + '</h3>' +
+			'<hr>' +
+			'<h4> Contact Name: ' + contact_name  + '</h4>' +
+			'<h4> Email Address: ' + email  + '</h4>' +
+		'</body></html>'
+
+	$.ajaxSetup({cache: false});
+	var xmlhttp = new XMLHttpRequest();
+	var response;
+	var param_string = 'x999=' + Math.random() + '&' + "message=" + message_body;
+
+	xmlhttp.open("POST", "transmit_profile_to_email_address.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 ) {
+			if (xmlhttp.status == 200)  {
+				response = xmlhttp.responseText;
+			}
+		}
+	};
+	xmlhttp.send(param_string);
 }
 
 // Alert messages
@@ -443,3 +503,4 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 	if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
 	if (message_placement === "no_selected_profiles") document.getElementById("no_profile_selected_alert").innerHTML = full_message;
 }
+
