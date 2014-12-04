@@ -9,6 +9,7 @@
  * Gets identity profile data keyed by identity_profile_id.
  */
 $identity_profile_id = $_POST["identity_profile_id"];
+$from_identity_profile_id = $_POST["from_identity_profile_id"];
 
 require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
@@ -40,10 +41,27 @@ if (mysqli_num_rows($result) > 0) {
     $item["searchable"] = $row[14];
     $item["active_ind"] = $row[15];
     $item["description"] = $row[16];
+}
+else {
+    $response["ret_code"] = 1;
+    $response["message"] = "No Identity Profile data found";
+    echo json_encode($response);
+}
+
+$sql = "SELECT first_name, last_name, profile_name, email
+        FROM identity_profile WHERE delete_ind = 0 AND identity_profile_id = " .$from_identity_profile_id;
+
+$result = mysqli_query($con, $sql) or die(mysqli_error($con));
+if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_row($result);
+    $item["from_first_name"] = $row[0];
+    $item["from_last_name"] = $row[1];
+    $item["from_profile_name"] = $row[2];
+    $item["from_email"] = $row[3];
 
     array_push($response["identity_profile_data"], $item);
     $response["ret_code"] = 0;
-    echo json_encode($response);    ;
+    echo json_encode($response);
 }
 else {
     $response["ret_code"] = 1;

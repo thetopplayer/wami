@@ -346,15 +346,15 @@ function transmitProfiles() {
 		transmit_str = transmit_str.slice(0, transmit_str.length - 1);
 		var body = '';
 		for (var j = 0; j < profile_ids_to_transmit.length; j++) {
-			body = getEmailBody(profile_ids_to_transmit[j]) + body;;
+			body = getEmailBody(profile_ids_to_transmit[j], from_profile_id, transmit_str) + body;;
 			if (body === 1) return;
 		}
 		window.location.href = 'mailto:' + transmit_str + '?subject=Wami Profile(s)&body=' + encodeURI(body);
 	}
 }
 
-function getEmailBody(identity_profile_id) {
-	var param_str = "identity_profile_id=" + identity_profile_id;
+function getEmailBody(identity_profile_id, from_profile_id, transmit_str) {
+	var param_str = "identity_profile_id=" + identity_profile_id + "&from_identity_profile_id=" + from_profile_id;
 	processData(param_str, "get_identity_profile_data.php", "identity_profile_data", false);
 
 	try {
@@ -362,7 +362,7 @@ function getEmailBody(identity_profile_id) {
 		var profile_data_obj = JSON.parse(profile_data);
 	} catch (err) {
 		console.log(err.message)
-		my_profile_collection_alert("get_identity_profile_data: Problem getting identoty profile data = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
+		my_profile_collection_alert("get_identity_profile_data: Problem getting identity profile data = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
 		return;
 	}
 
@@ -387,6 +387,11 @@ function getEmailBody(identity_profile_id) {
 	var tags = profile_data_obj.identity_profile_data[0].tags;
 	var create_date = profile_data_obj.identity_profile_data[0].create_date.substr(0, 10);
 
+	var from_first_name = profile_data_obj.identity_profile_data[0].from_first_name;
+	var from_last_name = profile_data_obj.identity_profile_data[0].from_last_name;
+	var from_profile_name = profile_data_obj.identity_profile_data[0].from_profile_name;
+	var from_email = profile_data_obj.identity_profile_data[0].from_email;
+
 	var body =
 					"\n" +
 					"Profile Name: " + profile_name + "\n" +
@@ -402,13 +407,13 @@ function getEmailBody(identity_profile_id) {
 					"Telephone Number: " + telephone + "\n"    +
 					"Tags: " + tags + "\n"         +
 					"Profile Create Date: " + create_date + "\n\n" +
-					"For more info download the Wami app from the Apple App Store or Google Play! \n" +
-					"-----------------------------------------------------------------------------\n";
-	send_serverside_email(profile_data_obj);
+					"For more detailed profile info, download the Wami app from the Apple App Store or Google Play! \n" +
+					"----------------------------------------------------------------------------------------------\n";
+	send_serverside_email(profile_data_obj, transmit_str);
 	return(body);
 }
 
-function send_serverside_email(profile_data_obj) {
+function send_serverside_email(profile_data_obj, transmit_str) {
 	var profile_name = profile_data_obj.identity_profile_data[0].profile_name;
 	var contact_name = profile_data_obj.identity_profile_data[0].first_name + ' ' + profile_data_obj.identity_profile_data[0].last_name;
 	var email = profile_data_obj.identity_profile_data[0].email;
@@ -423,11 +428,17 @@ function send_serverside_email(profile_data_obj) {
 	var tags = profile_data_obj.identity_profile_data[0].tags;
 	var create_date = profile_data_obj.identity_profile_data[0].create_date.substr(0, 10);
 
+	var from_first_name = profile_data_obj.identity_profile_data[0].from_first_name;
+	var from_last_name = profile_data_obj.identity_profile_data[0].from_last_name;
+	var from_profile_name = profile_data_obj.identity_profile_data[0].from_profile_name;
+	var from_email = profile_data_obj.identity_profile_data[0].from_email;
+
 	var message_body =
 		'<html><body style="background-color: rgba(204, 255, 254, 0.13)">' +
-			'<link href="http://www.mywami.com/assets/css/bootstrap.css" rel="stylesheet">' +
-			'<link href="http://www.mywami.com/assets/css/wami.css" rel="stylesheet">' +
-			'<script src="http://www.mywami.com/assets/js/jquery-1.11.0.min.js"></script>' +
+			'<link href="http://www.mywami.com/css/bootstrap.css" rel="stylesheet">' +
+			'<link href="http://www.mywami.com/css/wami.css" rel="stylesheet">' +
+			'<script src="http://www.mywami.com/js/jquery-1.11.0.min.js"></script>' +
+
 			'<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">' +
 				'<div class="container" style="margin-left: 60px; margin-right: 400px">' +
 					'<div class="navbar-header">' +
@@ -437,21 +448,48 @@ function send_serverside_email(profile_data_obj) {
 							'<span class="icon-bar"></span>' +
 							'<span class="icon-bar"></span>' +
 						'</button>' +
-						'<div><img src="http://www.mywami.com/assets/assets/wami-navbar.jpg"></div>' +
+						'<div><img src="http://www.mywami.com/assets/wami-navbar.jpg"></div>' +
 					'</div>' +
 				'</div>' +
 			'</div>' +
-			'<br>' +
-			'<h3> Wami Profile for ' + profile_name + '</h3>' +
-			'<hr>' +
-			'<h4> Contact Name: ' + contact_name  + '</h4>' +
-			'<h4> Email Address: ' + email  + '</h4>' +
-		'</body></html>'
+			'<br><br><br>' +
+			'<div style="margin-left: 10px; margin-right: 10px">' +
+				'<h4> Wami Profile For: <span style="color: #f87c08">' + profile_name + '</span></h4>' +
+				'<h4> From: <span style="color: #f87c08">' + from_first_name + ' ' +  from_last_name + '</span>' + '  Wami Profile: ' + '<span style="color: #f87c08">' + from_profile_name + '</span> </h4>' +
+				'<hr>' +
+				'<div style="margin-left: 20px; line-height: 10px">' +
+					'<h5> Contact Name: <span style="color: #f87c08">' + contact_name  + '</span></h5>' +
+					'<h5> Email Address: <span style="color: #f87c08">' + email  + '</span></h5>' +
+					'<h5> Profile Type: <span style="color: #f87c08">' + profile_type  + '</span></h5>' +
+					'<h5> Description: <span style="color: #f87c08">' + description  + '</span></h5>' +
+					'<h5> Street Address: <span style="color: #f87c08">' + street_address  + '</span></h5>' +
+					'<h5> City: <span style="color: #f87c08">' + city  + '</span></h5>' +
+					'<h5> State: <span style="color: #f87c08">' + state  + '</span></h5>' +
+					'<h5> Zip/Postal Code: <span style="color: #f87c08">' + zipcode  + '</span></h5>' +
+					'<h5> Country: <span style="color: #f87c08">' + country  + '</span></h5>' +
+					'<h5> Telephone: <span style="color: #f87c08">' + telephone  + '</span></h5>' +
+					'<h5> Profile Key Words: <span style="color: #f87c08">' + tags  + '</span></h5>' +
+					'<h5> Profile Create Date: <span style="color: #f87c08">' + create_date  + '</span></h5>' +
+				'</div>' +
+				'<hr>' +
+				'<div>' +
+					'<h4> For more detailed Profile info, download the Wami app from ' +
+						'<img src="http://www.mywami.com/assets/android_app_logo.png"> ' +
+						'<img src="http://www.mywami.com/assets/apple_app_logo.png">' +
+					'</h4>' +
+				'</div>' +
+				'<hr>' +
+				'<br><br>' +
+				'<h6 style="margin-left: 4px; color: #808080">WAMI Logos, Site Design, and Content © 2014 WAMI Inc. All rights reserved. Several aspects of the WAMI site are patent pending.</h6> ' +
+				'<p> <img src="http://www.mywami.com/assets/wami-logo-footer.jpg" class="left" ></p>' +
+				'<br><br><br>' +
+			'</div>' +
+		'</body></html>';
 
 	$.ajaxSetup({cache: false});
 	var xmlhttp = new XMLHttpRequest();
 	var response;
-	var param_string = 'x999=' + Math.random() + '&' + "message=" + message_body;
+	var param_string = 'x999=' + Math.random() + '&message=' + message_body + "&from_email=" + from_email + "&transmit_to=" + transmit_str;
 
 	xmlhttp.open("POST", "transmit_profile_to_email_address.php", false);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

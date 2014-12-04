@@ -9,14 +9,15 @@
  */
 
 $message = $_POST["message"];
-$to = 'rob@roblanter.com' . "\r\n";
+$to = $_POST["transmit_to"];
+$from = $_POST["from_email"];
 $subject = 'Transmitted Wami Profile';
 
-$headers = "From: rob@roblanter.com\r\n";
+$headers = "From: " .$from. "\r\n";
 //$headers .= "Reply-To: rob@roblanter.com\r\n";
 //$headers .= "Return-Path: rob@roblanter.com\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+$headers .= "MIME-Version: 1.0 \r\n";
+$headers .= "Content-Type: text/html; charset=ISO-8859-1 \r\n";
 
 $retVal = mail($to, $subject, $message, $headers);
 $response["ret_code"] = $retVal;
