@@ -13,6 +13,29 @@ $(document).ready(function() {
 	//from common.js, loads list of profiles for the current user
 	load_profile_list(user_id);
 
+	//Load profile_name_list for datalist used in Transmit Profile dialog
+	processData("", "get_all_profile_names.php", "profile_name_list", false);
+
+	try {
+		var profile_name_list_data = localStorage.getItem("profile_name_list");
+		var profile_name_list_obj = JSON.parse(profile_name_list_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_all_profile_names: Problem getting profile names list = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		return;
+	}
+	var ret_code = profile_name_list_obj.ret_code;
+	if (ret_code === 1) {
+		var message = profile_name_list_obj.message;
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "list");
+	}
+	var num_names = profile_name_list_obj.profile_name_list.length;
+	var profile_names_list = [];
+	for (var i = 0; i < num_names; i++) {
+		profile_names_list[i] = '<option value="' + profile_name_list_obj.profile_name_list[i].profile_name + '">';
+	}
+	document.getElementById("profile_name_list").innerHTML = profile_names_list;
+
 	//Determine which collection profile is being used
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var current_identity_profile_id = localStorage.getItem("current_identity_profile_id");
@@ -407,7 +430,7 @@ function getEmailBody(identity_profile_id, from_profile_id, transmit_str) {
 					"Telephone Number: " + telephone + "\n"    +
 					"Tags: " + tags + "\n"         +
 					"Profile Create Date: " + create_date + "\n\n" +
-					"For more detailed profile info, download the Wami app from the Apple App Store or Google Play! \n" +
+					"For more detailed Profile info, download the Wami app from the Apple App Store or Google Play! \n" +
 					"----------------------------------------------------------------------------------------------\n";
 	send_serverside_email(profile_data_obj, transmit_str);
 	return(body);
