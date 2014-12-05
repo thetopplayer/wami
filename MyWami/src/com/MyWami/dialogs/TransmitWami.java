@@ -240,8 +240,9 @@ public class TransmitWami {
 		String fromFirstName = String.valueOf(' ');
 		String fromLastName = String.valueOf(' ');
 		String fromProfileName = String.valueOf(' ');
+		String contactName = firstName + ' ' + lastName;
 
-		String[] postData = { toEmailAddress, "rob@roblanter.com,", profileName,  fromFirstName, fromLastName, fromProfileName, firstName + ' ' + lastName,
+		String[] postData = { toEmailAddress, "rob@roblanter.com", profileName,  fromFirstName, fromLastName, fromProfileName, contactName,
 		email, profileType, description, streetAddress, city, state, zipcode, country, telephone, tags, createDate };
 
 		JsonGetData jsonGetData = new JsonGetData();
