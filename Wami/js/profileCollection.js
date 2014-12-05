@@ -439,20 +439,10 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 			'<link href="http://www.mywami.com/css/wami.css" rel="stylesheet">' +
 			'<script src="http://www.mywami.com/js/jquery-1.11.0.min.js"></script>' +
 
-			'<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">' +
-				'<div class="container" style="margin-left: 60px; margin-right: 400px">' +
-					'<div class="navbar-header">' +
-						'<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
-							'<span class="sr-only">Toggle navigation</span>' +
-							'<span class="icon-bar"></span>' +
-							'<span class="icon-bar"></span>' +
-							'<span class="icon-bar"></span>' +
-						'</button>' +
-						'<div><img src="http://www.mywami.com/assets/wami-navbar.jpg"></div>' +
-					'</div>' +
-				'</div>' +
+			'<div class="panel" style="background-color: #606060; height: 45px">' +
+				'<img  style="margin-left: 30px; vertical-align: middle" src="http://www.mywami.com/assets/wami-navbar.jpg">' +
 			'</div>' +
-			'<br><br><br>' +
+
 			'<div style="margin-left: 10px; margin-right: 10px">' +
 				'<h4> Wami Profile For: <span style="color: #f87c08">' + profile_name + '</span></h4>' +
 				'<h4> From: <span style="color: #f87c08">' + from_first_name + ' ' +  from_last_name + '</span>' + '  Wami Profile: ' + '<span style="color: #f87c08">' + from_profile_name + '</span> </h4>' +
@@ -501,6 +491,7 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 		}
 	};
 	xmlhttp.send(param_string);
+	my_profile_collection_alert("Profile successfully transmitted to email address!", "alert-success","Success! ", "transmit");
 }
 
 // Alert messages
