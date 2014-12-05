@@ -43,6 +43,7 @@ public class TransmitWami {
 	final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile_data.php";
 	final private String GET_IDENTITY_PROFILE_DATA = Constants.IP + "get_identity_profile_data.php";
 	final private String GET_PROFILE_NAMES = Constants.IP + "get_profile_names.php";
+	final private String TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_profile_to_email_address_mobile.php";
 	private String profileNames[];
 	private AutoCompleteTextView etWamiProfileName;
 
@@ -141,19 +142,19 @@ public class TransmitWami {
 		for (int i = 0; i < alWamiTransmitModel.size(); i++) {
 			transmitModel = (TransmitModel) alWamiTransmitModel.get(i);
 			String identityProfileId = String.valueOf(transmitModel.getWamiToTransmitId());
-			body = getEmailBody(identityProfileId) + body;
+			body = getEmailBody(identityProfileId, emails) + body;
 		}
 
-		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-		emailIntent.setType("plain/text");
-		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, emails);
-		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wami Profile(s)");
-		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-		context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+//		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+//		emailIntent.setType("plain/text");
+//		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, emails);
+//		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wami Profile(s)");
+//		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+//		context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 		toastMessage = toastMessage + "\n\nNumber of profiles emailed = " + alEmailList.size();
 	}
 
-	private String getEmailBody(String identityProfileId) {
+	private String getEmailBody(String identityProfileId, String emails[]) {
 		String firstName;
 		String lastName;
 		String profileName;
@@ -226,7 +227,37 @@ public class TransmitWami {
 						"Profile Create Date: " + createDate + "\n\n" +
 						"For extended profiler info download the Wami app from the Apple App Store or Google Play! \n" +
 						"-----------------------------------------------------------------------------\n";
+		String toEmailAddress = emails[0];
+		sendEmail(profileName, firstName, lastName, email, profileType, description, streetAddress,
+							city, state, zipcode, country, telephone, tags, createDate, toEmailAddress);
 		return(body);
+	}
+
+	private void sendEmail (String profileName, String firstName, String lastName, String email, String profileType,
+													String description, String streetAddress, String city, String state, String zipcode, String country, String telephone,
+													String tags, String createDate, String toEmailAddress) {
+
+		String fromFirstName = String.valueOf(' ');
+		String fromLastName = String.valueOf(' ');
+		String fromProfileName = String.valueOf(' ');
+
+		String[] postData = { toEmailAddress, "rob@roblanter.com,", profileName,  fromFirstName, fromLastName, fromProfileName, firstName + ' ' + lastName,
+		email, profileType, description, streetAddress, city, state, zipcode, country, telephone, tags, createDate };
+
+		JsonGetData jsonGetData = new JsonGetData();
+		jsonGetData.jsonGetData(context, TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE, postData);
+		String jsonResult = jsonGetData.getJsonResult();
+		try {
+			JSONObject jsonResponse = new JSONObject(jsonResult);
+			boolean ret_code = jsonResponse.optBoolean("ret_code");
+			if (ret_code) {
+				String message = jsonResponse.optString("Profile successfully sent to email address.");
+				Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+			}
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public class TransmitWamiData extends AsyncTask<ArrayList, Void, JSONObject> {

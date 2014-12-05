@@ -9,6 +9,7 @@ public final class Constants {
 //	final static public String IP = "http://172.31.99.12/";
 	final static public String IP = "http://192.168.254.42/MyWami/";
 	final static public String ASSETS_IP = "http://192.168.254.42:80/Wami/";
+	final static public String EMAIL_IP = "http://www.mywami.com/";
 //	final static public String IP = 	"http://localhost:63342/WamiGradle/" ;
 //	final static public String IP = "http://172.31.99.12/";
 //	final static public String IP = "http://10.0.1.11/";
