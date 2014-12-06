@@ -60,7 +60,9 @@ $message =
         "</div>" .
         "<hr>" .
         "<div>" .
-            "<h4> For more detailed Profile info, download the Wami app from " .
+            "<h4> You can create a Wami account by going to " .
+                "<a href='http://www.mywami.com'> http://www.mywami.com </a>" .
+                ", then download the Wami app from " .
                 "<img src='http://www.mywami.com/assets/android_app_logo.png'> " .
                 "<img src='http://www.mywami.com/assets/apple_app_logo.png'>" .
             "</h4>" .
@@ -83,10 +85,10 @@ header('Access-Control-Allow-Origin: http://www.mywami.com');
 $retCode = mail($to, $subject, $message, $headers);
 $response["ret_code"] = $retCode;
 if ($retCode) {
-    $response["message"] = "Profile has been emailed....!";
+    $response["message"] = "Profile has been emailed.";
 }
 else {
-    $response["message"] =  "Problem with emailing profile....!";
+    $response["message"] =  "Problem with emailing profile.";
 }
 echo json_encode($response);
 ?>
