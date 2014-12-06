@@ -504,7 +504,7 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 	var response;
 	var param_string = 'x999=' + Math.random() + '&message=' + message_body + "&from_email=" + from_email + "&transmit_to=" + transmit_str;
 
-	xmlhttp.open("POST", "transmit_profile_to_email_address.php", false);
+	xmlhttp.open("POST", "http://www.mywami.com/transmit_profile_to_email_address.php", false);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 ) {
