@@ -78,14 +78,15 @@ $headers = "From: " .$from. "\n";
 $headers .= "Reply-To: " .$from. "\n";
 $headers .= "MIME-Version: 1.0\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+header('Access-Control-Allow-Origin: http://www.mywami.com');
 
 $retCode = mail($to, $subject, $message, $headers);
 $response["ret_code"] = $retCode;
 if ($retCode) {
-    echo "Profile has been emailed....!";
+    $response["message"] = "Profile has been emailed....!";
 }
 else {
-    echo "Problem with emailing profile....!";
+    $response["message"] =  "Problem with emailing profile....!";
 }
 echo json_encode($response);
 ?>

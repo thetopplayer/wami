@@ -138,11 +138,13 @@ public class TransmitWami {
 		String body = "";
 		String[] emails = new String[alEmailList.size()];
 		alEmailList.toArray(emails);
+		int fromProfileId = 0;
 
 		for (int i = 0; i < alWamiTransmitModel.size(); i++) {
 			transmitModel = (TransmitModel) alWamiTransmitModel.get(i);
 			String identityProfileId = String.valueOf(transmitModel.getWamiToTransmitId());
-			body = getEmailBody(identityProfileId, emails) + body;
+			fromProfileId = transmitModel.getFromIdentityProfileId();
+			body = getEmailBody(identityProfileId, emails, fromProfileId) + body;
 		}
 
 //		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -154,7 +156,7 @@ public class TransmitWami {
 		toastMessage = toastMessage + "\n\nNumber of profiles emailed = " + alEmailList.size();
 	}
 
-	private String getEmailBody(String identityProfileId, String emails[]) {
+	private String getEmailBody(String identityProfileId, String emails[], int fromProfileId) {
 		String firstName;
 		String lastName;
 		String profileName;
@@ -168,17 +170,21 @@ public class TransmitWami {
 		String country;
 		String telephone;
 		String createDate;
-		 String tags;
+		String tags;
+		String fromFirstName;
+		String fromLastName;
+		String fromProfileName;
+		String fromEmail;
 
 		String body;
-		String[] postData = { identityProfileId };
+		String[] postData = { identityProfileId, String.valueOf(fromProfileId)};
 		JsonGetData jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(context, GET_IDENTITY_PROFILE_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			int ret_code = jsonResponse.optInt("ret_code");
-			if (ret_code == 0) {
+			if (ret_code == 1) {
 				String message = jsonResponse.optString("message");
 				Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 				return "";
@@ -204,6 +210,11 @@ public class TransmitWami {
 			country = jsonChildNode.optString("country");
 			telephone = jsonChildNode.optString("telephone");
 			createDate = (jsonChildNode.optString("create_date")).substring(0, 10);
+			fromFirstName = jsonChildNode.optString("from_first_name");
+			fromLastName = jsonChildNode.optString("from_last_name");
+			fromProfileName = jsonChildNode.optString("from_profile_name");
+			fromEmail = jsonChildNode.optString("from_email");
+
 		}
 		catch (JSONException e) {
 //			Log.e("****TransmitWami Error", e.toString(), e);
@@ -229,17 +240,16 @@ public class TransmitWami {
 						"-----------------------------------------------------------------------------\n";
 		String toEmailAddress = emails[0];
 		sendEmail(profileName, firstName, lastName, email, profileType, description, streetAddress,
-							city, state, zipcode, country, telephone, tags, createDate, toEmailAddress);
+							city, state, zipcode, country, telephone, tags, createDate, toEmailAddress,
+							fromFirstName, fromLastName, fromProfileName, fromEmail);
 		return(body);
 	}
 
 	private void sendEmail (String profileName, String firstName, String lastName, String email, String profileType,
 													String description, String streetAddress, String city, String state, String zipcode, String country, String telephone,
-													String tags, String createDate, String toEmailAddress) {
+													String tags, String createDate, String toEmailAddress, String fromFirstName, String fromLastName, String fromProfileName,
+													String fromEmail) {
 
-		String fromFirstName = String.valueOf(' ');
-		String fromLastName = String.valueOf(' ');
-		String fromProfileName = String.valueOf(' ');
 		String contactName = firstName + ' ' + lastName;
 
 		String[] postData = { toEmailAddress, "rob@roblanter.com", profileName,  fromFirstName, fromLastName, fromProfileName, contactName,
@@ -251,10 +261,10 @@ public class TransmitWami {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			boolean ret_code = jsonResponse.optBoolean("ret_code");
-			if (ret_code) {
-				String message = jsonResponse.optString("Profile successfully sent to email address.");
+//			if (ret_code) {
+				String message = jsonResponse.optString("message");
 				Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-			}
+//			}
 		}
 		catch (JSONException e) {
 			e.printStackTrace();

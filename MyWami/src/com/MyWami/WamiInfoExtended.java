@@ -245,7 +245,7 @@ public class WamiInfoExtended extends Activity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			int ret_code = jsonResponse.optInt("ret_code");
-			if (ret_code == 0) {
+			if (ret_code == 1) {
 				String message = jsonResponse.optString("message");
 				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 				return false;
@@ -285,18 +285,20 @@ public class WamiInfoExtended extends Activity {
 			if (activeIndStr.equals("1")) activeInd = "Active";
 			else activeInd = "Inactive";
 
-			if (ret_code == 2) {
-				return true;
-			}
+//			if (ret_code == 2) {
+//				return true;
+//			}
+//
+//			JSONObject jsonGroups = jsonNode.getJSONObject(1);
+//			JSONArray jsonArray =  jsonGroups.getJSONArray("group_data");
+//			for (int i = 0; i < jsonArray.length(); i++) {
+//				jsonChildNode = jsonArray.getJSONObject(i);
+//				String group = jsonChildNode.optString("group");
+//				groups = groups + ", " + group;
+//			}
+//			groups = groups.substring(2);
 
-			JSONObject jsonGroups = jsonNode.getJSONObject(1);
-			JSONArray jsonArray =  jsonGroups.getJSONArray("group_data");
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonChildNode = jsonArray.getJSONObject(i);
-				String group = jsonChildNode.optString("group");
-				groups = groups + ", " + group;
-			}
-			groups = groups.substring(2);
+
 			return true;
 		}
 
@@ -310,7 +312,8 @@ public class WamiInfoExtended extends Activity {
 	private String getJsonData(String identityProfileId) {
 		jsonGetData = new JsonGetData();
 		identityProfileId = String.valueOf(identityProfileId);
-		String[] postData = { identityProfileId };
+		String fromProfileId = "NA";
+		String[] postData = { identityProfileId, fromProfileId };
 		jsonGetData.jsonGetData(this, GET_IDENTITY_PROFILE_DATA, postData);
 
 		return jsonGetData.getJsonResult();
