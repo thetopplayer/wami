@@ -46,6 +46,7 @@ else {
     $response["ret_code"] = 1;
     $response["message"] = "No Identity Profile data found";
     echo json_encode($response);
+    return;
 }
 
 $sql = "SELECT first_name, last_name, profile_name, email
