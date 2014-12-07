@@ -60,6 +60,7 @@ function searchProfiles(selected_item, search_str, search_context) {
 	if (ret_code === 1) {
 		var message = profile_list_obj.message;
 		my_search_alert (message, "alert-info", "Alert! ");
+		return;
 	}
 
 	var list = '';
@@ -124,7 +125,7 @@ function checkForChosen() {
 }
 
 function requestProfiles() {
-	var search_num_items = +localStorage.getItem("search_num_items");
+	var search_num_items = localStorage.getItem("search_num_items");
 	if (search_num_items > 0) {
 		var email_str = '';
 		for (var i = 0; i < search_num_items; i++) {
@@ -133,11 +134,90 @@ function requestProfiles() {
 				email_str = email_str + "," + document.getElementById(checkbox_id).value;
 			}
 		}
+		if (email_str.slice(0,1) === ',') {
+			email_str = email_str.slice(1);
+		}
 		var requestor_profile_name = localStorage.getItem("current_profile_name");
-		var login_url  = "http://localhost:80/Wami/index.html";
-		window.location.href = 'mailto:?bcc=' + email_str + '&subject=Request For WAMI Profile&body=' + encodeURI('Wami user: ' + requestor_profile_name + ' has requested your WAMI profile. Log into Wami ' + login_url + ' to transmit your profile.');
+		var login_url  = "http://www.mywami.com";
+
+		send_serverside_request(requestor_profile_name, email_str);
+
+	//	window.location.href = 'mailto:?bcc=' + email_str + '&subject=Request For WAMI Profile&body=' +
+	//	encodeURI('Wami user: ' + requestor_profile_name + ' has requested your WAMI profile. Log into Wami ' + login_url + ' to transmit your profile.');
 
 	}
+}
+
+function send_serverside_request(requestor_profile_name, email_str) {
+	var message_body =
+		'<html><body style="background-color: rgba(204, 255, 254, 0.13)">' +
+		'<link href="http://www.mywami.com/css/bootstrap.css" rel="stylesheet">' +
+		'<link href="http://www.mywami.com/css/wami.css" rel="stylesheet">' +
+		'<script src="http://www.mywami.com/js/jquery-1.11.0.min.js"></script>' +
+
+		'<div class="panel" style="background-color: #606060; height: 45px">' +
+			'<img  style="margin-left: 30px; vertical-align: middle" src="http://www.mywami.com/assets/wami-navbar.jpg">' +
+		'</div>' +
+
+		'<div style="margin-left: 10px; margin-right: 10px">' +
+			'<h4> Wami user: <span style="color: #f87c08">' + requestor_profile_name + '</span> has requested your WAMI profile. Log into Wami ' +
+				'<a href="http://www.mywami.com"> http://www.mywami.com </a> to transmit your Profile if you want.' +
+			'</h4><br>' +
+			'<hr>' +
+		'<div><br>' +
+		'<h5> Download the WAMI app from <br><br>' +
+			'<img src="http://www.mywami.com/assets/android_app_logo.png">   ' +
+			'<img src="http://www.mywami.com/assets/apple_app_logo.png">' +
+		'</h5>' +
+		'</div>' +
+			'<hr>' +
+			'<br><br>' +
+			'<h6 style="margin-left: 4px; color: #808080">WAMI Logos, Site Design, and Content © 2014 WAMI Inc. All rights reserved. Several aspects of the WAMI site are patent pending.</h6> ' +
+			'<p> <img src="http://www.mywami.com/assets/wami-logo-footer.jpg" class="left" ></p>' +
+			'<br><br><br>' +
+		'</div>' +
+		'</body></html>';
+
+	var requestor_profile_id = localStorage.getItem("current_identity_profile_id");
+	if (requestor_profile_id === null) {
+		requestor_profile_id = localStorage.getItem("identity_profile_id");
+	}
+
+	var params = "identity_profile_id=" + requestor_profile_id;
+	processData(params, "get_profile_email.php", "from_email");
+	try {
+		var from_email_data = localStorage.getItem("from_email");
+		var from_email_obj = JSON.parse(from_email_data);
+	} catch (err) {
+		console.log(err.message)
+		my_search_alert("get_profile_email: Problem getting emal for profile: status = " + err.message, "alert-danger", "Severe Error!  ");
+		return;
+	}
+	var ret_code = from_email_obj.ret_code;
+	if (ret_code === 1) {
+		var message = from_email_obj.message;
+		my_search_alert (message, "alert-info", "Alert! ");
+		return;
+	}
+
+	var from_email = from_email_obj.from_email;
+
+	$.ajaxSetup({cache: false});
+	var xmlhttp = new XMLHttpRequest();
+	var response;
+	var param_string = 'x999=' + Math.random() + '&message=' + message_body + "&from_email=" + from_email + "&transmit_to=" + email_str;
+
+	xmlhttp.open("POST", "http://www.mywami.com/transmit_request_to_email_address.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 ) {
+			if (xmlhttp.status == 200)  {
+				response = xmlhttp.responseText;
+			}
+		}
+	};
+	xmlhttp.send(param_string);
+	my_search_alert("Request transmitted to email address!", "alert-success","Success! ");
 }
 
 // Alert messages
