@@ -60,12 +60,12 @@ $message =
         "</div>" .
         "<hr>" .
         "<div>" .
-            "<h4> You can create a Wami account by going to " .
+            "<h5> You can create a WAMI account by going to " .
                 "<a href='http://www.mywami.com'> http://www.mywami.com </a>" .
-                ", then download the Wami app from " .
+                "then download the WAMI app from <br><br>" .
                 "<img src='http://www.mywami.com/assets/android_app_logo.png'> " .
                 "<img src='http://www.mywami.com/assets/apple_app_logo.png'>" .
-            "</h4>" .
+            "</h5>" .
         "</div>" .
         "<hr>" .
         "<br><br>" .
@@ -80,7 +80,7 @@ $headers = "From: " .$from. "\n";
 $headers .= "Reply-To: " .$from. "\n";
 $headers .= "MIME-Version: 1.0\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
-header('Access-Control-Allow-Origin: http://www.mywami.com');
+header('Access-Control-Allow-Origin: http://localhost');
 
 $retCode = mail($to, $subject, $message, $headers);
 $response["ret_code"] = $retCode;
