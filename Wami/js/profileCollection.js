@@ -372,7 +372,7 @@ function transmitProfiles() {
 			body = getEmailBody(profile_ids_to_transmit[j], from_profile_id, transmit_str) + body;;
 			if (body === 1) return;
 		}
-		window.location.href = 'mailto:' + transmit_str + '?subject=Wami Profile(s)&body=' + encodeURI(body);
+	//	window.location.href = 'mailto:' + transmit_str + '?subject=Wami Profile(s)&body=' + encodeURI(body);
 	}
 }
 
@@ -486,10 +486,12 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 				'</div>' +
 				'<hr>' +
 				'<div>' +
-					'<h4> For more detailed Profile info, download the Wami app from ' +
-						'<img src="http://www.mywami.com/assets/android_app_logo.png"> ' +
+					'<h5> You can create a WAMI account by going to ' +
+						'<a href="http://www.mywami.com"> http://www.mywami.com </a>' +
+						'then download the WAMI app from <br><br>' +
+						'<img src="http://www.mywami.com/assets/android_app_logo.png">   ' +
 						'<img src="http://www.mywami.com/assets/apple_app_logo.png">' +
-					'</h4>' +
+					'</h5>' +
 				'</div>' +
 				'<hr>' +
 				'<br><br>' +

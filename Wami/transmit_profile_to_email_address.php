@@ -17,6 +17,7 @@ $headers = "From: " .$from. "\n";
 $headers .= "Reply-To: " .$from. "\n";
 $headers .= "MIME-Version: 1.0\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+header('Access-Control-Allow-Origin: http://localhost');
 
 $retVal = mail($to, $subject, $message, $headers);
 $response["ret_code"] = $retVal;
