@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,6 +98,17 @@ public class WamiInfoExtended extends Activity {
 
 			TextView tvEmail = (TextView) findViewById(R.id.email);
 			tvEmail.setText(email);
+			tvEmail.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_SENDTO);
+					intent.setData(Uri.parse("mailto:"));
+					intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email });
+					intent.putExtra(Intent.EXTRA_SUBJECT, "Message From Wami Profile");
+					if (intent.resolveActivity(getPackageManager()) != null) {
+						startActivity(intent);
+					}
+				}
+			});
 
 			TextView tvProfileType = (TextView) findViewById(R.id.profile_type);
 			tvProfileType.setText(profileType);
@@ -118,6 +130,15 @@ public class WamiInfoExtended extends Activity {
 
 			TextView tvTelephone = (TextView) findViewById(R.id.telephone);
 			tvTelephone.setText(telephone);
+			tvTelephone.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_DIAL);
+					intent.setData(Uri.parse("tel:" + telephone));
+					if (intent.resolveActivity(getPackageManager()) != null) {
+						startActivity(intent);
+					}
+				}
+			});
 
 			TextView tvCreateDate = (TextView) findViewById(R.id.create_date);
 			tvCreateDate.setText(createDate);
@@ -195,7 +216,6 @@ public class WamiInfoExtended extends Activity {
 				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
 			}
 		});
-
 	}
 
 
