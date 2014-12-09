@@ -33,11 +33,11 @@ function loadData(selected_item, search_str, search_context) {
 		document.getElementById("list_id").innerHTML=list;
 		var profile_title_id = "Profile Search Results";
 		document.getElementById("profile_title_id").innerHTML=profile_title_id;
-		my_search_alert ("Please provide a Search String", "alert-info", "Info!  ");
+		my_search_alert ("Please provide a Search String", "alert-info", "Info!  ", "search_alert");
 		return;
 	}
 	else {
-		my_search_alert ("", "", "clear");
+		my_search_alert ("", "", "clear", "search_alert");
 	}
 
 	searchProfiles(selected_item, search_str, search_context);
@@ -52,14 +52,14 @@ function searchProfiles(selected_item, search_str, search_context) {
 		var profile_list_obj = JSON.parse(profile_list_data);
 	} catch (err) {
 			console.log(err.message)
-			my_search_alert("get_search_profile_data: Problem getting search profile data: status = " + err.message, "alert-danger", "Severe Error!  ");
+			my_search_alert("get_search_profile_data: Problem getting search profile data: status = " + err.message, "alert-danger", "Severe Error!  ", "search_alert");
 			return;
 	}
 
 	var ret_code = profile_list_obj.ret_code;
 	if (ret_code === 1) {
 		var message = profile_list_obj.message;
-		my_search_alert (message, "alert-info", "Alert! ");
+		my_search_alert (message, "alert-info", "Alert! ", "search_alert");
 		return;
 	}
 
@@ -111,16 +111,16 @@ function checkForChosen() {
 		for (var i = 0; i < search_num_items; i++) {
 			var checkbox_id = "checkbox" + i;
 			if (document.getElementById(checkbox_id).checked) {
-				my_search_alert ("", "", "clear");
+				my_search_alert ("", "", "clear", "search_alert");
 				return true;
 			}
 		}
 	}
 	else if (search_num_items === 0) {
-		my_search_alert("No Profile search data found so none can be requested.", "alert-info", "Alert! ");
+		my_search_alert("No Profile search data found so none can be requested.", "alert-info", "Alert! ", "search_alert");
 		return false;
 	}
-	my_search_alert("No Profiles were chosen to be requested.", "alert-info", "Alert! ");
+	my_search_alert("No Profiles were chosen to be requested.", "alert-info", "Alert! ", "search_alert");
 	return false;
 }
 
@@ -190,13 +190,13 @@ function send_serverside_request(requestor_profile_name, email_str) {
 		var from_email_obj = JSON.parse(from_email_data);
 	} catch (err) {
 		console.log(err.message)
-		my_search_alert("get_profile_email: Problem getting emal for profile: status = " + err.message, "alert-danger", "Severe Error!  ");
+		my_search_alert("get_profile_email: Problem getting emal for profile: status = " + err.message, "alert-danger", "Severe Error!  ", "request_alert");
 		return;
 	}
 	var ret_code = from_email_obj.ret_code;
 	if (ret_code === 1) {
 		var message = from_email_obj.message;
-		my_search_alert (message, "alert-info", "Alert! ");
+		my_search_alert (message, "alert-info", "Alert! ", "request_alert");
 		return;
 	}
 
@@ -217,16 +217,17 @@ function send_serverside_request(requestor_profile_name, email_str) {
 		}
 	};
 	xmlhttp.send(param_string);
-	my_search_alert("Request transmitted to email address!", "alert-success","Success! ");
+	my_search_alert("Request transmitted to email address!", "alert-success","Success! ", "request_alert");
 }
 
 // Alert messages
-function my_search_alert (message, message_type_class, message_type_string) {
+function my_search_alert (message, message_type_class, message_type_string, message_placement) {
 	var alert_str = "";
 	if (message_type_string !== "clear") {
 	  alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 				"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 				"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	}
-	document.getElementById("search_alert").innerHTML = alert_str;
+	if (message_placement === "search_alert") document.getElementById("search_alert").innerHTML = alert_str;
+	if (message_placement === "request_alert") document.getElementById("request_alert_message").innerHTML = alert_str;
 }
