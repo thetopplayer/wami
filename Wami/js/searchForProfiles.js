@@ -137,18 +137,18 @@ function requestProfiles() {
 		if (email_str.slice(0,1) === ',') {
 			email_str = email_str.slice(1);
 		}
-		var requestor_profile_name = localStorage.getItem("current_profile_name");
+		var requester_profile_name = localStorage.getItem("current_profile_name");
 		var login_url  = "http://www.mywami.com";
 
-		send_serverside_request(requestor_profile_name, email_str);
+		send_serverside_request(requester_profile_name, email_str);
 
 	//	window.location.href = 'mailto:?bcc=' + email_str + '&subject=Request For WAMI Profile&body=' +
-	//	encodeURI('Wami user: ' + requestor_profile_name + ' has requested your WAMI profile. Log into Wami ' + login_url + ' to transmit your profile.');
+	//	encodeURI('Wami user: ' + requester_profile_name + ' has requested your WAMI profile. Log into Wami ' + login_url + ' to transmit your profile.');
 
 	}
 }
 
-function send_serverside_request(requestor_profile_name, email_str) {
+function send_serverside_request(requester_profile_name, email_str) {
 	var message_body =
 		'<html><body style="background-color: rgba(204, 255, 254, 0.13)">' +
 		'<link href="http://www.mywami.com/css/bootstrap.css" rel="stylesheet">' +
@@ -160,7 +160,7 @@ function send_serverside_request(requestor_profile_name, email_str) {
 		'</div>' +
 
 		'<div style="margin-left: 10px; margin-right: 10px">' +
-			'<h4> Wami user: <span style="color: #f87c08">' + requestor_profile_name + '</span> has requested your WAMI profile. Log into Wami ' +
+			'<h4> Wami user: <span style="color: #f87c08">' + requester_profile_name + '</span> has requested your WAMI profile. Log into Wami ' +
 				'<a href="http://www.mywami.com"> http://www.mywami.com </a> to transmit your Profile if you want.' +
 			'</h4><br>' +
 			'<hr>' +
