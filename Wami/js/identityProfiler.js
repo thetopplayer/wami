@@ -89,8 +89,8 @@ function load_profiler_categories (identity_profile_id) {
 // Image gallery category
 			if (media_type === 'Image') {
 				decorator_section =
-						'<div class="row" style="padding: 10px; height: 600px; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg); background-repeat: repeat" >';
+						'<div class="row" style="padding: 10px; height: 600px;  background-color: #d1d1d1">';
+								//'background-image: url(assets/seamlesstexture1_1200.jpg); background-repeat: repeat" >';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -145,8 +145,8 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Text') {
 				var file = identity_profiler_obj.identity_profiler_data[i].file.file[0].contents;
 				var decorator_section_text =
-						'<div class="row" style="padding: 25px; background-repeat: repeat; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
+								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 				var data_section_text =
 						'<textarea readonly cols="145" rows="25" wrap="hard" style="display: block; margin-right: auto; margin-left: auto">' + file + '</textarea>';
 				var text_actions =
@@ -169,8 +169,8 @@ function load_profiler_categories (identity_profile_id) {
 // PDF file categories
 			if (media_type === 'PDF') {
 				var decorator_section_pdf =
-						'<div class="row" style="padding: 25px; background-repeat: repeat; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
+								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 				var file_name =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_name;
 				var file_location =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_location;
 				var data_section_pdf =
@@ -196,8 +196,8 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 25px; height: 550px; background-repeat: repeat; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px; height: 550px; background-color: #d1d1d1">';
+								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;
@@ -353,8 +353,8 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 
 	var profiler_audio_jukebox_id = [];
 	var decorator_section_audio =
-			'<div class="row" style="padding: 25px; height: 550px; background-repeat: repeat; ' +
-					'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+			'<div class="row" style="padding: 25px; height: 550px;  background-color: #d1d1d1">';
+					//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 
 	var audio_files = audio_file_obj.audio;
 	var data_section_audio = '';
@@ -566,8 +566,8 @@ function refresh_image_gallery(identity_profile_id, category) {
 
 	var profiler_image_gallery_id = [];
 	var decorator_section =
-			'<div class="row" style="padding: 20px; height: 600px;' +
-					'background-repeat: repeat; background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+			'<div class="row" style="padding: 20px; height: 600px; background-color: #d1d1d1">';
+					//'background-repeat: repeat; background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 
 	var gallery_images = image_gallery_obj.images;
 	var data_section = '';
@@ -781,8 +781,8 @@ function refresh_text_file(identity_profile_id, category)  {
 
 	var file = text_file_obj.file[0].contents;
 	var decorator_section_text =
-			'<div class="row" style="padding: 25px; background-repeat: repeat; ' +
-					'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+			'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
+					//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 	var data_section_text =
 			'<textarea readonly cols="145" rows="25" wrap="hard" style="display: block; margin-right: auto; margin-left: auto">' + file + '</textarea>';
 
@@ -906,8 +906,8 @@ function refresh_pdf_file(identity_profile_id, category)  {
 	var file_location = pdf_file_obj.file[0].file_location;
 	var file_name = pdf_file_obj.file[0].file_name;
 	var decorator_section_pdf =
-			'<div class="row" style="padding: 25px; background-repeat: repeat; ' +
-					'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+			'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
+					//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 	var data_section_pdf =
 			'<object type="application/pdf" width="100%" height="500px" data="' + file_location + file_name + '"> ';
 
