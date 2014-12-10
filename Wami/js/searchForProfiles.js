@@ -166,8 +166,8 @@ function send_serverside_request(requester_profile_name, email_str) {
 			'<hr>' +
 		'<div><br>' +
 		'<h5> Download the WAMI app from <br><br>' +
-			'<img src="http://www.mywami.com/assets/android_app_logo.png">   ' +
-			'<img src="http://www.mywami.com/assets/apple_app_logo.png">' +
+			'<img src="http://www.mywami.com/assets/android_app_logo.png"  height="25px" width="80px"> ' +
+			' <img src="http://www.mywami.com/assets/apple_app_logo.png" height="25px" width="80px">' +
 		'</h5>' +
 		'</div>' +
 			'<hr>' +
