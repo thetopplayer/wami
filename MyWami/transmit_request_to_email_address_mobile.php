@@ -1,16 +1,17 @@
 <?php
 /**
  *
- * transmit_request_to_email_address.php
+ * transmit_request_to_email_address_mobile.php
  *
  * Created by Rob Lanter
  * Date: 6/11/14
  * Time: 8:44 PM
  */
 header('Access-Control-Allow-Origin: http://localhost');
-$message = $_POST["param1"];
-$to = $_POST["param2"];
+$to = $_POST["param1"];
+$bcc = $_POST["param2"];
 $from_email = $_POST["param3"];
+$requester_profile_name = $_POST["param4"];
 $subject = 'Request For WAMI Profile';
 
 $message =
@@ -24,7 +25,7 @@ $message =
     "</div>" .
     
     "<div style='margin-left: 10px; margin-right: 10px'>" .
-        "<h4> Wami user: <span style='color: #f87c08'>" .$requestor_profile_name. "</span> has requested your WAMI profile. Log into Wami " .
+        "<h4> Wami user: <span style='color: #f87c08'>" .$requester_profile_name. "</span> has requested your WAMI profile. Log into Wami " .
             "<a href='http://www.mywami.com'> http://www.mywami.com </a> to transmit your Profile if you want." .
         "</h4><br>" .
         "<hr>" .
@@ -48,10 +49,15 @@ $headers = "From: " .$from_email. "\n";
 $headers .= "Reply-To: " .$from_email. "\n";
 $headers .= "MIME-Version: 1.0\n";
 $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+$headers .= "Bcc: $bcc\n";
 
-$retVal = mail($to, $subject, $message, $headers);
-$response["ret_code"] = $retVal;
+$retCode = mail($to, $subject, $message, $headers);
+$response["ret_code"] = $retCode;
+if ($retCode) {
+    $response["message"] = "Request has been sent.";
+}
+else {
+    $response["message"] =  "Problem with emailing request(s).";
+}
 echo json_encode($response);
-
-echo "Message has been sent....!";
 ?>

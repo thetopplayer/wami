@@ -261,10 +261,9 @@ public class TransmitWami {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			boolean ret_code = jsonResponse.optBoolean("ret_code");
-//			if (ret_code) {
-				String message = jsonResponse.optString("message");
-				Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-//			}
+
+			String message = jsonResponse.optString("message");
+			Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 		}
 		catch (JSONException e) {
 			e.printStackTrace();

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 public class WamiInfoExtended extends Activity {
 	final private String GET_IDENTITY_PROFILE_DATA = Constants.IP + "get_identity_profile_data.php";
 	final private String GET_IDENTITY_PROFILER_DATA = Constants.IP + "get_identity_profiler_data.php";
+	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
 	JsonGetData jsonGetData;
 	private String userIdentityProfileId;
 	private boolean useDefault;
@@ -103,7 +104,23 @@ public class WamiInfoExtended extends Activity {
 					Intent intent = new Intent(Intent.ACTION_SENDTO);
 					intent.setData(Uri.parse("mailto:"));
 					intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email });
-					intent.putExtra(Intent.EXTRA_SUBJECT, "Message From Wami Profile");
+					String userProfileName = null;
+
+					jsonGetData = new JsonGetData();
+					String[] postData = {userIdentityProfileId};
+					jsonGetData.jsonGetData(getApplicationContext(), GET_PROFILE_NAME, postData);
+					String jsonResult = jsonGetData.getJsonResult();
+					try {
+						JSONObject jsonResponse = new JSONObject(jsonResult);
+						userProfileName = jsonResponse.getString("profile_name");
+					}
+					catch (JSONException e) {
+						Toast.makeText(getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_LONG).show();
+//					Log.e("****Request Profile Error", e.toString(), e);
+						e.printStackTrace();
+					}
+
+					intent.putExtra(Intent.EXTRA_SUBJECT, "Message From Wami Profile: " + userProfileName);
 					if (intent.resolveActivity(getPackageManager()) != null) {
 						startActivity(intent);
 					}

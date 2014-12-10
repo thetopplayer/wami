@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class SearchResults extends ListActivity {
 	final private String GET_SEARCH_PROFILE_DATA = Constants.IP + "get_search_profile_data.php";
 	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
+	final private String TRANSMIT_REQUEST_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_request_to_email_address_mobile.php";
 	private JsonGetData jsonGetData;
 	private SearchListModel[] listModel;
 	private String selectedItem;
@@ -94,10 +95,12 @@ public class SearchResults extends ListActivity {
 				String[] postData = {userIdentityProfileId};
 				jsonGetData.jsonGetData(getApplicationContext(), GET_PROFILE_NAME, postData);
 				String jsonResult = jsonGetData.getJsonResult();
-				String profile_name = null;
+				String fromProfileName = null;
+				String fromEmail = null;
 				try {
 					JSONObject jsonResponse = new JSONObject(jsonResult);
-					profile_name = jsonResponse.getString("profile_name");
+					fromProfileName = jsonResponse.getString("profile_name");
+					fromEmail = jsonResponse.getString("email");
 				}
 				catch (JSONException e) {
 					Toast.makeText(getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_LONG).show();
@@ -105,21 +108,45 @@ public class SearchResults extends ListActivity {
 					e.printStackTrace();
 				}
 
-				String[] emails = new String[emailTo.size()];
+				String emails = null;
 				for (int i = 0; i < emailTo.size(); i++) {
-					emails[i] = emailTo.get(i);
+					emails = emails + "," + emailTo.get(i);
 				}
-				Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
-				i.setType("message/rfc822");
-				i.putExtra(Intent.EXTRA_BCC, emails);
-				i.putExtra(Intent.EXTRA_SUBJECT, "Request For WAMI Profile");
-				i.putExtra(Intent.EXTRA_TEXT, "Wami user: " + profile_name + " has requested your WAMI profile... Log into Wami " + Constants.LOGINURL + " to transmit your profile.");
+
+				assert emails != null;
+				emails = emails.substring(5);
+				postData = new String[]{fromEmail, emails, fromEmail, fromProfileName};
+
+				JsonGetData jsonGetData = new JsonGetData();
+				jsonGetData.jsonGetData(getApplicationContext(), TRANSMIT_REQUEST_TO_EMAIL_ADDRESS_MOBILE, postData);
+				jsonResult = jsonGetData.getJsonResult();
 				try {
-					startActivity(Intent.createChooser(i, "Send mail..."));
+					JSONObject jsonResponse = new JSONObject(jsonResult);
+					boolean ret_code = jsonResponse.optBoolean("ret_code");
+
+					String message = jsonResponse.optString("message");
+					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 				}
-				catch (android.content.ActivityNotFoundException ex) {
-					Toast.makeText(getApplicationContext(), "No email clients installed.", Toast.LENGTH_LONG).show();
+				catch (JSONException e) {
+					e.printStackTrace();
 				}
+
+//				String[] emails = new String[emailTo.size()];
+//				for (int i = 0; i < emailTo.size(); i++) {
+//					emails[i] = emailTo.get(i);
+//				}
+
+//				Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
+//				i.setType("message/rfc822");
+//				i.putExtra(Intent.EXTRA_BCC, emails);
+//				i.putExtra(Intent.EXTRA_SUBJECT, "Request For WAMI Profile");
+//				i.putExtra(Intent.EXTRA_TEXT, "Wami user: " + fromProfileName + " has requested your WAMI profile... Log into Wami " + Constants.LOGINURL + " to transmit your profile.");
+//				try {
+//					startActivity(Intent.createChooser(i, "Send mail..."));
+//				}
+//				catch (android.content.ActivityNotFoundException ex) {
+//					Toast.makeText(getApplicationContext(), "No email clients installed.", Toast.LENGTH_LONG).show();
+//				}
 			}
 		});
 

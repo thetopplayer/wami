@@ -35,6 +35,7 @@ public class WamiListActivity extends ListActivity {
 	private ArrayList alWamiTransmitModel = new ArrayList();
 	private String identityProfileId;
 	private String userIdentityProfileId;
+	private String userProfileName;
 	private boolean useDefault;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
