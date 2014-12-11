@@ -27,10 +27,6 @@
 			loadData();
 			return false;
 		}
-		function createProfile() {
-			alert("createProfile");
-			return false;
-		}
 		function saveForm() {
 			var ret_code  = validateAccount();
 			if (ret_code === true) saveAccountData();
@@ -126,7 +122,6 @@
 					<hr style="margin-bottom: 20px; width: 970px; border: 2px solid #bababa;">
 					<input id="save" type="submit" class="btn btn-sm btn-primary" value="Save" onclick="return saveForm()">
 					<input id="clear" type="submit" class="btn btn-sm btn-primary" value="Clear" style="margin-left: 10px" onclick="return clearForm()">
-					<input id="createProfile" type="submit" class="btn btn-sm btn-primary" value="Create New Profile" style="margin-left: 10px" onclick="return createProfile()">
 					<input id="delete" type="submit" class="btn btn-sm btn-danger" value="Delete Account" style="margin-left: 55px" onclick="return deleteForm()">
 				</div>
 				<div class="col-md-1" >
