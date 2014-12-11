@@ -33,8 +33,8 @@ $message =
             "<h5> You can create a WAMI account by going to " .
                 "<a href='http://www.mywami.com'> http://www.mywami.com </a>" .
                 "then download the WAMI app from <br><br>" .
-                "<img src='http://www.mywami.com/assets/android_app_logo.png'> " .
-                " <img src='http://www.mywami.com/assets/apple_app_logo.png'>" .
+                "<img src='http://www.mywami.com/assets/android_app_logo.png' height='25px' width='80px'> " .
+                " <img src='http://www.mywami.com/assets/apple_app_logo.png' height='25px' width='80px'>" .
             "</h5>" .
         "</div>" .
         "<hr>" .
