@@ -393,7 +393,7 @@ function check_new_profile(profile_name) {
 	var obj = JSON.parse(data)
 	var user_id = obj.user_info[0].user_id;
 
-	var params = "profile_name=" + profile_name + "&user_id=" + user_id;
+	var params = "profile_name=" + profile_name;
 	var identifier = "result";
 
 	var message;

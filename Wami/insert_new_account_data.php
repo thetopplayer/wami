@@ -19,7 +19,6 @@ $email = $_POST["email"];
 $profile_name = $_POST["profile_name"];
 $active_ind = 1;
 $delete_ind = 0;
-$rating = 0.00;
 $user_id = '';
 $identity_profile_id = '';
 $default_profile_ind = 1;
@@ -58,8 +57,8 @@ try {
     }
 
     // Create default profile
-    $sql = "INSERT INTO identity_profile (user_id, profile_name, first_name, last_name, rating, email, active_ind, delete_ind, default_profile_ind, image_url, create_date, modified_date)
-            VALUES (".$user_id.", '".$profile_name."','".$first_name."','".$last_name."', '".$rating."', '".$email."',".$active_ind.", ".$delete_ind.",  ".$default_profile_ind.",'defaultimage', NOW(), NOW())";
+    $sql = "INSERT INTO identity_profile (user_id, profile_name, first_name, last_name, email, active_ind, delete_ind, default_profile_ind, image_url, create_date, modified_date)
+            VALUES (".$user_id.", '".$profile_name."','".$first_name."','".$last_name."', '".$email."',".$active_ind.", ".$delete_ind.",  ".$default_profile_ind.",'defaultimage', NOW(), NOW())";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["message"] = "insert_new_account_data: Problem creating default profile: " .$username. " MySQL Error: " .mysqli_error($con);

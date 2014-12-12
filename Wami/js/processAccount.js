@@ -81,53 +81,13 @@ function loadData() {
 	return true;
 }
 
-// Save data
-function saveAccountData() {
-	var first_name = document.getElementById("first_name").value;
-	var last_name = document.getElementById("last_name").value;
-	var password = document.getElementById("password_val").value;
-	var email = document.getElementById("email").value;
-	var street_address = document.getElementById("street_address").value;
-	var city = document.getElementById("city").value;
-	var state = document.getElementById("state").value;
-	var country = document.getElementById("country").value;
-	var zipcode = document.getElementById("zipcode").value;
-	var telephone = document.getElementById("telephone").value;
-	var active_ind = document.getElementById("active");
-	if (active_ind.checked) {
-		active_ind = 1;
-	} else active_ind = 0;
-
-	var data = localStorage.getItem("user_info");
-	var obj = JSON.parse(data);
-	var user_id = obj.user_info[0].user_id;
-
-	var params = "user_id=" + user_id + "&first_name=" + first_name + "&last_name=" + last_name
-			+ "&password=" + password + "&email=" + email
-			+ "&street_address=" + street_address + "&city=" + city
-			+ "&state=" + state + "&country=" + country
-			+ "&zipcode=" + zipcode + "&telephone=" + telephone
-			+ "&active_ind=" + active_ind;
-
-	processData(params, "update_account_data.php", "result");
-	data = localStorage.getItem("result");
-	obj = JSON.parse(data);
-	var ret_code = obj.ret_code;
-	if (ret_code === 0) {
-		my_account_alert(obj.message, "alert-success", "Success!  ", "account_alert");
-	}
-	else {
-		my_account_alert(obj.message, "alert-danger", "Alert!  ", "account_alert");
-	}
-
-	return true;
-}
-
 // Clear all fields except username inaccount_profile.html page
 function clearAccountData() {
+	my_account_alert ("", "", "", "account_alert") ;
 	$("#first_name").val('');
 	$("#last_name").val('');
 	$("#password_val").val('');
+	$("#retype_password").val('');
 	$("#email").val('');
 	$("#street_address").val('');
 	$("#city").val('');
@@ -139,6 +99,7 @@ function clearAccountData() {
 
 // Delete account
 function deleteAccount() {
+	my_account_alert ("", "", "", "account_alert") ;
 	var user_info = localStorage.getItem("user_info");
 	var user_info_obj = JSON.parse(user_info);
 	var user_id = user_info_obj.user_info[0].user_id;
@@ -159,14 +120,15 @@ function deleteAccount() {
 	return false;
 }
 
-function validateAccountData() {
+function validateAccountData(account_status) {
+	my_account_alert ("", "", "", "account_alert") ;
 	var ret_code = validateAccount();
 	if (ret_code === false) return false;
 
-	var ret_code = validateFirstProfile();
-	if (ret_code === false) return false;
+	//var ret_code = validateFirstProfile();
+	//if (ret_code === false) return false;
 
-	var results = checkAccount();
+	var results = checkAccount(account_status);
 	var result = results[0];
 	var message = results[1];
 
@@ -174,27 +136,51 @@ function validateAccountData() {
 		my_account_alert(message, "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
-	else {
-		result = insertAccount();
-		if (result != "success") {
-			my_account_alert(message, "alert-danger", "Alert! ", "account_alert");
+	var result_obj;
+	var ret_code
+	if (account_status === 'new') {
+		result_obj = insertAccount();
+		ret_code = result_obj.ret_code;
+		if (ret_code === -1) {
+			my_account_alert(result_obj.message, "alert-danger", "Alert! ", "account_alert");
 			return false;
 		}
 		localStorage.setItem("username", username_val.value);
 		localStorage.setItem("password", password_val.value);
+		var params = "username=" + username_val.value + "&password=" + password_val.value;
+		processData(params, 'get_user_data.php', 'user_info', false);
+		var data = localStorage.getItem("user_info");
+		var obj = JSON.parse(data);
+		var ret_code = obj.ret_code;
+		if (ret_code === -1){
+			my_account_alert("Problem getting user data.", "alert-warning", "Warning! ", "account_alert");
+			return false;
+		}
+
 		return true;
+	}
+	if (account_status === 'update') {
+		result_obj = saveAccountData();
+		ret_code = result_obj.ret_code;
+		if (ret_code === 0) {
+			my_account_alert(result_obj.message, "alert-success", "Success!  ", "account_alert");
+		}
+		else {
+			my_account_alert(result_obj.message, "alert-danger", "Alert!  ", "account_alert");
+		}
+		return false;
 	}
 }
 
 // Check account for valid username and email address. Duplicates are not allowed
-function checkAccount() {
+function checkAccount(account_status) {
+	my_account_alert ("", "", "", "account_alert") ;
 	var url = "check_account_data.php";
-	var username = document.getElementById("username_val").value;
-	var email = document.getElementById("email").value;
-	var params = "username=" + username + "&email=" + email;
+	var username = (document.getElementById("username_val").value).trim();
+	var email = (document.getElementById("email").value).trim();
+	var params = "username=" + username + "&email=" + email + "&account_status=" + account_status;
 	var identifier = "result";
 
-	localStorage.clear();
 	var message;
 	processData(params, url, identifier, false);
 	var result_data = localStorage.getItem("result");
@@ -208,6 +194,7 @@ function checkAccount() {
 
 // Validate all required fields
 function validateAccount() {
+	my_account_alert ("", "", "", "account_alert") ;
 	if (first_name.value == '') {
 		my_account_alert ("Missing First Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
@@ -232,7 +219,7 @@ function validateAccount() {
 		my_account_alert ("Please retype password.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
-	if (password_val.value != retype_password.value) {
+	if ((password_val.value).trim() != (retype_password.value).trim()) {
 		my_account_alert ("Passwords do not match. Please retype password.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
@@ -240,50 +227,79 @@ function validateAccount() {
 	return true;
 }
 
-function validateFirstProfile () {
-	if (first_profile_name.value == '') {
-		my_account_alert ("Missing first profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
-		return false;
-	}
-	if ((first_profile_name.value).length < 7) {
-		my_account_alert ("Profile name must be at lest seven characters.", "alert-danger", "Alert! ", "account_alert") ;
-		return false;
-	}
-	var result = (first_profile_name.value).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
-	if (result !== null) {
-		my_account_alert("Profile names must only contain letters, numbers, dashes and hyphens", "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
+//function validateFirstProfile () {
+//	if (first_profile_name.value == '') {
+//		my_account_alert ("Missing first profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
+//		return false;
+//	}
+//	if ((first_profile_name.value).length < 7) {
+//		my_account_alert ("Profile name must be at lest seven characters.", "alert-danger", "Alert! ", "account_alert") ;
+//		return false;
+//	}
+//	var result = (first_profile_name.value).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
+//	if (result !== null) {
+//		my_account_alert("Profile names must only contain letters, numbers, dashes and hyphens", "alert-danger", "Alert! ", "account_alert");
+//		return false;
+//	}
+//
+//	return true;
+//}
 
-	return true;
+// Save data
+function saveAccountData() {
+	my_account_alert ("", "", "", "account_alert") ;
+	var first_name = (document.getElementById("first_name").value).trim();
+	var last_name = (document.getElementById("last_name").value).trim();
+	var password = (document.getElementById("password_val").value).trim();
+	var email = (document.getElementById("email").value).trim();
+	var street_address = (document.getElementById("street_address").value).trim();
+	var city = (document.getElementById("city").value).trim();
+	var state = (document.getElementById("state").value).trim();
+	var country = (document.getElementById("country").value).trim();
+	var zipcode = (document.getElementById("zipcode").value).trim();
+	var telephone = (document.getElementById("telephone").value).trim();
+	var active_ind = document.getElementById("active");
+	if (active_ind.checked) {
+		active_ind = 1;
+	} else active_ind = 0;
+
+	var data = localStorage.getItem("user_info");
+	var obj = JSON.parse(data);
+	var user_id = obj.user_info[0].user_id;
+
+	var params = "user_id=" + user_id + "&first_name=" + first_name + "&last_name=" + last_name
+		+ "&password=" + password + "&email=" + email
+		+ "&street_address=" + street_address + "&city=" + city
+		+ "&state=" + state + "&country=" + country
+		+ "&zipcode=" + zipcode + "&telephone=" + telephone
+		+ "&active_ind=" + active_ind;
+
+	processData(params, "update_account_data.php", "result");
+	var result_data = localStorage.getItem("result");
+	var result_obj = JSON.parse(result_data);
+	return result_obj;
 }
 
 // Insert new account
 function insertAccount() {
-	var message = null;
-	var username = document.getElementById("username_val").value;
-	var password = document.getElementById("password_val").value;
-	var first_name = document.getElementById("first_name").value;
-	var last_name = document.getElementById("last_name").value;
-	var profile_name = document.getElementById("first_profile_name").value;
-	var email = document.getElementById("email").value;
+	my_account_alert ("", "", "", "account_alert") ;
+	var username = (document.getElementById("username_val").value).trim();
+	var password = (document.getElementById("password_val").value).trim();
+	var first_name = (document.getElementById("first_name").value).trim();
+	var last_name = (document.getElementById("last_name").value).trim();
+	var profile_name = (document.getElementById("first_profile_name").value).trim();
+	var email = (document.getElementById("email").value).trim();
 
 	var params = "first_name=" + first_name + "&last_name=" + last_name + "&profile_name=" + profile_name
 			+ "&password=" + password + "&email=" + email
 			+ "&username=" + username;
 
 	var url = "insert_new_account_data.php";
-
-	localStorage.clear();
 	processData(params, url, "result", false);
 	var result_data = localStorage.getItem("result");
 	var result_obj = JSON.parse(result_data);
 
-	var ret_code = result_obj.ret_code;
-	if (ret_code === -1) {
-		return result_obj.message;
-	}
-	return "success";
+	return result_obj;
 }
 
 // Alert messages
@@ -292,4 +308,7 @@ function my_account_alert (message, message_type_class, message_type_string, mes
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	if (message_type === "account_alert") document.getElementById("account_alert").innerHTML = alert_str;
+	if (message === '') {
+		document.getElementById("account_alert").innerHTML = message;
+	}
 }
