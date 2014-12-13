@@ -214,8 +214,18 @@ function validateAccount() {
 		my_account_alert ("Missing Last Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
+
+	//email "lite" validation
 	if ((email.value).trim() == '') {
 		my_account_alert ("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
+		return false;
+	}
+	if (((email.value).trim()).indexOf("@") < 0) {
+		my_account_alert ("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert") ;
+		return false;
+	}
+	if (((email.value).trim()).indexOf(".") < 0) {
+		my_account_alert ("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
 

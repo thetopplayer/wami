@@ -294,15 +294,15 @@ function save_my_wami_data() {
 		return false;
 	}
 
-	var profile_type = document.getElementById("profile_type").value;
-	var description = document.getElementById("description").value;
-	var street_address = document.getElementById("street_address").value;
-	var city = document.getElementById("city").value;
-	var state = document.getElementById("state").value;
-	var country = document.getElementById("country").value;
-	var zipcode = document.getElementById("zipcode").value;
-	var telephone = document.getElementById("telephone").value;
-	var tags = document.getElementById("tags").value;
+	var profile_type = (document.getElementById("profile_type").value).trim();
+	var description = (document.getElementById("description").value).trim();
+	var street_address = (document.getElementById("street_address").value).trim();
+	var city = (document.getElementById("city").value).trim();
+	var state = (document.getElementById("state").value).trim();
+	var country = (document.getElementById("country").value).trim();
+	var zipcode = (document.getElementById("zipcode").value).trim();
+	var telephone = (document.getElementById("telephone").value).trim();
+	var tags = (document.getElementById("tags").value).trim();
 	var active_ind = document.getElementById("active");
 	if (active_ind.checked) {
 		active_ind = 1;
