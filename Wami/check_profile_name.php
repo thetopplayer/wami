@@ -1,6 +1,6 @@
 <?php
 /**
- * check_new_profile_data.php
+ * check_profile_name.php
  *
  * Created Rob Lanter
  * Date: 5/27/14
@@ -17,12 +17,12 @@ $con = $db->connect();
 $sql = "SELECT * FROM identity_profile WHERE delete_ind = 0 AND profile_name = '" .$profile_name. "'";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 if (mysqli_num_rows($result) > 0) {
-    $response["result"] = "fail";
+    $response["ret_code"] = 1;
     $response["message"] = "Profile name already exists, choose another one!";
     echo json_encode($response);
     return;
 }
-$response["result"] = "success";
+$response["ret_code"] = 0;
 $response["message"] = "New Profile being created.";
 echo json_encode($response);
 ?>

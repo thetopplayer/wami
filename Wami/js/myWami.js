@@ -363,59 +363,48 @@ function new_profile(profile_name, email) {
 		return false;
 	}
 
-	var results = check_new_profile(profile_name);
-	result = results[0];
-	var message = results[1];
-	var user_id = results[2];
-
-	if (result != "success") {
-		my_wami_alert(message, "alert-danger", "Alert! ", "new_profile");
+	var result_obj = check_new_profile(profile_name);
+	var ret_code = result_obj.ret_code;
+	if (ret_code != 0) {
+		my_wami_alert(result_obj.message, "alert-danger", "Alert! ", "new_profile");
 		return false;
 	}
 	else {
-		result = insert_new_profile(profile_name, email, user_id);
-		if (result != "success") {
-			my_wami_alert(message, "alert-danger", "Alert! ", "new_profile");
+		var data = localStorage.getItem("user_info");
+		var obj = JSON.parse(data)
+		var user_id = obj.user_info[0].user_id;
+		result_obj = insert_new_profile(profile_name, email, user_id);
+		if (result_obj.ret_code != 0) {
+			my_wami_alert(result_obj.message, "alert-danger", "Alert! ", "new_profile");
 			return false;
 		}
 		message = "Profile was created and was added to your collection. Use the rest of the My Wami Profiles page to finish entering your profile information.";
 		my_wami_alert(message, "alert-success", "Success!  ", "new_profile");
-		load_profile_list(user_id); //from common.js
+		load_profile_list(user_id); //located in common.js
 		return true;
 	}
 }
 
 // Check for valid profile name. Duplicates are not allowed
 function check_new_profile(profile_name) {
-	var url = "check_new_profile_data.php";
-
-	var data = localStorage.getItem("user_info");
-	var obj = JSON.parse(data)
-	var user_id = obj.user_info[0].user_id;
-
+	var url = "check_profile_name.php";
 	var params = "profile_name=" + profile_name;
 	var identifier = "result";
 
-	var message;
 	processData(params, url, identifier, false);
 	try {
 		var result_data = localStorage.getItem("result");
 		var result_obj = JSON.parse(result_data);
 	} catch (err) {
 		console.log(err.message)
-		return ("check_new_profile_data: Error checking for duplicate profiles = " + err.message);
+		return ("check_profile_name: Error checking for duplicate profile name = " + err.message);
 	}
 
-	var result = result_obj.result;
-	message = result_obj.message;
-
-	return [result, message, user_id];
+	return result_obj;
 }
 
 // Insert new account
 function insert_new_profile(profile_name, email, user_id) {
-	var message = null;
-
 	var params = "profile_name=" + profile_name + "&email=" + email + "&user_id=" + user_id;
 	var url = "insert_new_profile_data.php";
 	processData(params, url, "result", false);
@@ -428,11 +417,7 @@ function insert_new_profile(profile_name, email, user_id) {
 		return ("insert_new_profile_data: Error inserting new profile = " + err.message);
 	}
 
-	var ret_code = result_obj.ret_code;
-	if (ret_code === -1) {
-		return result_obj.message;
-	}
-	return "success";
+	return result_obj;
 }
 
 function upload_new_profile_image() {

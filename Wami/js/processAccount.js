@@ -125,19 +125,17 @@ function validateAccountData(account_status) {
 	var ret_code = validateAccount();
 	if (ret_code === false) return false;
 
-	//var ret_code = validateFirstProfile();
-	//if (ret_code === false) return false;
-
-	var results = checkAccount(account_status);
-	var result = results[0];
-	var message = results[1];
-
-	if (result != 0) {
-		my_account_alert(message, "alert-danger", "Alert! ", "account_alert");
+	var result_obj = checkAccount(account_status);
+	if (result_obj.ret_code != 0) {
+		my_account_alert(result_obj.message, "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
-	var result_obj;
-	var ret_code
+
+	var result_obj = checkProfileName();
+	if (result_obj.ret_code != 0) {
+		my_account_alert(result_obj.message, "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
 	if (account_status === 'new') {
 		result_obj = insertAccount();
 		ret_code = result_obj.ret_code;
@@ -186,36 +184,76 @@ function checkAccount(account_status) {
 	var result_data = localStorage.getItem("result");
 	var result_obj = JSON.parse(result_data);
 
-	var ret_code = result_obj.ret_code;
-	message = result_obj.message;
+	return result_obj;
+}
 
-	return [ret_code, message];
+// Check account for valid username and email address. Duplicates are not allowed
+function checkProfileName() {
+	my_account_alert ("", "", "", "account_alert") ;
+	var url = "check_profile_name.php";
+	var profile_name = (document.getElementById("first_profile_name").value).trim();
+	var params = "profile_name=" + profile_name;
+	var identifier = "result";
+
+	var message;
+	processData(params, url, identifier, false);
+	var result_data = localStorage.getItem("result");
+	var result_obj = JSON.parse(result_data);
+
+	return result_obj;
 }
 
 // Validate all required fields
 function validateAccount() {
 	my_account_alert ("", "", "", "account_alert") ;
-	if (first_name.value == '') {
+	if ((first_name.value).trim() == '') {
 		my_account_alert ("Missing First Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
-	if (last_name.value == '') {
+	if ((last_name.value).trim() == '') {
 		my_account_alert ("Missing Last Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
-	if (email.value == '') {
+	if ((email.value).trim() == '') {
 		my_account_alert ("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
-	if (username_val.value == '') {
+
+	//username validation
+	if ((username_val.value).trim() == '') {
 		my_account_alert ("Missing Username. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
-	if (password_val.value == '') {
+	var result = ((username_val.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
+	if (result !== null) {
+		my_account_alert("Username must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
+
+	//first profile name validation
+	if ((first_profile_name.value).trim() == '') {
+		my_account_alert ("Missing Profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
+		return false;
+	}
+	result = ((first_profile_name.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
+	if (result !== null) {
+		my_account_alert("Profile names must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
+
+	// Password validations
+	if ((password_val.value).trim() == '') {
 		my_account_alert ("Missing Password. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
-	if (retype_password.value == '') {
+	//At least 8 chars, at least 1 upper and lower case letter, at least 1 number, at least one special char.
+	result = ((password_val.value).trim()).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g);
+	if (result === null) {
+		my_account_alert("Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
+		" and at least 1 of the following characters: # ? ! @ $ % ^ & * - ", "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
+	if ((retype_password.value).trim() == '') {
 		my_account_alert ("Please retype password.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
@@ -226,24 +264,6 @@ function validateAccount() {
 
 	return true;
 }
-
-//function validateFirstProfile () {
-//	if (first_profile_name.value == '') {
-//		my_account_alert ("Missing first profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
-//		return false;
-//	}
-//	if ((first_profile_name.value).length < 7) {
-//		my_account_alert ("Profile name must be at lest seven characters.", "alert-danger", "Alert! ", "account_alert") ;
-//		return false;
-//	}
-//	var result = (first_profile_name.value).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
-//	if (result !== null) {
-//		my_account_alert("Profile names must only contain letters, numbers, dashes and hyphens", "alert-danger", "Alert! ", "account_alert");
-//		return false;
-//	}
-//
-//	return true;
-//}
 
 // Save data
 function saveAccountData() {
