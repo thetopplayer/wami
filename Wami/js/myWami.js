@@ -288,9 +288,19 @@ function save_my_wami_data() {
 
 	var first_name = document.getElementById("first_name").value;
 	var last_name = document.getElementById("last_name").value;
+
+	//email "lite" validation
 	var email = (document.getElementById("email").value).trim();
 	if (email === '') {
-		my_wami_alert("Missing  <strong> Email </strong>. Please fill in required field.", "alert-danger", "Alert! ", "mywami");
+		my_wami_alert ("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "mywami") ;
+		return false;
+	}
+	if (email.indexOf("@") < 0) {
+		my_wami_alert ("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "mywami") ;
+		return false;
+	}
+	if (email.indexOf(".") < 0) {
+		my_wami_alert ("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "mywami") ;
 		return false;
 	}
 
