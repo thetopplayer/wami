@@ -3,8 +3,10 @@ package com.MyWami;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -267,14 +269,33 @@ public class WamiInfoExtended extends Activity {
 			intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
 			TextView mPhoneNumber = (TextView) findViewById(R.id.telephone);
 			TextView mEmailAddress = (TextView) findViewById(R.id.email);
-			TextView mContactName = (TextView) findViewById(R.id.contact_name);
+			TextView mContactName = (TextView) findViewById(R.id.profile_name);
+
 			intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress.getText());
 			intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
 			intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber.getText());
 			intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
 			intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName.getText());
+			intent.putExtra("finishActivityOnSaveCompleted", true);
 
-			startActivity(intent);
+			String targetName = (String) mContactName.getText();
+			boolean bExists = false;
+			ContentResolver cr = getContentResolver();
+			Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+			if (cur.getCount() > 0) {
+				while (cur.moveToNext()) {
+					String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+					if (name.equals(targetName)) {
+						Toast.makeText(getApplicationContext(), "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
+						bExists = true;
+						break;
+					}
+				}
+			}
+			cur.close();
+			if (!bExists) {
+				startActivity(intent);
+			}
 		}
 
 // My Wami Network

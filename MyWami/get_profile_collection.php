@@ -14,7 +14,7 @@ $identityProfileId = $_POST["param1"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$sql = "SELECT ip.first_name, ip.last_name, image_url, profile_name, tags, ipc.identity_profile_id, assign_to_identity_profile_id
+$sql = "SELECT ip.first_name, ip.last_name, image_url, profile_name, tags, ipc.identity_profile_id, assign_to_identity_profile_id, email, telephone
         FROM identity_profile_collection ipc, identity_profile ip
         WHERE ip.delete_ind = 0 AND ipc.delete_ind = 0 AND ipc.identity_profile_id = ip.identity_profile_id AND assign_to_identity_profile_id = " .$identityProfileId;
 
@@ -30,6 +30,8 @@ if (mysqli_num_rows($result) > 0) {
         $collection["tags"] = $row["tags"];
         $collection["identity_profile_id"] = $row["identity_profile_id"];
         $collection["assign_to_identity_profile_id"] = $row["assign_to_identity_profile_id"];
+        $collection["email"] = $row["email"];
+        $collection["telephone"] = $row["telephone"];
 
         array_push($response["profile_collection"], $collection);
     }

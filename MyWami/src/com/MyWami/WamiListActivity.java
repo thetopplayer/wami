@@ -164,6 +164,8 @@ public class WamiListActivity extends ListActivity {
 				String imageURL = jsonChildNode.optString("image_url");
 				int identityProfileId = jsonChildNode.optInt("identity_profile_id");
 				int assignToIdentityProfileId = jsonChildNode.optInt("assign_to_identity_profile_id");
+				String email = jsonChildNode.optString("email");
+				String telephone = jsonChildNode.optString("telephone");
 
 				String listName = firstName + " " + lastName;
 				ListRow listRow = new ListRow(imageURL, listName);
@@ -176,6 +178,8 @@ public class WamiListActivity extends ListActivity {
 				listModel[i].setImageUrl(imageURL);
 				listModel[i].setIdentityProfileId(identityProfileId);
 				listModel[i].setAssignToIdentityProfileId(assignToIdentityProfileId);
+				listModel[i].setEmail(email);
+				listModel[i].setTelephone(telephone);
 			}
 		}
 		catch (JSONException e) {

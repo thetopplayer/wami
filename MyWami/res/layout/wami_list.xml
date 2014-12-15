@@ -64,6 +64,22 @@
 				android:text="Transmit"
 				android:focusable="false"
 				android:layout_below="@+id/list_text_profile_name"/>
+
+		<Button
+			android:id="@+id/list_add_to_contacts"
+			android:layout_width="95dp"
+			android:layout_height="25dp"
+			android:paddingBottom="8dp"
+			android:textStyle="bold"
+			android:textSize="11sp"
+			android:textColor="#FFFFFF"
+			android:background="@drawable/button_state"
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="5dp"
+			android:text="Add To Contacts"
+			android:focusable="false"
+			android:layout_below="@+id/list_text_profile_name"
+			android:layout_toRightOf="@+id/list_transmit_btn"/>
 	</RelativeLayout>
 
 	<ImageView
