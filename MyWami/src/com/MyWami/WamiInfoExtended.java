@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 import com.MyWami.dialogs.ActionList;
 import com.MyWami.dialogs.TransmitWami;
 import com.MyWami.model.TransmitModel;
-import com.MyWami.model.WamiListModel;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
 import org.json.JSONArray;
@@ -259,6 +259,22 @@ public class WamiInfoExtended extends Activity {
 			alWamiTransmitModel.add(transmitModel);
 			TransmitWami transmitWami = new TransmitWami();
 			transmitWami.transmitWami(alWamiTransmitModel, that, true);
+		}
+
+// Export to contacts
+		if (id == R.id.action_add_to_contact_list) {
+			Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+			intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+			TextView mPhoneNumber = (TextView) findViewById(R.id.telephone);
+			TextView mEmailAddress = (TextView) findViewById(R.id.email);
+			TextView mContactName = (TextView) findViewById(R.id.contact_name);
+			intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress.getText());
+			intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
+			intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber.getText());
+			intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
+			intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName.getText());
+
+			startActivity(intent);
 		}
 
 // My Wami Network
