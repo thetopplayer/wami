@@ -170,8 +170,7 @@ function load_profiler_categories (identity_profile_id) {
 // Image gallery category
 			if (media_type === 'Image') {
 				decorator_section =
-						'<div class="row" style="padding: 10px; height: 600px; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg); background-repeat: repeat" >';
+						'<div class="row" style="padding: 10px; height: 600px; background-color: #d1d1d1" >';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -203,8 +202,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Text') {
 				var file = identity_profiler_obj.identity_profiler_data[i].file.file[0].contents;
 				var decorator_section_text =
-						'<div class="row" style="padding: 25px; background-repeat: repeat; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px; background-repeat: repeat; background-color: #d1d1d1" >';
 				var data_section_text =
 						'<textarea readonly cols="145" rows="25" wrap="hard" style="display: block; margin-right: auto; margin-left: auto">' + file + '</textarea>';
 
@@ -215,8 +213,7 @@ function load_profiler_categories (identity_profile_id) {
 // PDF file categories
 			if (media_type === 'PDF') {
 				var decorator_section_pdf =
-						'<div class="row" style="padding: 25px; background-repeat: repeat; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px; background-repeat: repeat; background-color: #d1d1d1" >';
 				var file_name =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_name;
 				var file_location =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_location;
 				var data_section_pdf =
@@ -230,8 +227,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 25px; height: 550px; background-repeat: repeat; ' +
-								'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px; height: 550px; background-color: #d1d1d1" >';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;

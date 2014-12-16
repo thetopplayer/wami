@@ -213,7 +213,7 @@ function checkForChosenProfiles(action) {
 			return true;
 		}
 	}
-	my_profile_collection_alert("No Profiles selected. Please select profile(s) to perform action.", "alert-info", "Info Alert! ", "no_selected_profiles");
+	my_profile_collection_alert("No Profiles selected. Please select profile(s) to perform action.", "alert-warning", "Info Alert! ", "no_selected_profiles");
 	return false;
 }
 
