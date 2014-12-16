@@ -122,8 +122,9 @@ function deleteAccount() {
 
 function validateAccountData(account_status) {
 	my_account_alert ("", "", "", "account_alert") ;
-	var ret_code = validateAccount();
+	var ret_code = validateAccount(account_status);
 	if (ret_code === false) return false;
+
 
 	var result_obj = checkAccount(account_status);
 	if (result_obj.ret_code != 0) {
@@ -131,12 +132,12 @@ function validateAccountData(account_status) {
 		return false;
 	}
 
-	var result_obj = checkProfileName();
-	if (result_obj.ret_code != 0) {
-		my_account_alert(result_obj.message, "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
 	if (account_status === 'new') {
+		var result_obj = checkProfileName();
+		if (result_obj.ret_code != 0) {
+			my_account_alert(result_obj.message, "alert-danger", "Alert! ", "account_alert");
+			return false;
+		}
 		result_obj = insertAccount();
 		ret_code = result_obj.ret_code;
 		if (ret_code === -1) {
@@ -204,34 +205,34 @@ function checkProfileName() {
 }
 
 // Validate all required fields
-function validateAccount() {
-	my_account_alert ("", "", "", "account_alert") ;
+function validateAccount(account_status) {
+	my_account_alert("", "", "", "account_alert");
 	if ((first_name.value).trim() == '') {
-		my_account_alert ("Missing First Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
+		my_account_alert("Missing First Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	if ((last_name.value).trim() == '') {
-		my_account_alert ("Missing Last Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
+		my_account_alert("Missing Last Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 
 	//email "lite" validation
 	if ((email.value).trim() == '') {
-		my_account_alert ("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
+		my_account_alert("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	if (((email.value).trim()).indexOf("@") < 0) {
-		my_account_alert ("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert") ;
+		my_account_alert("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	if (((email.value).trim()).indexOf(".") < 0) {
-		my_account_alert ("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert") ;
+		my_account_alert("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 
 	//username validation
 	if ((username_val.value).trim() == '') {
-		my_account_alert ("Missing Username. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
+		my_account_alert("Missing Username. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	var result = ((username_val.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
@@ -241,14 +242,16 @@ function validateAccount() {
 	}
 
 	//first profile name validation
-	if ((first_profile_name.value).trim() == '') {
-		my_account_alert ("Missing Profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
-		return false;
-	}
-	result = ((first_profile_name.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
-	if (result !== null) {
-		my_account_alert("Profile names must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
-		return false;
+	if (account_status === "new") {
+		if ((first_profile_name.value).trim() == '') {
+			my_account_alert("Missing Profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
+			return false;
+		}
+		result = ((first_profile_name.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
+		if (result !== null) {
+			my_account_alert("Profile names must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
+			return false;
+		}
 	}
 
 	// Password validations
