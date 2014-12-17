@@ -33,7 +33,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_image_gallery_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["ret_code"] = 1;
-                array_push($response["message"], "My Wami Profile, Identity Profiler: No Profiler Images found.");
+                array_push($response["message"], "Identity Profiler: No Profiler Images found.");
             }
         }
 
@@ -41,7 +41,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_text_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["ret_code"] = 1;
-                array_push($response["message"], "My Wami Profile, Identity Profiler: No Profiler Text File uploaded.");
+                array_push($response["message"], "Identity Profiler: No Profiler Text File uploaded.");
             }
         }
 
@@ -49,7 +49,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_PDF_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["ret_code"] = 1;
-                array_push($response["message"], "My Wami Profile, Identity Profiler: No Profiler PDF File uploaded.");
+                array_push($response["message"], "Identity Profiler: No Profiler PDF File uploaded.");
             }
         }
 
@@ -57,14 +57,14 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_audio_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["ret_code"] = 1;
-                array_push($response["message"], "My Wami Profile, Identity Profiler: No Profiler Audio Files found.");
+                array_push($response["message"], "Identity Profiler: No Profiler Audio Files found.");
             }
         }
         array_push($response["identity_profiler_data"], $profiler);
     }
 } else {
     $response["ret_code"] = 1;
-    array_push($response["message"], "My Wami Profile, Identity Profiler: No Identity Profiler Categories found.");
+    array_push($response["message"], "Identity Profiler: No Identity Profiler Categories found.");
 }
 if ($response["ret_code"] > 0) echo json_encode($response);
 else {

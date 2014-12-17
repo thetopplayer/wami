@@ -3,10 +3,16 @@ package com.MyWami.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 import com.MyWami.*;
+import com.MyWami.util.Constants;
+import com.MyWami.webservice.JsonGetData;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by robertlanter on 8/6/14.
@@ -26,6 +32,8 @@ public class ActionList {
 
 	public void actionList(final Context context, final String identityProfileId, final String imageUrl, final String profileName,
 	                       final String firstName, final String lastName, final String userIdentityProfileId, final boolean useDefault) {
+
+		final String GET_IDENTITY_PROFILER_DATA = Constants.IP + "get_identity_profiler_data.php";
 		this.context = context;
 		this.identityProfileId = identityProfileId;
 		this.imageUrl = imageUrl;
@@ -54,6 +62,31 @@ public class ActionList {
 		openProfiler.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
+				String[] postData = { identityProfileId };
+				JsonGetData jsonGetData = new JsonGetData();
+				jsonGetData.jsonGetData(context, GET_IDENTITY_PROFILER_DATA, postData);
+				String jsonResult = jsonGetData.getJsonResult();
+				JSONObject jsonResponse = null;
+				try {
+					jsonResponse = new JSONObject(jsonResult);
+				}
+				catch (JSONException e) {
+					e.printStackTrace();
+//					Log.e("**** Profiler: json error: ", e.toString(), e);
+				}
+				assert jsonResponse != null;
+				int ret_code = jsonResponse.optInt("ret_code");
+				if (ret_code == 1) {
+					String message = jsonResponse.optString("message");
+					Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+					return;
+				}
+				if (ret_code == -1) {
+//					Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
+					return;
+				}
+
 				startActivity(Profiler.class);
 				dialog.dismiss();
 			}

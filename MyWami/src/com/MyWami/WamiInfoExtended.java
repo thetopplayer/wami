@@ -28,7 +28,6 @@ import com.MyWami.webservice.JsonGetData;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class WamiInfoExtended extends Activity {
@@ -191,7 +190,8 @@ public class WamiInfoExtended extends Activity {
 					jsonResponse = new JSONObject(jsonResult);
 				}
 				catch (JSONException e) {
-					Log.e("**** Profiler: json error: ", e.toString(), e);
+					e.printStackTrace();
+//					Log.e("**** Profiler: json error: ", e.toString(), e);
 				}
 				int ret_code = jsonResponse.optInt("ret_code");
 				if (ret_code == 1) {
@@ -200,7 +200,7 @@ public class WamiInfoExtended extends Activity {
 					return;
 				}
 				if (ret_code == -1) {
-					Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
+//					Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
 					return;
 				}
 
@@ -285,6 +285,7 @@ public class WamiInfoExtended extends Activity {
 			if (cur.getCount() > 0) {
 				while (cur.moveToNext()) {
 					String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
 					if (name.equals(targetName)) {
 						Toast.makeText(getApplicationContext(), "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
 						bExists = true;
@@ -325,7 +326,7 @@ public class WamiInfoExtended extends Activity {
 				return false;
 			}
 			if (ret_code == -1) {
-				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
+//				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
 				return false;
 			}
 //

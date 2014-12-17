@@ -78,10 +78,7 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 			File folder = new File(extStorageDirectory, "Image/thumbs");
 			folder.mkdir();
 			String location = fileLocation[position] + fileName[position];
-			// string off "assets" from the fileLocation
-//			location = location.substring(7);
 			location = Constants.ASSETS_IP + location;
-
 			URL u = new URL(location);
 
 			HttpParams httpParameters = new BasicHttpParams();
