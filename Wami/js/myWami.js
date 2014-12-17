@@ -97,8 +97,9 @@ function loadData(identity_profile_id) {
 	var email = mywami_obj.identity_profile_data[0].email;
 	$("#email").val(email);
 
-	var profile_type = mywami_obj.identity_profile_data[0].profile_type;
-	$("#profile_type").val(profile_type);
+	//var profile_type = mywami_obj.identity_profile_data[0].profile_type;
+	//$("#profile_type").val(profile_type);
+	get_profile_type_list();
 
 	var description = mywami_obj.identity_profile_data[0].description;
 	$("#description").val(description);
@@ -211,8 +212,8 @@ function loadData(identity_profile_id) {
 // -----------------------------------------
 
 
-//
-// check box function to use data from account for profile
+// -------------------------------------------------------
+// fill_from_account(): check box function to use data from account for profile
 //
 function fill_from_account() {
 	if ($('#use_account_info').is(':checked')) {
@@ -226,7 +227,7 @@ function fill_from_account() {
 
 		var ret_code = account_data_obj.ret_code;
 		if (ret_code === -1) {
-			my_wami_alert(account_data_obj.message, "alert-danger", "Alert! ", "header");
+			my_wami_alert(account_data_obj.message, "alert-danger", "Alert! ", "mywami");
 			return false;
 		}
 
@@ -253,6 +254,45 @@ function fill_from_account() {
 	}
 	return true;
 }
+//
+// End fill_from_account()
+// -----------------------------------------
+
+
+// -----------------------------------------
+// get_profile_type_list(): get list of profile types
+//
+function get_profile_type_list () {
+	processData("", "get_profile_types.php", "profile_types", false);
+	try {
+		var profile_types_data = localStorage.getItem("profile_types");
+		var profile_types_obj = JSON.parse(profile_types_data);
+	} catch (err) {
+		console.log(err.message);
+		my_wami_alert("Problem getting profile types list = " + err.message, "alert-danger", "Severe Error!  ", "mywami");
+		return;
+	}
+	var ret_code = profile_types_obj.ret_code;
+	if (ret_code === 1) {
+		var message = profile_types_obj.message;
+		my_wami_alert (message, "alert-danger", "Alert! ", "mywami");
+	}
+
+	var profile_types_dropdown = '<select name="profileTypes" id="profileTypes" class="dropdown-wami"  style="height: 20px">';
+	var num_types = profile_types_obj.profile_type_list.length;
+	var profile_type = '';
+	var profile_types_option = '';
+	for (var i = 0; i < num_types; i++) {
+		profile_type = profile_types_obj.profile_type_list[i].profile_type;
+		profile_types_option = profile_types_option + '<option value=' + '"' + profile_type + '">' + profile_type + '</option>';
+	}
+	profile_types_dropdown = profile_types_dropdown + profile_types_option + '</select>';
+	document.getElementById("profileTypes").innerHTML = profile_types_dropdown;
+}
+//
+// End get_profile_type_list()
+// -----------------------------------------
+
 
 // -----------------------------------------
 // MyWami Profile Image processing...Remove profile by doing a soft delete
