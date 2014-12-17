@@ -149,8 +149,8 @@
 							<div style='vertical-align: top'><h5 class='wami-margin-t4 wami-margin-b2' style='width: 90px; margin-top: 7px'>Description</h5></div>
 							<div><textarea  class='input-wami' style='width: 200px; resize: none; height: 50px' id="description"></textarea></div>
 						</div>
-						<div class="col-md-2" style="width: 230px">
-							<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2' style='width: 120px'>Street Address</h5></div>
+						<div class="col-md-2" style="width: 240px">
+							<div style='vertical-align: top'><h5 class='wami-margin-b2' style='width: 120px'>Street Address</h5></div>
 							<div><input style='width: 200px' class='input-wami' type='text' id="street_address"></div>
 
 							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>City</h5></div>
@@ -167,10 +167,14 @@
 
 							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 90px; margin-top: 7px'>Telephone</h5></div>
 							<div><input style='width: 200px' class='input-wami' type='text'  id="telephone"></div>
+
+							<div style='vertical-align: top; margin-top: 5px'>
+								<input type="checkbox" id="use_account_info" name="use_account_info" value="yes" onclick="return fill_from_account()"/>  Use account info to fill fields?
+							</div>
 						</div>
 
 						<div class="col-md-3">
-							<div style='vertical-align: top'><h5 class='wami-margin-t2 wami-margin-b2'>Tags</h5></div>
+							<div style='vertical-align: top'><h5 class='wami-margin-b2'>Tags</h5></div>
 							<div><input class='input-wami' style='width: 340px' type='text' id="tags"></div>
 
 							<div style='vertical-align: top'><h5 class='wami-margin-b4' style='width: 1200px; margin-top: 7px'>Profile Create Date</h5></div>

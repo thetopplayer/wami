@@ -210,6 +210,50 @@ function loadData(identity_profile_id) {
 // End loadData()
 // -----------------------------------------
 
+
+//
+// check box function to use data from account for profile
+//
+function fill_from_account() {
+	if ($('#use_account_info').is(':checked')) {
+		var data = localStorage.getItem("user_info");
+		var obj = JSON.parse(data)
+		var user_id = obj.user_info[0].user_id;
+
+		processData("user_id=" + user_id, "get_account_data.php", "account_data", false);
+		var account_data = localStorage.getItem("account_data");
+		var account_data_obj = JSON.parse(account_data);
+
+		var ret_code = account_data_obj.ret_code;
+		if (ret_code === -1) {
+			my_wami_alert(account_data_obj.message, "alert-danger", "Alert! ", "header");
+			return false;
+		}
+
+		var street_address = account_data_obj.account_profile[0].street_address;
+		$("#street_address").val(street_address);
+		var city = account_data_obj.account_profile[0].city;
+		$("#city").val(city);
+		var state = account_data_obj.account_profile[0].state;
+		$("#state").val(state);
+		var country = account_data_obj.account_profile[0].country;
+		$("#country").val(country);
+		var zipcode = account_data_obj.account_profile[0].zipcode;
+		$("#zipcode").val(zipcode);
+		var telephone = account_data_obj.account_profile[0].telephone;
+		$("#telephone").val(telephone);
+	}
+	else {
+		$("#street_address").val('');
+		$("#city").val('');
+		$("#state").val('');
+		$("#country").val('');
+		$("#zipcode").val('');
+		$("#telephone").val('');
+	}
+	return true;
+}
+
 // -----------------------------------------
 // MyWami Profile Image processing...Remove profile by doing a soft delete
 //

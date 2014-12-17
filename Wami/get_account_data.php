@@ -44,7 +44,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     $response["ret_code"] = -1;
-    $response["message"] = "get_account_data.php: No account data found";
+    $response["message"] = "No account data found";
     echo json_encode($response);
 }
 ?>
