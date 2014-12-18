@@ -153,7 +153,6 @@ function load_profiler_categories (identity_profile_id) {
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_text_file_dialog(\'' + category + '\')">Upload New File </button>' +
-//								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="download_file_dialog()">Download File </button>' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 700px; vertical-align: top; margin-top: 8px; padding-left: 0px">' +
 								'<div class="text-left" id="text_file_alert" style="width: 700px"></div>' +
@@ -837,16 +836,6 @@ function save_pdf_file() {
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var pdf_file_description = document.getElementById('pdf_file_description').value;
 	var pdf_file_name = document.getElementById('pdf_file_name').value;
-
-
-//	document.getElementById("pdf_upload").submit();
-//	var file = document.getElementById('new_pdf_file').files[0];
-//	var formData = new FormData();
-//	formData.append('pdf_file_src', file);
-//	var xhr = new XMLHttpRequest();
-//	xhr.open('POST', 'update_pdf_file.php');
-//	xhr.send(formData);
-
 
 // save to file system and database
 	var byte_reader = new FileReader();

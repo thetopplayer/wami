@@ -786,18 +786,6 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 			return;
 		}
 	}
-//	if (message_type === "categories")  {
-//		if (message === '') {
-//			document.getElementById("new_category_alerts").innerHTML = message;
-//			return;
-//		}
-//	}
-//	if (message_type === "profiler_category")  {
-//		if (message === '') {
-//			document.getElementById("profiler_category_alerts").innerHTML = message;
-//			return;
-//		}
-//	}
 
 	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
@@ -809,6 +797,4 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 	if (message_type === "flash_dialog") document.getElementById("flash_dialog_alerts").innerHTML = alert_str;
 	if (message_type === "flash") document.getElementById("flash_alerts").innerHTML = alert_str;
 	if (message_type === "remove_flash") document.getElementById("remove_flash_alert").innerHTML = alert_str;
-//	if (message_type === "categories") document.getElementById("new_category_alerts").innerHTML = alert_str;
-//	if (message_type === "profiler_category") document.getElementById("profiler_category_alerts").innerHTML = alert_str;
 }
