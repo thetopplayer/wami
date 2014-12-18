@@ -1206,6 +1206,9 @@ function save_categories() {
 	for (var i = 0; i < 20; i++) {
 		if (category_pool[i] === "taken") {
 			category_name = document.getElementById('userDefinedCategory' + i).value;
+			if (category_name === '' || category_name === null) {
+				continue;
+			}
 
 			var option = document.getElementById('mediaTypesList' + i);
 			media_type =  option.options[option.selectedIndex].value;
@@ -1217,7 +1220,7 @@ function save_categories() {
 
 	var template_option = document.getElementById('templateList');
 	var template =  template_option.options[template_option.selectedIndex].value;
-	if (num_categories === 0 && template === "EMPTY") {
+	if (num_categories === 0 && template === "") {
 		my_identity_profiler_alert("No new categories were chosen to add to Profiler.", "alert-warning", "Warning!  ", "categories");
 		return;
 	}

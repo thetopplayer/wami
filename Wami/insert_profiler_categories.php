@@ -35,7 +35,7 @@ for ($i = 0; $i < 20; $i++) {
 }
 
 $category_index = 0;
-if ($template != 'EMPTY') {
+if ($template != '') {
     $sql = "SELECT category, media_type FROM profiler_template_category WHERE delete_ind = 0 AND template = '" .$template."'";
     $result = mysqli_query($con, $sql)  or  die(mysql_error($con));
     if (mysqli_num_rows($result) > 0) {
@@ -69,7 +69,6 @@ for ($i = 0; $i < $num_categories; $i++) {
             exit(-1);
         }
 
-
         $file_location = '';
         $file_name = '';
         $table_name = '';
@@ -96,43 +95,38 @@ for ($i = 0; $i < $num_categories; $i++) {
         }
 
         if ($media_types[$i] === "Image") {
-            $table_name = "profiler_image_gallery";
             $file_location = "assets/image_gallery/" .$profile_name. "/";
-            $file_name = 'default_image.png';
             $exists = file_exists($file_location);
             if (!$exists) {
                 mkdir($file_location, 0777);
             }
-            copy('assets/default/default_image.png', $file_location. "default_image.png");
 
             $file_location_thumb = "assets/image_gallery/" .$profile_name. "/thumbs/";
-            $file_name = 'default_image.png';
             $exists = file_exists($file_location_thumb);
             if (!$exists) {
                 mkdir($file_location_thumb, 0777);
             }
-            copy('assets/default/default_image.png', $file_location_thumb. "default_image.png");
         }
         if ($media_types[$i] === "Audio") {
-            $table_name = "profiler_audio_jukebox";
             $file_location = "assets/audio/" .$profile_name. "/";
-            $file_name = 'default_mp3.mp3';
             $exists = file_exists($file_location);
             if (!$exists) {
                 mkdir($file_location, 0777);
             }
-            copy('assets/default/default_mp3.mp3', $file_location. "default_mp3.mp3");
         }
-        $sql = "INSERT INTO " .$table_name. " (identity_profile_id, category, file_location, file_name, delete_ind, create_date, modified_date)
-                        VALUES (" .$identity_profile_id.", '".$categories[$i]."', '".$file_location."', '".$file_name."', ".$delete_ind.", NOW(), NOW())";
-        $result = mysqli_query($con, $sql) or die(mysqli_error($con));
-        if (!$result) {
-            $response["message"] = "insert_profiler_categories: Problem inserting record into media table MySQL Error: " .mysqli_error($con);
-            $response["ret_code"] = -1;
-            $con->rollback();
-            $con->autocommit(TRUE);
-            echo json_encode($response);
-            exit(-1);
+
+        if ($media_types[$i] === "PDF" || $media_types[$i] === "Text") {
+            $sql = "INSERT INTO " . $table_name . " (identity_profile_id, category, file_location, file_name, delete_ind, create_date, modified_date)
+                        VALUES (" . $identity_profile_id . ", '" . $categories[$i] . "', '" . $file_location . "', '" . $file_name . "', " . $delete_ind . ", NOW(), NOW())";
+            $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+            if (!$result) {
+                $response["message"] = "insert_profiler_categories: Problem inserting record into media table MySQL Error: " . mysqli_error($con);
+                $response["ret_code"] = -1;
+                $con->rollback();
+                $con->autocommit(TRUE);
+                echo json_encode($response);
+                exit(-1);
+            }
         }
 
     } catch (Exception $e) {

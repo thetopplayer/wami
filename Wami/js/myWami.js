@@ -97,9 +97,8 @@ function loadData(identity_profile_id) {
 	var email = mywami_obj.identity_profile_data[0].email;
 	$("#email").val(email);
 
-	//var profile_type = mywami_obj.identity_profile_data[0].profile_type;
-	//$("#profile_type").val(profile_type);
-	get_profile_type_list();
+	var saved_profile_type = mywami_obj.identity_profile_data[0].profile_type;
+	set_profile_type_dropdown(saved_profile_type);
 
 	var description = mywami_obj.identity_profile_data[0].description;
 	$("#description").val(description);
@@ -262,7 +261,7 @@ function fill_from_account() {
 // -----------------------------------------
 // get_profile_type_list(): get list of profile types
 //
-function get_profile_type_list () {
+function set_profile_type_dropdown(saved_profile_type) {
 	processData("", "get_profile_types.php", "profile_types", false);
 	try {
 		var profile_types_data = localStorage.getItem("profile_types");
@@ -278,16 +277,21 @@ function get_profile_type_list () {
 		my_wami_alert (message, "alert-danger", "Alert! ", "mywami");
 	}
 
-	var profile_types_dropdown = '<select name="profileTypes" id="profileTypes" class="dropdown-wami"  style="height: 20px">';
+	var profile_types_dropdown = '<select name="profileTypes" id="profileTypes" class="dropdown-wami" style="height: 20px" >';
 	var num_types = profile_types_obj.profile_type_list.length;
 	var profile_type = '';
 	var profile_types_option = '';
 	for (var i = 0; i < num_types; i++) {
 		profile_type = profile_types_obj.profile_type_list[i].profile_type;
-		profile_types_option = profile_types_option + '<option value=' + '"' + profile_type + '">' + profile_type + '</option>';
+		if (profile_type === saved_profile_type) {
+			profile_types_option = profile_types_option + '<option selected value=' + '"' + i + '">' + profile_type + '</option>';
+		}
+		else {
+			profile_types_option = profile_types_option + '<option value=' + '"' + i + '">' + profile_type + '</option>';
+		}
 	}
 	profile_types_dropdown = profile_types_dropdown + profile_types_option + '</select>';
-	document.getElementById("profileTypes").innerHTML = profile_types_dropdown;
+	document.getElementById("profileTypesDropdown").innerHTML = profile_types_dropdown;
 }
 //
 // End get_profile_type_list()
@@ -388,7 +392,9 @@ function save_my_wami_data() {
 		return false;
 	}
 
-	var profile_type = (document.getElementById("profile_type").value).trim();
+	var profile_type_dropdown = document.getElementById("profileTypes");
+	var profile_type = profile_type_dropdown.options[profile_type_dropdown.selectedIndex].text;
+
 	var description = (document.getElementById("description").value).trim();
 	var street_address = (document.getElementById("street_address").value).trim();
 	var city = (document.getElementById("city").value).trim();
@@ -449,7 +455,7 @@ function new_profile(profile_name, email) {
 	}
 	var result = (profile_name).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
 	if (result !== null) {
-		my_wami_alert("Profile names must only contain letters, numbers, dashes and hyphens", "alert-danger", "Alert! ", "new_profile");
+		my_wami_alert("Profile names must only contain letters, numbers, dashes, hyphens, and no spaces", "alert-danger", "Alert! ", "new_profile");
 		return false;
 	}
 	if (email === '') {
