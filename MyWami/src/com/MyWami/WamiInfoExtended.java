@@ -329,11 +329,6 @@ public class WamiInfoExtended extends Activity {
 //				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
 				return false;
 			}
-//
-//			Integer result = (Integer) jsonResponse.get("success");
-//			if (result.equals(0)) {
-//				return false;
-//			}
 
 			JSONArray jsonNode = jsonResponse.optJSONArray("identity_profile_data");
 			JSONObject jsonChildNode = jsonNode.getJSONObject(0);
