@@ -1,6 +1,6 @@
 <?php
 /**
- * get_identity_profiler_id.php
+ * get_profiler_id.php
  *
  * Created by Robert Lanter
  * User: robertlanter
@@ -30,7 +30,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     $response["ret_code"] = 1;
-    $response["message"] = "get_identity_profiler_id.php: No identity profiler ids found";
+    $response["message"] = "get_profiler_id.php: No identity profiler ids found";
     echo json_encode($response);
 }
 ?>

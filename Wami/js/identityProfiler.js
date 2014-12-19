@@ -11,7 +11,7 @@
 function load_profiler_categories (identity_profile_id) {
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 	var params = "identity_profile_id=" + identity_profile_id;
-	processData(params, "get_identity_profiler_data.php", "identity_profiler_data", false);
+	processData(params, "get_profiler_data.php", "identity_profiler_data", false);
 	try {
 		var identity_profiler_data = localStorage.getItem("identity_profiler_data");
 		var identity_profiler_obj = JSON.parse(identity_profiler_data);
@@ -21,7 +21,7 @@ function load_profiler_categories (identity_profile_id) {
 		return;
 	}
 
-// Check return code and messages from get_identity_profiler_data.php
+// Check return code and messages from get_profiler_data.php
 	var ret_code = identity_profiler_obj.ret_code;
 	var alert_str = '';
 	if (ret_code === -1) {
@@ -938,14 +938,14 @@ function checkForChosenCategories() {
 
 	// get most current list of category ids
 	var params = "identity_profile_id=" + localStorage.getItem("identity_profile_id");
-	var url = "get_identity_profiler_id.php";
+	var url = "get_profiler_id.php";
 	processData(params, url, "result", false);
 	try {
 		var identity_profiler_id_data = localStorage.getItem("result");
 		var identity_profiler_id_obj = JSON.parse(identity_profiler_id_data);
 	} catch (err) {
 		console.log(err.message)
-		my_identity_profiler_alert("get_identity_profiler_id: Error getting identity profiler ids = " + err.message, "alert-danger", "Error!  ", "profiler_category");
+		my_identity_profiler_alert("get_profiler_id: Error getting identity profiler ids = " + err.message, "alert-danger", "Error!  ", "profiler_category");
 		return false;
 	}
 	var ret_code = identity_profiler_id_obj.ret_code;

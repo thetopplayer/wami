@@ -33,7 +33,7 @@ function login(username, password) {
  * Load drop down list of profiles for current user
  */
 function load_profile_list(user_id) {
-	processData("user_id=" + user_id, "get_identity_profile_list.php", "identity_profile_list_data", false);
+	processData("user_id=" + user_id, "get_profile_list.php", "identity_profile_list_data", false);
 	var identity_profile_list_data = localStorage.getItem("identity_profile_list_data");
 	var identity_profile_list_obj = JSON.parse(identity_profile_list_data);
 	var profile_list_dropdown = '<select name="identityProfileList" id="identityProfileList" class="dropdown-wami" onchange="loadData(this.value)" >';

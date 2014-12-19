@@ -1,6 +1,6 @@
 <?php
 /**
- * get_identity_profile_list.php
+ * get_profile_list.php
  *
  * Created by IntelliJ IDEA.
  * User: robertlanter

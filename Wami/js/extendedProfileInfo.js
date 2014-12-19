@@ -110,7 +110,7 @@ function loadData(selected_profile_id) {
 function load_profiler_categories (identity_profile_id) {
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 	var params = "identity_profile_id=" + identity_profile_id;
-	processData(params, "get_identity_profiler_data.php", "identity_profiler_data", false);
+	processData(params, "get_profiler_data.php", "identity_profiler_data", false);
 	try {
 		var identity_profiler_data = localStorage.getItem("identity_profiler_data");
 		var identity_profiler_obj = JSON.parse(identity_profiler_data);
