@@ -378,14 +378,14 @@ function transmitProfiles() {
 
 function getEmailBody(identity_profile_id, from_profile_id, transmit_str) {
 	var param_str = "identity_profile_id=" + identity_profile_id + "&from_identity_profile_id=" + from_profile_id;
-	processData(param_str, "get_identity_profile_data.php", "identity_profile_data", false);
+	processData(param_str, "get_profile_data.php", "identity_profile_data", false);
 
 	try {
 		var profile_data = localStorage.getItem("identity_profile_data");
 		var profile_data_obj = JSON.parse(profile_data);
 	} catch (err) {
 		console.log(err.message)
-		my_profile_collection_alert("get_identity_profile_data: Problem getting identity profile data = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
+		my_profile_collection_alert("get_profile_data: Problem getting identity profile data = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
 		return;
 	}
 
