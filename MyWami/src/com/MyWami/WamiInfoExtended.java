@@ -31,8 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class WamiInfoExtended extends Activity {
-	final private String GET_IDENTITY_PROFILE_DATA = Constants.IP + "get_identity_profile_data.php";
-	final private String GET_IDENTITY_PROFILER_DATA = Constants.IP + "get_identity_profiler_data.php";
+	final private String GET_PROFILE_DATA = Constants.IP + "get_profile_data.php";
+	final private String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
 	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
 	JsonGetData jsonGetData;
 	private String userIdentityProfileId;
@@ -183,7 +183,7 @@ public class WamiInfoExtended extends Activity {
 			public void onClick(View v) {
 				String[] postData = { identityProfileId };
 				JsonGetData jsonGetData = new JsonGetData();
-				jsonGetData.jsonGetData(getApplicationContext(), GET_IDENTITY_PROFILER_DATA, postData);
+				jsonGetData.jsonGetData(getApplicationContext(), GET_PROFILER_DATA, postData);
 				String jsonResult = jsonGetData.getJsonResult();
 				JSONObject jsonResponse = null;
 				try {
@@ -384,7 +384,7 @@ public class WamiInfoExtended extends Activity {
 		identityProfileId = String.valueOf(identityProfileId);
 		String fromProfileId = "NA";
 		String[] postData = { identityProfileId, fromProfileId };
-		jsonGetData.jsonGetData(this, GET_IDENTITY_PROFILE_DATA, postData);
+		jsonGetData.jsonGetData(this, GET_PROFILE_DATA, postData);
 
 		return jsonGetData.getJsonResult();
 	}

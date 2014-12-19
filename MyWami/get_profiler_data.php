@@ -1,6 +1,6 @@
 <?php
 /**
- * get_identity_profiler_data.php
+ * get_profiler_data.php
  *
  * Created by robertlanter
  * Date: 5/26/14

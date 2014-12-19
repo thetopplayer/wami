@@ -60,7 +60,7 @@ public class Profiler extends ListActivity {
 	private ArrayList alWamiTransmitModel = new ArrayList();
 	private Context that;
 
-	final private String GET_IDENTITY_PROFILER_DATA = Constants.IP + "get_identity_profiler_data.php";
+	final private String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
 
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -136,7 +136,7 @@ public class Profiler extends ListActivity {
 
 		String[] postData = { identityProfileId };
 		JsonGetData jsonGetData = new JsonGetData();
-		jsonGetData.jsonGetData(this, GET_IDENTITY_PROFILER_DATA, postData);
+		jsonGetData.jsonGetData(this, GET_PROFILER_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
 		profilerModel = assignData(jsonResult);
 		if (profilerModel == null) {

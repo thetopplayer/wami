@@ -1,6 +1,6 @@
 <?php
 /**
- * get_identity_profile_data.php
+ * get_profile_data.php
  *
  * Created by Robert Lanter
  * Date: 5/15/14
@@ -21,7 +21,7 @@ $sql = "SELECT first_name, last_name, profile_name, image_url, email, profile_ty
 
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 if (!$result) {
-    $response["db_error"] = "get_identity_profile_data(1): Problem accessing identity profile data: " .$identity_profile_id. " MySQL Error: " .mysqli_error($con);
+    $response["db_error"] = "get_profile_data(1): Problem accessing identity profile data: " .$identity_profile_id. " MySQL Error: " .mysqli_error($con);
     $response["ret_code"] = -1;
     echo json_encode($response);
     exit(-1);
@@ -58,7 +58,7 @@ if (mysqli_num_rows($result) > 0) {
 //$sql = "SELECT `group` FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
 //$result = mysqli_query($con, $sql) or die(mysqli_error($con));
 //if (!$result) {
-//    $response["db_error"] = "get_identity_profile_data(2): Problem accessing identity profile data: " .$identity_profile_id. " MySQL Error: " .mysqli_error($con);
+//    $response["db_error"] = "get_profile_data(2): Problem accessing identity profile data: " .$identity_profile_id. " MySQL Error: " .mysqli_error($con);
 //    $response["ret_code"] = -1;
 //    echo json_encode($response);
 //    exit(-1);

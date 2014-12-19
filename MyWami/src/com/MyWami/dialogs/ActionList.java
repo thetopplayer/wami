@@ -33,7 +33,7 @@ public class ActionList {
 	public void actionList(final Context context, final String identityProfileId, final String imageUrl, final String profileName,
 	                       final String firstName, final String lastName, final String userIdentityProfileId, final boolean useDefault) {
 
-		final String GET_IDENTITY_PROFILER_DATA = Constants.IP + "get_identity_profiler_data.php";
+		final String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
 		this.context = context;
 		this.identityProfileId = identityProfileId;
 		this.imageUrl = imageUrl;
@@ -65,7 +65,7 @@ public class ActionList {
 
 				String[] postData = { identityProfileId };
 				JsonGetData jsonGetData = new JsonGetData();
-				jsonGetData.jsonGetData(context, GET_IDENTITY_PROFILER_DATA, postData);
+				jsonGetData.jsonGetData(context, GET_PROFILER_DATA, postData);
 				String jsonResult = jsonGetData.getJsonResult();
 				JSONObject jsonResponse = null;
 				try {

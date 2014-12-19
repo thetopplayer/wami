@@ -41,7 +41,7 @@ public class TransmitWami {
 	private TransmitModel transmitModel;
 	private String toastMessage = "";
 	final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile_data.php";
-	final private String GET_IDENTITY_PROFILE_DATA = Constants.IP + "get_identity_profile_data.php";
+	final private String GET_PROFILE_DATA = Constants.IP + "get_profile_data.php";
 	final private String GET_PROFILE_NAMES = Constants.IP + "get_profile_names.php";
 	final private String TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_profile_to_email_address_mobile.php";
 	private String profileNames[];
@@ -179,7 +179,7 @@ public class TransmitWami {
 		String body;
 		String[] postData = { identityProfileId, String.valueOf(fromProfileId)};
 		JsonGetData jsonGetData = new JsonGetData();
-		jsonGetData.jsonGetData(context, GET_IDENTITY_PROFILE_DATA, postData);
+		jsonGetData.jsonGetData(context, GET_PROFILE_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
