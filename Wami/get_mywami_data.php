@@ -53,13 +53,13 @@ else {
 }
 
 //get group data
-$sql = "SELECT `group` FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
+$sql = "SELECT group_name FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
 $result = mysqli_query($con, $sql)  or  die(mysql_error($con));
 if (mysqli_num_rows($result) > 0) {
     $response["profile_group_data"] = array();
     while ($row = mysqli_fetch_array($result)) {
         $group = array();
-        $group["group"] = $row["group"];
+        $group["group"] = $row["group_name"];
         array_push($response["profile_group_data"], $group);
     }
 }
