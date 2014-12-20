@@ -15,7 +15,7 @@ $identity_profile_id = $_POST["identity_profile_id"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$sql = "SELECT group_name FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
+$sql = "SELECT profile_group_id, group_name FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
 
 $result = mysqli_query($con, $sql)  or  die(mysql_error($con));
 
@@ -24,6 +24,7 @@ if (mysqli_num_rows($result) > 0) {
 
     while ($row = mysqli_fetch_array($result)) {
         $item = array();
+        $item["profile_group_id"] = $row["profile_group_id"];
         $item["group"] = $row["group_name"];
         array_push($response["profile_group_data"], $item);
     }
