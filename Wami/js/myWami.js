@@ -674,15 +674,15 @@ function refresh_flash() {
 			}
 			flash_announcements = flash_announcements +
 					'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
-					'<div class="list-group">' +
-					'<div class="col-md-1" style="width: 3px">' +
-					'<input type="checkbox" id="checkbox' + i + '">' +
-					'</div>' +
-					'<div class="col-md-1" style="width: 170px">' +
-					'<h5 style="margin-top: 3px; margin-bottom: 3px">' + date + '</h5>' +
-					'</div>' +
-					media_tag + flash_tag +
-					'</div>' +
+						'<div class="list-group">' +
+							'<div class="col-md-1" style="width: 3px">' +
+								'<input type="checkbox" id="checkbox' + i + '">' +
+							'</div>' +
+							'<div class="col-md-1" style="width: 170px">' +
+								'<h5 style="margin-top: 3px; margin-bottom: 3px">' + date + '</h5>' +
+							'</div>' +
+							media_tag + flash_tag +
+						'</div>' +
 					'</a>';
 		}
 	}
@@ -752,6 +752,48 @@ function clean_remove_flash_dialog() {
 // End Flash processing
 // -----------------------------------------------
 
+
+// -------------------------------------------
+// Group processing
+//
+function add_group() {
+	$('#new_group_dialog').modal();
+	my_wami_alert("", "", "", "group_dialog");
+}
+
+function save_group () {
+	var new_group = document.getElementById('new_group').value;
+	if (new_group === '') {
+		my_wami_alert("Group name cannot be empty. Please create a group or close.", "alert-warning", "Warning!  ", "group_dialog");
+		return;
+	}
+	var identity_profile_id = localStorage.getItem("identity_profile_id");
+	var params = "new_group=" + new_group + "&identity_profile_id=" + identity_profile_id;
+	var url = "insert_group.php";
+	processData(params, url, "result", false);
+	try {
+		var result_data = localStorage.getItem("result");
+		var result_obj = JSON.parse(result_data);
+	} catch (err) {
+		console.log(err.message)
+		my_wami_alert("insert_group: Error inserting a new Group = " + err.message, "alert-danger", "Error!  ", "group_dialog");
+		return;
+	}
+
+	var ret_code = result_obj.ret_code;
+	if (ret_code === -1) {
+		my_wami_alert(result_obj.message, "alert-danger", "Danger!  ", "group_dialog");
+		return;
+	}
+	//refresh_group();
+	my_wami_alert(result_obj.message, "alert-success", "Success!  ", "group_dialog");
+}
+
+//
+// End Group processing
+// -----------------------------------------------
+
+
 // ----------------------------------------------
 // Alert messages
 //
@@ -771,6 +813,12 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 	if (message_type === "flash_dialog")  {
 		if (message === '') {
 			document.getElementById("flash_dialog_alerts").innerHTML = message;
+			return;
+		}
+	}
+	if (message_type === "group_dialog")  {
+		if (message === '') {
+			document.getElementById("group_dialog_alerts").innerHTML = message;
 			return;
 		}
 	}
@@ -795,6 +843,7 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 	if (message_type === "new_profile") document.getElementById("new_profile_alerts").innerHTML = alert_str;
 	if (message_type === "image_upload") document.getElementById("image_upload_alerts").innerHTML = alert_str;
 	if (message_type === "flash_dialog") document.getElementById("flash_dialog_alerts").innerHTML = alert_str;
+	if (message_type === "group_dialog") document.getElementById("group_dialog_alerts").innerHTML = alert_str;
 	if (message_type === "flash") document.getElementById("flash_alerts").innerHTML = alert_str;
 	if (message_type === "remove_flash") document.getElementById("remove_flash_alert").innerHTML = alert_str;
 }

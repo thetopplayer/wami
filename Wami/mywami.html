@@ -282,8 +282,7 @@
 						<h6 style="margin-left: 15px; margin-bottom: 5px"> Remove </h6>
 					</div>
 					<span class="span-scroll-groups" id="group_id"></span>
-					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px">Save</button>
-					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-left: 5px">Add Group</button>
+					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-left: 5px"  onclick="add_group()">Add Group</button>
 					<button type="button" class="btn btn-sm btn-danger" style="margin-top: 10px; margin-left: 25px">Remove Checked</button>
 				</div>
 			</div>
@@ -399,6 +398,30 @@
 					</span>
 					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
 					<div class="text-left" id="flash_dialog_alerts" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--New Group dialog-->
+	<div class="modal fade" id="new_group_dialog" role="dialog">
+		<div class="modal-dialog" style="width: 350px">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">New Group</h4>
+				</div>
+				<div class="modal-body">
+					<h5>Create New Group</h5>
+					<input type="text" class="input-wami" placeholder="Enter new group name, then hit Create" name="new_group" id="new_group" style="width: 300px">
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<span class="pull-left">
+						<button type="button" class="btn btn-primary" onclick="save_group()">Create</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="group_dialog_alerts" style="margin-top: 50px;"></div>
 				</div>
 			</div>
 		</div>
