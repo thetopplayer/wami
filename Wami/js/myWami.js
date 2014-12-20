@@ -153,17 +153,24 @@ function loadData(identity_profile_id) {
 
 // Groups Data
 	var groups = '';
+	var profile_group_id = [];
 	if (mywami_obj.profile_group_data !== undefined) {
+		localStorage.setItem("num_groups", mywami_obj.profile_group_data.length);
 		for (var i = 0; i < mywami_obj.profile_group_data.length; i++) {
+			profile_group_id[i] = mywami_obj.profile_group_data[i].profile_group_id;
 			var group = mywami_obj.profile_group_data[i].group;
 			groups = groups +
-					'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left">' +
-					'<div class="list-group"><div class="col-md-1" style="width: 3px"><input type="checkbox"></div>' +
+				'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
+					'<div class="list-group"><div class="col-md-1" style="width: 3px">' +
+						'<input type="checkbox" id="group_checkbox' + i + '">' +
+					'</div>' +
 					'<div class="col-md-1" style="width: 1040px">' +
-					'<h5 style="margin-top: 3px; margin-bottom: 3px">' + group + '</h5>' +
-					'</div></div></a>';
+						'<h5 style="margin-top: 3px; margin-bottom: 3px">' + group + '</h5>' +
+					'</div></div>' +
+				'</a>';
 		}
 	}
+	localStorage.setItem("profile_group_id", profile_group_id);
 	document.getElementById("group_id").innerHTML = groups;
 //
 // Flash Data
@@ -785,10 +792,113 @@ function save_group () {
 		my_wami_alert(result_obj.message, "alert-danger", "Danger!  ", "group_dialog");
 		return;
 	}
-	//refresh_group();
+	refresh_group();
 	my_wami_alert(result_obj.message, "alert-success", "Success!  ", "group_dialog");
 }
 
+
+function refresh_group() {
+	var identity_profile_id = localStorage.getItem("identity_profile_id");
+	var params = "identity_profile_id=" + identity_profile_id;
+	var url = "get_profile_group_data.php";
+	processData(params, url, "result", false);
+	try {
+		var group_data = localStorage.getItem("result");
+		var group_obj = JSON.parse(group_data);
+	} catch (err) {
+		console.log(err.message)
+		my_wami_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
+		return;
+	}
+
+	var ret_code = group_obj.ret_code;
+	if (ret_code === -1) {
+		my_wami_alert(group_obj[0].message, "alert-danger", "Alert! ", "group_dialog");
+		return;
+	}
+
+	var groups = '';
+	var profile_group_id = [];
+	if (group_obj.profile_group_data !== undefined) {
+		localStorage.setItem("num_groups", group_obj.profile_group_data.length);
+		for (var i = 0; i < group_obj.profile_group_data.length; i++) {
+			profile_group_id[i] = group_obj.profile_group_data[i].profile_group_id;
+			var group = group_obj.profile_group_data[i].group;
+			var group_tag = '';
+			group_tag = '<div class="col-md-1" style="min-width: 870px">' + group + '</div>';
+			groups = groups +
+			'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
+				'<div class="list-group">' +
+					'<div class="col-md-1" style="width: 3px">' +
+						'<input type="checkbox" id="checkbox' + i + '">' +
+					'</div>' +
+					group_tag +
+				'</div>' +
+			'</a>';
+		}
+	}
+	localStorage.setItem("profile_group_id", profile_group_id);
+	document.getElementById("group_id").innerHTML = groups;
+}
+
+function remove_groups() {
+	var remove_ind = check_for_chosen_group();
+	if (remove_ind === true) {
+		my_wami_alert("", "", "", "group");
+		$('#remove_group').modal();
+	}
+	if (remove_ind === false) {
+		my_wami_alert("No Group(s) were chosen to remove. Please check a group to remove.", "alert-warning", "Warning! ", "group");
+	}
+}
+
+function check_for_chosen_group() {
+	var group_ids_to_remove = [];
+	var remove_index = 0;
+	var profile_group_id = (localStorage.getItem("profile_group_id")).split(",");
+	var num_groups = localStorage.getItem("num_groups");
+	for (var i = 0; i < num_groups; i++) {
+		var checkbox = "group_checkbox" + i;
+		if (document.getElementById(checkbox).checked) {
+			group_ids_to_remove[remove_index] =  profile_group_id[i];
+			remove_index++;
+		}
+	}
+	if (remove_index > 0) {
+		localStorage.setItem("group_ids_to_remove", group_ids_to_remove);
+		return true;
+	}
+	return false;
+}
+
+function update_for_delete_group() {
+	var group_ids_to_remove = localStorage.getItem("group_ids_to_remove");
+	var params = "group_ids_to_remove=" + group_ids_to_remove;
+	var url = "update_for_delete_group.php";
+	processData(params, url, "result", false);
+	try {
+		var group_data = localStorage.getItem("result");
+		var group_obj = JSON.parse(group_data);
+	} catch (err) {
+		console.log(err.message)
+		my_wami_alert("update_for_delete_group: Error deleting Group data = " + err.message, "alert-danger", "Error!  ", "remove_group");
+		return false;
+	}
+
+	var ret_code = group_obj.ret_code;
+	if (ret_code === -1) {
+		my_wami_alert(group_obj[0].message, "alert-danger", "Alert! ", "remove_group");
+	}
+	else {
+		my_wami_alert("Group(s) succsessfuly removed. ", "alert-success", "Success!  ", "remove_group");
+		refresh_group();
+	}
+	return false;
+}
+
+function clean_remove_group_dialog() {
+	my_wami_alert("", "", "", "remove_group");
+}
 //
 // End Group processing
 // -----------------------------------------------
@@ -828,9 +938,21 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 			return;
 		}
 	}
+	if (message_type === "group")  {
+		if (message === '') {
+			document.getElementById("group_alerts").innerHTML = message;
+			return;
+		}
+	}
 	if (message_type === "remove_flash")  {
 		if (message === '') {
 			document.getElementById("remove_flash_alert").innerHTML = message;
+			return;
+		}
+	}
+	if (message_type === "remove_group")  {
+		if (message === '') {
+			document.getElementById("remove_group_alert").innerHTML = message;
 			return;
 		}
 	}
@@ -845,5 +967,7 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 	if (message_type === "flash_dialog") document.getElementById("flash_dialog_alerts").innerHTML = alert_str;
 	if (message_type === "group_dialog") document.getElementById("group_dialog_alerts").innerHTML = alert_str;
 	if (message_type === "flash") document.getElementById("flash_alerts").innerHTML = alert_str;
+	if (message_type === "group") document.getElementById("group_alerts").innerHTML = alert_str;
 	if (message_type === "remove_flash") document.getElementById("remove_flash_alert").innerHTML = alert_str;
+	if (message_type === "remove_group") document.getElementById("remove_group_alert").innerHTML = alert_str;
 }

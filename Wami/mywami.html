@@ -258,6 +258,7 @@
 						<h6 style="margin-left: 15px; margin-bottom: 5px"> Remove </h6>
 					</div>
 					<span class="span-scroll-flash" id="flash_id"></span>
+					<br><hr>
 					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-left: 5px" onclick="add_flash()">Add Flash</button>
 					<button type="button" class="btn btn-sm btn-danger" style="margin-top: 10px; margin-left: 25px" onclick="remove_checked_flash()">Remove Checked</button>
 					<div class="text-left" id="flash_alerts" style="margin-top: 20px; width: 750px"></div>
@@ -277,13 +278,15 @@
 				</h3>
 			</div>
 			<div id="collapseGroups" class="panel-collapse collapse out">
-				<div class="panel-body" style="padding-top: 5px">
+				<div class="panel-body" style="padding-top: 5px; background-color: #f3f3f3">
 					<div>
 						<h6 style="margin-left: 15px; margin-bottom: 5px"> Remove </h6>
 					</div>
 					<span class="span-scroll-groups" id="group_id"></span>
+					<br><hr>
 					<button type="button" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-left: 5px"  onclick="add_group()">Add Group</button>
-					<button type="button" class="btn btn-sm btn-danger" style="margin-top: 10px; margin-left: 25px">Remove Checked</button>
+					<button type="button" class="btn btn-sm btn-danger" style="margin-top: 10px; margin-left: 25px" onclick="remove_groups()">Remove Checked</button>
+					<div class="text-left" id="group_alerts" style="margin-top: 20px; width: 750px"></div>
 				</div>
 			</div>
 		</div>
@@ -758,6 +761,30 @@
 						</span>
 					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
 					<div class="text-left" id="remove_flash_alert" style="margin-top: 50px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal remove Group dialog-->
+	<div class="modal fade" id="remove_group" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #d9d9d9">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Group(s)</span></strong></h4>
+				</div>
+				<div class="modal-body">
+					<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen group(s).</h5>
+					<h5>Are you sure?</h5>
+				</div>
+				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+						<span class="pull-left">
+							<button type="button" class="btn btn-danger" onclick="return update_for_delete_group()">Remove</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal" onClick="clean_remove_group_dialog()">Close</button>
+						</span>
+					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
+					<div class="text-left" id="remove_group_alert" style="margin-top: 50px;"></div>
 				</div>
 			</div>
 		</div>

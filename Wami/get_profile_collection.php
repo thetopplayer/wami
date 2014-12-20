@@ -45,7 +45,7 @@ if (mysqli_num_rows($result) > 0) {
     return;
 }
 //Get group data
-$sql = "SELECT pg.group, pga.identity_profile_id FROM profile_group_assign pga, profile_group pg
+$sql = "SELECT pg.group_name, pga.identity_profile_id FROM profile_group_assign pga, profile_group pg
          WHERE assign_to_identity_profile_id = pg.identity_profile_id AND pg.profile_group_id = pga.profile_group_id
          AND pga.delete_ind = 0 AND assign_to_identity_profile_id = " .$identityProfileId. "
          ORDER BY identity_profile_id ASC, pga.profile_group_id ASC";
@@ -56,7 +56,7 @@ $response["profile_group_assign_data"] = array();
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_array($result)) {
         $group = array();
-        $group["group"] = $row["group"];
+        $group["group"] = $row["group_name"];
         $group["identity_profile_id"] = $row["identity_profile_id"];
         array_push($response["profile_group_assign_data"], $group);
     }
