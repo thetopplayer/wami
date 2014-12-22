@@ -133,6 +133,43 @@ function loadData(identity_profile_id) {
 	}
 	list += "</span></div></div>";
 	document.getElementById("list_id").innerHTML=list;
+
+	create_group_dropdown(identity_profile_id)
+}
+
+function create_group_dropdown (identity_profile_id) {
+	var params = "identity_profile_id=" + identity_profile_id;
+	var url = "get_profile_group_data.php";
+	processData(params, url, "result", false);
+	try {
+		var group_data = localStorage.getItem("result");
+		var group_obj = JSON.parse(group_data);
+	} catch (err) {
+		console.log(err.message)
+		my_wami_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
+		return;
+	}
+
+	var ret_code = group_obj.ret_code;
+	if (ret_code === -1) {
+		my_wami_alert(group_obj[0].message, "alert-danger", "Alert! ", "group_dialog");
+		return;
+	}
+
+	var group = '';
+	var group_id = [];
+	var group_option = '';
+	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" >';
+	group_option = group_option + '<option value="All">All Groups</option>';
+	if (group_obj.profile_group_data !== undefined) {
+		for (var i = 0; i < group_obj.profile_group_data.length; i++) {
+			group_id[i] = group_obj.profile_group_data[i].profile_group_id;
+			group = group_obj.profile_group_data[i].group;
+			group_option = group_option + '<option value=' + '"' + group_id[i] + '">' + group + '</option>';
+		}
+	}
+	group_dropdown = group_dropdown + group_option + '</select>';
+	document.getElementById("groupDropDown").innerHTML = group_dropdown;
 }
 
 function showExtendedInfo(id) {
