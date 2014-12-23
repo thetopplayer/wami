@@ -159,7 +159,7 @@ function create_group_dropdown (identity_profile_id) {
 	var group = '';
 	var group_id = [];
 	var group_option = '';
-	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" >';
+	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" onchange="filter_list(this.value)>';
 	group_option = group_option + '<option value="All">All Groups</option>';
 	if (group_obj.profile_group_data !== undefined) {
 		for (var i = 0; i < group_obj.profile_group_data.length; i++) {
@@ -170,6 +170,10 @@ function create_group_dropdown (identity_profile_id) {
 	}
 	group_dropdown = group_dropdown + group_option + '</select>';
 	document.getElementById("groupDropDown").innerHTML = group_dropdown;
+}
+
+function filter_list(selected_value) {
+
 }
 
 function showExtendedInfo(id) {
