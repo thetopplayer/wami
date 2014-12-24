@@ -125,9 +125,8 @@ function loadData(identity_profile_id) {
 					'</div>' +
 				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +
 					'<div style="vertical-align: top">' +
-						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="' + i + '" onclick="showExtendedInfo(' + i + ')" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
-						'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px; margin-bottom: 10px">Assign to Groups</button>' +
-						//'<button type="button" class="btn btn-sm btn-primary btn-block" style="width: 120px">Rate/Review Profile</button>' +
+						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="showExtendedInfo(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="showGroupAssignDialog(this.value)" value="' + list_identity_profile_id + '">Assign to Groups</button>' +
 					'</div>' +
 				'</div></div><hr>';
 	}
@@ -159,7 +158,7 @@ function create_group_dropdown (identity_profile_id) {
 	var group = '';
 	var group_id = [];
 	var group_option = '';
-	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" onchange="filter_list(this.value)>';
+	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" onchange="filter_list(this.value)">';
 	group_option = group_option + '<option value="All">All Groups</option>';
 	if (group_obj.profile_group_data !== undefined) {
 		for (var i = 0; i < group_obj.profile_group_data.length; i++) {
@@ -169,6 +168,7 @@ function create_group_dropdown (identity_profile_id) {
 		}
 	}
 	group_dropdown = group_dropdown + group_option + '</select>';
+	localStorage.setItem("group_data", group_data);
 	document.getElementById("groupDropDown").innerHTML = group_dropdown;
 }
 
@@ -176,8 +176,30 @@ function filter_list(selected_value) {
 
 }
 
-function showExtendedInfo(id) {
-	var selected_profile_id = document.getElementById(id).value;
+function showGroupAssignDialog(selected_profile_id) {
+	get_group_list();
+	var profile_name = localStorage.getItem("current_profile_name");
+	var assign_group_title = '<h4 class="modal-title">Profile: ' +  '<span style="color: #f87c08">' + profile_name + '</span>' + ' Groups</h4>';
+	document.getElementById("assign_group_title").innerHTML = assign_group_title;
+	$('#assign_group').modal();
+}
+
+function get_group_list() {
+	var group_data = localStorage.getItem("group_data");
+	var group_obj = JSON.parse(group_data)
+	var group_list = '';
+	for (var i = 0; i < group_obj.profile_group_data.length; i++) {
+		var group_name = group_obj.profile_group_data[i].group;
+		group_list = group_list +
+		'<label style="margin-right: 10px">' +
+			'<input id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' +  group_name +
+		'</label>';
+		//group_list = group_list + "<h4>" + group_name + "</h4><br>"
+	}
+	document.getElementById("profile_group_list").innerHTML = group_list;
+}
+
+function showExtendedInfo(selected_profile_id) {
 	localStorage.setItem("selected_profile_id", selected_profile_id);
 
 	var element_id = document.getElementById("identityProfileList");

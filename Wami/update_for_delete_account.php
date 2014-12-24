@@ -61,8 +61,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete profile_group_assign
-            $sql =  "UPDATE profile_group_assign SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id. "
-             OR assign_to_identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profile_group_assign SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;

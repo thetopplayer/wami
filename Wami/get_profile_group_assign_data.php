@@ -12,8 +12,8 @@ $db = new DB_CONNECT();
 $con = $db->connect();
 
 $sql = "SELECT pg.group, pga.identity_profile_id FROM profile_group_assign pga, profile_group pg
-         WHERE assign_to_identity_profile_id = pg.identity_profile_id AND pg.profile_group_id = pga.profile_group_id
-         AND assign_to_identity_profile_id =
+         WHERE pga.identity_profile_id = pg.identity_profile_id AND pg.profile_group_id = pga.profile_group_id
+         AND pga.identity_profile_id =
         (SELECT identity_profile_id FROM user u, identity_profile ip
                   WHERE  u.user_id = " .$userId. " AND u.user_id = ip.user_id AND default_profile_ind=1)
                   ORDER BY identity_profile_id ASC, pga.profile_group_id ASC";

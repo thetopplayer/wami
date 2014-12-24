@@ -46,8 +46,8 @@ if (mysqli_num_rows($result) > 0) {
 }
 //Get group data
 $sql = "SELECT pg.group_name, pga.identity_profile_id FROM profile_group_assign pga, profile_group pg
-         WHERE assign_to_identity_profile_id = pg.identity_profile_id AND pg.profile_group_id = pga.profile_group_id
-         AND pga.delete_ind = 0 AND assign_to_identity_profile_id = " .$identityProfileId. "
+         WHERE pga.identity_profile_id = pg.identity_profile_id AND pg.profile_group_id = pga.profile_group_id
+         AND pga.delete_ind = 0 AND pga.identity_profile_id = " .$identityProfileId. "
          ORDER BY identity_profile_id ASC, pga.profile_group_id ASC";
 
 $result = mysqli_query($con, $sql)  or  die(mysqli_error($con));
