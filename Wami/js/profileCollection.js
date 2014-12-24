@@ -126,7 +126,7 @@ function loadData(identity_profile_id) {
 				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +
 					'<div style="vertical-align: top">' +
 						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="showExtendedInfo(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
-						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="showGroupAssignDialog(this.value)" value="' + list_identity_profile_id + '">Assign to Groups</button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Assign to Groups</button>' +
 					'</div>' +
 				'</div></div><hr>';
 	}
@@ -145,13 +145,13 @@ function create_group_dropdown (identity_profile_id) {
 		var group_obj = JSON.parse(group_data);
 	} catch (err) {
 		console.log(err.message)
-		my_wami_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
+		my_profile_collection_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
 		return;
 	}
 
 	var ret_code = group_obj.ret_code;
 	if (ret_code === -1) {
-		my_wami_alert(group_obj[0].message, "alert-danger", "Alert! ", "group_dialog");
+		my_profile_collection_alert(group_obj[0].message, "alert-danger", "Alert! ", "group_dialog");
 		return;
 	}
 
@@ -176,10 +176,29 @@ function filter_list(selected_value) {
 
 }
 
-function showGroupAssignDialog(selected_profile_id) {
+function show_group_assign_dialog(selected_profile_id) {
+	processData("identity_profile_id=" + selected_profile_id, "get_selected_profile_name.php", "result", false);
+	try {
+		var profile_name_data = localStorage.getItem("result");
+		var profile_name_obj = JSON.parse(profile_name_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_selected_profile_name: Error getting Profile Name = " + err.message, "alert-danger", "Error!  ", "group_assign_dialog");
+		return;
+	}
+
+	var ret_code = profile_name_obj.ret_code;
+	if (ret_code === -1) {
+		my_profile_collection_alert(profile_name_obj[0].message, "alert-danger", "Alert! ", "group_assign_dialog");
+		return;
+	}
+	var selected_profile_name = profile_name_obj.profile_name;
+
 	get_group_list();
 	var profile_name = localStorage.getItem("current_profile_name");
-	var assign_group_title = '<h4 class="modal-title">Profile: ' +  '<span style="color: #f87c08">' + profile_name + '</span>' + ' Groups</h4>';
+	var assign_group_title = '<h4 class="modal-title">Assign/Remove ' +
+		'<span style="color: #f87c08">' + profile_name + '</span>' + ' Groups to/from ' +
+		'<span style="color: #f87c08">' + selected_profile_name + '</span></h4>' ;
 	document.getElementById("assign_group_title").innerHTML = assign_group_title;
 	$('#assign_group').modal();
 }
@@ -194,7 +213,6 @@ function get_group_list() {
 		'<label style="margin-right: 10px">' +
 			'<input id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' +  group_name +
 		'</label>';
-		//group_list = group_list + "<h4>" + group_name + "</h4><br>"
 	}
 	document.getElementById("profile_group_list").innerHTML = group_list;
 }
@@ -242,7 +260,7 @@ function removeProfiles() {
 	try {
 		var collection_data = localStorage.getItem("ret_code");
 		var collection_obj = JSON.parse(collection_data);
-} catch (err) {
+	} catch (err) {
 		console.log(err.message)
 		my_profile_collection_alert("update_for_delete_profile_collection: Problem deleting profiles = " + err.message, "alert-danger", "Severe Error!  ", "list");
 		return;
@@ -588,7 +606,7 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 
 	if (message_placement === "no_selected_profiles")  {
 		if (message === '') {
-			document.getElementById("no_profile_selected_alert").innerHTML = message;
+			document.getElementById("profile_collection_alert").innerHTML = message;
 			return;
 		}
 	}
@@ -618,6 +636,7 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	if (message_placement === "remove") document.getElementById("remove_alert_message").innerHTML = full_message;
 	if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
-	if (message_placement === "no_selected_profiles") document.getElementById("no_profile_selected_alert").innerHTML = full_message;
+	if (message_placement === "no_selected_profiles") document.getElementById("profile_collection_alert").innerHTML = full_message;
+	if (message_placement === "group_dialog") document.getElementById("profile_collection_alert").innerHTML = full_message;
+	if (message_placement === "group_assign_dialog") document.getElementById("assign_group_alert_message").innerHTML = full_message;
 }
-
