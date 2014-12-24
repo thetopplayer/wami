@@ -810,10 +810,13 @@ function refresh_group() {
 		my_wami_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
 		return;
 	}
-
 	var ret_code = group_obj.ret_code;
 	if (ret_code === -1) {
 		my_wami_alert(group_obj[0].message, "alert-danger", "Alert! ", "group_dialog");
+		return;
+	}
+	if (ret_code === 1) {
+		my_wami_alert(group_obj[0].message, "alert-info", "Alert! ", "group_dialog");
 		return;
 	}
 

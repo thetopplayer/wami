@@ -58,7 +58,6 @@ function loadData(identity_profile_id) {
 	localStorage.setItem("extended_info_ind", false);
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
 	processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
-
 	try {
 		var wami_data = localStorage.getItem("profile_collection");
 		var wami_obj = JSON.parse(wami_data);
@@ -67,12 +66,17 @@ function loadData(identity_profile_id) {
 		my_profile_collection_alert("get_profile_collection: Problem getting profile collections = " + err.message, "alert-danger", "Severe Error!  ", "list");
 		return;
 	}
-
 	var profile_ret_code = wami_obj.profile_ret_code;
 	if (profile_ret_code === 1) {
 		var message = wami_obj.message;
-		my_profile_collection_alert (message, "alert-danger", "Alert! ", "list");
+		my_profile_collection_alert (message, "alert-info", "Alert! ", "list");
 	}
+	var group_ret_code = wami_obj.group_ret_code;
+	if (group_ret_code === 1) {
+		var message = wami_obj.message;
+		my_profile_collection_alert (message, "alert-info", "Alert! ", "list");
+	}
+
 
 	var list = '<div class="col-sm-7" style="max-width: 800px; min-width: 800px"><div class="panel panel-primary" style="border-color: #4c4c4c">' +
 			'<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D"><h3 class="panel-title">Profile Collection</h3></div><span class="span-scroll-wami-list">';
@@ -125,7 +129,7 @@ function loadData(identity_profile_id) {
 					'</div>' +
 				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +
 					'<div style="vertical-align: top">' +
-						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="showExtendedInfo(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
+						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="show_extended_info(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
 						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Assign to Groups</button>' +
 					'</div>' +
 				'</div></div><hr>';
@@ -148,17 +152,20 @@ function create_group_dropdown (identity_profile_id) {
 		my_profile_collection_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
 		return;
 	}
-
 	var ret_code = group_obj.ret_code;
 	if (ret_code === -1) {
 		my_profile_collection_alert(group_obj[0].message, "alert-danger", "Alert! ", "group_dialog");
+		return;
+	}
+	if (ret_code === 1) {
+		my_profile_collection_alert(group_obj[0].message, "alert-info", "Alert! ", "group_dialog");
 		return;
 	}
 
 	var group = '';
 	var group_id = [];
 	var group_option = '';
-	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" onchange="filter_list(this.value)">';
+	var group_dropdown = '<select name="groupDropDownList" id="groupDropDownList" class="dropdown-wami" onchange="filter_profile_collection(this.value)">';
 	group_option = group_option + '<option value="All">All Groups</option>';
 	if (group_obj.profile_group_data !== undefined) {
 		for (var i = 0; i < group_obj.profile_group_data.length; i++) {
@@ -172,7 +179,7 @@ function create_group_dropdown (identity_profile_id) {
 	document.getElementById("groupDropDown").innerHTML = group_dropdown;
 }
 
-function filter_list(selected_value) {
+function filter_profile_collection(selected_value) {
 
 }
 
@@ -186,10 +193,13 @@ function show_group_assign_dialog(selected_profile_id) {
 		my_profile_collection_alert("get_selected_profile_name: Error getting Profile Name = " + err.message, "alert-danger", "Error!  ", "group_assign_dialog");
 		return;
 	}
-
 	var ret_code = profile_name_obj.ret_code;
 	if (ret_code === -1) {
 		my_profile_collection_alert(profile_name_obj[0].message, "alert-danger", "Alert! ", "group_assign_dialog");
+		return;
+	}
+	if (ret_code === 1) {
+		my_profile_collection_alert(profile_name_obj[0].message, "alert-info", "Alert! ", "group_assign_dialog");
 		return;
 	}
 	var selected_profile_name = profile_name_obj.profile_name;
@@ -197,13 +207,38 @@ function show_group_assign_dialog(selected_profile_id) {
 	get_group_list();
 	var profile_name = localStorage.getItem("current_profile_name");
 	var assign_group_title = '<h4 class="modal-title">Assign/Remove ' +
-		'<span style="color: #f87c08">' + profile_name + '</span>' + ' Groups to/from ' +
+		'<span style="color: #f87c08">' + profile_name + '</span>' + ' groups to/from ' +
 		'<span style="color: #f87c08">' + selected_profile_name + '</span></h4>' ;
 	document.getElementById("assign_group_title").innerHTML = assign_group_title;
 	$('#assign_group').modal();
 }
 
 function get_group_list() {
+	var identity_profile_id = localStorage.getItem("identity_profile_id");
+	var params = "identity_profile_id=" + identity_profile_id;
+	var url = "get_profile_group_assign_data.php";
+	processData(params, url, "result", false);
+	try {
+		var group_assign_data = localStorage.getItem("result");
+		var group_assign_obj = JSON.parse(group_assign_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_profile_group_assign_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
+		return;
+	}
+	var ret_code = group_assign_obj.ret_code;
+	if (ret_code === -1) {
+		my_profile_collection_alert(group_assign_obj.message, "alert-danger", "Alert! ", "group_dialog");
+		return;
+	}
+	if (ret_code === 1) {
+		my_profile_collection_alert(group_assign_obj.message, "alert-info", "Alert! ", "group_dialog");
+		return;
+	}
+	var selected_group_name = group_assign_obj.profile_group_assign_data[0].group;
+
+
+
 	var group_data = localStorage.getItem("group_data");
 	var group_obj = JSON.parse(group_data)
 	var group_list = '';
@@ -217,7 +252,7 @@ function get_group_list() {
 	document.getElementById("profile_group_list").innerHTML = group_list;
 }
 
-function showExtendedInfo(selected_profile_id) {
+function show_extended_info(selected_profile_id) {
 	localStorage.setItem("selected_profile_id", selected_profile_id);
 
 	var element_id = document.getElementById("identityProfileList");
