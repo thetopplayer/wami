@@ -55,6 +55,7 @@ $(document).ready(function() {
 });
 
 function loadData(identity_profile_id) {
+	my_profile_collection_alert("", "", "", "group_data");
 	localStorage.setItem("extended_info_ind", false);
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
 	processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
@@ -74,7 +75,7 @@ function loadData(identity_profile_id) {
 	var group_ret_code = wami_obj.group_ret_code;
 	if (group_ret_code === 1) {
 		var message = wami_obj.message;
-		my_profile_collection_alert (message, "alert-info", "Alert! ", "list");
+		my_profile_collection_alert (message, "alert-info", "Alert! ", "group_data");
 	}
 
 
@@ -183,6 +184,32 @@ function filter_profile_collection(selected_value) {
 
 }
 
+function assign_group() {
+	var selected_profile_id = localStorage.getItem("selected_profile_id");
+	var selected_group_list = get_checked_groups();
+}
+
+function get_checked_groups() {
+	my_profile_collection_alert("", "", "", "assign_group_dialog");
+	var num_groups = localStorage.getItem("num_groups");
+	var selected_group_list = [];
+	var group_seleceted = false;
+	var selected_index = 0;
+	for (var i = 0; i < num_groups; i++) {
+		var checkbox_id = "group_name" + i;
+		if (document.getElementById(checkbox_id).checked) {
+			group_seleceted = true;
+			selected_group_list[selected_index] = document.getElementById(checkbox_id).value;
+			selected_index++;
+		}
+	}
+	if (group_seleceted) {
+		return selected_group_list;
+	}
+	my_profile_collection_alert("No Groups selected. Please select groups(s) to assign.", "alert-warning", "Info Alert! ", "assign_group_dialog");
+	return null;
+}
+
 function show_group_assign_dialog(selected_profile_id) {
 	processData("identity_profile_id=" + selected_profile_id, "get_selected_profile_name.php", "result", false);
 	try {
@@ -210,10 +237,12 @@ function show_group_assign_dialog(selected_profile_id) {
 		'<span style="color: #f87c08">' + profile_name + '</span>' + ' groups to/from ' +
 		'<span style="color: #f87c08">' + selected_profile_name + '</span></h4>' ;
 	document.getElementById("assign_group_title").innerHTML = assign_group_title;
+	localStorage.setItem("selected_profile_id", selected_profile_id);
 	$('#assign_group').modal();
 }
 
 function get_group_list(selected_profile_id) {
+	my_profile_collection_alert("", "", "", "assign_group_dialog");
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var params = "identity_profile_id=" + identity_profile_id + "&selected_profile_id=" + selected_profile_id;
 	var url = "get_profile_group_assign_data.php";
@@ -232,7 +261,7 @@ function get_group_list(selected_profile_id) {
 		return;
 	}
 	if (ret_code === 1) {
-		my_profile_collection_alert(group_assign_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
+		//my_profile_collection_alert(group_assign_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
 	}
 
 	var selected_group_ids = [];
@@ -245,7 +274,8 @@ function get_group_list(selected_profile_id) {
 	var group_obj = JSON.parse(group_data)
 	var group_list = '';
 	var selected = false;
-	for (var i = 0; i < group_obj.profile_group_data.length; i++) {
+	var num_groups = group_obj.profile_group_data.length;
+	for (var i = 0; i < num_groups; i++) {
 		var group_id = group_obj.profile_group_data[i].profile_group_id;
 		var group_name = group_obj.profile_group_data[i].group;
 		for (var j = 0;  j < num_selected_groups; j++) {
@@ -256,17 +286,18 @@ function get_group_list(selected_profile_id) {
 		if (selected === true) {
 			group_list = group_list +
 			'<label style="margin-right: 10px">' +
-				'<input checked id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' + group_name +
+				'<input checked id="group_name' + i + '" name="group_name' + i + '" value="' + group_id + '" type="checkbox"> ' + group_name +
 			'</label>';
 		}
 		else {
 			group_list = group_list +
 			'<label style="margin-right: 10px">' +
-				'<input id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' + group_name +
+				'<input id="group_name' + i + '" name="group_name' + i + '" value="' + group_id + '" type="checkbox"> ' + group_name +
 			'</label>';
 		}
 		selected = false;
 	}
+	localStorage.setItem("num_groups", num_groups);
 	document.getElementById("profile_group_list").innerHTML = group_list;
 }
 
@@ -657,12 +688,19 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 function my_profile_collection_alert (message, message_type_class, message_type_string, message_placement) {
 	var full_message = '';
 
-	if (message_placement === "no_selected_profiles")  {
+	if ((message_placement === "no_selected_profiles") || (message_placement === "group_dialog")) {
 		if (message === '') {
 			document.getElementById("profile_collection_alert").innerHTML = message;
 			return;
 		}
 	}
+	if (message_placement === "assign_group_dialog") {
+		if (message === '') {
+			document.getElementById("assign_group_alert_message").innerHTML = message;
+			return;
+		}
+	}
+
 
 	if (message_placement === "transmit") {
 		if (Array.isArray(message)) {
@@ -688,6 +726,7 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	if (message_placement === "remove") document.getElementById("remove_alert_message").innerHTML = full_message;
+	if (message_placement === "group_data") 	document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
 	if (message_placement === "no_selected_profiles") document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "group_dialog") document.getElementById("profile_collection_alert").innerHTML = full_message;
