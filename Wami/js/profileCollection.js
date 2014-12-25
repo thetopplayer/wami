@@ -204,7 +204,7 @@ function show_group_assign_dialog(selected_profile_id) {
 	}
 	var selected_profile_name = profile_name_obj.profile_name;
 
-	get_group_list();
+	get_group_list(selected_profile_id);
 	var profile_name = localStorage.getItem("current_profile_name");
 	var assign_group_title = '<h4 class="modal-title">Assign/Remove ' +
 		'<span style="color: #f87c08">' + profile_name + '</span>' + ' groups to/from ' +
@@ -213,9 +213,9 @@ function show_group_assign_dialog(selected_profile_id) {
 	$('#assign_group').modal();
 }
 
-function get_group_list() {
+function get_group_list(selected_profile_id) {
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
-	var params = "identity_profile_id=" + identity_profile_id;
+	var params = "identity_profile_id=" + identity_profile_id + "&selected_profile_id=" + selected_profile_id;
 	var url = "get_profile_group_assign_data.php";
 	processData(params, url, "result", false);
 	try {
@@ -232,22 +232,40 @@ function get_group_list() {
 		return;
 	}
 	if (ret_code === 1) {
-		my_profile_collection_alert(group_assign_obj.message, "alert-info", "Alert! ", "group_dialog");
-		return;
+		my_profile_collection_alert(group_assign_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
 	}
-	var selected_group_name = group_assign_obj.profile_group_assign_data[0].group;
 
-
+	var selected_group_ids = [];
+	var num_selected_groups = group_assign_obj.profile_group_assign_data.length;
+	for (var j = 0 ; j < num_selected_groups; j++) {
+		selected_group_ids[j] = group_assign_obj.profile_group_assign_data[j].profile_group_id;
+	}
 
 	var group_data = localStorage.getItem("group_data");
 	var group_obj = JSON.parse(group_data)
 	var group_list = '';
+	var selected = false;
 	for (var i = 0; i < group_obj.profile_group_data.length; i++) {
+		var group_id = group_obj.profile_group_data[i].profile_group_id;
 		var group_name = group_obj.profile_group_data[i].group;
-		group_list = group_list +
-		'<label style="margin-right: 10px">' +
-			'<input id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' +  group_name +
-		'</label>';
+		for (var j = 0;  j < num_selected_groups; j++) {
+			if (group_id === selected_group_ids[j]) {
+				selected = true;
+			}
+		}
+		if (selected === true) {
+			group_list = group_list +
+			'<label style="margin-right: 10px">' +
+				'<input checked id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' + group_name +
+			'</label>';
+		}
+		else {
+			group_list = group_list +
+			'<label style="margin-right: 10px">' +
+				'<input id="group_name' + i + '" name="group_name' + i + '" value="' + group_name + '" type="checkbox"> ' + group_name +
+			'</label>';
+		}
+		selected = false;
 	}
 	document.getElementById("profile_group_list").innerHTML = group_list;
 }
@@ -673,5 +691,5 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 	if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
 	if (message_placement === "no_selected_profiles") document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "group_dialog") document.getElementById("profile_collection_alert").innerHTML = full_message;
-	if (message_placement === "group_assign_dialog") document.getElementById("assign_group_alert_message").innerHTML = full_message;
+	if (message_placement === "assign_group_dialog") document.getElementById("assign_group_alert_message").innerHTML = full_message;
 }
