@@ -184,29 +184,61 @@ function filter_profile_collection(selected_value) {
 
 }
 
-function assign_group() {
+function manage_assign_group(manage_state) {
 	var selected_profile_id = localStorage.getItem("selected_profile_id");
-	var selected_group_list = get_checked_groups();
+	var selected_group_id_list = get_checked_groups();
+	selected_group_id_list.join(',');
+	if (selected_group_id_list === null) {
+		my_profile_collection_alert("No Groups selected. Please select groups(s) to assign.", "alert-warning", "Info Alert! ", "assign_group_dialog");
+		return;
+	}
+
+	var params = "selected_profile_id=" + selected_profile_id + "&selected_group_id_list=" + selected_group_id_list + "&manage_state=" + manage_state;
+	var url = "manage_assign_group.php";
+	processData(params, url, "result", false);
+	try {
+		var manage_assign_group_data = localStorage.getItem("result");
+		var manage_assign_group_obj = JSON.parse(manage_assign_group_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("manage_assign_group: Error assigning/removing group data = " + err.message, "alert-danger", "Error!  ", "assign_group_dialog");
+		return;
+	}
+	var ret_code = manage_assign_group_obj.ret_code;
+	if (ret_code === -1) {
+		my_profile_collection_alert(manage_assign_group_obj.message, "alert-danger", "Alert! ", "assign_group_dialog");
+		return;
+	}
+	if (ret_code === 1) {
+		my_profile_collection_alert(manage_assign_group_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
+		return;
+	}
+	var current_profile_id = localStorage.getItem("current_identity_profile_id");
+	loadData(current_profile_id);
+	my_profile_collection_alert(manage_assign_group_obj.message, "alert-success","Success! ", "assign_group_dialog");
+}
+
+function remove_group() {
+
 }
 
 function get_checked_groups() {
 	my_profile_collection_alert("", "", "", "assign_group_dialog");
 	var num_groups = localStorage.getItem("num_groups");
-	var selected_group_list = [];
-	var group_seleceted = false;
+	var selected_group_id_list = [];
+	var group_selected = false;
 	var selected_index = 0;
 	for (var i = 0; i < num_groups; i++) {
 		var checkbox_id = "group_name" + i;
 		if (document.getElementById(checkbox_id).checked) {
-			group_seleceted = true;
-			selected_group_list[selected_index] = document.getElementById(checkbox_id).value;
+			group_selected = true;
+			selected_group_id_list[selected_index] = document.getElementById(checkbox_id).value;
 			selected_index++;
 		}
 	}
-	if (group_seleceted) {
-		return selected_group_list;
+	if (group_selected) {
+		return selected_group_id_list;
 	}
-	my_profile_collection_alert("No Groups selected. Please select groups(s) to assign.", "alert-warning", "Info Alert! ", "assign_group_dialog");
 	return null;
 }
 
