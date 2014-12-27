@@ -19,6 +19,7 @@ $(document).ready(function(){
 });
 
 function loadData(identity_profile_id) {
+	my_wami_alert("", "", "", "header");
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 

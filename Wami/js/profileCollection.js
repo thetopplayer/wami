@@ -56,11 +56,20 @@ $(document).ready(function() {
 
 function loadData(identity_profile_id) {
 	my_profile_collection_alert("", "", "", "group_data");
+	my_profile_collection_alert("", "", "", "group_data");
 	localStorage.setItem("extended_info_ind", false);
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 	localStorage.setItem("identity_profile_id", identity_profile_id);
-	processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
+
+	var group_filter = localStorage.getItem("profile_group_id");
+	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
+		processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
+	}
+	else {
+		var profile_group_id = localStorage.getItem("profile_group_id");
+		processData("identity_profile_id=" + identity_profile_id + "&profile_group_id=" + profile_group_id, "get_profile_collection_filtered.php", "profile_collection", false);
+	}
 	try {
 		var wami_data = localStorage.getItem("profile_collection");
 		var wami_obj = JSON.parse(wami_data);
@@ -140,7 +149,10 @@ function loadData(identity_profile_id) {
 	list += "</span></div></div>";
 	document.getElementById("list_id").innerHTML=list;
 
-	create_group_dropdown(identity_profile_id)
+	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
+		create_group_dropdown(identity_profile_id);
+	}
+	localStorage.removeItem("profile_group_id");
 }
 
 function create_group_dropdown (identity_profile_id) {
@@ -183,7 +195,9 @@ function create_group_dropdown (identity_profile_id) {
 }
 
 function filter_profile_collection(selected_value) {
-
+	localStorage.setItem("profile_group_id", selected_value);
+	var current_identity_profile_id = localStorage.getItem("current_identity_profile_id");
+	loadData(current_identity_profile_id);
 }
 
 function manage_groups(manage_state) {
@@ -731,7 +745,6 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 			return;
 		}
 	}
-
 
 	if (message_placement === "transmit") {
 		if (Array.isArray(message)) {
