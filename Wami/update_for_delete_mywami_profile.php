@@ -64,7 +64,7 @@ try {
     }
 
     //Update for delete profile_group_assign
-    $sql =  "UPDATE profile_group_assign SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+    $sql =  "UPDATE profile_group_assign SET delete_ind = 1 WHERE assign_to_identity_profile_id = " .$identity_profile_id;
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["ret_code"] = 1;
@@ -93,6 +93,54 @@ try {
     if (!$result) {
         $response["ret_code"] = 1;
         $response["message"] = "update_for_delete_mywami_profile.php: Problem updating identity_profiler table. MySQL Error: " .mysqli_error($con);
+        $con->rollback();
+        $con->autocommit(TRUE);
+        echo json_encode($response);
+        exit(-1);
+    }
+
+    //Update for delete image media type
+    $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    if (!$result) {
+        $response["ret_code"] = 1;
+        $response["message"] = "update_for_delete_mywami_profile.php: Problem updating image gallery data. MySQL Error: " .mysqli_error($con);
+        $con->rollback();
+        $con->autocommit(TRUE);
+        echo json_encode($response);
+        exit(-1);
+    }
+
+    //Update for delete audio media type
+    $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    if (!$result) {
+        $response["ret_code"] = 1;
+        $response["message"] = "update_for_delete_mywami_profile.php: Problem updating audio file data. MySQL Error: " .mysqli_error($con);
+        $con->rollback();
+        $con->autocommit(TRUE);
+        echo json_encode($response);
+        exit(-1);
+    }
+
+    //Update for delete text media type
+    $sql =  "UPDATE profiler_text_files SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    if (!$result) {
+        $response["ret_code"] = 1;
+        $response["message"] = "update_for_delete_mywami_profile.php: Problem updating text file data. MySQL Error: " .mysqli_error($con);
+        $con->rollback();
+        $con->autocommit(TRUE);
+        echo json_encode($response);
+        exit(-1);
+    }
+
+    //Update for delete pdf media type
+    $sql =  "UPDATE profiler_pdf_files SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    if (!$result) {
+        $response["ret_code"] = 1;
+        $response["message"] = "update_for_delete_mywami_profile.php: Problem updating pdf file data. MySQL Error: " .mysqli_error($con);
         $con->rollback();
         $con->autocommit(TRUE);
         echo json_encode($response);
