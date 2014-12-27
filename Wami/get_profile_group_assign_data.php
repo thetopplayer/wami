@@ -15,7 +15,7 @@ $db = new DB_CONNECT();
 $con = $db->connect();
 
 $sql = "SELECT group_name, pga.profile_group_id FROM profile_group pg, profile_group_assign pga
-        WHERE pg.profile_group_id = pga.profile_group_id AND pga.delete_ind = 0 AND pg.identity_profile_id = " .$identity_profile_id.
+        WHERE pg.profile_group_id = pga.profile_group_id AND pga.delete_ind = 0 AND pga.assign_to_identity_profile_id = " .$identity_profile_id.
         " AND pga.identity_profile_id = " .$selected_profile_id;
 
 $result = mysqli_query($con, $sql) or  die(mysql_error($con));

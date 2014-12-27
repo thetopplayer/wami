@@ -133,7 +133,7 @@ function loadData(identity_profile_id) {
 				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +
 					'<div style="vertical-align: top">' +
 						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="show_extended_info(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
-						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Assign to Groups</button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Manage Groups</button>' +
 					'</div>' +
 				'</div></div><hr>';
 	}
@@ -186,17 +186,18 @@ function filter_profile_collection(selected_value) {
 
 }
 
-function manage_assign_group(manage_state) {
+function manage_groups(manage_state) {
 	var selected_profile_id = localStorage.getItem("selected_profile_id");
+	var assign_to_identity_profile_id = localStorage.getItem("current_identity_profile_id");
 	var selected_group_id_list = get_checked_groups();
-	selected_group_id_list.join(',');
 	if (selected_group_id_list === null) {
-		my_profile_collection_alert("No Groups selected. Please select groups(s) to assign.", "alert-warning", "Info Alert! ", "assign_group_dialog");
+		my_profile_collection_alert("No Groups selected. Please select groups(s) to assign/remove.", "alert-warning", "Info Alert! ", "assign_group_dialog");
 		return;
 	}
 
-	var params = "selected_profile_id=" + selected_profile_id + "&selected_group_id_list=" + selected_group_id_list + "&manage_state=" + manage_state;
-	var url = "manage_assign_group.php";
+	selected_group_id_list.join(',');
+	var params = "selected_profile_id=" + selected_profile_id + "&assign_to_identity_profile_id=" + assign_to_identity_profile_id + "&selected_group_id_list=" + selected_group_id_list + "&manage_state=" + manage_state;
+	var url = "manage_groups.php";
 	processData(params, url, "result", false);
 	try {
 		var manage_assign_group_data = localStorage.getItem("result");
@@ -218,10 +219,6 @@ function manage_assign_group(manage_state) {
 	var current_profile_id = localStorage.getItem("current_identity_profile_id");
 	loadData(current_profile_id);
 	my_profile_collection_alert(manage_assign_group_obj.message, "alert-success","Success! ", "assign_group_dialog");
-}
-
-function remove_group() {
-
 }
 
 function get_checked_groups() {

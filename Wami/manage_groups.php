@@ -1,6 +1,6 @@
 <?php
 /**
- * manage_assign_group.php
+ * manage_groups.php
  *
  * Created by Robert Lanter
  * Date: 5/15/14
@@ -10,6 +10,7 @@
  */
 require_once __DIR__ . '/db_connect.php';
 $selected_profile_id = $_POST["selected_profile_id"];
+$assign_to_identity_profile_id = $_POST["assign_to_identity_profile_id"];
 $selected_group_id_list = explode(',', $_POST["selected_group_id_list"]);
 $manage_state = $_POST["manage_state"];
 $db = new DB_CONNECT();
@@ -40,7 +41,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
                 " AND identity_profile_id = " .$selected_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
-                $response["message"] = "manage_assign_group.php: Problem updating Group Assign. MySQL Error: " .mysqli_error($con);
+                $response["message"] = "manage_groups.php: Problem updating Group Assign. MySQL Error: " .mysqli_error($con);
                 $response["ret_code"] = -1;
                 $con->rollback();
                 $con->autocommit(TRUE);
@@ -49,7 +50,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
             }
         } catch (Exception $e) {
             $response["ret_code"] = -1;
-            $response["message"] = "manage_assign_group.php: Transaction failed: " . $e->getMessage();
+            $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
             $con->rollback();
             $con->autocommit(TRUE);
             echo json_encode($response);
@@ -64,7 +65,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
                     " AND identity_profile_id = " .$selected_profile_id;
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
-                    $response["message"] = "manage_assign_group.php: Problem updating Group Assign. MySQL Error: " .mysqli_error($con);
+                    $response["message"] = "manage_groups.php: Problem updating Group Assign. MySQL Error: " .mysqli_error($con);
                     $response["ret_code"] = -1;
                     $con->rollback();
                     $con->autocommit(TRUE);
@@ -73,7 +74,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
                 }
             } catch (Exception $e) {
                 $response["ret_code"] = -1;
-                $response["message"] = "manage_assign_group.php: Transaction failed: " . $e->getMessage();
+                $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
                 $con->rollback();
                 $con->autocommit(TRUE);
                 echo json_encode($response);
@@ -83,11 +84,11 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
         else {
             $delete_ind = 0;
             try {
-                $sql = "INSERT INTO profile_group_assign (identity_profile_id, profile_group_id, delete_ind, create_date, modified_date)
-                    VALUES ( " . $selected_profile_id . ", " . $selected_group_id . ", " . $delete_ind . ", NOW(), NOW())";
+                $sql = "INSERT INTO profile_group_assign (assign_to_identity_profile_id, identity_profile_id, profile_group_id, delete_ind, create_date, modified_date)
+                    VALUES ( ".$assign_to_identity_profile_id. ","  .$selected_profile_id. ", " .$selected_group_id. ", " . $delete_ind. ", NOW(), NOW())";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
-                    $response["message"] = "manage_assign_group.php: Problem inserting Group Assign. MySQL Error: " .mysqli_error($con);
+                    $response["message"] = "manage_groups.php: Problem inserting Group Assign. MySQL Error: " .mysqli_error($con);
                     $response["ret_code"] = -1;
                     $con->rollback();
                     $con->autocommit(TRUE);
@@ -96,7 +97,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
                 }
             } catch (Exception $e) {
                 $response["ret_code"] = -1;
-                $response["message"] = "manage_assign_group.php: Transaction failed: " . $e->getMessage();
+                $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
                 $con->rollback();
                 $con->autocommit(TRUE);
                 echo json_encode($response);
