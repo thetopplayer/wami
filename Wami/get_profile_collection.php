@@ -38,12 +38,14 @@ if (mysqli_num_rows($result) > 0) {
         array_push($response["profile_collection"], $collection);
     }
     $response["ret_code"] = 0;
+    mysqli_free_result($result);
 } else {
     $response["profile_ret_code"] = 1;
     $response["message"] = "No Collection found for profile.";
     echo json_encode($response);
     return;
 }
+
 //Get group data
 $sql = "SELECT pg.group_name, pga.identity_profile_id FROM profile_group_assign pga, profile_group pg
          WHERE pg.profile_group_id = pga.profile_group_id
@@ -51,7 +53,6 @@ $sql = "SELECT pg.group_name, pga.identity_profile_id FROM profile_group_assign 
          ORDER BY identity_profile_id ASC, pga.profile_group_id ASC";
 
 $result = mysqli_query($con, $sql)  or  die(mysqli_error($con));
-
 $response["profile_group_assign_data"] = array();
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_array($result)) {
@@ -61,6 +62,7 @@ if (mysqli_num_rows($result) > 0) {
         array_push($response["profile_group_assign_data"], $group);
     }
     $response["ret_code"] = 0;
+    mysqli_free_result($result);
     echo json_encode($response);
 } else {
     $response["group_ret_code"] = 1;
