@@ -58,6 +58,8 @@ function loadData(identity_profile_id) {
 	my_profile_collection_alert("", "", "", "group_data");
 	localStorage.setItem("extended_info_ind", false);
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
+	localStorage.setItem("current_identity_profile_id", identity_profile_id);
+	localStorage.setItem("identity_profile_id", identity_profile_id);
 	processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
 	try {
 		var wami_data = localStorage.getItem("profile_collection");

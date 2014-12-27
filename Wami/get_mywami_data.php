@@ -51,6 +51,7 @@ else {
     echo json_encode($response);
     exit(-1);
 }
+mysqli_free_result($result);
 
 //get group data
 $sql = "SELECT profile_group_id, group_name FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
@@ -68,6 +69,7 @@ else {
     $response["ret_code"] = 1;
     array_push($response["message"], "My Wami Profile: No Profile Groups found for profile: " .$profile["profile_name"]);
 }
+mysqli_free_result($result);
 
 //get flash data
 $sql = "SELECT profile_flash_id, identity_profile_id, flash, media_type, media_url, create_date FROM profile_flash WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id.
@@ -92,6 +94,7 @@ else {
 
 if ($response["ret_code"] > 0) echo json_encode($response);
 else {
+    mysqli_free_result($result);
     $response["ret_code"] = 0;
     echo json_encode($response);
 }

@@ -73,8 +73,8 @@ else {
     $response["ret_code"] = 0;
     echo json_encode($response);
 }
+mysqli_free_result($result);
 return;
-
 
 //Get images for image gallery
 function get_image_gallery_data($identity_profile_id, $category, $con) {
@@ -99,6 +99,7 @@ function get_image_gallery_data($identity_profile_id, $category, $con) {
     } else {
         return -1;
     }
+    mysqli_free_result($result_image);
     return $response_images;
 }
 
@@ -125,7 +126,7 @@ function get_text_data($identity_profile_id, $category, $con) {
     } else {
         return -1;
     }
-
+    mysqli_free_result($result_file);
     return ($response_file);
 }
 
@@ -148,7 +149,7 @@ function get_PDF_data($identity_profile_id, $category, $con) {
     } else {
         return -1;
     }
-
+    mysqli_free_result($result_file);
     return ($response_file);
 }
 
@@ -174,5 +175,6 @@ function get_audio_data ($identity_profile_id, $category, $con) {
     } else {
         return -1;
     }
+    mysqli_free_result($result_audio);
     return $response_audio;
 }

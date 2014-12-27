@@ -51,6 +51,8 @@ else {
     echo json_encode($response);
     exit(-1);
 }
+mysqli_free_result($result);
+
 //get flash data
 $sql = "SELECT identity_profile_id, flash, media_type, media_url, create_date FROM profile_flash WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id.
     " ORDER BY create_date DESC";
@@ -72,50 +74,7 @@ else {
     $response["flash_ret_code"] = 1;
     $response["message"] = "No profile flash data found";
 }
-//
-////get profiler data
-//$sql = "SELECT identity_profile_id, category, media_type FROM identity_profiler WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
-//$result = mysqli_query($con, $sql)  or  die(mysql_error($con));
-//if (mysqli_num_rows($result) > 0) {
-//    $response["identity_profiler_data"] = array();
-//
-//    while ($row = mysqli_fetch_array($result)) {
-//        $profiler = array();
-//        $profiler["identity_profile_id"] = $row["identity_profile_id"];
-//        $profiler["category"] = $row["category"];
-//        $profiler["media_type"] = $row["media_type"];
-//
-//        if ($row["media_type"] == 'Image') {
-//            $profiler["file"] = $row["url"];
-//        }
-//
-//        if ($row["media_type"] == 'Text') {
-//            if ($row["url"] == '') {
-//                $profiler["file"] = '';
-//            }
-//            else {
-//                $filename = $row["url"];
-//                $handle = fopen($filename, "r");
-//                $contents = fread($handle, filesize($filename));
-//                fclose($handle);
-//                $profiler["file"] = $contents;
-//            }
-//        }
-////
-////        $filename = $row["url"];
-////        $handle = fopen($filename, "r");
-////        $contents = fread($handle, filesize($filename));
-////        fclose($handle);
-////        $item["file"] = $contents;
-//
-//        array_push($response["identity_profiler_data"], $profiler);
-//    }
-//    $response["profiler_ret_code"] = 0;
-//} else {
-//    $response["profiler_ret_code"] = 1;
-//    $response["message"] = "No identity profiler data found";
-//}
-
+mysqli_free_result($result);
 echo json_encode($response);
 
 ?>

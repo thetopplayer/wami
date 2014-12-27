@@ -19,7 +19,8 @@ $(document).ready(function(){
 });
 
 function loadData(identity_profile_id) {
-	 localStorage.setItem("identity_profile_id", identity_profile_id);
+	localStorage.setItem("identity_profile_id", identity_profile_id);
+	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 
 // Get number of Wami's for the specified profile_id
 	processData("identity_profile_id=" + identity_profile_id, "get_wami_count_for_profile.php", "wami_count", false);
