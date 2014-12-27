@@ -47,7 +47,7 @@ if (mysqli_num_rows($result) > 0) {
     mysqli_free_result($result);
 } else {
     $response["profile_ret_code"] = 1;
-    $response["message"] = "No Collection found for profile.";
+    $response["message"] = "No Collection found for selected profile and group.";
     echo json_encode($response);
     return;
 }

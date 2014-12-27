@@ -56,39 +56,37 @@ $(document).ready(function() {
 
 function loadData(identity_profile_id) {
 	my_profile_collection_alert("", "", "", "group_data");
-	my_profile_collection_alert("", "", "", "group_data");
+	my_profile_collection_alert("", "", "", "list");
 	localStorage.setItem("extended_info_ind", false);
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 
-	var group_filter = localStorage.getItem("profile_group_id");
+	var group_filter = localStorage.getItem("group_filter");
 	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
 		processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
 	}
 	else {
-		var profile_group_id = localStorage.getItem("profile_group_id");
-		processData("identity_profile_id=" + identity_profile_id + "&profile_group_id=" + profile_group_id, "get_profile_collection_filtered.php", "profile_collection", false);
+		processData("identity_profile_id=" + identity_profile_id + "&profile_group_id=" + group_filter, "get_profile_collection_filtered.php", "profile_collection", false);
 	}
 	try {
 		var wami_data = localStorage.getItem("profile_collection");
 		var wami_obj = JSON.parse(wami_data);
 	} catch (err) {
 		console.log(err.message)
-		my_profile_collection_alert("get_profile_collection: Problem getting profile collections = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		my_profile_collection_alert("Problem getting profile collections = " + err.message, "alert-danger", "Severe Error!  ", "list");
 		return;
 	}
 	var profile_ret_code = wami_obj.profile_ret_code;
 	if (profile_ret_code === 1) {
 		var message = wami_obj.message;
-		my_profile_collection_alert (message, "alert-info", "Alert! ", "list");
+		my_profile_collection_alert (message, "alert-warning", "Warning! ", "group_data");
 	}
 	var group_ret_code = wami_obj.group_ret_code;
 	if (group_ret_code === 1) {
 		var message = wami_obj.message;
-		my_profile_collection_alert (message, "alert-info", "Alert! ", "group_data");
+		my_profile_collection_alert (message, "alert-info", "Info! ", "group_data");
 	}
-
 
 	var list = '<div class="col-sm-7" style="max-width: 800px; min-width: 800px"><div class="panel panel-primary" style="border-color: #4c4c4c">' +
 			'<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D"><h3 class="panel-title">Profile Collection</h3></div><span class="span-scroll-wami-list">';
@@ -98,7 +96,9 @@ function loadData(identity_profile_id) {
 	for (var i = 0; i < num_list_elements; i++) {
 		var list_identity_profile_id = wami_obj.profile_collection[i].identity_profile_id;
 		var profile_name = wami_obj.profile_collection[i].profile_name;
-		if (list_identity_profile_id === identity_profile_id) localStorage.setItem("current_profile_name", profile_name);
+		if (list_identity_profile_id === identity_profile_id) {
+			localStorage.setItem("current_profile_name", profile_name);
+		}
 
 		var image_url = "assets/main_image/" + wami_obj.profile_collection[i].image_url + ".png";
 		var first_name = wami_obj.profile_collection[i].first_name;
@@ -152,7 +152,7 @@ function loadData(identity_profile_id) {
 	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
 		create_group_dropdown(identity_profile_id);
 	}
-	localStorage.removeItem("profile_group_id");
+	localStorage.setItem("group_filter", "");
 }
 
 function create_group_dropdown (identity_profile_id) {
@@ -195,7 +195,7 @@ function create_group_dropdown (identity_profile_id) {
 }
 
 function filter_profile_collection(selected_value) {
-	localStorage.setItem("profile_group_id", selected_value);
+	localStorage.setItem("group_filter", selected_value);
 	var current_identity_profile_id = localStorage.getItem("current_identity_profile_id");
 	loadData(current_identity_profile_id);
 }
@@ -276,7 +276,10 @@ function show_group_assign_dialog(selected_profile_id) {
 	}
 	var selected_profile_name = profile_name_obj.profile_name;
 
-	get_group_list(selected_profile_id);
+	ret_code = get_group_list(selected_profile_id);
+	if (ret_code === null) {
+		return;
+	}
 	var profile_name = localStorage.getItem("current_profile_name");
 	var assign_group_title = '<h4 class="modal-title">Assign/Remove ' +
 		'<span style="color: #f87c08">' + profile_name + '</span>' + ' groups to/from ' +
@@ -298,15 +301,16 @@ function get_group_list(selected_profile_id) {
 	} catch (err) {
 		console.log(err.message)
 		my_profile_collection_alert("get_profile_group_assign_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
-		return;
+		return null;
 	}
 	var ret_code = group_assign_obj.ret_code;
 	if (ret_code === -1) {
 		my_profile_collection_alert(group_assign_obj.message, "alert-danger", "Alert! ", "group_dialog");
-		return;
+		return null;
 	}
 	if (ret_code === 1) {
-		//my_profile_collection_alert(group_assign_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
+		//my_profile_collection_alert(group_assign_obj.message, "alert-info", "Info! ", "group_dialog");
+		//return null;
 	}
 
 	var selected_group_ids = [];
@@ -742,6 +746,12 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 	if (message_placement === "assign_group_dialog") {
 		if (message === '') {
 			document.getElementById("assign_group_alert_message").innerHTML = message;
+			return;
+		}
+	}
+	if (message_placement === "list") {
+		if (message === '') {
+			document.getElementById("list_alert_message").innerHTML = message;
 			return;
 		}
 	}

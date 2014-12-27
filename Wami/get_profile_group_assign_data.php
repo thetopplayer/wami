@@ -33,11 +33,11 @@ if (mysqli_num_rows($result) > 0) {
         array_push($response["profile_group_assign_data"], $item);
     }
     $response["ret_code"] = 0;
-    $response["message"] = "Profile group assign data found";
+    $response["message"] = "Profile group assign data found.";
     echo json_encode($response);
 } else {
     $response["ret_code"] = 1;
-    $response["message"] = "No profile groups assigned.";
+    $response["message"] = "No profile groups assigned for selected profile.";
     echo json_encode($response);
 }
 ?>
