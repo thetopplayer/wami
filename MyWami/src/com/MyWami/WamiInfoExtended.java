@@ -227,14 +227,14 @@ public class WamiInfoExtended extends Activity {
 			}
 		});
 
-		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ActionList actionList = new ActionList();
-				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-			}
-		});
+//		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
+//		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				ActionList actionList = new ActionList();
+//				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
+//			}
+//		});
 	}
 
 
@@ -297,6 +297,12 @@ public class WamiInfoExtended extends Activity {
 			if (!bExists) {
 				startActivity(intent);
 			}
+		}
+
+// Navigatio action
+		if (id == R.id.action_navigate_to) {
+			ActionList actionList = new ActionList();
+			actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
 		}
 
 // My Wami Network

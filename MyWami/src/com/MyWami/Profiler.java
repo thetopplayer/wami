@@ -125,14 +125,14 @@ public class Profiler extends ListActivity {
 			}
 		});
 
-		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ActionList actionList = new ActionList();
-				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-			}
-		});
+//		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
+//		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				ActionList actionList = new ActionList();
+//				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
+//			}
+//		});
 
 		String[] postData = { identityProfileId };
 		JsonGetData jsonGetData = new JsonGetData();
@@ -435,6 +435,12 @@ public class Profiler extends ListActivity {
 			i.putExtra("user_identity_profile_id", userIdentityProfileId);
 			i.putExtra("use_default", useDefault);
 			startActivity(i);
+		}
+
+//Navigatio action
+		if (id == R.id.action_navigate_to) {
+			ActionList actionList = new ActionList();
+			actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
 		}
 
 // Logout

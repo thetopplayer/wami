@@ -112,14 +112,14 @@ public class Flash extends ListActivity {
 			}
 		});
 
-		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ActionList actionList = new ActionList();
-				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-			}
-		});
+//		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
+//		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				ActionList actionList = new ActionList();
+//				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
+//			}
+//		});
 
 		if (!userIdentityProfileId.equals(identityProfileId)) {
 			Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
@@ -254,6 +254,12 @@ public class Flash extends ListActivity {
 			i.putExtra("user_identity_profile_id", userIdentityProfileId);
 			i.putExtra("use_default", useDefault);
 			startActivity(i);
+		}
+
+// Navigatio action
+		if (id == R.id.action_navigate_to) {
+			ActionList actionList = new ActionList();
+			actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
 		}
 
 // Logout
