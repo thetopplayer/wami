@@ -125,15 +125,6 @@ public class Profiler extends ListActivity {
 			}
 		});
 
-//		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-//		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				ActionList actionList = new ActionList();
-//				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-//			}
-//		});
-
 		String[] postData = { identityProfileId };
 		JsonGetData jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(this, GET_PROFILER_DATA, postData);

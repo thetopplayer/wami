@@ -112,15 +112,6 @@ public class Flash extends ListActivity {
 			}
 		});
 
-//		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-//		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				ActionList actionList = new ActionList();
-//				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-//			}
-//		});
-
 		if (!userIdentityProfileId.equals(identityProfileId)) {
 			Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
 			btnNewFlash.setVisibility(View.GONE);

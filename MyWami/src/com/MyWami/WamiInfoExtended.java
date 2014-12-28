@@ -226,17 +226,7 @@ public class WamiInfoExtended extends Activity {
 				startActivity(i);
 			}
 		});
-
-//		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-//		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				ActionList actionList = new ActionList();
-//				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-//			}
-//		});
 	}
-
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.wami_info_extended_menu, menu);
