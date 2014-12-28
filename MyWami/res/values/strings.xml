@@ -22,7 +22,7 @@
 	<string name="action_new_flash">New Flash Announcement…</string>
 	<string name="action_transmit_this_wami">Transmit This Wami…</string>
 	<string name="action_add_to_contact_list">Add To Contact List…</string>
-	<string name="action_home">Home…</string>
+	<string name="action_home">Home</string>
 
 	<string name="action_remove_wami">Remove Wami(s)</string>
 	<string name="action_request_wami">Request a Wami Profile</string>
