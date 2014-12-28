@@ -21,13 +21,13 @@ $(document).ready(function() {
 		var profile_name_list_obj = JSON.parse(profile_name_list_data);
 	} catch (err) {
 		console.log(err.message)
-		my_profile_collection_alert("get_all_profile_names: Problem getting profile names list = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		my_profile_collection_alert("get_all_profile_names: Problem getting profile names list = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
 		return;
 	}
 	var ret_code = profile_name_list_obj.ret_code;
 	if (ret_code === 1) {
 		var message = profile_name_list_obj.message;
-		my_profile_collection_alert (message, "alert-danger", "Alert! ", "list");
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "side_list_placement");
 	}
 	var num_names = profile_name_list_obj.profile_name_list.length;
 	var profile_names_list = [];
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
 function loadData(identity_profile_id) {
 	my_profile_collection_alert("", "", "", "group_data");
-	my_profile_collection_alert("", "", "", "list");
+	my_profile_collection_alert("", "", "", "side_list_placement");
 	localStorage.setItem("extended_info_ind", false);
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
@@ -74,7 +74,7 @@ function loadData(identity_profile_id) {
 		var wami_obj = JSON.parse(wami_data);
 	} catch (err) {
 		console.log(err.message)
-		my_profile_collection_alert("Problem getting profile collections = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		my_profile_collection_alert("Problem getting profile collections = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
 		return;
 	}
 	var profile_ret_code = wami_obj.profile_ret_code;
@@ -374,7 +374,7 @@ function removeProfiles() {
 
 			// not allowed to delete default profile from collection
 			if (list_identity_profile_id === assign_to_identity_profile_id) {
-				message = "<strong>Default Profile </strong>cannot be removed.";
+				message = "<strong>Starting Profile </strong>cannot be removed.";
 				continue;
 			}
 
@@ -383,7 +383,7 @@ function removeProfiles() {
 		}
 	}
 	if (num_profiles_to_remove == 0) {
-		if (message !== '')	my_profile_collection_alert(message, "alert-info", "Info Alert!" +  '&nbsp;  ', "list");
+		if (message !== '')	my_profile_collection_alert(message, "alert-info", "Info Alert!" +  '&nbsp;  ', "side_list_placement");
 		return;
 	}
 	param_str = param_str.substr(0, param_str.length -1);
@@ -395,18 +395,18 @@ function removeProfiles() {
 		var collection_obj = JSON.parse(collection_data);
 	} catch (err) {
 		console.log(err.message)
-		my_profile_collection_alert("update_for_delete_profile_collection: Problem deleting profiles = " + err.message, "alert-danger", "Severe Error!  ", "list");
+		my_profile_collection_alert("update_for_delete_profile_collection: Problem deleting profiles = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
 		return;
 	}
 
 	var ret_code = collection_obj.ret_code;
 	if (ret_code === -1) {
 		var message = collection_obj.message;
-		my_profile_collection_alert (message, "alert-danger", "Alert! ", "list");
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "side_list_placement");
 	}
 
 	loadData(assign_to_identity_profile_id);
-	if (message !== '')	my_profile_collection_alert(message, "alert-info", "Info Alert! ", "list");
+	if (message !== '')	my_profile_collection_alert(message, "alert-info", "Info Alert! ", "side_list_placement");
 }
 
 function checkForChosenProfiles(action) {
@@ -737,7 +737,7 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 function my_profile_collection_alert (message, message_type_class, message_type_string, message_placement) {
 	var full_message = '';
 
-	if ((message_placement === "no_selected_profiles") || (message_placement === "group_dialog")) {
+	if ((message_placement === "no_selected_profiles") || (message_placement === "group_dialog") || (message_placement === "side_list_placement")) {
 		if (message === '') {
 			document.getElementById("profile_collection_alert").innerHTML = message;
 			return;
@@ -749,12 +749,12 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 			return;
 		}
 	}
-	if (message_placement === "list") {
-		if (message === '') {
-			document.getElementById("list_alert_message").innerHTML = message;
-			return;
-		}
-	}
+	//if (message_placement === "list") {
+	//	if (message === '') {
+	//		document.getElementById("list_alert_message").innerHTML = message;
+	//		return;
+	//	}
+	//}
 
 	if (message_placement === "transmit") {
 		if (Array.isArray(message)) {
@@ -781,7 +781,8 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	if (message_placement === "remove") document.getElementById("remove_alert_message").innerHTML = full_message;
 	if (message_placement === "group_data") 	document.getElementById("profile_collection_alert").innerHTML = full_message;
-	if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
+	//if (message_placement === "list") 	document.getElementById("list_alert_message").innerHTML = full_message;
+	if (message_placement === "side_list_placement") 	document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "no_selected_profiles") document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "group_dialog") document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "assign_group_dialog") document.getElementById("assign_group_alert_message").innerHTML = full_message;
