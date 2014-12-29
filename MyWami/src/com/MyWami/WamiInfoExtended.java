@@ -80,7 +80,7 @@ public class WamiInfoExtended extends Activity {
 		userIdentityProfileId = extras.getString("user_identity_profile_id");
 		useDefault = extras.getBoolean("use_default");
 
-		String jsonResult = getJsonData(identityProfileId);
+		String jsonResult = getJsonData(identityProfileId, userIdentityProfileId);
 		boolean result = assignData(jsonResult);
 		if (result) {
 //			TextView tvRating = (TextView) findViewById(R.id.profile_rating);
@@ -316,6 +316,7 @@ public class WamiInfoExtended extends Activity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			int ret_code = jsonResponse.optInt("ret_code");
+			int group_ret_code = jsonResponse.optInt("group_ret_code");
 			if (ret_code == 1) {
 				String message = jsonResponse.optString("message");
 				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
@@ -326,8 +327,12 @@ public class WamiInfoExtended extends Activity {
 				return false;
 			}
 
+			JSONObject jsonChildNode = null;
 			JSONArray jsonNode = jsonResponse.optJSONArray("identity_profile_data");
-			JSONObject jsonChildNode = jsonNode.getJSONObject(0);
+			if (group_ret_code == 2) {
+				jsonChildNode = jsonNode.getJSONObject(0);
+			}
+			else jsonChildNode = jsonNode.getJSONObject(1);
 			profileName = jsonChildNode.optString("profile_name");
 			description = jsonChildNode.optString("description");
 			firstName = jsonChildNode.optString("first_name");
@@ -351,19 +356,18 @@ public class WamiInfoExtended extends Activity {
 			if (activeIndStr.equals("1")) activeInd = "Active";
 			else activeInd = "Inactive";
 
-//			if (ret_code == 2) {
-//				return true;
-//			}
-//
-//			JSONObject jsonGroups = jsonNode.getJSONObject(1);
-//			JSONArray jsonArray =  jsonGroups.getJSONArray("group_data");
-//			for (int i = 0; i < jsonArray.length(); i++) {
-//				jsonChildNode = jsonArray.getJSONObject(i);
-//				String group = jsonChildNode.optString("group");
-//				groups = groups + ", " + group;
-//			}
-//			groups = groups.substring(2);
+			if (group_ret_code == 2) {
+				return true;
+			}
 
+			JSONObject jsonGroups = jsonNode.getJSONObject(0);
+			JSONArray jsonArray =  jsonGroups.getJSONArray("group_data");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonChildNode = jsonArray.getJSONObject(i);
+				String group = jsonChildNode.optString("group");
+				groups = groups + ", " + group;
+			}
+			groups = groups.substring(2);
 
 			return true;
 		}
@@ -375,11 +379,12 @@ public class WamiInfoExtended extends Activity {
 		}
 	}
 
-	private String getJsonData(String identityProfileId) {
+	private String getJsonData(String identityProfileId, String userIdentityProfileId) {
 		jsonGetData = new JsonGetData();
 		identityProfileId = String.valueOf(identityProfileId);
+		userIdentityProfileId = String.valueOf(userIdentityProfileId);
 		String fromProfileId = "NA";
-		String[] postData = { identityProfileId, fromProfileId };
+		String[] postData = { identityProfileId, fromProfileId, userIdentityProfileId};
 		jsonGetData.jsonGetData(this, GET_PROFILE_DATA, postData);
 
 		return jsonGetData.getJsonResult();
