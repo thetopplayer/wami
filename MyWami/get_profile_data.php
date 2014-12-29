@@ -58,29 +58,31 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Get assigned groups
-$sql = "SELECT group_name, pga.profile_group_id FROM profile_group pg, profile_group_assign pga
-        WHERE pg.profile_group_id = pga.profile_group_id AND pga.delete_ind = 0 AND pga.assign_to_identity_profile_id = " .$user_identity_profile_id.
-        " AND pga.identity_profile_id = " .$identity_profile_id;
+if ($user_identity_profile_id != "NA") {
+    $sql = "SELECT group_name, pga.profile_group_id FROM profile_group pg, profile_group_assign pga
+        WHERE pg.profile_group_id = pga.profile_group_id AND pga.delete_ind = 0 AND pga.assign_to_identity_profile_id = " . $user_identity_profile_id .
+        " AND pga.identity_profile_id = " . $identity_profile_id;
 
-$result = mysqli_query($con, $sql) or die(mysqli_error($con));
-if (!$result) {
-    $response["db_error"] = "get_profile_data(2): Problem accessing identity profile data: " .$identity_profile_id. " MySQL Error: " .mysqli_error($con);
-    $response["ret_code"] = -1;
-    echo json_encode($response);
-    exit(-1);
-}
-if (mysqli_num_rows($result) > 0) {
-    $groups["group_data"] = array();
-    while ($row = mysqli_fetch_array($result)) {
-        $group_data["group"] = $row["group_name"];
-        array_push($groups["group_data"], $group_data);
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    if (!$result) {
+        $response["db_error"] = "get_profile_data(2): Problem accessing identity profile data: " . $identity_profile_id . " MySQL Error: " . mysqli_error($con);
+        $response["ret_code"] = -1;
+        echo json_encode($response);
+        exit(-1);
     }
-}
-if (mysqli_num_rows($result) === 0) {
-    $response["group_ret_code"] = 2;
-    $response["message"] = "No Group data found";
-} else {
-    array_push($response["identity_profile_data"], $groups);
+    if (mysqli_num_rows($result) > 0) {
+        $groups["group_data"] = array();
+        while ($row = mysqli_fetch_array($result)) {
+            $group_data["group"] = $row["group_name"];
+            array_push($groups["group_data"], $group_data);
+        }
+    }
+    if (mysqli_num_rows($result) === 0) {
+        $response["group_ret_code"] = 2;
+        $response["message"] = "No Group data found";
+    } else {
+        array_push($response["identity_profile_data"], $groups);
+    }
 }
 
 // Check if "from" data is needed

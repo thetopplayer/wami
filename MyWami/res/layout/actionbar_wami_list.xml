@@ -13,6 +13,15 @@
 			android:clickable="false"
 			android:focusable="false"
 			android:longClickable="false"
-			android:src="@drawable/actionbar_wami_list" />
+			android:src="@drawable/actionbar_profile_collection" />
 
+	<TextView
+		android:id="@+id/collectionProfileName"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_toRightOf="@id/actionBarLogo"
+		android:paddingTop="6dp"
+		android:textColor="#fff38e0d"
+		android:textStyle="bold"
+		android:textSize="18sp"/>
 </LinearLayout>

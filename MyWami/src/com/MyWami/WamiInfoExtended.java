@@ -329,6 +329,7 @@ public class WamiInfoExtended extends Activity {
 
 			JSONObject jsonChildNode = null;
 			JSONArray jsonNode = jsonResponse.optJSONArray("identity_profile_data");
+			//No Group data found
 			if (group_ret_code == 2) {
 				jsonChildNode = jsonNode.getJSONObject(0);
 			}

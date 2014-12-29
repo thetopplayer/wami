@@ -147,12 +147,6 @@ public class TransmitWami {
 			body = getEmailBody(identityProfileId, emails, fromProfileId) + body;
 		}
 
-//		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-//		emailIntent.setType("plain/text");
-//		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, emails);
-//		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wami Profile(s)");
-//		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-//		context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 		toastMessage = toastMessage + "\n\nNumber of profiles emailed = " + alEmailList.size();
 	}
 
@@ -177,7 +171,7 @@ public class TransmitWami {
 		String fromEmail;
 
 		String body;
-		String[] postData = { identityProfileId, String.valueOf(fromProfileId)};
+		String[] postData = { identityProfileId, String.valueOf(fromProfileId), "NA"};
 		JsonGetData jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(context, GET_PROFILE_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();

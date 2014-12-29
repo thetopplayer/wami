@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.MyWami.dialogs.SearchForProfiles;
 import com.MyWami.dialogs.SelectProfile;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 public class WamiListActivity extends ListActivity {
 	final private String GET_DEFAULT_PROFILE_COLLECTION = Constants.IP + "get_default_profile_collection.php";
 	final private String GET_PROFILE_COLLECTION = Constants.IP + "get_profile_collection.php";
+	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
+	final private String GET_DEFAULT_IDENTITY_PROFILE_ID = Constants.IP + "get_default_identity_profile_id.php";
 
 	private Context that;
 	private WamiListModel[] listModel;
@@ -37,6 +40,7 @@ public class WamiListActivity extends ListActivity {
 	private String userIdentityProfileId;
 	private String userProfileName;
 	private boolean useDefault;
+	private String profileName;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -58,6 +62,10 @@ public class WamiListActivity extends ListActivity {
 
 		String jsonResult = getJsonData();
 		ListData(jsonResult);
+
+		profileName = getProfileName();
+		TextView tvProfileName = (TextView) findViewById(R.id.collectionProfileName);
+		tvProfileName.setText(profileName);
 	}
 
 	public void onResume() {
@@ -68,6 +76,9 @@ public class WamiListActivity extends ListActivity {
 
 		String jsonResult = getJsonData();
 		ListData(jsonResult);
+		profileName = getProfileName();
+		TextView tvProfileName = (TextView) findViewById(R.id.collectionProfileName);
+		tvProfileName.setText(profileName);
 	}
 
 	@Override
@@ -190,6 +201,43 @@ public class WamiListActivity extends ListActivity {
 		setListAdapter(new WamiListAdapter(that, R.layout.wami_list, alListRow, listModel));
 	}
 
+	private String getProfileName() {
+		String identityProfileId = null;
+		JSONObject jsonResponse = null;
+		JsonGetData jsonGetData = new JsonGetData();
+		if (useDefault) {
+			String userId = String.valueOf(GetUserId.getUserId(that));
+			String[] postData = { userId };
+			jsonGetData.jsonGetData(this, GET_DEFAULT_IDENTITY_PROFILE_ID, postData);
+			jsonResponse = null;
+			try {
+				jsonResponse = new JSONObject(jsonGetData.getJsonResult());
+				JSONArray jsonMainNode = jsonResponse.optJSONArray("default_identity_profile_id");
+				JSONObject jsonChildNode = jsonMainNode.getJSONObject(0);
+				identityProfileId = String.valueOf(jsonChildNode.optInt("identity_profile_id"));
+				postData = new String[]{identityProfileId};
+				jsonGetData.jsonGetData(this, GET_PROFILE_NAME, postData);
+				jsonResponse = new JSONObject(jsonGetData.getJsonResult());
+				profileName = jsonResponse.optString("profile_name");
+			}
+				catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			String[] postData = {userIdentityProfileId};
+			jsonGetData.jsonGetData(this, GET_PROFILE_NAME, postData);
+			try {
+				jsonResponse = new JSONObject(jsonGetData.getJsonResult());
+			}
+				catch (JSONException e) {
+				e.printStackTrace();
+			}
+			profileName = jsonResponse.optString("profile_name");
+		}
+		return profileName;
+	}
+
 	private String getJsonData() {
 		JsonGetData jsonGetData = new JsonGetData();
 		if (useDefault) {
@@ -205,4 +253,3 @@ public class WamiListActivity extends ListActivity {
 		return jsonGetData.getJsonResult();
 	}
 }
-
