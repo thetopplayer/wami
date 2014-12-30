@@ -33,6 +33,7 @@ public class WamiListActivity extends ListActivity {
 	final private String GET_PROFILE_COLLECTION = Constants.IP + "get_profile_collection.php";
 	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
 	final private String GET_DEFAULT_IDENTITY_PROFILE_ID = Constants.IP + "get_default_identity_profile_id.php";
+	final private String GET_PROFILE_COLLECTION_FILTERED = Constants.IP + "get_profile_collection_filtered.php";
 
 	private Context that;
 	private WamiListModel[] listModel;
@@ -41,6 +42,7 @@ public class WamiListActivity extends ListActivity {
 	private boolean useDefault;
 	private String profileName;
 	private String groupName;
+	private int profileGroupId;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -59,13 +61,11 @@ public class WamiListActivity extends ListActivity {
 		Bundle extras = getIntent().getExtras();
 		useDefault = extras.getBoolean("use_default");
 		userIdentityProfileId = extras.getString("user_identity_profile_id");
+		groupName = extras.getString("group_name_selected");
+		profileGroupId = extras.getInt("profile_group_id");
 
 		String jsonResult = getJsonData();
 		ListData(jsonResult);
-
-		if (extras.getString("groupNameSelected") != null) {
-			groupName = extras.getString("groupNameSelected");
-		}
 
 		profileName = getProfileName();
 		TextView tvProfileName = (TextView) findViewById(R.id.collectionProfileName);
@@ -77,9 +77,12 @@ public class WamiListActivity extends ListActivity {
 		Bundle extras = getIntent().getExtras();
 		useDefault = extras.getBoolean("use_default");
 		userIdentityProfileId = extras.getString("user_identity_profile_id");
+		groupName = extras.getString("group_name_selected");
+		profileGroupId = extras.getInt("profile_group_id");
 
 		String jsonResult = getJsonData();
 		ListData(jsonResult);
+
 		profileName = getProfileName();
 		TextView tvProfileName = (TextView) findViewById(R.id.collectionProfileName);
 		tvProfileName.setText(profileName);
@@ -251,8 +254,14 @@ public class WamiListActivity extends ListActivity {
 			jsonGetData.jsonGetData(this, GET_DEFAULT_PROFILE_COLLECTION, postData);
 		}
 		else {
-			String[] postData = { userIdentityProfileId };
-			jsonGetData.jsonGetData(this, GET_PROFILE_COLLECTION, postData);
+			if ( (profileGroupId == 999999) || (profileGroupId == 0 && groupName == null) ) {
+				String[] postData = {userIdentityProfileId};
+				jsonGetData.jsonGetData(this, GET_PROFILE_COLLECTION, postData);
+			}
+			else {
+				String[] postData = {userIdentityProfileId, String.valueOf(profileGroupId)};
+				jsonGetData.jsonGetData(this, GET_PROFILE_COLLECTION_FILTERED, postData);
+			}
 		}
 
 		return jsonGetData.getJsonResult();

@@ -35,11 +35,13 @@ if (mysqli_num_rows($result) > 0) {
 
         array_push($response["profile_collection"], $collection);
     }
-    $response["success"] = 1;
+    $response["ret_code"] = 0;
+    mysqli_free_result($result);
     echo json_encode($response);
 } else {
-    $response["success"] = 0;
+    $response["ret_code"] = 1;
     $response["message"] = "No profile collection found";
+    mysqli_free_result($result);
     echo json_encode($response);
 }
 ?>

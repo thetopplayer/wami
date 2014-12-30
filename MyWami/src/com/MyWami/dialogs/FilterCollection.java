@@ -24,8 +24,8 @@ public class FilterCollection {
   private GroupModel[] groupModel;
   private Context context;
   final private String GET_PROFILE_GROUP_DATA = Constants.IP + "get_profile_group_data.php";
-  private String userIdentityProfileId;
   private String groupNameSelected;
+  private int profileGroupIdSelected;
 
   public FilterCollection() {
 
@@ -33,7 +33,6 @@ public class FilterCollection {
 
   public void filterCollection(final Context context, final String userIdentityProfileId) {
     this.context = context;
-    this.userIdentityProfileId = userIdentityProfileId;
 
     final Dialog dialog = new Dialog(context);
     dialog.getWindow();
@@ -81,11 +80,25 @@ public class FilterCollection {
     filterCollection.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent i = new Intent(context, WamiListActivity.class);
-        i.putExtra("user_identity_profile_id", userIdentityProfileId);
-        i.putExtra("use_default", false);
-        i.putExtra("groupNameSelected", groupNameSelected);
-        context.startActivity(i);
+        Intent intent = new Intent(context, WamiListActivity.class);
+        intent.putExtra("user_identity_profile_id", userIdentityProfileId);
+        intent.putExtra("use_default", false);
+        intent.putExtra("group_name_selected", groupNameSelected);
+        if (groupNameSelected.equals("All Groups")) {
+          profileGroupIdSelected = 999999;
+        }
+        else {
+          int num_groups = groupModel.length;
+          for (int i = 0; i < num_groups; i++) {
+            String groupName = groupModel[i].getGroupName();
+            if (groupName.equals(groupNameSelected)) {
+              profileGroupIdSelected = groupModel[i].getProfileGroupId();
+              break;
+            }
+          }
+        }
+        intent.putExtra("profile_group_id", profileGroupIdSelected);
+        context.startActivity(intent);
         dialog.dismiss();
       }
     });
