@@ -36,5 +36,6 @@
 	<string name="search_within">Search Within</string>
 	<string name="new_flash">New flash up to 110 characters</string>
 	<string name="action_navigate_to">Navigate To...</string>
+	<string name="action_filter_collection">Filter Collection by Group...</string>
 
 </resources>

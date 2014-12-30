@@ -2,9 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.MyWami.WamiListActivity" >
 
-
 	<item android:id="@+id/action_select_profile"
 	      android:title="@string/action_select_profile_collection"/>
+
+	<item android:id="@+id/action_filter_collection"
+		android:title="@string/action_filter_collection"/>
 
 	<item android:id="@+id/action_transmit_wami"
 	      android:title="@string/action_transmit_wamis"/>

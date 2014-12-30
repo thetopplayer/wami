@@ -42,8 +42,6 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 		TextView listTextRating;
 		TextView listTextEmailName;
 		Button listButton;
-//		Spinner listSpinner;
-//		ImageView listIcon;
 	}
 
 	@Override
@@ -80,26 +78,6 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 		viewHolder.listTextRating.setText(searchListModel[position].getRating());
 		viewHolder.listTextEmailName.setText(searchListModel[position].getEmail());
 		viewHolder.listCheckBox.setChecked(checkBoxState[position]);
-
-//
-//		String description = searchListModel[position].getDescriptiom();
-//		final Spinner dropdown = (Spinner)row.findViewById(R.id.list_more_info);
-//		String[] items = new String[]{"More Info...   " + description};
-//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
-//		dropdown.setAdapter(adapter);
-//
-//		dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//			@Override
-//			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//				((TextView) parentView.getChildAt(0)).setTextColor(Color.BLACK);
-//			}
-//
-//			@Override
-//			public void onNothingSelected(AdapterView<?> parent) {
-//
-//			}
-//		});
-
 
 		viewHolder.listButton.setOnClickListener(new View.OnClickListener() {
 			@Override

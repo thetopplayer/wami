@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.MyWami.dialogs.FilterCollection;
 import com.MyWami.dialogs.SearchForProfiles;
 import com.MyWami.dialogs.SelectProfile;
 import com.MyWami.dialogs.TransmitWami;
@@ -125,6 +126,12 @@ public class WamiListActivity extends ListActivity {
 		if (id == R.id.action_select_profile) {
 			SelectProfile selectProfile = new SelectProfile();
 			selectProfile.selectProfile(that, userIdentityProfileId);
+		}
+
+// Filter collection by group
+		if (id == R.id.action_filter_collection) {
+			FilterCollection filterCollection = new FilterCollection();
+			filterCollection.filterCollection(that, userIdentityProfileId);
 		}
 
 // Search for Profiles

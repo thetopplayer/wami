@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:src="@drawable/dialog_filter_collection_by_group"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:scaleType="center"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"/>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="250dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/select_group_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:text="Select Group"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <Spinner
+        android:id="@+id/select_group_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="#ff000000"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/select_group_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:spinnerMode="dropdown"
+        android:background="@android:drawable/btn_dropdown"/>
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/filter_collection"
+            android:layout_width="82dp"
+            android:layout_height="39dp"
+            android:text=" Filter"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:background="@drawable/button_state"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@+id/line"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/close_filter"
+            android:layout_width="82dp"
+            android:layout_height="39dp"
+            android:text=" Close"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:background="@drawable/button_state"
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/line"
+            android:layout_toRightOf="@+id/filter_collection"
+            android:layout_marginBottom="10dp"/>
+
+    </RelativeLayout>
+</LinearLayout>
