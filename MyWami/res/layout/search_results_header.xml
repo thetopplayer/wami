@@ -1,59 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	              android:orientation="vertical"
-	              android:layout_width="match_parent"
-	              android:layout_height="match_parent"
-	              android:id="@+id/wami_heading_layout"
-	              android:background="@color/logo_blue">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/wami_heading_layout"
+	android:background="@color/logo_blue">
 
 	<RelativeLayout
-			android:id="@+id/footer"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingBottom="10dp"
-			android:paddingTop="8dp"
-			android:gravity="center" >
+		android:id="@+id/footer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingBottom="10dp"
+		android:paddingTop="8dp"
+		android:gravity="center" >
 
 		<Button
-				android:layout_weight="1"
-				android:id="@+id/requestProfiles"
-				android:layout_width="110dp"
-				android:layout_height="30dp"
-				android:text=" Request Profile(s)"
-				android:textColor="#FFFFFF"
-				android:textSize="12sp"
-				android:background="@drawable/button_state"
-				android:layout_marginTop="10dp"
-				android:layout_marginBottom="10dp"/>
+			android:layout_weight="1"
+			android:id="@+id/requestProfiles"
+			android:layout_width="110dp"
+			android:layout_height="30dp"
+			android:text=" Request Profile(s)"
+			android:textColor="#FFFFFF"
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:background="@drawable/button_state"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"/>
 
 		<Button
-				android:layout_weight="1"
-				android:id="@+id/newSearch"
-				android:layout_width="110dp"
-				android:layout_height="30dp"
-				android:text="New Search"
-				android:textColor="#FFFFFF"
-				android:textSize="12sp"
-				android:background="@drawable/button_state"
-				android:layout_marginLeft="10dp"
-				android:layout_toRightOf="@+id/requestProfiles"
-				android:layout_marginTop="10dp"
-				android:layout_marginBottom="10dp"/>
+			android:layout_weight="1"
+			android:id="@+id/newSearch"
+			android:layout_width="110dp"
+			android:layout_height="30dp"
+			android:text="New Search"
+			android:textColor="#FFFFFF"
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:background="@drawable/button_state"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/requestProfiles"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"/>
 
 		<Button
-				android:layout_weight="1"
-				android:id="@+id/home"
-				android:layout_width="110dp"
-				android:layout_height="30dp"
-				android:text="Home"
-				android:textColor="#FFFFFF"
-				android:textSize="12sp"
-				android:background="@drawable/button_state"
-				android:layout_marginLeft="10dp"
-				android:layout_toRightOf="@+id/newSearch"
-				android:layout_marginTop="10dp"
-				android:layout_marginBottom="10dp"/>
+			android:layout_weight="1"
+			android:id="@+id/home"
+			android:layout_width="110dp"
+			android:layout_height="30dp"
+			android:text="Home"
+			android:textColor="#FFFFFF"
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:background="@drawable/button_state"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/newSearch"
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"/>
 	</RelativeLayout>
 </LinearLayout>
 

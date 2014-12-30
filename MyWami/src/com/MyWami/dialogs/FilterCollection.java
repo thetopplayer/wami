@@ -7,7 +7,6 @@ package com.MyWami.dialogs;
     import android.view.View;
     import android.view.Window;
     import android.widget.*;
-    import com.MyWami.FilterCollectionAdapter;
     import com.MyWami.R;
     import com.MyWami.WamiListActivity;
     import com.MyWami.model.GroupModel;
@@ -25,13 +24,14 @@ public class FilterCollection {
   private GroupModel[] groupModel;
   private Context context;
   final private String GET_PROFILE_GROUP_DATA = Constants.IP + "get_profile_group_data.php";
-  String userIdentityProfileId;
+  private String userIdentityProfileId;
+  private String groupNameSelected;
 
   public FilterCollection() {
 
   }
 
-  public void filterCollection(final Context context, String userIdentityProfileId) {
+  public void filterCollection(final Context context, final String userIdentityProfileId) {
     this.context = context;
     this.userIdentityProfileId = userIdentityProfileId;
 
@@ -45,17 +45,22 @@ public class FilterCollection {
     jsonGetData.jsonGetData(context, GET_PROFILE_GROUP_DATA, postData);
     String jsonResult = jsonGetData.getJsonResult();
     groupModel = assignData(jsonResult);
-    setSelected(userIdentityProfileId);
 
     final Spinner dropdown = (Spinner)dialog.findViewById(R.id.select_group_edit);
-    String[] items = new String[]{"Profile Name", "First Name", "Last Name", "Tags", "Description"};
-    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+    int numElements = groupModel.length;
+    String[] groupNames = new String[numElements + 1];
+    groupNames[0] = "All Groups";
+    for (int i = 1; i <= numElements; i++) {
+      groupNames[i] = groupModel[i - 1].getGroupName();
+    }
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, groupNames);
     dropdown.setAdapter(adapter);
 
     dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
         ((TextView) parentView.getChildAt(0)).setTextColor(Color.BLACK);
+        groupNameSelected = String.valueOf(((TextView) parentView.getChildAt(0)).getText());
       }
 
       @Override
@@ -63,10 +68,6 @@ public class FilterCollection {
 
       }
     });
-
-//    ListView listView = (ListView) dialog.findViewById(R.id.profile_collection_list);
-//    FilterCollectionAdapter spa = new FilterCollectionAdapter(context, R.layout.dialog_filter_collection_by_group, groupModel);
-//    listView.setAdapter(spa);
 
     Button closeFilter = (Button) dialog.findViewById(R.id.close_filter);
     closeFilter.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +81,12 @@ public class FilterCollection {
     filterCollection.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        boolean isSelected = false;
-        for (GroupModel aGroupModel : groupModel)
-          if (aGroupModel.isSelected()) {
-            isSelected = true;
-            String identityProfileId = String.valueOf(aGroupModel.getIdentityProfileId());
-            Intent i = new Intent(context, WamiListActivity.class);
-            i.putExtra("user_identity_profile_id", identityProfileId);
-            i.putExtra("use_default", false);
-            context.startActivity(i);
-            dialog.dismiss();
-          }
-        if (!isSelected) {
-          Toast.makeText(context, "Please select a group from dropdown list or hit the Close button.", Toast.LENGTH_LONG).show();
-        }
+        Intent i = new Intent(context, WamiListActivity.class);
+        i.putExtra("user_identity_profile_id", userIdentityProfileId);
+        i.putExtra("use_default", false);
+        i.putExtra("groupNameSelected", groupNameSelected);
+        context.startActivity(i);
+        dialog.dismiss();
       }
     });
 
@@ -124,14 +117,5 @@ public class FilterCollection {
     }
 
     return groupModel;
-  }
-
-  private void setSelected(String userIdentityProfileId) {
-    for (int i = 0; i < groupModel.length; i++) {
-      if (groupModel[i].getIdentityProfileId() == Integer.parseInt(userIdentityProfileId)) {
-        groupModel[i].setSelected(true);
-        return;
-      }
-    }
   }
 }

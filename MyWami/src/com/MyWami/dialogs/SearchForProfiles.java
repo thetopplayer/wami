@@ -71,16 +71,19 @@ public class SearchForProfiles {
 			}
 		});
 
-		Button searchForProfiles = (Button) dialog.findViewById(R.id.searchForProfiles);
+		final Button searchForProfiles = (Button) dialog.findViewById(R.id.searchForProfiles);
 		searchForProfiles.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if ((searchStrEdit.getText().toString()).equals("")) {
+					Toast.makeText(context, "Please enter a search string.", Toast.LENGTH_LONG).show();
+					return;
+				}
 				Intent i = new Intent(context, SearchResults.class);
 				i.putExtra("user_identity_profile_id", userIdentityProfileId);
 				i.putExtra("use_default", useDefault);
 				i.putExtra("selected_item", dropdown.getSelectedItem().toString());
 				i.putExtra("search_str", searchStrEdit.getText().toString());
-//				i.putExtra("search_context", useDefault);
 				context.startActivity(i);
 			}
 		});

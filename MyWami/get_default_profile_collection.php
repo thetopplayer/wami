@@ -1,6 +1,6 @@
 <?php
 /**
- * get_default_profile_collection.php
+ * c.php
  *
  * Created by Rob Lanter
  *
@@ -22,7 +22,7 @@ $sql = "SELECT u2.first_name, u2.last_name, image_url, profile_name, tags, ipc.i
          WHERE ip.delete_ind = 0 AND u.user_id = " .$userId. " AND u.user_id = ip.user_id AND default_profile_ind=1)";
 
 $result = mysqli_query($con, $sql) or  die(mysql_error($con));
-$response["default_profile_collection"] = array();
+$response["profile_collection"] = array();
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_array($result)) {
         $collection = array();
@@ -36,7 +36,7 @@ if (mysqli_num_rows($result) > 0) {
         $collection["email"] = $row["email"];
         $collection["telephone"] = $row["telephone"];
 
-        array_push($response["default_profile_collection"], $collection);
+        array_push($response["profile_collection"], $collection);
     }
     $response["success"] = 1;
     echo json_encode($response);

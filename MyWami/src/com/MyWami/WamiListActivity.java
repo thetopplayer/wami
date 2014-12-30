@@ -37,11 +37,10 @@ public class WamiListActivity extends ListActivity {
 	private Context that;
 	private WamiListModel[] listModel;
 	private ArrayList alWamiTransmitModel = new ArrayList();
-	private String identityProfileId;
 	private String userIdentityProfileId;
-	private String userProfileName;
 	private boolean useDefault;
 	private String profileName;
+	private String groupName;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -63,6 +62,10 @@ public class WamiListActivity extends ListActivity {
 
 		String jsonResult = getJsonData();
 		ListData(jsonResult);
+
+		if (extras.getString("groupNameSelected") != null) {
+			groupName = extras.getString("groupNameSelected");
+		}
 
 		profileName = getProfileName();
 		TextView tvProfileName = (TextView) findViewById(R.id.collectionProfileName);
@@ -165,12 +168,7 @@ public class WamiListActivity extends ListActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode;
-			if (useDefault) {
-				jsonMainNode = jsonResponse.optJSONArray("default_profile_collection");
-			}
-			else {
-				jsonMainNode = jsonResponse.optJSONArray("profile_collection");
-			}
+			jsonMainNode = jsonResponse.optJSONArray("profile_collection");
 
 			listModel = new WamiListModel[jsonMainNode.length()];
 			for (int i = 0; i < jsonMainNode.length(); i++) {
@@ -216,7 +214,7 @@ public class WamiListActivity extends ListActivity {
 			String userId = String.valueOf(GetUserId.getUserId(that));
 			String[] postData = { userId };
 			jsonGetData.jsonGetData(this, GET_DEFAULT_IDENTITY_PROFILE_ID, postData);
-			jsonResponse = null;
+
 			try {
 				jsonResponse = new JSONObject(jsonGetData.getJsonResult());
 				JSONArray jsonMainNode = jsonResponse.optJSONArray("default_identity_profile_id");
