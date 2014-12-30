@@ -155,6 +155,9 @@ function loadData(identity_profile_id) {
 	localStorage.setItem("group_filter", "");
 }
 
+// -----------------------
+// Group processing
+//
 function create_group_dropdown (identity_profile_id) {
 	var params = "identity_profile_id=" + identity_profile_id;
 	var url = "get_profile_group_data.php";
@@ -349,6 +352,9 @@ function get_group_list(selected_profile_id) {
 	localStorage.setItem("num_groups", num_groups);
 	document.getElementById("profile_group_list").innerHTML = group_list;
 }
+//
+// End Group Processing
+//-------------------------
 
 function show_extended_info(selected_profile_id) {
 	localStorage.setItem("selected_profile_id", selected_profile_id);
