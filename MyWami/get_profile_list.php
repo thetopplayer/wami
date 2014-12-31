@@ -25,11 +25,11 @@ if (mysqli_num_rows($result) > 0) {
         $item["default_profile_ind"] = $row["default_profile_ind"];
         array_push($response["profile_list_data"], $item);
     }
-    $response["success"] = 1;
+    $response["ret_code"] = 0;
     echo json_encode($response);
 }
 else {
-    $response["success"] = 0;
+    $response["ret_code"] = 1;
     $response["message"] = "No Profiles found";
     echo json_encode($response);
 }
