@@ -254,7 +254,7 @@ public class WamiListActivity extends ListActivity {
 			jsonGetData.jsonGetData(this, GET_DEFAULT_PROFILE_COLLECTION, postData);
 		}
 		else {
-			if ( (profileGroupId == 999999) || (profileGroupId == 0 && groupName == null) ) {
+			if ( (profileGroupId == -99) || (profileGroupId == 0 && groupName == null) ) {
 				String[] postData = {userIdentityProfileId};
 				jsonGetData.jsonGetData(this, GET_PROFILE_COLLECTION, postData);
 			}
