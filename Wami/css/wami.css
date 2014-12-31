@@ -138,7 +138,7 @@ hr {
 }
 .span-scroll-wami-list {
 	display:block;
-	max-height: 700px;
+	max-height: 600px;
 	overflow-y:scroll;
 }
 .span-scroll-profile {
