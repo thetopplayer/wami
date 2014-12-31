@@ -153,11 +153,6 @@ public class Login extends Activity {
 				return false;
 			}
 
-//			Integer result = (Integer) jsonResponse.get("success");
-//			if (result.equals(0)) {
-//				return false;
-//			}
-
 			JSONArray jsonNode = jsonResponse.optJSONArray("user_info");
 			JSONObject jsonChildNode = jsonNode.getJSONObject(0);
 
