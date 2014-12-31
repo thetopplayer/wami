@@ -333,7 +333,9 @@ public class WamiInfoExtended extends Activity {
 			if (group_ret_code == 2) {
 				jsonChildNode = jsonNode.getJSONObject(0);
 			}
-			else jsonChildNode = jsonNode.getJSONObject(1);
+			else {
+				jsonChildNode = jsonNode.getJSONObject(1);
+			}
 			profileName = jsonChildNode.optString("profile_name");
 			description = jsonChildNode.optString("description");
 			firstName = jsonChildNode.optString("first_name");
@@ -351,11 +353,19 @@ public class WamiInfoExtended extends Activity {
 			rating = jsonChildNode.optString("rating");
 			createDate = (jsonChildNode.optString("create_date")).substring(0, 10);
 			String searchableStr = jsonChildNode.optString("searchable");
-			if (searchableStr.equals("1")) searchable = "Yes";
-			else searchable = "No";
+			if (searchableStr.equals("1")) {
+				searchable = "Yes";
+			}
+			else {
+				searchable = "No";
+			}
 			String activeIndStr = jsonChildNode.optString("active_ind");
-			if (activeIndStr.equals("1")) activeInd = "Active";
-			else activeInd = "Inactive";
+			if (activeIndStr.equals("1")) {
+				activeInd = "Active";
+			}
+			else {
+				activeInd = "Inactive";
+			}
 
 			if (group_ret_code == 2) {
 				return true;
