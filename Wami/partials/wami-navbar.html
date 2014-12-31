@@ -10,11 +10,12 @@
 		if (current_page !== "collection") {
 			document.getElementById("myWamiNetwork").innerHTML =
 				"<li><a href='profile_collection.html'>View My Wami Network</a></li> " +
+				"<li class='divider'></li> " +
 				"<li class='disabled'><a href='#'>Transmit Wami(s)</a></li> " +
 				"<li class='disabled'><a href='#'>Remove Wami(s)</a></li> " +
-				"<li class='disabled'><a href='#'>Refresh My Wami List</a></li> " +
-				"<li class='divider'></li> " +
-				"<li class='disabled'><a href='#'>View/Manage My Wami Groups</a></li>";
+				"<li class='disabled'><a href='#'>Refresh My Wami List</a></li> ";
+//				"<li class='divider'></li> " +
+//				"<li class='disabled'><a href='#'>View/Manage My Wami Groups</a></li>";
 		}
 
 		if (current_page !== "mywami") {
@@ -47,11 +48,12 @@
 					<a style="background-color: rgba(118, 118, 118, 0)" href="#" class="dropdown-toggle" data-toggle="dropdown">My Profile Collections <b class="caret"></b></a>
 					<ul class="dropdown-menu" id="myWamiNetwork">
 						<li><a href="profile_collection.html">View My Profile Collections</a></li>
+						<li class='divider'></li>
 						<li><a onclick="return checkForChosenProfiles('transmit')">Transmit Wami(s)</a></li>
 						<li><a onclick="return checkForChosenProfiles('remove')">Remove Wami(s)</a></li>
 						<li><a onclick="refreshCollection()">Refresh My Collection List</a></li>
-						<li class="divider"></li>
-						<li><a href="#">View/Manage My Wami Groups</a></li>
+						<!--<li class="divider"></li>-->
+						<!--<li><a href="#">View/Manage My Wami Groups</a></li>-->
 					</ul>
 				</li>
 				<li class="dropdown">
