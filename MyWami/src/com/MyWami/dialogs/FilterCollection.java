@@ -85,7 +85,7 @@ public class FilterCollection {
         intent.putExtra("use_default", false);
         intent.putExtra("group_name_selected", groupNameSelected);
         if (groupNameSelected.equals("All Groups")) {
-          profileGroupIdSelected = 999999;
+          profileGroupIdSelected = -99;
         }
         else {
           int num_groups = groupModel.length;
