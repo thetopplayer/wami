@@ -8,11 +8,15 @@
 	border-radius: 0px;
 }
 
+.wami-background {
+	background-color: rgba(255, 255, 255, 0.13);
+}
+
 .jumbotron {
 	padding: 30px;
 	margin-bottom: 30px;
 	color: inherit;
-	background-color: #a4d6d5;
+	background-color: #ebe9e9;
 }
 .btn-success {
 	color: #ffeddf;
