@@ -48,7 +48,7 @@ public class FilterCollection {
       jsonResponse = new JSONObject(jsonResult);
       int ret_code = jsonResponse.optInt("ret_code");
       if (ret_code == 1) {
-        Toast.makeText(context, "No Groups have been created yet!", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "No Groups have been created yet! Groups can be created from the website.", Toast.LENGTH_LONG).show();
         return;
       }
     }
@@ -138,8 +138,8 @@ public class FilterCollection {
       }
     }
     catch (JSONException e) {
-      e.printStackTrace();
       Toast.makeText(context, "Error" + e.toString(), Toast.LENGTH_LONG).show();
+      e.printStackTrace();
     }
 
     return groupModel;
