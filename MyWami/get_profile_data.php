@@ -49,7 +49,7 @@ if (mysqli_num_rows($result) > 0) {
     $item["active_ind"] = $row[15];
     $item["description"] = $row[16];
     $item["rating"] = $row[17];
-//    array_push($response["identity_profile_data"], $item);
+    mysqli_free_result($result);
 } else {
     $response["ret_code"] = 1;
     $response["message"] = "No Identity Profile data found";
@@ -76,6 +76,7 @@ if ($user_identity_profile_id != "NA") {
             $group_data["group"] = $row["group_name"];
             array_push($groups["group_data"], $group_data);
         }
+        mysqli_free_result($result);
     }
     if (mysqli_num_rows($result) === 0) {
         $response["group_ret_code"] = 2;
@@ -85,7 +86,7 @@ if ($user_identity_profile_id != "NA") {
     }
 }
 
-// Check if "from" data is needed
+// Check if "from" data is needed...used in Transmit functionality
 if ($from_identity_profile_id === "NA") {
     array_push($response["identity_profile_data"], $item);
     $response["ret_code"] = 0;
@@ -107,6 +108,7 @@ if (mysqli_num_rows($result) > 0) {
 
     array_push($response["identity_profile_data"], $item);
     $response["ret_code"] = 0;
+    mysqli_free_result($result);
     echo json_encode($response);
 }
 else {

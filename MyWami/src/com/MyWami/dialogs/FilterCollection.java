@@ -43,6 +43,19 @@ public class FilterCollection {
     JsonGetData jsonGetData = new JsonGetData();
     jsonGetData.jsonGetData(context, GET_PROFILE_GROUP_DATA, postData);
     String jsonResult = jsonGetData.getJsonResult();
+    JSONObject jsonResponse = null;
+    try {
+      jsonResponse = new JSONObject(jsonResult);
+      int ret_code = jsonResponse.optInt("ret_code");
+      if (ret_code == 1) {
+        Toast.makeText(context, "No Groups have been created yet!", Toast.LENGTH_LONG).show();
+        return;
+      }
+    }
+    catch (JSONException e) {
+      e.printStackTrace();
+    }
+
     groupModel = assignData(jsonResult);
 
     final Spinner dropdown = (Spinner)dialog.findViewById(R.id.select_group_edit);

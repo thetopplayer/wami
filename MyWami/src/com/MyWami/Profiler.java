@@ -58,6 +58,12 @@ public class Profiler extends ListActivity {
 	private String userIdentityProfileId;
 	private boolean useDefault;
 	private ArrayList alWamiTransmitModel = new ArrayList();
+
+	private int no_images_ret_code;
+	private int no_text_ret_code;
+	private int no_pdf_ret_code;
+	private int no_audio_ret_code;
+
 	private Context that;
 
 	final private String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
@@ -158,13 +164,23 @@ public class Profiler extends ListActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			int ret_code = jsonResponse.optInt("ret_code");
+			int no_categories_ret_code = jsonResponse.optInt("no_categories_ret_code");
+			no_images_ret_code = jsonResponse.optInt("no_images_ret_code");
+			no_text_ret_code = jsonResponse.optInt("no_text_ret_code");
+			no_pdf_ret_code = jsonResponse.optInt("no_pdf_ret_code");
+			no_audio_ret_code = jsonResponse.optInt("no_audio_ret_code");
 			if (ret_code == 1) {
 				String message = jsonResponse.optString("message");
 				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-				return null;
+				//return null;
 			}
 			if (ret_code == -1) {
 //				Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
+				return null;
+			}
+			if (no_categories_ret_code == 1) {
+				String message = jsonResponse.optString("message");
+				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 				return null;
 			}
 			JSONArray jsonMainNode = jsonResponse.optJSONArray("identity_profiler_data");
@@ -181,17 +197,7 @@ public class Profiler extends ListActivity {
 				String fileName;
 				String textDoc;
 
-				if (mediaType.equals("Text")) {
-					JSONObject fileObj = jsonChildNode.getJSONObject("file");
-//					textDoc = fileObj.getString("contents");
-					fileLocation = fileObj.getString("file_location");
-					fileName = fileObj.getString("file_name");
-//					profilerModel[i].setTextDoc(textDoc);
-					profilerModel[i].setFileLocation(fileLocation);
-					profilerModel[i].setFileName(fileName);
-				}
-
-				if (mediaType.equals("PDF")) {
+				if ((mediaType.equals("Text")) && (no_text_ret_code != 1)) {
 					JSONObject fileObj = jsonChildNode.getJSONObject("file");
 					fileLocation = fileObj.getString("file_location");
 					fileName = fileObj.getString("file_name");
@@ -199,7 +205,15 @@ public class Profiler extends ListActivity {
 					profilerModel[i].setFileName(fileName);
 				}
 
-				if (mediaType.equals("Audio")) {
+				if ((mediaType.equals("PDF")) && (no_pdf_ret_code != 1)) {
+					JSONObject fileObj = jsonChildNode.getJSONObject("file");
+					fileLocation = fileObj.getString("file_location");
+					fileName = fileObj.getString("file_name");
+					profilerModel[i].setFileLocation(fileLocation);
+					profilerModel[i].setFileName(fileName);
+				}
+
+				if ((mediaType.equals("Audio")) && (no_audio_ret_code != 1)) {
 					JSONObject fileObj = jsonChildNode.getJSONObject("file");
 					JSONArray audioFiles =  fileObj.getJSONArray("audio");
 					audioFileModel = new AudioFileModel[audioFiles.length()];
@@ -217,7 +231,7 @@ public class Profiler extends ListActivity {
 					profilerModel[i].setAudioFileModel(audioFileModel);
 				}
 
-				if (mediaType.equals("Image")) {
+				if ((mediaType.equals("Image")) && (no_images_ret_code != 1)) {
 					JSONObject fileObj = jsonChildNode.getJSONObject("file");
 					JSONArray imageFiles =  fileObj.getJSONArray("image");
 					imageFileModel = new ImageFileModel[imageFiles.length()];
@@ -256,142 +270,150 @@ public class Profiler extends ListActivity {
 		Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
 
 		if (profilerModel[position].getMediaType().equals("Audio")) {
-			audioFileModel = profilerModel[position].getAudioFileModel();
-			String[] audioFileName = new String[audioFileModel.length];
-			String[] fileName = new String[audioFileModel.length];
-			String[] fileLocation = new String[audioFileModel.length];
-			String[] audioDescription = new String[audioFileModel.length];
-			for (int i = 0; i < (audioFileModel.length); i++) {
-				audioFileName[i] = audioFileModel[i].getAudioFileName();
-				fileName[i] = audioFileModel[i].getFileName();
-				fileLocation[i] = audioFileModel[i].getFileLocation();
-				audioDescription[i] = audioFileModel[i].getAudioDescription();
+			if (no_audio_ret_code != 1) {
+				audioFileModel = profilerModel[position].getAudioFileModel();
+				String[] audioFileName = new String[audioFileModel.length];
+				String[] fileName = new String[audioFileModel.length];
+				String[] fileLocation = new String[audioFileModel.length];
+				String[] audioDescription = new String[audioFileModel.length];
+				for (int i = 0; i < (audioFileModel.length); i++) {
+					audioFileName[i] = audioFileModel[i].getAudioFileName();
+					fileName[i] = audioFileModel[i].getFileName();
+					fileLocation[i] = audioFileModel[i].getFileLocation();
+					audioDescription[i] = audioFileModel[i].getAudioDescription();
+				}
+				Intent intent = new Intent(Profiler.this, ProfilerAudioView.class);
+				intent.putExtra("audio_file_name", audioFileName);
+				intent.putExtra("file_name", fileName);
+				intent.putExtra("file_location", fileLocation);
+				intent.putExtra("audio_description", audioDescription);
+
+				intent.putExtra("image_url", imageUrl);
+				intent.putExtra("profile_name", profileName);
+				intent.putExtra("identity_profile_id", identityProfileId);
+				intent.putExtra("first_name", firstName);
+				intent.putExtra("last_name", lastName);
+				intent.putExtra("user_identity_profile_id", userIdentityProfileId);
+				intent.putExtra("use_default", useDefault);
+
+				startActivity(intent);
 			}
-			Intent intent = new Intent(Profiler.this, ProfilerAudioView.class);
-			intent.putExtra("audio_file_name", audioFileName);
-			intent.putExtra("file_name", fileName);
-			intent.putExtra("file_location", fileLocation);
-			intent.putExtra("audio_description", audioDescription);
-
-			intent.putExtra("image_url", imageUrl);
-			intent.putExtra("profile_name", profileName);
-			intent.putExtra("identity_profile_id", identityProfileId);
-			intent.putExtra("first_name", firstName);
-			intent.putExtra("last_name", lastName);
-			intent.putExtra("user_identity_profile_id", userIdentityProfileId);
-			intent.putExtra("use_default", useDefault);
-
-			startActivity(intent);
+			if (no_audio_ret_code == 1) {
+				Toast.makeText(this, "No audio files have been uploaded yet!", Toast.LENGTH_LONG).show();
+			}
 		}
+
 
 		if (profilerModel[position].getMediaType().equals("Image")) {
-			imageFileModel = profilerModel[position].getImageFileModel();
-			String[] imageName = new String[imageFileModel.length];
-			String[] fileName = new String[imageFileModel.length];
-			String[] fileLocation = new String[imageFileModel.length];
-			String[] imageDescription = new String[imageFileModel.length];
-			for (int i = 0; i < (imageFileModel.length); i++) {
-				imageName[i] = imageFileModel[i].getImageName();
-				fileName[i] = imageFileModel[i].getFileName();
-				fileLocation[i] = imageFileModel[i].getFileLocation();
-				imageDescription[i] = imageFileModel[i].getImageDescription();
+			if (no_images_ret_code != 1) {
+				imageFileModel = profilerModel[position].getImageFileModel();
+				String[] imageName = new String[imageFileModel.length];
+				String[] fileName = new String[imageFileModel.length];
+				String[] fileLocation = new String[imageFileModel.length];
+				String[] imageDescription = new String[imageFileModel.length];
+				for (int i = 0; i < (imageFileModel.length); i++) {
+					imageName[i] = imageFileModel[i].getImageName();
+					fileName[i] = imageFileModel[i].getFileName();
+					fileLocation[i] = imageFileModel[i].getFileLocation();
+					imageDescription[i] = imageFileModel[i].getImageDescription();
+				}
+				Intent intent = new Intent(Profiler.this, ProfilerImageView.class);
+				intent.putExtra("image_name", imageName);
+				intent.putExtra("file_name", fileName);
+				intent.putExtra("file_location", fileLocation);
+				intent.putExtra("image_description", imageDescription);
+
+				intent.putExtra("image_url", imageUrl);
+				intent.putExtra("profile_name", profileName);
+				intent.putExtra("identity_profile_id", identityProfileId);
+				intent.putExtra("first_name", firstName);
+				intent.putExtra("last_name", lastName);
+				intent.putExtra("user_identity_profile_id", userIdentityProfileId);
+				intent.putExtra("use_default", useDefault);
+
+				startActivity(intent);
 			}
-			Intent intent = new Intent(Profiler.this, ProfilerImageView.class);
-			intent.putExtra("image_name", imageName);
-			intent.putExtra("file_name", fileName);
-			intent.putExtra("file_location", fileLocation);
-			intent.putExtra("image_description", imageDescription);
-
-			intent.putExtra("image_url", imageUrl);
-			intent.putExtra("profile_name", profileName);
-			intent.putExtra("identity_profile_id", identityProfileId);
-			intent.putExtra("first_name", firstName);
-			intent.putExtra("last_name", lastName);
-			intent.putExtra("user_identity_profile_id", userIdentityProfileId);
-			intent.putExtra("use_default", useDefault);
-
-			startActivity(intent);
+			if (no_images_ret_code == 1) {
+				Toast.makeText(this, "No images files have been uploaded yet!", Toast.LENGTH_LONG).show();
+			}
 		}
 
-		if (profilerModel[position].getMediaType().equals("PDF")) {
-			GetFile task = new GetFile();
-			try {
-				String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-				File folder = new File(extStorageDirectory, "pdf");
-				folder.mkdir();
-				ArrayList<String> params = new ArrayList<String>();
-				params.add(profilerModel[position].getFileLocation());
-				params.add(profilerModel[position].getFileName());
-				params.add(String.valueOf(folder));
-				task.execute(new ArrayList[] { params }).get();
 
+		if (profilerModel[position].getMediaType().equals("PDF")) {
+			if (no_pdf_ret_code != 1) {
+				GetFile task = new GetFile();
 				try {
-					Intent intent = new Intent();
-					intent.setAction(Intent.ACTION_VIEW);
-					File fileToRead = new File(folder + "/" + profilerModel[position].getFileName());
-					Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
-					intent.setDataAndType(uri, "application/pdf");
-					startActivity(intent);
-				}
-			  	catch (ActivityNotFoundException activityNotFoundException) {
-					activityNotFoundException.printStackTrace();
-					Toast.makeText(this, "There doesn't seem to be a PDF reader installed.",	Toast.LENGTH_LONG).show();
-			  	}
-				catch (Exception ex) {
-					ex.printStackTrace();
-					Toast.makeText(this, "Cannot open the selected file.",	Toast.LENGTH_LONG).show();
+					String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+					File folder = new File(extStorageDirectory, "pdf");
+					folder.mkdir();
+					ArrayList<String> params = new ArrayList<String>();
+					params.add(profilerModel[position].getFileLocation());
+					params.add(profilerModel[position].getFileName());
+					params.add(String.valueOf(folder));
+					task.execute(new ArrayList[]{params}).get();
+
+					try {
+						Intent intent = new Intent();
+						intent.setAction(Intent.ACTION_VIEW);
+						File fileToRead = new File(folder + "/" + profilerModel[position].getFileName());
+						Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
+						intent.setDataAndType(uri, "application/pdf");
+						startActivity(intent);
+					} catch (ActivityNotFoundException activityNotFoundException) {
+						activityNotFoundException.printStackTrace();
+						Toast.makeText(this, "There doesn't seem to be a PDF reader installed.", Toast.LENGTH_LONG).show();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						Toast.makeText(this, "Cannot open the selected file.", Toast.LENGTH_LONG).show();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
 				}
 			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			catch (ExecutionException e) {
-				e.printStackTrace();
+			if (no_pdf_ret_code == 1) {
+				Toast.makeText(this, "No pdf files have been uploaded yet!", Toast.LENGTH_LONG).show();
 			}
 		}
 
 		if (profilerModel[position].getMediaType().equals("Text")) {
-			GetFile task = new GetFile();
-			try {
-				String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-				File folder = new File(extStorageDirectory, "text");
-				folder.mkdir();
-				ArrayList<String> params = new ArrayList<String>();
-				params.add(profilerModel[position].getFileLocation());
-				params.add(profilerModel[position].getFileName());
-				params.add(String.valueOf(folder));
-				task.execute(new ArrayList[] { params }).get();
-
+			if (no_text_ret_code != 1) {
+				GetFile task = new GetFile();
 				try {
-					Intent intent = new Intent();
-					intent.setAction(Intent.ACTION_VIEW);
-					File fileToRead = new File(folder + "/" + profilerModel[position].getFileName());
-					Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
-					intent.setDataAndType(uri, "text/plain");
-					startActivity(intent);
-				}
-				catch (ActivityNotFoundException activityNotFoundException) {
-					activityNotFoundException.printStackTrace();
-					Toast.makeText(this, "There doesn't seem to be a Text reader installed.",	Toast.LENGTH_LONG).show();
-				}
-				catch (Exception ex) {
-					ex.printStackTrace();
-					Toast.makeText(this, "Cannot open the selected file.",	Toast.LENGTH_LONG).show();
-				}
+					String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+					File folder = new File(extStorageDirectory, "text");
+					folder.mkdir();
+					ArrayList<String> params = new ArrayList<String>();
+					params.add(profilerModel[position].getFileLocation());
+					params.add(profilerModel[position].getFileName());
+					params.add(String.valueOf(folder));
+					task.execute(new ArrayList[]{params}).get();
 
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			catch (ExecutionException e) {
-				e.printStackTrace();
-			}
+					try {
+						Intent intent = new Intent();
+						intent.setAction(Intent.ACTION_VIEW);
+						File fileToRead = new File(folder + "/" + profilerModel[position].getFileName());
+						Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
+						intent.setDataAndType(uri, "text/plain");
+						startActivity(intent);
+					} catch (ActivityNotFoundException activityNotFoundException) {
+						activityNotFoundException.printStackTrace();
+						Toast.makeText(this, "There doesn't seem to be a Text reader installed.", Toast.LENGTH_LONG).show();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						Toast.makeText(this, "Cannot open the selected file.", Toast.LENGTH_LONG).show();
+					}
 
-//			Intent intent = new Intent(Profiler.this, ProfilerTextView.class);
-//			intent.putExtra("text_doc", profilerModel[position].getTextDoc());
-//			intent.putExtra("file_location", profilerModel[position].getFileLocation());
-//			intent.putExtra("file_name", profilerModel[position].getFileName());
-//			startActivity(intent);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+			}
+			if (no_text_ret_code == 1) {
+				Toast.makeText(this, "No text files have been uploaded yet!", Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 
@@ -452,9 +474,6 @@ public class Profiler extends ListActivity {
 				String folder = String.valueOf(params[0].get(2));
 
 				String path = Constants.ASSETS_IP + fileLocation + fileName;
-//				String ipNoSlash = Constants.IP.substring(0, Constants.IP.length() - 1);
-//				String path = ipNoSlash + ":80/" + fileLocation + fileName;
-				
 				URL u = new URL(path);
 
 				HttpParams httpParameters = new BasicHttpParams();

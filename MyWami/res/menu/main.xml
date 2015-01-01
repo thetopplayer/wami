@@ -18,8 +18,8 @@
 	      android:icon="@drawable/ic_action_search"
 	      android:title="@string/action_search_for_profiles"/>
 
-	<item android:id="@+id/action_group_wami"
-	      android:title="@string/action_group_wami"/>
+	<!--<item android:id="@+id/action_group_wami"-->
+	      <!--android:title="@string/action_group_wami"/>-->
 
 	<item android:id="@+id/action_logout"
 	      android:title="@string/action_logout"/>

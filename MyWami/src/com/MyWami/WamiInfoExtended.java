@@ -194,7 +194,12 @@ public class WamiInfoExtended extends Activity {
 //					Log.e("**** Profiler: json error: ", e.toString(), e);
 				}
 				int ret_code = jsonResponse.optInt("ret_code");
+				int no_categories_ret_code = jsonResponse.optInt("no_categories_ret_code");
 				if (ret_code == 1) {
+					String message = jsonResponse.optString("message");
+					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+				}
+				if (no_categories_ret_code == 1) {
 					String message = jsonResponse.optString("message");
 					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 					return;

@@ -18,8 +18,14 @@ $sql = "SELECT identity_profiler_id, identity_profile_id, category, media_type F
 
 $response = array();
 $response["message"] = array();
-$response["ret_code"] = 0;
+//$response["ret_code"] = 0;
 $result = mysqli_query($con, $sql)  or  die(mysqli_error($con));
+if (!$result) {
+    $response["db_error"] = "get_profiler_data(1): Problem accessing profiler data: " .$identity_profile_id. " MySQL Error: " .mysqli_error($con);
+    $response["ret_code"] = -1;
+    echo json_encode($response);
+    exit(-1);
+}
 if (mysqli_num_rows($result) > 0) {
     $response["identity_profiler_data"] = array();
     while ($row = mysqli_fetch_array($result)) {
@@ -32,7 +38,7 @@ if (mysqli_num_rows($result) > 0) {
         if ($row["media_type"] == 'Image') {
             $profiler["file"] = get_image_gallery_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
-                $response["ret_code"] = 1;
+                $response["no_images_ret_code"] = 1;
                 array_push($response["message"], "Identity Profiler: No Profiler Images found.");
             }
         }
@@ -40,7 +46,7 @@ if (mysqli_num_rows($result) > 0) {
         if ($row["media_type"] == 'Text') {
             $profiler["file"] = get_text_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
-                $response["ret_code"] = 1;
+                $response["no_text_ret_code"] = 1;
                 array_push($response["message"], "Identity Profiler: No Profiler Text File uploaded.");
             }
         }
@@ -48,7 +54,7 @@ if (mysqli_num_rows($result) > 0) {
         if ($row["media_type"] == 'PDF') {
             $profiler["file"] = get_PDF_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
-                $response["ret_code"] = 1;
+                $response["no_pdf_ret_code"] = 1;
                 array_push($response["message"], "Identity Profiler: No Profiler PDF File uploaded.");
             }
         }
@@ -56,21 +62,26 @@ if (mysqli_num_rows($result) > 0) {
         if ($row["media_type"] == 'Audio') {
             $profiler["file"] = get_audio_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
-                $response["ret_code"] = 1;
+                $response["no_audio_ret_code"] = 1;
                 array_push($response["message"], "Identity Profiler: No Profiler Audio Files found.");
             }
         }
         array_push($response["identity_profiler_data"], $profiler);
     }
-} else {
-    $response["ret_code"] = 1;
+}
+else {
+    $response["no_categories_ret_code"] = 1;
     array_push($response["message"], "Identity Profiler: No Identity Profiler Categories found.");
 }
-if ($response["ret_code"] > 0) echo json_encode($response);
-else {
-    $response["ret_code"] = 0;
-    echo json_encode($response);
-}
+$response["ret_code"] = 0;
+mysqli_free_result($result);
+echo json_encode($response);
+//if ($response["ret_code"] > 0) echo json_encode($response);
+//else {
+//    $response["ret_code"] = 0;
+//    mysqli_free_result($result);
+//    echo json_encode($response);
+//}
 return;
 
 // get text files
@@ -88,16 +99,12 @@ function get_text_data($identity_profile_id, $category, $con) {
         $file["text_file_name"]  = $row_file[2];
         $file["text_file_description"]  = $row_file[3];
         $file["category"] = $category;
-
-//        $contents = file_get_contents($row_file[0] .$row_file[1]);
-//        $file["contents"]  = $contents;
-
-//        array_push($response_file["file"], $file);
-    } else {
+    }
+    else {
         return -1;
     }
 
-//    return ($response_file);
+    mysqli_free_result($result_file);
     return ($file);
 }
 
@@ -116,13 +123,12 @@ function get_PDF_data($identity_profile_id, $category, $con) {
         $file["pdf_file_name"]  = $row_file[2];
         $file["pdf_file_description"]  = $row_file[3];
         $file["category"] = $category;
-
-//        array_push($response_file["file"], $file);
-    } else {
+    }
+    else {
         return -1;
     }
 
-//    return ($response_file);
+    mysqli_free_result($result_file);
     return ($file);
 }
 
@@ -146,9 +152,11 @@ function get_audio_data ($identity_profile_id, $category, $con) {
 
             array_push($audio_files["audio"], $audio_file);
         }
-    } else {
+    }
+    else {
         return -1;
     }
+    mysqli_free_result($result_audio);
     return $audio_files;
 }
 
@@ -173,9 +181,11 @@ function get_image_gallery_data($identity_profile_id, $category, $con) {
 
             array_push($image_files["image"], $image_file);
         }
-    } else {
+    }
+    else {
         return -1;
     }
+    mysqli_free_result($result_image);
     return $image_files;
 }
 
