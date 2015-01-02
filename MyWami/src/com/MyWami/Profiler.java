@@ -148,6 +148,11 @@ public class Profiler extends ListActivity {
 		setListAdapter(new ProfilerAdapter(this, profileList));
 	}
 
+	public void onResume() {
+		super.onResume();
+
+	}
+
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		savedInstanceState.putString("identity_profile_id", identityProfileId);
