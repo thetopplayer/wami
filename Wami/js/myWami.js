@@ -239,6 +239,10 @@ function fill_from_account() {
 			return false;
 		}
 
+		var first_name = account_data_obj.account_profile[0].first_name;
+		$("#first_name").val(first_name);
+		var last_name = account_data_obj.account_profile[0].last_name;
+		$("#last_name").val(last_name);
 		var street_address = account_data_obj.account_profile[0].street_address;
 		$("#street_address").val(street_address);
 		var city = account_data_obj.account_profile[0].city;
