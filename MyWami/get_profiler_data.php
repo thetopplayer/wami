@@ -160,7 +160,6 @@ function get_audio_data ($identity_profile_id, $category, $con) {
     return $audio_files;
 }
 
-
 //Get images for image gallery
 function get_image_gallery_data($identity_profile_id, $category, $con) {
     $sql_image = "SELECT profiler_image_gallery_id, file_location, file_name, image_name, image_description FROM profiler_image_gallery " .
@@ -188,5 +187,4 @@ function get_image_gallery_data($identity_profile_id, $category, $con) {
     mysqli_free_result($result_image);
     return $image_files;
 }
-
 ?>

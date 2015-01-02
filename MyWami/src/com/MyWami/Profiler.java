@@ -69,7 +69,7 @@ public class Profiler extends ListActivity {
 	final private String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
 
 
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+//	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
