@@ -6,7 +6,7 @@
  */
 // Alert messages
 function my_alert (message, message_type_class, message_type_string) {
-	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable' style='width: 600px; float: right'> " +
+	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable' style='width: 590px; margin-bottom: 0; float: right'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	document.getElementById("login_error").innerHTML = alert_str;
