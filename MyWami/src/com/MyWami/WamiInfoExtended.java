@@ -201,7 +201,8 @@ public class WamiInfoExtended extends Activity {
 				}
 				if (no_categories_ret_code == 1) {
 					String message = jsonResponse.optString("message");
-					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+					String toastMessage = message.substring(2, message.length() - 2);
+					Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_LONG).show();
 					return;
 				}
 				if (ret_code == -1) {
