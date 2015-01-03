@@ -15,7 +15,8 @@ $identity_profile_id = $_POST["identity_profile_id"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$sql = "SELECT identity_profiler_id FROM identity_profiler WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
+$sql = "SELECT identity_profiler_id FROM identity_profiler WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id.
+        " ORDER BY category";
 
 $response = array();
 $response["ret_code"] = 0;
