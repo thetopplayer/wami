@@ -51,7 +51,7 @@ function load_profiler_categories (identity_profile_id) {
 					'<div class="panel-group" id="accordionSection' +  i + '"> ' +
 						'<div class="panel panel-primary" style="border-color: #969696">' +
 							'<div class="panel-heading" style="background-color: #e9e9e9; color: #616161; padding-bottom: 5px">'+
-								'<h3 class="panel-title"><input type="checkbox" value=" + identity_profiler_id[i] + " id="category_checkbox' + i + '" style="margin-right: 10px; margin-bottom: 7px">' +
+								'<h3 class="panel-title"><input type="checkbox" value="' + identity_profiler_id[i] + '" id="category_checkbox' + i + '" style="margin-right: 10px; margin-bottom: 7px">' +
 									'<a style="color: #323232" data-toggle="collapse" data-parent="#accordionSection' + i + '" href="#collapseSection' +  i + '">' +  category +
 										'<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>' +
 									'</a>' +
@@ -958,7 +958,8 @@ function checkForChosenCategories() {
 	for (var i = 0; i < num_categories; i++) {
 		var checkbox = "category_checkbox" + i;
 		if (document.getElementById(checkbox).checked) {
-			profiler_ids_to_remove[remove_index] = identity_profiler_id[i];
+			//profiler_ids_to_remove[remove_index] = identity_profiler_id[i];
+			profiler_ids_to_remove[remove_index] = document.getElementById(checkbox).value;
 			remove_index++;
 		}
 	}
