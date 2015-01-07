@@ -689,7 +689,7 @@ function refresh_flash() {
 					'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
 						'<div class="list-group">' +
 							'<div class="col-md-1" style="width: 3px">' +
-								'<input type="checkbox" id="checkbox' + i + '">' +
+								'<input type="checkbox" id="flash_checkbox' + i + '">' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 170px">' +
 								'<h5 style="margin-top: 3px; margin-bottom: 3px">' + date + '</h5>' +
@@ -839,7 +839,7 @@ function refresh_group() {
 			'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
 				'<div class="list-group">' +
 					'<div class="col-md-1" style="width: 3px">' +
-						'<input type="checkbox" id="checkbox' + i + '">' +
+						'<input type="checkbox" id="group_checkbox' + i + '">' +
 					'</div>' +
 					group_tag +
 				'</div>' +
