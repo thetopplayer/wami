@@ -24,6 +24,7 @@ public class FilterCollection {
   private GroupModel[] groupModel;
   private Context context;
   final private String GET_PROFILE_GROUP_DATA = Constants.IP + "get_profile_group_data.php";
+  final private String GET_PROFILE_GROUP_ASSIGN_DATA = Constants.IP + "get_profile_group_assign_data.php";
   private String groupNameSelected;
   private int profileGroupIdSelected;
 
@@ -110,6 +111,23 @@ public class FilterCollection {
             }
           }
         }
+        String[] postData = { userIdentityProfileId, String.valueOf(profileGroupIdSelected)};
+        JsonGetData jsonGetData = new JsonGetData();
+        jsonGetData.jsonGetData(context, GET_PROFILE_GROUP_ASSIGN_DATA, postData);
+        String jsonResult = jsonGetData.getJsonResult();
+        JSONObject jsonResponse = null;
+        try {
+          jsonResponse = new JSONObject(jsonResult);
+          int ret_code = jsonResponse.optInt("ret_code");
+          if (ret_code == 1) {
+            Toast.makeText(context, "No Collection found for selected profile and group.", Toast.LENGTH_LONG).show();
+            return;
+          }
+        }
+        catch (JSONException e) {
+          e.printStackTrace();
+        }
+
         intent.putExtra("profile_group_id", profileGroupIdSelected);
         context.startActivity(intent);
         dialog.dismiss();

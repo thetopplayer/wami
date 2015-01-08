@@ -337,7 +337,6 @@ public class Profiler extends ListActivity {
 			}
 		}
 
-
 		if (profilerModel[position].getMediaType().equals("PDF")) {
 			if (no_pdf_ret_code != 1) {
 				GetFile task = new GetFile();
