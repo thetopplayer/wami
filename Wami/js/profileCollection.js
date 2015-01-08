@@ -312,7 +312,7 @@ function get_group_list(selected_profile_id) {
 		return null;
 	}
 	if (ret_code === 1) {
-		//my_profile_collection_alert(group_assign_obj.message, "alert-info", "Info! ", "group_dialog");
+		my_profile_collection_alert(group_assign_obj.message, "alert-info", "Info! ", "group_dialog");
 		//return null;
 	}
 
