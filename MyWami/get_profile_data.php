@@ -76,7 +76,6 @@ if ($user_identity_profile_id != "NA") {
             $group_data["group"] = $row["group_name"];
             array_push($groups["group_data"], $group_data);
         }
-        mysqli_free_result($result);
     }
     if (mysqli_num_rows($result) === 0) {
         $response["group_ret_code"] = 2;

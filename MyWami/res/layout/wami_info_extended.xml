@@ -140,7 +140,7 @@
 					android:layout_height="wrap_content"
 					android:layout_below="@+id/contact_name"
 					android:paddingTop="10dp"
-					android:textColor="#FFABE5E4"
+					android:textColor="#ff99cecd"
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Email Address"/>
@@ -345,7 +345,7 @@
 					android:layout_height="wrap_content"
 					android:layout_below="@+id/country"
 					android:paddingTop="10dp"
-					android:textColor="#FFABE5E4"
+					android:textColor="#FF99CECD"
 					android:textStyle="bold"
 					android:textSize="15sp"
 					android:text="Telephone"/>
