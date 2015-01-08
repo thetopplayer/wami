@@ -24,7 +24,7 @@ public class FilterCollection {
   private GroupModel[] groupModel;
   private Context context;
   final private String GET_PROFILE_GROUP_DATA = Constants.IP + "get_profile_group_data.php";
-  final private String GET_PROFILE_GROUP_ASSIGN_DATA = Constants.IP + "get_profile_group_assign_data.php";
+  final private String GET_PROFILES_ASSIGNED_TO_GROUP = Constants.IP + "get_profiles_assigned_to_group.php";
   private String groupNameSelected;
   private int profileGroupIdSelected;
 
@@ -111,23 +111,23 @@ public class FilterCollection {
             }
           }
         }
-        String[] postData = { userIdentityProfileId, String.valueOf(profileGroupIdSelected)};
-        JsonGetData jsonGetData = new JsonGetData();
-        jsonGetData.jsonGetData(context, GET_PROFILE_GROUP_ASSIGN_DATA, postData);
-        String jsonResult = jsonGetData.getJsonResult();
-        JSONObject jsonResponse = null;
-        try {
-          jsonResponse = new JSONObject(jsonResult);
-          int ret_code = jsonResponse.optInt("ret_code");
-          if (ret_code == 1) {
-            Toast.makeText(context, "No Collection found for selected profile and group.", Toast.LENGTH_LONG).show();
-            return;
+        if (profileGroupIdSelected != -99) {
+          String[] postData = {userIdentityProfileId, String.valueOf(profileGroupIdSelected)};
+          JsonGetData jsonGetData = new JsonGetData();
+          jsonGetData.jsonGetData(context, GET_PROFILES_ASSIGNED_TO_GROUP, postData);
+          String jsonResult = jsonGetData.getJsonResult();
+          JSONObject jsonResponse = null;
+          try {
+            jsonResponse = new JSONObject(jsonResult);
+            int ret_code = jsonResponse.optInt("ret_code");
+            if (ret_code == 1) {
+              Toast.makeText(context, "No profiles found for selected group.", Toast.LENGTH_LONG).show();
+              return;
+            }
+          } catch (JSONException e) {
+            e.printStackTrace();
           }
         }
-        catch (JSONException e) {
-          e.printStackTrace();
-        }
-
         intent.putExtra("profile_group_id", profileGroupIdSelected);
         context.startActivity(intent);
         dialog.dismiss();
