@@ -4,6 +4,6 @@
 	<color name="white">#ffffff</color>
 	<color name="text_color">#339999</color>
 	<color name="orange">#ff9933</color>
-	<color name="logo_blue">#99cccc</color>
+	<color name="logo_grey">#ffd9d7d7</color>
 	<color name="button_shadow">#ffd1d1d1</color>
 </resources>
