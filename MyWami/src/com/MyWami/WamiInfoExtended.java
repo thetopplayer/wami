@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -98,6 +99,7 @@ public class WamiInfoExtended extends Activity {
 
 			TextView tvEmail = (TextView) findViewById(R.id.email);
 			tvEmail.setText(email);
+			tvEmail.setPaintFlags(tvEmail.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 			tvEmail.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -128,6 +130,7 @@ public class WamiInfoExtended extends Activity {
 
 			TextView tvTelephone = (TextView) findViewById(R.id.telephone);
 			tvTelephone.setText(telephone);
+			tvTelephone.setPaintFlags(tvTelephone.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 			tvTelephone.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					Intent intent = new Intent(Intent.ACTION_DIAL);
