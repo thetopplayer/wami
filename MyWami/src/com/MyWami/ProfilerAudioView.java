@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -75,22 +76,24 @@ public class ProfilerAudioView extends ListActivity {
 			useDefault = extras.getBoolean("use_default");
 		}
 
-		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ActionList actionList = new ActionList();
-				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-			}
-		});
-
 		Bundle extras = getIntent().getExtras();
 		String[] audioFileName = extras.getStringArray("audio_file_name");
 		fileName = extras.getStringArray("file_name");
-	  	fileLocation = extras.getStringArray("file_location");
+	  fileLocation = extras.getStringArray("file_location");
 		audioDescription = extras.getStringArray("audio_description");
 
 		setListAdapter(new ProfilerAudioAdapter(this, audioFileName, audioDescription));
+
+		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
+		ivHome.setOnClickListener(new ImageView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(ProfilerAudioView.this, WamiListActivity.class);
+				i.putExtra("user_identity_profile_id", userIdentityProfileId);
+				i.putExtra("use_default", useDefault);
+				startActivity(i);
+			}
+		});
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -134,11 +137,39 @@ public class ProfilerAudioView extends ListActivity {
 		}
 	}
 
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.profiler_audio_menu, menu);
+		return true;
+	}
+
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+		int id = item.getItemId();
+
+		switch (id) {
 			case android.R.id.home:
 				super.onBackPressed();
 				return true;
+		}
+
+		// Navigate to action
+		if (id == R.id.action_navigate_to) {
+			ActionList actionList = new ActionList();
+			actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
+		}
+
+// My Wami Network
+		if (id == R.id.action_home) {
+			Intent i = new Intent(ProfilerAudioView.this, WamiListActivity.class);
+			i.putExtra("user_identity_profile_id", userIdentityProfileId);
+			i.putExtra("use_default", useDefault);
+			startActivity(i);
+		}
+
+// Logout
+		if (id == R.id.action_logout) {
+			this.finish();
+			Intent i = new Intent(ProfilerAudioView.this, Login.class);
+			startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}

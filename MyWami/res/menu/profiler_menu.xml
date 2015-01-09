@@ -1,7 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.MyWami.WamiListActivity"
-      xmlns:wami="http://schemas.android.com/apk/res-auto" >
+      tools:context="com.MyWami.Profiler">
 
 	<item android:id="@+id/action_transmit_wami"
 	      android:title="@string/action_transmit_this_wami"/>

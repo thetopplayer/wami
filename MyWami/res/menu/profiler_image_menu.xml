@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.MyWami.ProfilerImageView">
+
+    <item android:id="@+id/action_navigate_to"
+        android:title="@string/action_navigate_to"/>
+
+    <item android:id="@+id/action_home"
+        android:title="@string/action_home"/>
+
+    <item android:id="@+id/action_logout"
+        android:title="@string/action_logout"/>
+</menu>

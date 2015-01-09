@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -76,15 +77,6 @@ public class ProfilerImageView extends ListActivity {
 			useDefault = extras.getBoolean("use_default");
 		}
 
-		ImageView ivListDialog = (ImageView) findViewById(R.id.actionList);
-		ivListDialog.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ActionList actionList = new ActionList();
-				actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
-			}
-		});
-
 		Bundle extras = getIntent().getExtras();
 		imageName = extras.getStringArray("image_name");
 		fileName = extras.getStringArray("file_name");
@@ -92,6 +84,17 @@ public class ProfilerImageView extends ListActivity {
 		imageDescription = extras.getStringArray("image_description");
 
 		setListAdapter(new ProfilerImageAdapter(this, imageName, imageDescription, fileLocation, fileName));
+
+		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
+		ivHome.setOnClickListener(new ImageView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(ProfilerImageView.this, WamiListActivity.class);
+				i.putExtra("user_identity_profile_id", userIdentityProfileId);
+				i.putExtra("use_default", useDefault);
+				startActivity(i);
+			}
+		});
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -135,11 +138,39 @@ public class ProfilerImageView extends ListActivity {
 		}
 	}
 
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.profiler_image_menu, menu);
+		return true;
+	}
+
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+		int id = item.getItemId();
+
+		switch (id) {
 			case android.R.id.home:
 				super.onBackPressed();
 				return true;
+		}
+
+		// Navigate to action
+		if (id == R.id.action_navigate_to) {
+			ActionList actionList = new ActionList();
+			actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
+		}
+
+// My Wami Network
+		if (id == R.id.action_home) {
+			Intent i = new Intent(ProfilerImageView.this, WamiListActivity.class);
+			i.putExtra("user_identity_profile_id", userIdentityProfileId);
+			i.putExtra("use_default", useDefault);
+			startActivity(i);
+		}
+
+// Logout
+		if (id == R.id.action_logout) {
+			this.finish();
+			Intent i = new Intent(ProfilerImageView.this, Login.class);
+			startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}
