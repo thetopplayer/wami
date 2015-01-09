@@ -19,7 +19,7 @@
             android:id="@+id/wami_heading_image"
             android:layout_width="220dp"
             android:layout_height="180dp"
-            android:paddingBottom="10dp"></ImageView>
+            android:paddingBottom="10dp"/>
 
         <ImageView
             android:id="@+id/wami_heading_icon_right"
@@ -28,7 +28,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:paddingTop="60dp"
-            android:src="@drawable/next_item_right"></ImageView>
+            android:src="@drawable/next_item_right"/>
 
         <ImageView
             android:id="@+id/line"
@@ -37,30 +37,6 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/wami_heading_image"
             android:background="#aa000000" />
-
-        <!--<TextView-->
-        <!--android:id="@+id/profile_rating_title"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/line"-->
-        <!--android:layout_marginTop="15dp"-->
-        <!--android:textColor="#000000"-->
-        <!--android:textStyle="bold"-->
-        <!--android:textSize="15sp"-->
-        <!--android:text="Profile Overall Rating"/>-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/profile_rating"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@+id/profile_rating_title"-->
-        <!--android:layout_marginTop="3dp"-->
-        <!--android:textColor="#ff5c5c5c"-->
-        <!--android:textSize="17sp"-->
-        <!--android:padding="5dp"-->
-        <!--android:background="@drawable/textfield_background"-->
-        <!--android:singleLine="true"/>-->
-        <!--android:layout_below="@+id/profile_rating"-->
 
         <TextView
             android:id="@+id/profile_name_title"
@@ -159,7 +135,7 @@
             android:id="@+id/telephone_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/country"
+            android:layout_below="@+id/email"
             android:paddingTop="10dp"
             android:text="Telephone"
             android:textColor="#FF99CECD"
@@ -170,19 +146,20 @@
             android:id="@+id/telephone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/telephone_title"
-            android:layout_marginTop="3dp"
             android:background="@drawable/textfield_background"
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="#FF769C9B"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:layout_below="@+id/telephone_title"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:id="@+id/profile_type_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/email"
+            android:layout_below="@+id/telephone"
             android:paddingTop="10dp"
             android:text="Profile Type"
             android:textColor="#000000"
@@ -364,7 +341,7 @@
             android:id="@+id/create_date_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/telephone"
+            android:layout_below="@+id/country"
             android:paddingTop="10dp"
             android:textColor="#000000"
             android:textStyle="bold"

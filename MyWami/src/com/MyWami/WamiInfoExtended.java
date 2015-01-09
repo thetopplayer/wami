@@ -83,8 +83,6 @@ public class WamiInfoExtended extends Activity {
 		String jsonResult = getJsonData(identityProfileId, userIdentityProfileId);
 		boolean result = assignData(jsonResult);
 		if (result) {
-//			TextView tvRating = (TextView) findViewById(R.id.profile_rating);
-//			tvRating.setText(rating);
 
 			TextView tvProfileName = (TextView) findViewById(R.id.profile_name);
 			tvProfileName.setText(profileName);
@@ -128,6 +126,18 @@ public class WamiInfoExtended extends Activity {
 				}
 			});
 
+			TextView tvTelephone = (TextView) findViewById(R.id.telephone);
+			tvTelephone.setText(telephone);
+			tvTelephone.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_DIAL);
+					intent.setData(Uri.parse("tel:" + telephone));
+					if (intent.resolveActivity(getPackageManager()) != null) {
+						startActivity(intent);
+					}
+				}
+			});
+
 			TextView tvProfileType = (TextView) findViewById(R.id.profile_type);
 			tvProfileType.setText(profileType);
 
@@ -145,18 +155,6 @@ public class WamiInfoExtended extends Activity {
 
 			TextView tvCountry = (TextView) findViewById(R.id.country);
 			tvCountry.setText(country);
-
-			TextView tvTelephone = (TextView) findViewById(R.id.telephone);
-			tvTelephone.setText(telephone);
-			tvTelephone.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					Intent intent = new Intent(Intent.ACTION_DIAL);
-					intent.setData(Uri.parse("tel:" + telephone));
-					if (intent.resolveActivity(getPackageManager()) != null) {
-						startActivity(intent);
-					}
-				}
-			});
 
 			TextView tvCreateDate = (TextView) findViewById(R.id.create_date);
 			tvCreateDate.setText(createDate);
@@ -295,7 +293,7 @@ public class WamiInfoExtended extends Activity {
 			}
 		}
 
-// Navigatio action
+// Navigate to action
 		if (id == R.id.action_navigate_to) {
 			ActionList actionList = new ActionList();
 			actionList.actionList(that, identityProfileId, imageUrl, profileName, firstName, lastName, userIdentityProfileId, useDefault);
