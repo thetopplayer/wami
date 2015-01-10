@@ -12,12 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.MyWami.model.TransmitModel;
 import com.MyWami.model.UserModel;
 import com.MyWami.sqlite.SQLiteHelper;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
-import com.MyWami.dialogs.TransmitWami;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,40 +101,6 @@ public class Login extends Activity {
 				}
 			}
 		});
-
-//		final Button btnTransmit = (Button) findViewById(R.id.btnTransmit);
-//		btnTransmit.setOnClickListener(new View.OnClickListener() {
-//			public void onClick(View v) {
-//				ArrayList<TransmitModel> alWamiTransmitModel = new ArrayList<TransmitModel>();
-//				TransmitModel transmitModel = new TransmitModel();
-//
-//				String userName;
-//				String password;
-//				EditText etUserName = (EditText) findViewById(R.id.login_username);
-//				EditText etPassword = (EditText) findViewById(R.id.login_password);
-//				userName = etUserName.getText().toString().trim();
-//				password = etPassword.getText().toString().trim();
-//
-//				if (userName.equals("") && password.equals("")) {
-//					Toast.makeText(that.getApplicationContext(), "Please enter password and username", Toast.LENGTH_LONG).show();
-//				}
-//				else {
-//					JsonGetData jsonGetData = new JsonGetData();
-//					String[] postData = {userName, password};
-//					jsonGetData.jsonGetData(that, GET_USER_DATA, postData);
-//					String jsonResult = jsonGetData.getJsonResult();
-//					boolean result = assignData(jsonResult);
-//					if (result) {
-//						transmitModel.setWamiToTransmitId(userModel.getUserId());
-//						alWamiTransmitModel.add(transmitModel);
-//						TransmitWami transmitWami = new TransmitWami();
-//						transmitWami.transmitWami(alWamiTransmitModel, that, true);
-//						return;
-//					}
-//					Toast.makeText(that.getApplicationContext(), "Invalid password or username, please re-enter", Toast.LENGTH_LONG).show();
-//				}
-//			}
-//		});
 	}
 
 	private boolean assignData(String jsonResult) {
