@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.MyWami"
-          android:versionCode="1"
-          android:versionName="1.0" >
+	package="com.MyWami"
+	android:versionCode="1"
+	android:versionName="1.0" >
 	<uses-sdk
-			android:minSdkVersion="11"
-			android:targetSdkVersion="19" />
+		android:minSdkVersion="11"
+		android:targetSdkVersion="19" />
 
 	<application
-			android:allowBackup="true"
-			android:icon="@drawable/wami"
-			android:label="@string/app_name"
-			android:logo="@drawable/wamiup"
-			android:theme="@style/AppTheme" >
+		android:allowBackup="true"
+		android:icon="@drawable/wami"
+		android:label="@string/app_name"
+		android:logo="@drawable/wamiup"
+		android:theme="@style/AppTheme" >
 
 		<activity
-				android:name=".Login"
-				android:label="@string/activity_name">
+			android:name=".Login"
+			android:screenOrientation="portrait"
+			android:label="@string/activity_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -24,83 +25,83 @@
 		</activity>
 
 		<activity
-				android:name=".WamiListActivity"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName="com.MyWami.Login">
+			android:name=".WamiListActivity"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName="com.MyWami.Login">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.Login" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.Login" />
 		</activity>
 
 		<activity
-				android:name=".WamiInfoExtended"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName="com.MyWami.WamiListActivity">
+			android:name=".WamiInfoExtended"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName="com.MyWami.WamiListActivity">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.WamiListActivity" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.WamiListActivity" />
 		</activity>
 
 		<activity
-				android:name=".Profiler"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName=".WamiInfoExtended">
+			android:name=".Profiler"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName=".WamiInfoExtended">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.WamiInfoExtended" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.WamiInfoExtended" />
 		</activity>
 
 		<activity
-				android:name=".ProfilerTextView"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName=".Profiler">
+			android:name=".ProfilerTextView"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName=".Profiler">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.Profiler" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.Profiler" />
 		</activity>
 
 		<activity
-				android:name=".ProfilerAudioView"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName=".Profiler">
+			android:name=".ProfilerAudioView"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName=".Profiler">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.Profiler" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.Profiler" />
 		</activity>
 
 		<activity
-				android:name=".ProfilerImageView"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName=".Profiler">
+			android:name=".ProfilerImageView"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName=".Profiler">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.Profiler" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.Profiler" />
 		</activity>
 
 		<activity
-				android:name=".Flash"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName=".Profiler">
+			android:name=".Flash"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName=".Profiler">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.Profiler" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.Profiler" />
 		</activity>
 
 		<activity
-				android:name=".SearchResults"
-				android:screenOrientation="portrait"
-				android:label="@string/app_name"
-				android:parentActivityName=".WamiListActivity">
+			android:name=".SearchResults"
+			android:screenOrientation="portrait"
+			android:label="@string/app_name"
+			android:parentActivityName=".WamiListActivity">
 			<meta-data
-					android:name="android.support.PARENT_ACTIVITY"
-					android:value="com.MyWami.WamiListActivity" />
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.MyWami.WamiListActivity" />
 		</activity>
 
 	</application>
