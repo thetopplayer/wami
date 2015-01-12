@@ -17,6 +17,21 @@ $delete_ind = 0;
 $db = new DB_CONNECT();
 $con = $db->connect();
 
+$sql = "SELECT group_name FROM profile_group WHERE delete_ind = 0 AND group_name = '" .$new_group. "' AND identity_profile_id = " .$identity_profile_id;
+$result = mysqli_query($con, $sql) or die(mysqli_error($con));
+if (!$result) {
+    $response["ret_code"] = -1;
+    $response["message"] = "insert_group.php: Problem getting Profile Group for Profile: " .$identity_profile_id. ". MySQL Error: " .mysqli_error($con);
+    echo json_encode($response);
+    exit(-1);
+}
+if (mysqli_num_rows($result) > 0) {
+    $response["ret_code"] = 1;
+    $response["message"] = "Group already exists ";
+    echo json_encode($response);
+    return;
+}
+
 $sql = "INSERT INTO profile_group (identity_profile_id, group_name, delete_ind, create_date, modified_date)
             VALUES (".$identity_profile_id.", '".$new_group."', ".$delete_ind.", NOW(), NOW())";
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));

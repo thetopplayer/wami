@@ -775,7 +775,7 @@ function add_group() {
 }
 
 function save_group () {
-	var new_group = document.getElementById('new_group').value;
+	var new_group = (document.getElementById('new_group').value).trim();
 	if (new_group === '') {
 		my_wami_alert("Group name cannot be empty. Please create a group or close.", "alert-warning", "Warning!  ", "group_dialog");
 		return;
@@ -796,6 +796,10 @@ function save_group () {
 	var ret_code = result_obj.ret_code;
 	if (ret_code === -1) {
 		my_wami_alert(result_obj.message, "alert-danger", "Danger!  ", "group_dialog");
+		return;
+	}
+	if (ret_code === 1) {
+		my_wami_alert(result_obj.message, "alert-warning", "Warning!  ", "group_dialog");
 		return;
 	}
 	refresh_group();
