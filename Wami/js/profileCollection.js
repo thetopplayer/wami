@@ -15,7 +15,6 @@ $(document).ready(function() {
 
 	//Load profile_name_list for datalist used in Transmit Profile dialog
 	processData("", "get_all_profile_names.php", "profile_name_list", false);
-
 	try {
 		var profile_name_list_data = localStorage.getItem("profile_name_list");
 		var profile_name_list_obj = JSON.parse(profile_name_list_data);
@@ -48,7 +47,6 @@ $(document).ready(function() {
 				objSelect.options[i].selected = true;
 			}
 		}
-
 		loadData(current_identity_profile_id);
 	}
 	else loadData(identity_profile_id);
@@ -61,6 +59,28 @@ function loadData(identity_profile_id) {
 	localStorage.setItem("assign_to_identity_profile_id", identity_profile_id);
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 	localStorage.setItem("identity_profile_id", identity_profile_id);
+
+	//Load group_name_list for datalist used in Transmit Profile dialog
+	processData("identity_profile_id=" + identity_profile_id, "get_profile_group_data.php", "profile_group", false);
+	try {
+		var profile_group_data = localStorage.getItem("profile_group");
+		var profile_group_obj = JSON.parse(profile_group_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_profile_group_data: Problem getting profile group names = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
+		return;
+	}
+	var ret_code = profile_group_obj.ret_code;
+	if (ret_code === 1) {
+		var message = profile_group_obj.message;
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "side_list_placement");
+	}
+	var num_groups = profile_group_obj.profile_group_data.length;
+	var profile_groups = [];
+	for (var i = 0; i < num_groups; i++) {
+		profile_groups[i] = '<option value="' + profile_group_obj.profile_group_data[i].group + '">';
+	}
+	document.getElementById("group_name_list").innerHTML = profile_groups;
 
 	var group_filter = localStorage.getItem("group_filter");
 	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
