@@ -52,10 +52,11 @@ public class SearchForProfiles {
 		final EditText searchStrEdit = (EditText) dialog.findViewById(R.id.search_str_edit);
 
 		RadioGroup searchWithinRadioGroup = (RadioGroup) dialog.findViewById(R.id.search_within_edit);
-		RadioButton checkedRadioButton = (RadioButton)searchWithinRadioGroup.findViewById(searchWithinRadioGroup.getCheckedRadioButtonId());
+//		RadioButton checkedRadioButton = (RadioButton)searchWithinRadioGroup.findViewById(searchWithinRadioGroup.getCheckedRadioButtonId());
 		searchWithinRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
 				RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(checkedId);
+				String searchValue = (String) checkedRadioButton.getText();
 				boolean isChecked = checkedRadioButton.isChecked();
 				if (isChecked) {
 

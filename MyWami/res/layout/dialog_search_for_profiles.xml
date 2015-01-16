@@ -131,7 +131,7 @@
         <Button
             android:id="@+id/searchForProfiles"
             android:layout_width="82dp"
-            android:layout_height="32dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:text=" Search"
             android:textColor="#FFFFFF"
@@ -148,7 +148,7 @@
             android:layout_weight="1"
             android:id="@+id/closeSearch"
             android:layout_width="82dp"
-            android:layout_height="32dp"
+            android:layout_height="30dp"
             android:text=" Close"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
