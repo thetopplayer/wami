@@ -11,7 +11,8 @@
  */
 $selected_item = $_POST["param1"];
 $search_str = $_POST["param2"];
-//$search_context = $_POST["param3"];
+$search_index = $_POST["param3"];
+$identity_profile_id = $_POST["param4"];
 
 require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
@@ -36,13 +37,17 @@ if ($selected_item === "Description") {
 }
 
 // get profile data
-$sql = "SELECT first_name, last_name, profile_name, image_url, email, tags, rating, description, identity_profile_id
-        FROM identity_profile WHERE " .$condition. " AND delete_ind = 0 AND searchable = 1 AND active_ind = 1 ";
-
-$response["message"] = array();
+if ($search_index === "1") {
+    $sql = "SELECT first_name, last_name, profile_name, image_url, email, tags, description, identity_profile_id
+            FROM identity_profile WHERE " .$condition. " AND delete_ind = 0 AND searchable = 1 AND active_ind = 1 ";
+}
+else {
+    $sql = "SELECT first_name, last_name, profile_name, image_url, email, tags, description, ipc.identity_profile_id
+            FROM identity_profile_collection ipc, identity_profile ip WHERE " .$condition. " AND assign_to_identity_profile_id = " .$identity_profile_id. "
+            AND ipc.identity_profile_id = ip.identity_profile_id AND ipc.delete_ind = 0 AND searchable = 1 AND active_ind = 1 ";
+}
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 $response["profile_list"] = array();
-
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_array($result)) {
         $item = array();
@@ -52,9 +57,8 @@ if (mysqli_num_rows($result) > 0) {
         $item["image_url"] = $row[3];
         $item["email"] = $row[4];
         $item["tags"] = $row[5];
-        $item["rating"] = $row[6];
-        $item["description"] = $row[7];
-        $item["identity_profile_id"] = $row[8];
+        $item["description"] = $row[6];
+        $item["identity_profile_id"] = $row[7];
         array_push($response["profile_list"], $item);
     }
     $response["ret_code"] = 0;

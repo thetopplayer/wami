@@ -35,6 +35,7 @@ public class SearchResults extends ListActivity {
 	private String selectedItem;
 	private String searchStr;
 	private String userIdentityProfileId;
+	private int searchIndex;
 	private boolean useDefault;
 
 	private Context that;
@@ -60,6 +61,7 @@ public class SearchResults extends ListActivity {
 		Bundle extras = getIntent().getExtras();
 		selectedItem = extras.getString("selected_item");
 		searchStr = extras.getString("search_str");
+		searchIndex = extras.getInt("searchIndex");
 
 		View header = getLayoutInflater().inflate(R.layout.search_results_header, null);
 		ListView listView = getListView();
@@ -130,23 +132,6 @@ public class SearchResults extends ListActivity {
 				catch (JSONException e) {
 					e.printStackTrace();
 				}
-
-//				String[] emails = new String[emailTo.size()];
-//				for (int i = 0; i < emailTo.size(); i++) {
-//					emails[i] = emailTo.get(i);
-//				}
-
-//				Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
-//				i.setType("message/rfc822");
-//				i.putExtra(Intent.EXTRA_BCC, emails);
-//				i.putExtra(Intent.EXTRA_SUBJECT, "Request For WAMI Profile");
-//				i.putExtra(Intent.EXTRA_TEXT, "Wami user: " + fromProfileName + " has requested your WAMI profile... Log into Wami " + Constants.LOGINURL + " to transmit your profile.");
-//				try {
-//					startActivity(Intent.createChooser(i, "Send mail..."));
-//				}
-//				catch (android.content.ActivityNotFoundException ex) {
-//					Toast.makeText(getApplicationContext(), "No email clients installed.", Toast.LENGTH_LONG).show();
-//				}
 			}
 		});
 
@@ -173,7 +158,7 @@ public class SearchResults extends ListActivity {
 		});
 
 		jsonGetData = new JsonGetData();
-		String[] postData = {selectedItem, searchStr};
+		String[] postData = {selectedItem, searchStr, String.valueOf(searchIndex), userIdentityProfileId};
 		jsonGetData.jsonGetData(this, GET_SEARCH_PROFILE_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
 		ListData(jsonResult);

@@ -51,16 +51,12 @@ public class SearchForProfiles {
 
 		final EditText searchStrEdit = (EditText) dialog.findViewById(R.id.search_str_edit);
 
-		RadioGroup searchWithinRadioGroup = (RadioGroup) dialog.findViewById(R.id.search_within_edit);
-//		RadioButton checkedRadioButton = (RadioButton)searchWithinRadioGroup.findViewById(searchWithinRadioGroup.getCheckedRadioButtonId());
+		final RadioGroup searchWithinRadioGroup = (RadioGroup) dialog.findViewById(R.id.search_within_edit);
+		final int[] searchIndex = {0};
 		searchWithinRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
 				RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(checkedId);
-				String searchValue = (String) checkedRadioButton.getText();
-				boolean isChecked = checkedRadioButton.isChecked();
-				if (isChecked) {
-
-				}
+				searchIndex[0] = searchWithinRadioGroup.indexOfChild(checkedRadioButton);
 			}
 		});
 
@@ -85,6 +81,7 @@ public class SearchForProfiles {
 				i.putExtra("use_default", useDefault);
 				i.putExtra("selected_item", dropdown.getSelectedItem().toString());
 				i.putExtra("search_str", searchStrEdit.getText().toString());
+				i.putExtra("searchIndex", searchIndex[0]);
 				context.startActivity(i);
 			}
 		});
