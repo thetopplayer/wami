@@ -20,6 +20,7 @@ $(document).ready(function(){
 
 function loadData(identity_profile_id) {
 	my_wami_alert("", "", "", "header");
+	my_wami_alert("", "", "", "mywami");
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 
@@ -207,25 +208,31 @@ function loadData(identity_profile_id) {
 // -----------------------------------------
 // Get Default identity profile
 //
-function get_default_identity_profile (identity_profile_id) {
-	var data = localStorage.getItem("user_info");
-	var obj = JSON.parse(data)
-	var user_id = obj.user_info[0].user_id;
+function get_default_identity_profile () {
+	my_wami_alert("", "", "", "mywami");
+	var active_ind = $('#inactive').val();
+	if (active_ind === "inactive") {
+		var data = localStorage.getItem("user_info");
+		var obj = JSON.parse(data)
+		var user_id = obj.user_info[0].user_id;
 
-	processData("user_id=" + user_id, "get_default_identity_profile_id.php", "default_identity_profile_id", false);
-	var default_identity_profile_id_data = localStorage.getItem("default_identity_profile_id");
-	var default_identity_profile_id_obj = JSON.parse(default_identity_profile_id_data);
-	if (ret_code === 1) {
-		my_wami_alert(default_identity_profile_id_obj.message, "alert-danger", "Alert! ", "mywami");
-		return false;
+		processData("user_id=" + user_id, "get_default_identity_profile_id.php", "default_identity_profile_id", false);
+		var default_identity_profile_id_data = localStorage.getItem("default_identity_profile_id");
+		var default_identity_profile_id_obj = JSON.parse(default_identity_profile_id_data);
+		var ret_code = default_identity_profile_id_obj.ret_code;
+		if (ret_code === 1) {
+			my_wami_alert(default_identity_profile_id_obj.message, "alert-danger", "Alert! ", "mywami");
+			return false;
+		}
+		var default_identity_profile_id = default_identity_profile_id_obj.default_identity_profile_id;
+
+		var identity_profile_id = localStorage.getItem("identity_profile_id");
+		if (identity_profile_id === default_identity_profile_id) {
+			my_wami_alert("Default Profile can not be made inactive.", "alert-warning", "Alert! ", "mywami");
+			return false;
+		}
 	}
-	var default_identity_profile_id = default_identity_profile_id_obj.default_identity_profile_id;
-
-	if (identity_profile_id === default_identity_profile_id) {
-		return true;
-	}
-
-	return false;
+	return true;
 }
 //
 // End Get Default Identity Profile

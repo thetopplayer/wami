@@ -182,7 +182,7 @@
 									<span style="color: #525252">Active</span>
 								</label>
 								<label style="padding-top: 5px;">
-									<input id="inactive" type="radio" value="inactive" name="optionsProfileState">
+									<input id="inactive" type="radio" value="inactive" name="optionsProfileState" onclick="return get_default_identity_profile()">
 									<span style="color: #525252">InActive</span>
 								</label>
 							</div>
@@ -201,11 +201,11 @@
 						</div>
 					</div>
 					<br>
+					<div id="mywami_alerts" style="padding-top: 20px"></div>
 					<div style="padding-bottom: 10px; padding-top: 10px">
 						<hr>
 					</div>
 					<button type="button" class="btn btn-md btn-primary" onclick="return save_my_wami_data()">Save</button>
-					<div id="mywami_alerts" style="padding-top: 20px"></div>
 				</div>
 			</div>
 		</div>

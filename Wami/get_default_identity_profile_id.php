@@ -22,11 +22,11 @@ if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_row($result);
     $response["default_identity_profile_id"] = $row[0];
 
-    $response["success"] = 0;
+    $response["ret_code"] = 0;
     echo json_encode($response);
 }
 else {
-    $response["success"] = 1;
+    $response["ret_code"] = 1;
     $response["message"] = "No Default Identity Profile Id found";
     echo json_encode($response);
 }
