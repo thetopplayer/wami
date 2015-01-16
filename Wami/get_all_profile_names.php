@@ -14,7 +14,7 @@ require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$sql = "SELECT profile_name FROM identity_profile WHERE delete_ind = 0";
+$sql = "SELECT profile_name FROM identity_profile WHERE delete_ind = 0 AND active_ind = 1";
 
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 $response["profile_name_list"] = array();

@@ -18,7 +18,7 @@ $response = array();
 // Get profile collection data
 $sql = "SELECT first_name, last_name, image_url, profile_name, tags, ipc.identity_profile_id, assign_to_identity_profile_id, rating, default_profile_ind
         FROM identity_profile_collection ipc, identity_profile ip
-        WHERE ipc.identity_profile_id = ip.identity_profile_id AND ipc.delete_ind = 0 AND assign_to_identity_profile_id = " .$identityProfileId;
+        WHERE ipc.identity_profile_id = ip.identity_profile_id AND ipc.delete_ind = 0 AND active_ind = 1 AND assign_to_identity_profile_id = " .$identityProfileId;
 
 $result = mysqli_query($con, $sql) or  die(mysqli_error($con));
 $response["profile_collection"] = array();

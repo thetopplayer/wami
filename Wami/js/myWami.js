@@ -126,7 +126,6 @@ function loadData(identity_profile_id) {
 		radio[0].checked = true;
 		radio.button("refresh");
 	}
-
 	var searchable = mywami_obj.identity_profile_data[0].searchable;
 	if (searchable == 1) {
 		var radio = $('#search_allowed');
@@ -205,8 +204,34 @@ function loadData(identity_profile_id) {
 // End loadData()
 // -----------------------------------------
 
+// -----------------------------------------
+// Get Default identity profile
+//
+function get_default_identity_profile (identity_profile_id) {
+	var data = localStorage.getItem("user_info");
+	var obj = JSON.parse(data)
+	var user_id = obj.user_info[0].user_id;
 
-// -------------------------------------------------------
+	processData("user_id=" + user_id, "get_default_identity_profile_id.php", "default_identity_profile_id", false);
+	var default_identity_profile_id_data = localStorage.getItem("default_identity_profile_id");
+	var default_identity_profile_id_obj = JSON.parse(default_identity_profile_id_data);
+	if (ret_code === 1) {
+		my_wami_alert(default_identity_profile_id_obj.message, "alert-danger", "Alert! ", "mywami");
+		return false;
+	}
+	var default_identity_profile_id = default_identity_profile_id_obj.default_identity_profile_id;
+
+	if (identity_profile_id === default_identity_profile_id) {
+		return true;
+	}
+
+	return false;
+}
+//
+// End Get Default Identity Profile
+// ------------------------------------------
+
+// ------------------------------------------
 // fill_from_account(): check box function to use data from account for profile
 //
 function fill_from_account() {
