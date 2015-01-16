@@ -37,20 +37,6 @@ function loadData(identity_profile_id) {
 	document.getElementById("total_collected_profiles").innerHTML =
 			"<input readonly class='input-wami' type='text' value='" + wami_count + "' style='margin-bottom: 10px; text-align: center; width: 50px; background-color: #BBBBBB'>";
 
-// Get Validation and verification rating
-//	processData("identity_profile_id=" + identity_profile_id, "get_wami_rating_for_profile.php", "rating", false);
-//	try {
-//		var wami_rating_data = localStorage.getItem("rating");
-//		var wami_rating_obj = JSON.parse(wami_rating_data);
-//	} catch (err) {
-//		console.log(err.message)
-//		my_wami_alert("get_wami_rating_for_profile: Error getting rating for profile: status = " + err.message, "alert-danger", "Error!  ", "header");
-//	}
-//
-//	var wami_rating = wami_rating_obj.rating;
-//	document.getElementById("rating").innerHTML =
-//			"<input readonly class='input-wami' type='text' value='" + wami_rating + "' style='margin-bottom: 10px; text-align: center; width: 50px; background-color: #d1d1d1'>";
-
 // My Wami Data
 	var username = localStorage.getItem("username");
 	var params = "identity_profile_id=" + identity_profile_id + "&username=" + username;

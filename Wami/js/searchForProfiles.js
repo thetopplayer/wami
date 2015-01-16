@@ -6,25 +6,33 @@
  * Search either user wami collection or whole database for profiles
  */
 $(document).ready(function() {
-	var selected_item = localStorage.getItem("selected_item");
-	var search_str = localStorage.getItem("search_str");
-	var search_context = localStorage.getItem("search_context");
-	if (selected_item === null) selected_item = '';
-	if (search_str === null) search_str = '';
-	if (search_context === null) search_context = "mywami";
+	var current_profile_name = localStorage.getItem("current_profile_name");
+	var search_heading = "<h3 class='panel-title'>Search Wami Network For Profiles: " +
+		"<b><span style='color: #f87c08'>"  + current_profile_name + "</span></b> </h3>";
+	document.getElementById('search_heading').innerHTML = search_heading;
+	var selected_item = '';
+	var search_str = '';
+	var search_context = "mywami";
 
 	loadData(selected_item, search_str, search_context);
 });
 
 function loadData(selected_item, search_str, search_context) {
-	$("#wamiSearchSelect").val(selected_item);
+	if (selected_item === '') {
+		$('#wamiSearchSelect').find('option:first-child');
+	}
+	else {
+		$("#wamiSearchSelect").val(selected_item);
+	}
 	$("#searchStr").val(search_str);
 
 	var radios = document.getElementsByName("optionsRadios");
 	if (search_context === "mywami") {
 		radios[0].checked = true;
 	}
-	else radios[1].checked = true;
+	else {
+		radios[1].checked = true;
+	}
 
 	if (search_str === "") {
 		var search_num_items = 0;
@@ -44,8 +52,11 @@ function loadData(selected_item, search_str, search_context) {
 }
 
 function searchProfiles(selected_item, search_str, search_context) {
-	var params = "selected_item=" + selected_item + "&search_str=" + search_str + "&search_context=" + search_context;
-
+	var current_identity_profile_id = '';
+	if (search_context === 'mywami') {
+		current_identity_profile_id = localStorage.getItem("current_identity_profile_id");
+	}
+	var params = "selected_item=" + selected_item + "&search_str=" + search_str + "&search_context=" + search_context + "&identity_profile_id=" + current_identity_profile_id;
 	processData(params, "get_search_profile_data.php", "profile_list");
 	try {
 		var profile_list_data = localStorage.getItem("profile_list");
