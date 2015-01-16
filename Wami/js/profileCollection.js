@@ -61,26 +61,26 @@ function loadData(identity_profile_id) {
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 
 	//Load group_name_list for datalist used in Transmit Profile dialog
-	processData("identity_profile_id=" + identity_profile_id, "get_profile_group_data.php", "profile_group", false);
-	try {
-		var profile_group_data = localStorage.getItem("profile_group");
-		var profile_group_obj = JSON.parse(profile_group_data);
-	} catch (err) {
-		console.log(err.message)
-		my_profile_collection_alert("get_profile_group_data: Problem getting profile group names = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
-		return;
-	}
-	var ret_code = profile_group_obj.ret_code;
-	if (ret_code === 1) {
-		var message = profile_group_obj.message;
-		my_profile_collection_alert (message, "alert-danger", "Alert! ", "side_list_placement");
-	}
-	var num_groups = profile_group_obj.profile_group_data.length;
-	var profile_groups = [];
-	for (var i = 0; i < num_groups; i++) {
-		profile_groups[i] = '<option value="' + profile_group_obj.profile_group_data[i].group + '">';
-	}
-	document.getElementById("group_name_list").innerHTML = profile_groups;
+	//processData("identity_profile_id=" + identity_profile_id, "get_profile_group_data.php", "profile_group", false);
+	//try {
+	//	var profile_group_data = localStorage.getItem("profile_group");
+	//	var profile_group_obj = JSON.parse(profile_group_data);
+	//} catch (err) {
+	//	console.log(err.message)
+	//	my_profile_collection_alert("get_profile_group_data: Problem getting profile group names = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
+	//	return;
+	//}
+	//var ret_code = profile_group_obj.ret_code;
+	//if (ret_code === 1) {
+	//	var message = profile_group_obj.message;
+	//	my_profile_collection_alert (message, "alert-danger", "Alert! ", "side_list_placement");
+	//}
+	//var num_groups = profile_group_obj.profile_group_data.length;
+	//var profile_groups = [];
+	//for (var i = 0; i < num_groups; i++) {
+	//	profile_groups[i] = '<option value="' + profile_group_obj.profile_group_data[i].group + '">';
+	//}
+	//document.getElementById("group_name_list").innerHTML = profile_groups;
 
 	var group_filter = localStorage.getItem("group_filter");
 	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
@@ -99,12 +99,12 @@ function loadData(identity_profile_id) {
 	}
 	var profile_ret_code = wami_obj.profile_ret_code;
 	if (profile_ret_code === 1) {
-		var message = wami_obj.message;
+		message = wami_obj.message;
 		my_profile_collection_alert (message, "alert-warning", "Warning! ", "group_data");
 	}
 	var group_ret_code = wami_obj.group_ret_code;
 	if (group_ret_code === 1) {
-		var message = wami_obj.message;
+		message = wami_obj.message;
 		my_profile_collection_alert (message, "alert-info", "Info! ", "group_data");
 	}
 
@@ -133,7 +133,7 @@ function loadData(identity_profile_id) {
 		if (tags === null) tags = '';
 
 		var groups = '';
-		var num_groups = wami_obj.profile_group_assign_data.length;
+		num_groups = wami_obj.profile_group_assign_data.length;
 		for (var j = 0; j < num_groups; j++) {
 			var profile_group_id = wami_obj.profile_group_assign_data[j].identity_profile_id;
 			if (profile_group_id == list_identity_profile_id) {
@@ -795,6 +795,16 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 	xmlhttp.send(param_string);
 	my_profile_collection_alert("Profile successfully transmitted to email address!", "alert-success","Success! ", "transmit");
 }
+
+//
+// Transmit - clean up fields in dialog
+//
+function clean_up_transmit() {
+	$("#transmit_to_profile_name").val('');
+	$("#transmit_to_email_address").val('');
+	//$("#transmit_to_group_name").val('');
+}
+
 //
 // End Transmit
 //----------------------

@@ -106,14 +106,14 @@
 								<datalist id="profile_name_list"></datalist>
 								<h5>Email Address</h5>
 								<input class='input-wami form-control' autocomplete="on" id="transmit_to_email_address" placeholder="Enter email address to transmit to." name="transmit_to_email_address" size="77" type="text">
-								<h5>Profile Group Name</h5>
-								<input class='input-wami form-control' list="group_name_list" id="transmit_to_group_name" placeholder="Enter Profile group name to transmit to." name="transmit_to_group_name" size="77" type="text">
-								<datalist id="group_name_list"></datalist>
+								<!--<h5>Profile Group Name</h5>-->
+								<!--<input class='input-wami form-control' list="group_name_list" id="transmit_to_group_name" placeholder="Enter Profile group name to transmit to." name="transmit_to_group_name" size="77" type="text">-->
+								<!--<datalist id="group_name_list"></datalist>-->
 							</div>
 							<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
 								<span class="pull-left">
 									<button type="button" class="btn btn-primary" onclick="transmitProfiles()">Transmit</button>
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal" onclick="clean_up_transmit()">Close</button>
 								</span>
 								<img src="assets/wami-logo-footer.jpg" class="pull-right" >
 								<div class="text-left" id="transmit_alert_message" style="margin-top: 50px;"></div>

@@ -24,12 +24,6 @@
 	<script type="text/javascript" src="js/processData.js"></script>
 	<script type="text/javascript" src="js/searchForProfiles.js"></script>
 
-	<!--<script>-->
-		<!--function goBack() {-->
-			<!--window.history.back();-->
-		<!--}-->
-	<!--</script>-->
-
 	<script>
 		function search() {
 			var selected_item = wamiSearchSelect.value;
@@ -39,7 +33,9 @@
 			if (radios[0].checked) {
 				search_context = radios[0].value;
 			}
-			else search_context = radios[1].value;
+			else {
+				search_context = radios[1].value;
+			}
 			loadData(selected_item, search_str, search_context);
 			return false;
 		}
@@ -54,13 +50,13 @@
 
 </head>
 
-<!--<body style="background-color: rgba(255, 255, 255, 0.13)">-->
 <body class="wami-background">
 	<div id="includedNavbar"></div>
 	<div class="col-md-12" style="width: 1100px; padding-left: 40px">
 		<div class="panel panel-primary" style="border-color: #4c4c4c">
 			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
-				<h3 class="panel-title">Search For Profiles</h3>
+				<div id="search_heading"></div>
+				<!--<h3 class="panel-title">Search For Profiles</h3>-->
 			</div>
 			<div class="panel-body"  style="padding-left: 15px">
 				<div class="row" style="height: 60px">
@@ -73,7 +69,7 @@
 						<div style="vertical-align: top; margin-top: 10px;" class="clearfix">
 							<div class="input">
 								<select name="wamiSearchSelect" id="wamiSearchSelect" class="dropdown-wami">
-									<option value="profile_name">Profile Name</option>
+									<option selected value="profile_name">Profile Name</option>
 									<option value="first_name">First Name</option>
 									<option value="last_name">Last Name</option>
 									<option value="tag_keyword">Tag Keywords</option>
@@ -121,11 +117,6 @@
 				<div id="search_alert"></div>
 				<hr>
 				<div class="row" style="height: 40px">
-					<!--<div class="col-md-2" style="width: 250px; padding-right: 0px">-->
-						<!--<div style="padding-top: 10px; padding-left: 10px">-->
-							<!--<button type="button" class="btn-link" onclick="goBack()"><strong><< Back to Profile Collection</strong></button>-->
-						<!--</div>-->
-					<!--</div>-->
 					<div class="col-md-4" style="width: 180px; padding-left: 25px">
 						<div style="vertical-align: top; margin-top: 15px;">
 							<button type="button" style="font-size: 14px" class="btn-primary" onclick="return search()">Search For Profiles</button>
