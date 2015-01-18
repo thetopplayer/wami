@@ -108,8 +108,12 @@ function loadData(identity_profile_id) {
 		my_profile_collection_alert (message, "alert-info", "Info! ", "group_data");
 	}
 
-	var list = '<div class="col-sm-7" style="max-width: 800px; min-width: 800px"><div class="panel panel-primary" style="border-color: #4c4c4c">' +
-			'<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D"><h3 class="panel-title">Profile Collection</h3></div><span class="span-scroll-wami-list">';
+	var list =
+		'<div class="col-sm-7" style="max-width: 950px; min-width: 950px; padding-left: 0px">' +
+			'<div class="panel panel-primary" style="border-color: #4c4c4c">' +
+				'<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">' +
+		'			<h3 class="panel-title">Profile Collection</h3>' +
+		'		</div><span class="span-scroll-wami-list">';
 
 	var num_list_elements = wami_obj.profile_collection.length;
 	localStorage.setItem("num_list_elements", num_list_elements);
@@ -156,7 +160,6 @@ function loadData(identity_profile_id) {
 							'<strong>Contact Name: </strong> ' + contact + '<br> ' +
 							'<strong>Tags: </strong> ' + tags + '<br> ' +
 							'<strong>Groups: </strong> ' + groups + '<br> ' +
-							//'<strong>Profile Rating: </strong> ' + rating + '<br> ' +
 						'</div>' +
 					'</div>' +
 				'<div class="col-md-3" style="padding-right: 20px; padding-left: 50px">' +

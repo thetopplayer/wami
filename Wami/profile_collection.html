@@ -46,49 +46,99 @@
 	<script type="text/javascript" src="js/common.js"></script>
 
 </head>
-<!--<body style="background-color: rgba(255, 255, 255, 0.13)">-->
 <body class="wami-background">
 	<div id="includedNavbar"></div>
-	<div style="padding-left: 40px; width: 1200px">
+	<!--<div style="padding-left: 50px; width: 1200px">-->
 		<div id="list_alert_message" style="width: 500px"></div>
-		<div class="row" style="width: 1200px">
+		<div class="row" style="padding-left: 50px; width: 985px">
 
-			<div id="list_id"></div>
-			<div class="col-md-4" style="padding-left: 70px;  max-width: 380px">
-				<div class="panel panel-primary" style="border-color: #4c4c4c">
-					<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
-						<h3 class="panel-title">Actions</h3>
-					</div>
-					<div style="width: 292px; height: 80px; padding: 15px">
+
+			<div class="panel panel-primary" style="border-color: #4c4c4c">
+				<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+					<h3 class="panel-title">My Profile Collections</h3>
+				</div>
+				<div class="row" style="height: 160px">
+					<div class="col-md-2" style="width: 260px; margin-left: 30px; padding-top: 15px">
 						<div class="clearfix">
 							<label for="identityProfileDropDown">Select a Profile Collection</label>
 							<div class="input" id="identityProfileDropDown"></div>
 						</div>
+						<p style="margin-bottom: 3px; margin-top: 20px"><strong> Transmit chosen Wami Profile(s) </strong></p>
+						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Transmit</button>
 					</div>
-					<hr>
-					<div style="width: 292px; height: 80px; padding: 15px">
+					<div class="col-md-1" style="width: 260px; margin-left: 30px; padding-top: 15px">
 						<div class="clearfix">
 							<label for="groupDropDown">Select Group to display</label>
 							<div class="input" id="groupDropDown"></div>
 						</div>
-					</div>
-					<hr class="hr1">
-					<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">
-						<p style="margin-bottom: 3px"><strong> Transmit chosen Wami Profile(s) </strong></p>
-						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Transmit</button>
-					</div>
-					<hr>
-					<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">
-						<p style="margin-bottom: 3px"><strong>  Remove chosen Wami Profile(s) </strong></p>
+						<p style="margin-bottom: 3px; margin-top: 20px"><strong>  Remove chosen Wami Profile(s) </strong></p>
 						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('remove')">Remove</button>
 					</div>
-					<hr>
-					<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">
+					<div class="col-md-1" style="width: 240px; margin-left: 30px; margin-top: 82px">
 						<p style="margin-bottom: 5px"><strong>  Refresh your Wami Collection </strong></p>
 						<button type="button" style="margin-bottom: 5px" class="btn btn-sm btn-primary btn-block" onclick="refreshCollection()">Refresh List</button>
 					</div>
-				</div>
+
+
+
+					<!--<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">-->
+						<!--<p style="margin-bottom: 3px"><strong> Transmit chosen Wami Profile(s) </strong></p>-->
+						<!--<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Transmit</button>-->
+					<!--</div>-->
+					<!--<hr>-->
+					<!--<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">-->
+						<!--<p style="margin-bottom: 3px"><strong>  Remove chosen Wami Profile(s) </strong></p>-->
+						<!--<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('remove')">Remove</button>-->
+					<!--</div>-->
+					<!--<hr>-->
+					<!--<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">-->
+						<!--<p style="margin-bottom: 5px"><strong>  Refresh your Wami Collection </strong></p>-->
+						<!--<button type="button" style="margin-bottom: 5px" class="btn btn-sm btn-primary btn-block" onclick="refreshCollection()">Refresh List</button>-->
+					<!--</div>-->
+				<!--</div>-->
 				<div class="text-left" id="profile_collection_alert" style="margin-top: 10px;"></div>
+
+
+				</div>
+			</div>
+
+
+			<div id="list_id"></div>
+			<!--<div class="col-md-4" style="padding-left: 40px;  max-width: 310px">-->
+				<!--<div class="panel panel-primary" style="border-color: #4c4c4c">-->
+					<!--<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">-->
+						<!--<h3 class="panel-title">Actions</h3>-->
+					<!--</div>-->
+					<!--<div style="width: 292px; height: 80px; padding: 15px">-->
+						<!--<div class="clearfix">-->
+							<!--<label for="identityProfileDropDown">Select a Profile Collection</label>-->
+							<!--<div class="input" id="identityProfileDropDown"></div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<hr>-->
+					<!--<div style="width: 292px; height: 80px; padding: 15px">-->
+						<!--<div class="clearfix">-->
+							<!--<label for="groupDropDown">Select Group to display</label>-->
+							<!--<div class="input" id="groupDropDown"></div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<hr class="hr1">-->
+					<!--<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">-->
+						<!--<p style="margin-bottom: 3px"><strong> Transmit chosen Wami Profile(s) </strong></p>-->
+						<!--<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Transmit</button>-->
+					<!--</div>-->
+					<!--<hr>-->
+					<!--<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">-->
+						<!--<p style="margin-bottom: 3px"><strong>  Remove chosen Wami Profile(s) </strong></p>-->
+						<!--<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('remove')">Remove</button>-->
+					<!--</div>-->
+					<!--<hr>-->
+					<!--<div class="panel-body" style="padding-bottom: 9px; padding-top: 8px">-->
+						<!--<p style="margin-bottom: 5px"><strong>  Refresh your Wami Collection </strong></p>-->
+						<!--<button type="button" style="margin-bottom: 5px" class="btn btn-sm btn-primary btn-block" onclick="refreshCollection()">Refresh List</button>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="text-left" id="profile_collection_alert" style="margin-top: 10px;"></div>-->
 
 				<!--Modal Transmit-->
 				<div class="modal fade" id="transmit_wami" role="dialog">
@@ -173,14 +223,19 @@
 				</div>
 
 			</div>
-		</div>
+		<!--</div>-->
 		<br><br>
-		<hr>
+		<!--<hr>-->
+			<div class="row" style="padding-left: 50px; width: 985px">
+				<div class="col-md-2" style="width: 985px; margin-left: 30px; padding-top: 15px">
 		<footer>
+			<hr>
 			<div id="includedFooter"></div>
 		</footer>
+					</div>
+				</div>
 		<br><br>
-	</div>
+	<!--</div>-->
 
 	<script src="js/bootstrap.min.js"></script>
 </body>
