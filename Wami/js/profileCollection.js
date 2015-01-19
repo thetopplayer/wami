@@ -648,6 +648,10 @@ function transmitProfiles() {
 		}
 	//	window.location.href = 'mailto:' + transmit_str + '?subject=Wami Profile(s)&body=' + encodeURI(body);
 	}
+
+	if ((transmit_to_profile_name === '') && (transmit_to_email_address === '')) {
+		my_profile_collection_alert("Please enter either a Profile Name or Email Address to transmit to.", "alert-warning", "Info Alert! ", "transmit");
+	}
 }
 
 //
