@@ -945,6 +945,12 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 			return;
 		}
 	}
+	if (message_type === "mywami")  {
+		if (message === '') {
+			document.getElementById("mywami_alerts").innerHTML = message;
+			return;
+		}
+	}
 	if (message_type === "image_upload")  {
 		if (message === '') {
 			document.getElementById("image_upload_alerts").innerHTML = message;
