@@ -45,18 +45,18 @@ function loadData() {
 	var telephone = account_profile_obj.account_profile[0].telephone;
 	var create_date = account_profile_obj.account_profile[0].create_date,
 			create_date_formatted = create_date.substr(0, 10);
-	var active_ind = account_profile_obj.account_profile[0].active_ind;
-	var radio = '';
-	if (active_ind == 1) {
-		radio = $('#active');
-		radio[0].checked = true;
-		radio.button("refresh");
-	}
-	else {
-		radio = $('#inactive');
-		radio[0].checked = true;
-		radio.button("refresh");
-	}
+	//var active_ind = account_profile_obj.account_profile[0].active_ind;
+	//var radio = '';
+	//if (active_ind == 1) {
+	//	radio = $('#active');
+	//	radio[0].checked = true;
+	//	radio.button("refresh");
+	//}
+	//else {
+	//	radio = $('#inactive');
+	//	radio[0].checked = true;
+	//	radio.button("refresh");
+	//}
 
 	$("#first_name").val(first_name);
 	$("#last_name").val(last_name);
@@ -291,10 +291,10 @@ function saveAccountData() {
 	var country = (document.getElementById("country").value).trim();
 	var zipcode = (document.getElementById("zipcode").value).trim();
 	var telephone = (document.getElementById("telephone").value).trim();
-	var active_ind = document.getElementById("active");
-	if (active_ind.checked) {
-		active_ind = 1;
-	} else active_ind = 0;
+	//var active_ind = document.getElementById("active");
+	//if (active_ind.checked) {
+	//	active_ind = 1;
+	//} else active_ind = 0;
 
 	var data = localStorage.getItem("user_info");
 	var obj = JSON.parse(data);
