@@ -105,7 +105,9 @@ function load_profiler_categories (identity_profile_id) {
 				else {
 					for (var j = 0; j < images.length; j++) {
 						profiler_image_gallery_id[num_gallery_images] = images[j].profiler_image_gallery_id;
-						var location = images[j].file_location + images[j].file_name;
+						var file_location = images[j].file_location;
+						var location_thumb = images[j].file_location + images[j].file_name;
+						var location = file_location.substring(0, file_location.length - 7)  + images[j].file_name;
 						var image_name = images[j].image_name;
 						if ((image_name === '') || (image_name === undefined) || (image_name === null)) {
 							image_name = images[j].file_name;
@@ -113,7 +115,7 @@ function load_profiler_categories (identity_profile_id) {
 
 						data_section =
 									'<div class="col-md-2">' +
-										'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location + '" width="200%" height="200%"   ></a>' +
+										'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 										'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 									'</div>' + data_section;
@@ -580,14 +582,16 @@ function refresh_image_gallery(identity_profile_id, category) {
 	else {
 		for (var i = 0; i < gallery_images.length; i++) {
 			profiler_image_gallery_id[num_gallery_images] = image_gallery_obj.images[i].profiler_image_gallery_id;
-			var location = gallery_images[i].file_location + gallery_images[i].file_name;
+			var file_location = gallery_images[i].file_location;
+			var location_thumb = gallery_images[i].file_location + gallery_images[i].file_name;
+			var location = file_location.substring(0, file_location.length - 7)  + images[j].file_name;
 			var image_name = gallery_images[i].image_name;
 			if ((image_name === '') || (image_name === undefined) || (image_name === null)) {
 				image_name = gallery_images[i].file_name;
 			}
 			data_section =
 					'<div class="col-md-2">' +
-						'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location + '" width="200%" height="200%"   ></a>' +
+						'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 						'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 					'</div>' + data_section;
@@ -599,6 +603,12 @@ function refresh_image_gallery(identity_profile_id, category) {
 	var section_id = "section_id" + category;
 	localStorage.setItem("profiler_image_gallery_id", profiler_image_gallery_id);  //*******
 	document.getElementById(section_id).innerHTML = image_gallery;
+}
+
+
+// Image Gallery: Show emlarged image with detail
+function show_image() {
+	alert("jjwskwoskowsow");
 }
 
 // Image Gallery: Remove checked gallery images dialog
