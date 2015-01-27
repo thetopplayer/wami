@@ -116,7 +116,6 @@ function load_profiler_categories (identity_profile_id) {
 
 						data_section =
 									'<div class="col-md-2">' +
-										//'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
 													'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
@@ -218,14 +217,18 @@ function load_profiler_categories (identity_profile_id) {
 						profiler_audio_jukebox_id[num_audio_files] = audio_files[j].profiler_audio_jukebox_id;
 						var file_location = audio_files[j].file_location + audio_files[j].file_name;
 						var audio_file_name = audio_files[j].audio_file_name;
+						var audio_description = audio_files[j].audio_file_description;
 						if ((audio_file_name === '') || (audio_file_name === undefined) || (audio_file_name === null)) {
 							audio_file_name = audio_files[j].file_name;
 						}
 						data_section_audio =
-								'<div class="col-md-2" style="width: 320px">' +
+								'<div class="col-md-2" style="width: 320px; padding-bottom: 15px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
-									'<label style="padding-left: 5px; padding-bottom: 20px">' + audio_file_name + '</label>' +
+									'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
+									'<div style="padding-left: 17px;">' +
+										'<textarea readonly style="width: 260px; height: 60px; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+									'</div>' +
 								'</div>' + data_section_audio;
 						num_audio_files++;
 					}
@@ -374,15 +377,19 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 			profiler_audio_jukebox_id[num_audio_files] = audio_files[j].profiler_audio_jukebox_id;
 			var file_location = audio_files[j].file_location + audio_files[j].file_name;
 			var audio_file_name = audio_files[j].audio_file_name;
+			var audio_description = audio_files[j].audio_file_description;
 			if ((audio_file_name === '') || (audio_file_name === undefined) || (audio_file_name === null)) {
 				audio_file_name = audio_files[j].file_name;
 			}
 
 			data_section_audio =
-					'<div class="col-md-2" style="width: 300px">' +
+					'<div class="col-md-2" style="width: 320px; padding-bottom: 15px">' +
 						'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 						'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
-						'<label style="padding-left: 5px; padding-bottom: 20px">' + audio_file_name + '</label>' +
+						'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
+						'<div style="padding-left: 17px;">' +
+							'<textarea readonly style="width: 260px; height: 60px; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+						'</div>' +
 					'</div>' + data_section_audio;
 			num_audio_files++;
 		}
@@ -571,7 +578,6 @@ function refresh_image_gallery(identity_profile_id, category) {
 	var profiler_image_gallery_id = [];
 	var decorator_section =
 			'<div class="row" style="padding: 20px; height: 600px; background-color: #d1d1d1">';
-					//'background-repeat: repeat; background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 
 	var gallery_images = image_gallery_obj.images;
 	var data_section = '';
@@ -587,14 +593,16 @@ function refresh_image_gallery(identity_profile_id, category) {
 			profiler_image_gallery_id[num_gallery_images] = image_gallery_obj.images[i].profiler_image_gallery_id;
 			var file_location = gallery_images[i].file_location;
 			var location_thumb = gallery_images[i].file_location + gallery_images[i].file_name;
-			var location = file_location.substring(0, file_location.length - 7)  + images[j].file_name;
+			var location = file_location.substring(0, file_location.length - 7) + gallery_images[i].file_name;
+			var image_description = gallery_images[i].image_description;
 			var image_name = gallery_images[i].image_name;
 			if ((image_name === '') || (image_name === undefined) || (image_name === null)) {
 				image_name = gallery_images[i].file_name;
 			}
 			data_section =
 					'<div class="col-md-2">' +
-						'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
+						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
+						'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 						'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 					'</div>' + data_section;
