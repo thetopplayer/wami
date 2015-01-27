@@ -109,6 +109,7 @@ function load_profiler_categories (identity_profile_id) {
 						var location_thumb = images[j].file_location + images[j].file_name;
 						var location = file_location.substring(0, file_location.length - 7)  + images[j].file_name;
 						var image_name = images[j].image_name;
+						var image_description = images[j].image_description;
 						if ((image_name === '') || (image_name === undefined) || (image_name === null)) {
 							image_name = images[j].file_name;
 						}
@@ -116,7 +117,8 @@ function load_profiler_categories (identity_profile_id) {
 						data_section =
 									'<div class="col-md-2">' +
 										//'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
-										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\')"><img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
+										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
+													'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 										'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 									'</div>' + data_section;
@@ -608,9 +610,11 @@ function refresh_image_gallery(identity_profile_id, category) {
 
 
 // Image Gallery: Show emlarged image with detail
-function show_full_size_image(location) {
+function show_full_size_image(location, image_title, image_description) {
 	$('#show_full_size_image').modal();
-	var full_size_image = '<img src="' + location + '" width="100%" height="100%"   >'
+	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >'
+	document.getElementById("image_description").innerHTML = image_description;
+	document.getElementById("image_title").innerHTML = image_title;
 	document.getElementById("full_size_image").innerHTML = full_size_image;
 }
 
