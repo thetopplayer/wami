@@ -65,8 +65,8 @@ function load_profiler_categories (identity_profile_id) {
 											'<input class="input-wami" type="text" readonly style="background-color: #d1d1d1" value="'  +  media_type + '">' +
 										'</div>' +
 									'</div>' +
-									'<span class="span-scroll-profile" style="height: 555px; width: 1063px; margin-left: 10px">' +
-										'<div style="height: 553px; width: 1050px" id="section_id' + category + '"></div>' +
+									'<span class="span-scroll-profile" style="height: 555px; width: 965px; margin-left: 10px">' +
+										'<div style="height: 553px; width: 965px" id="section_id' + category + '"></div>' +
 									'</span>' +
 									'<div id="actions_id' + category + '"></div>' +
 								'</div>' +
@@ -88,9 +88,7 @@ function load_profiler_categories (identity_profile_id) {
 
 // Image gallery category
 			if (media_type === 'Image') {
-				decorator_section =
-						'<div class="row" style="padding: 10px; height: 600px;  background-color: #d1d1d1">';
-								//'background-image: url(assets/seamlesstexture1_1200.jpg); background-repeat: repeat" >';
+				decorator_section = '<div class="row" style="padding: 10px; height: 600px;  background-color: #d1d1d1">';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -127,7 +125,7 @@ function load_profiler_categories (identity_profile_id) {
 				}
 
 				var image_actions =
-						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
+						'<div class="row" style="padding-left: 10px; width: 1000px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_image_gallery_dialog(\'' + category + '\')">Upload New Image </button>' +
 								'<button type="button" class="btn btn-sm btn-danger" style="margin-left: 20px" onclick="remove_gallery_images(\'' + category + '\')">Remove Checked Images </button>' +
@@ -199,7 +197,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 25px; height: 550px; background-color: #d1d1d1">';
+						'<div class="row" style="padding: 10px; height: 550px; background-color: #d1d1d1">';
 								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 
 				var audio_files = [];
