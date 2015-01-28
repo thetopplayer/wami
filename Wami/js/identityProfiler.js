@@ -227,7 +227,7 @@ function load_profiler_categories (identity_profile_id) {
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
 									'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
 									'<div style="padding-left: 17px;">' +
-										'<textarea readonly style="width: 260px; height: 60px; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+								'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
 								'</div>' + data_section_audio;
 						num_audio_files++;
@@ -388,7 +388,7 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 						'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
 						'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
 						'<div style="padding-left: 17px;">' +
-							'<textarea readonly style="width: 260px; height: 60px; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+							'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 						'</div>' +
 					'</div>' + data_section_audio;
 			num_audio_files++;

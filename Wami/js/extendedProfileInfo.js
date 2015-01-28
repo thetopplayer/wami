@@ -177,21 +177,25 @@ function load_profiler_categories (identity_profile_id) {
 				if (images === undefined) {
 					data_section =
 							'<div class="col-md-2" style="width: 1000px; padding-left: 130px">' +
-									'<h3>No Images to display.</h3>' +
-								'</div>';
+								'<h3>No Images to display.</h3>' +
+							'</div>';
 				}
 				else {
 					for (var j = 0; j < images.length; j++) {
-						var location = images[j].file_location + images[j].file_name;
+						var file_location = images[j].file_location;
+						var location_thumb = images[j].file_location + images[j].file_name;
+						var location = file_location.substring(0, file_location.length - 7) + images[j].file_name;
+						var image_description = images[j].image_description;
 						var image_name = images[j].image_name;
 						if ((image_name === '') || (image_name === undefined) || (image_name === null)) {
 							image_name = images[j].file_name;
 						}
 						data_section =
-								'<div class="col-md-2">' +
-									'<a class="thumbnail" title="' + image_name + '" href="' + location + '"><img src="' + location + '" width="200%" height="200%"   ></a>' +
-									'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
-								'</div>' + data_section;
+							'<div class="col-md-2">' +
+								'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
+									'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
+								'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
+							'</div>' + data_section;
 					}
 				}
 				section_id = "section_id" + category;
@@ -241,13 +245,17 @@ function load_profiler_categories (identity_profile_id) {
 					for (var j = 0; j < audio_files.length; j++) {
 						var file_location = audio_files[j].file_location + audio_files[j].file_name;
 						var audio_file_name = audio_files[j].audio_file_name;
+						var audio_description = audio_files[j].audio_file_description;
 						if ((audio_file_name === '') || (audio_file_name === undefined) || (audio_file_name === null)) {
 							audio_file_name = audio_files[j].file_name;
 						}
 						data_section_audio =
-								'<div class="col-md-2" style="width: 300px">' +
+								'<div class="col-md-2" style="width: 320px; padding-bottom: 15px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
-									'<label style="padding-left: 5px; padding-bottom: 20px">' + audio_file_name + '</label>' +
+									'<label style="padding-left: 5px; padding-bottom: 0px">' + audio_file_name + '</label>' +
+									'<div style="padding-left: 5px;">' +
+										'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+									'</div>' +
 								'</div>' + data_section_audio;
 					}
 				}
@@ -256,6 +264,15 @@ function load_profiler_categories (identity_profile_id) {
 			}
 		}
 	}
+}
+
+// Image Gallery: Show emlarged image with detail
+function show_full_size_image(location, image_title, image_description) {
+	$('#show_full_size_image').modal();
+	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >'
+	document.getElementById("image_description").innerHTML = image_description;
+	document.getElementById("image_title").innerHTML = image_title;
+	document.getElementById("full_size_image").innerHTML = full_size_image;
 }
 
 // Alert messages
