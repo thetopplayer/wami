@@ -36,8 +36,6 @@ import java.util.concurrent.ExecutionException;
  * Created by robertlanter on 3/4/14.
  */
 public class ProfilerImageView extends ListActivity {
-	private TextView textView;
-	private WebView webView;
 	private String[] fileName;
 	private String[] fileLocation;
 	private String[] imageDescription;
@@ -85,16 +83,16 @@ public class ProfilerImageView extends ListActivity {
 
 		setListAdapter(new ProfilerImageAdapter(this, imageName, imageDescription, fileLocation, fileName));
 
-		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(ProfilerImageView.this, WamiListActivity.class);
-				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-				i.putExtra("use_default", useDefault);
-				startActivity(i);
-			}
-		});
+//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
+//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Intent i = new Intent(ProfilerImageView.this, WamiListActivity.class);
+//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
+//				i.putExtra("use_default", useDefault);
+//				startActivity(i);
+//			}
+//		});
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {

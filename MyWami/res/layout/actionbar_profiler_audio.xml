@@ -3,27 +3,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:gravity="center"
               android:orientation="horizontal" >
 
 	<ImageView
-			android:id="@+id/actionBarLogo"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginRight="10dp"
-			android:layout_marginLeft="30dp"
-			android:clickable="false"
-			android:focusable="false"
-			android:longClickable="false"
-			android:src="@drawable/actionbar_profiler_audio" />
-
-	<ImageView
-		android:id="@+id/actionBarHome"
+		android:id="@+id/actionBarLogo"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:clickable="true"
-		android:focusable="true"
-		android:src="@drawable/ic_action_home3"
-		android:paddingLeft="35dp"
-		android:contentDescription="Back to Wami List"/>
+		android:paddingLeft="50dp"
+		android:clickable="false"
+		android:focusable="false"
+		android:longClickable="false"
+		android:src="@drawable/actionbar_profiler_audio" />
+
+	<!--<ImageView-->
+		<!--android:id="@+id/actionBarHome"-->
+		<!--android:layout_width="wrap_content"-->
+		<!--android:layout_height="wrap_content"-->
+		<!--android:clickable="true"-->
+		<!--android:focusable="true"-->
+		<!--android:src="@drawable/ic_action_home3"-->
+		<!--android:paddingLeft="35dp"-->
+		<!--android:contentDescription="Back to Wami List"/>-->
 </LinearLayout>

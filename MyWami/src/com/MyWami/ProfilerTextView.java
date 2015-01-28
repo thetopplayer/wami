@@ -31,8 +31,8 @@ public class ProfilerTextView extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.black));
 
-		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-		ivHome.setVisibility(View.INVISIBLE);
+//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
+//		ivHome.setVisibility(View.INVISIBLE);
 
 		Bundle extras = getIntent().getExtras();
 		String textDoc = extras.getString("text_doc");

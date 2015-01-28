@@ -146,16 +146,16 @@ public class SearchResults extends ListActivity {
 			}
 		});
 
-		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(SearchResults.this, WamiListActivity.class);
-				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-				i.putExtra("use_default", useDefault);
-				startActivity(i);
-			}
-		});
+//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
+//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Intent i = new Intent(SearchResults.this, WamiListActivity.class);
+//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
+//				i.putExtra("use_default", useDefault);
+//				startActivity(i);
+//			}
+//		});
 
 		jsonGetData = new JsonGetData();
 		String[] postData = {selectedItem, searchStr, String.valueOf(searchIndex), userIdentityProfileId};
