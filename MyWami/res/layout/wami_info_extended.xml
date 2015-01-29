@@ -75,14 +75,13 @@
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="55dp"
             android:layout_below="@+id/description_title"
-            android:layout_marginTop="3dp"
             android:background="@drawable/textfield_background"
-            android:padding="5dp"
-            android:singleLine="true"
+            android:padding="3dp"
+            android:lines="3"
             android:textColor="#ff5c5c5c"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
 
         <TextView
