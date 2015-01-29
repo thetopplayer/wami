@@ -84,7 +84,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 				String content = "";
 				String profileName = searchListModel[position].getProfileName();
 				String description = searchListModel[position].getDescriptiom();
-				if ((description.equals("")) || (description == null) || (description.equals("null"))) {
+				if ((description.equals("")) || (description.equals("null"))) {
 					content = profileName + ": " + "No more info exists";
 				}
 				else {
