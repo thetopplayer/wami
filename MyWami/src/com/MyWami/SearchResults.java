@@ -7,10 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.MyWami.dialogs.SearchForProfiles;
@@ -207,6 +208,33 @@ public class SearchResults extends ListActivity {
 		}
 
 		setListAdapter(new SearchResultsListAdapter(that, R.layout.search_results, alListRow, listModel));
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.search_results_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+
+// My Wami Network
+		if (id == R.id.action_home) {
+			Intent i = new Intent(SearchResults.this, WamiListActivity.class);
+			i.putExtra("user_identity_profile_id", userIdentityProfileId);
+			i.putExtra("use_default", useDefault);
+			startActivity(i);
+		}
+
+// Logout
+		if (id == R.id.action_logout) {
+			this.finish();
+			Intent i = new Intent(SearchResults.this, Login.class);
+			startActivity(i);
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 }
 

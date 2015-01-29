@@ -15,13 +15,4 @@
 		android:longClickable="false"
 		android:src="@drawable/actionbar_search_results" />
 
-	<!--<ImageView-->
-			<!--android:id="@+id/actionBarHome"-->
-			<!--android:layout_width="wrap_content"-->
-			<!--android:layout_height="wrap_content"-->
-			<!--android:clickable="true"-->
-			<!--android:focusable="true"-->
-			<!--android:src="@drawable/ic_action_home3"-->
-			<!--android:contentDescription="Back to Wami List"/>-->
-
 </LinearLayout>

@@ -11,22 +11,14 @@ import com.MyWami.R;
 /**
  * Created by robertlanter on 7/22/14.
  */
-public class SearchMoreInfo {
-	private Context context;
-	private String description;
+public class MoreInfo {
+	public MoreInfo() {}
 
-	public SearchMoreInfo() {
-
-	}
-
-	public void searchMoreInfo(final Context context, final String description) {
-		this.context = context;
-		this.description = description;
-
+	public void moreInfo(final Context context, final String description) {
 		final Dialog dialog = new Dialog(context);
 		dialog.getWindow();
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.dialog_search_more_info);
+		dialog.setContentView(R.layout.dialog_more_info);
 
 		final TextView moreInfo = (TextView) dialog.findViewById(R.id.dialog_text);
 		moreInfo.setText(description);

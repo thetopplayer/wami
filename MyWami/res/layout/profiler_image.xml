@@ -3,21 +3,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/image_list"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="72dp"
 	android:background="@color/black">
 
 	<ImageView
 		android:id="@+id/list_image"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
+		android:paddingLeft="7dp"
 		android:background="@color/white">
 	</ImageView>
 
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_toRightOf="@+id/list_image"
-		android:layout_centerVertical="true">
+		android:background="@color/white"
+		android:layout_toRightOf="@+id/list_image">
 
 		<TextView
 			android:id="@+id/image_name"
@@ -30,31 +31,20 @@
 			android:background="@drawable/wami_list_background">
 		</TextView>
 
-		<!--<Button-->
-			<!--android:id="@+id/image_description"-->
-			<!--android:layout_width="68dp"-->
-			<!--android:layout_height="23dp"-->
-			<!--android:paddingBottom="7dp"-->
-			<!--android:textStyle="bold"-->
-			<!--android:textSize="10sp"-->
-			<!--android:textColor="#FFFFFF"-->
-			<!--android:background="@drawable/button_state"-->
-			<!--android:layout_marginTop="2dp"-->
-			<!--android:text="Description"-->
-			<!--android:focusable="false"-->
-			<!--android:layout_below="@+id/image_name"/>-->
-
-		<TextView
+		<Button
 			android:id="@+id/image_description"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:textSize="15sp"
-			android:textStyle="bold|italic"
-			android:textColor="@color/black"
-			android:layout_marginTop="-10dp"
-			android:layout_below="@+id/image_name"
-			android:background="@drawable/wami_list_background">
-		</TextView>
+			android:layout_width="68dp"
+			android:layout_height="24dp"
+			android:layout_marginLeft="8dp"
+			android:layout_centerVertical="true"
+			android:textStyle="bold"
+			android:textSize="10sp"
+			android:textColor="#FFFFFF"
+			android:background="@drawable/button_state"
+			android:layout_marginTop="2dp"
+			android:text="More Info"
+			android:focusable="false"
+			android:layout_below="@+id/image_name"/>
 	</RelativeLayout>
 
 	<ImageView

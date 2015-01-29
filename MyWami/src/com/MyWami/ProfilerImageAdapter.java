@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.MyWami.dialogs.MoreInfo;
 import com.MyWami.util.Constants;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -50,11 +52,11 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 	private class ViewHolder {
 		ImageView listImage;
 		TextView listImageName;
-		TextView listImageDescription;
+		Button listButton;
 	}
 
 	@Override
-	public View getView(int position, View row, ViewGroup parent) {
+	public View getView(final int position, View row, ViewGroup parent) {
 		ViewHolder viewHolder;
 
 		if (row == null) {
@@ -64,7 +66,7 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 
 			viewHolder.listImage = (ImageView) row.findViewById(R.id.list_image);
 			viewHolder.listImageName = (TextView) row.findViewById(R.id.image_name);
-			viewHolder.listImageDescription = (TextView) row.findViewById(R.id.image_description);
+			viewHolder.listButton = (Button) row.findViewById(R.id.image_description);
 			row.setTag( viewHolder);
 		}
 		else {
@@ -103,7 +105,6 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 		}
 
 		viewHolder.listImageName.setText(imageName[position]);
-		viewHolder.listImageDescription.setText(imageDescription[position]);
 		try {
 			is.close();
 		}
@@ -111,6 +112,15 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 			e.printStackTrace();
 		}
 		connection.disconnect();
+
+		viewHolder.listButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String description = imageDescription[position];
+				MoreInfo moreInfo = new MoreInfo();
+				moreInfo.moreInfo(context, description);
+			}
+		});
 
 		return row;
 	}

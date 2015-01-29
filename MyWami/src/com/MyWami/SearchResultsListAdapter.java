@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.MyWami.dialogs.SearchMoreInfo;
+import com.MyWami.dialogs.MoreInfo;
 import com.MyWami.model.SearchListModel;
 
 import java.util.ArrayList;
@@ -91,8 +91,8 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 				else {
 					content = profileName + ": \n" + description;
 				}
-				SearchMoreInfo searchMoreInfo = new SearchMoreInfo();
-				searchMoreInfo.searchMoreInfo(context, content);
+				MoreInfo moreInfo = new MoreInfo();
+				moreInfo.moreInfo(context, content);
 			}
 		});
 
