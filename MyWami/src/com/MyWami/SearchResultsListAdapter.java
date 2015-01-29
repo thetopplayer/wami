@@ -63,7 +63,6 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 			viewHolder.listTextRating = (TextView) row.findViewById(R.id.list_text_rating);
 			viewHolder.listTextEmailName = (TextView) row.findViewById(R.id.list_text_email_name);
 			viewHolder.listButton = (Button) row.findViewById(R.id.list_more_info_btn);
-//			viewHolder.listIcon = (ImageView) row.findViewById(R.id.list_icon);
 			row.setTag( viewHolder);
 		}
 		else {
