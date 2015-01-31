@@ -83,7 +83,6 @@
             android:textColor="#ff5c5c5c"
             android:textSize="15sp" />
 
-
         <TextView
             android:id="@+id/contact_name_title"
             android:layout_width="match_parent"

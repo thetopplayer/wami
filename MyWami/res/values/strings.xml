@@ -38,4 +38,13 @@
 	<string name="action_navigate_to">Navigate To...</string>
 	<string name="action_filter_collection">Filter Collection by Group...</string>
 
+	<string name="account_first_name">First Name</string>
+	<string name="account_last_name">Last Name</string>
+	<string name="account_email_address">Email Address</string>
+	<string name="account_username">Account Username</string>
+	<string name="account_password">Password</string>
+	<string name="account_retype_password">Retype Password</string>
+	<string name="account_first_profile_name">First Profile Name</string>
+	<string name="account_tele_number">Tele Number</string>
+	<string name="account_profile_description">Profile Description</string>
 </resources>

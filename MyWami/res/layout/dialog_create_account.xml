@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:src="@drawable/dialog_header_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:scaleType="center"
+        android:layout_marginBottom="10dp"
+        android:background="#666666"/>
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="490dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/asteric1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:textColor="#ff9933"
+            android:textStyle="bold"
+            android:textSize="19sp"
+            android:text="*"/>
+
+        <TextView
+            android:id="@+id/account_username_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Account Username"
+            android:layout_toRightOf="@+id/asteric1"/>
+
+        <EditText
+            android:id="@+id/account_username_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_username"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_username_heading"/>
+
+        <TextView
+            android:id="@+id/asteric2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:textColor="#ff9933"
+            android:textStyle="bold"
+            android:textSize="19sp"
+            android:text="*"
+            android:layout_below="@+id/account_username_edit"/>
+
+        <TextView
+            android:id="@+id/account_password_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Password"
+            android:layout_below="@+id/account_username_edit"
+            android:layout_toRightOf="@+id/asteric2"/>
+
+        <EditText
+            android:id="@+id/account_password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_password"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_password_heading"/>
+
+        <TextView
+            android:id="@+id/asteric3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:textColor="#ff9933"
+            android:textStyle="bold"
+            android:textSize="19sp"
+            android:text="*"
+            android:layout_below="@+id/account_password_edit"/>
+
+        <TextView
+            android:id="@+id/account_retype_password_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Retype Password"
+            android:layout_below="@+id/account_password_edit"
+            android:layout_toRightOf="@+id/asteric3"/>
+
+        <EditText
+            android:id="@+id/account_retype_password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_retype_password"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_retype_password_heading"/>
+
+        <TextView
+            android:id="@+id/asteric4"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:textColor="#ff9933"
+            android:textStyle="bold"
+            android:textSize="19sp"
+            android:text="*"
+            android:layout_below="@+id/account_retype_password_edit"/>
+
+        <TextView
+            android:id="@+id/account_email_address_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Email Address"
+            android:layout_below="@+id/account_retype_password_edit"
+            android:layout_toRightOf="@+id/asteric4"/>
+
+        <EditText
+            android:id="@+id/account_email_address_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_email_address"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_email_address_heading"/>
+
+        <TextView
+            android:id="@+id/asteric5"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:textColor="#ff9933"
+            android:textStyle="bold"
+            android:textSize="19sp"
+            android:text="*"
+            android:layout_below="@+id/account_email_address_edit"/>
+
+        <TextView
+            android:id="@+id/account_first_profile_name_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="First Profile Name"
+            android:layout_below="@+id/account_email_address_edit"
+            android:layout_toRightOf="@+id/asteric5"/>
+
+        <EditText
+            android:id="@+id/account_first_profile_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_first_profile_name"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_first_profile_name_heading"/>
+
+        <TextView
+            android:id="@+id/required_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ff9933"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="* - Required Field"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/account_first_profile_name_edit"/>
+
+        <TextView
+            android:id="@+id/account_first_name_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="First Name"
+            android:layout_below="@+id/required_text"/>
+
+        <EditText
+            android:id="@+id/account_first_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_first_name"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_first_name_heading"/>
+
+        <TextView
+            android:id="@+id/account_last_name_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Last Name"
+            android:layout_below="@+id/account_first_name_edit"/>
+
+        <EditText
+            android:id="@+id/account_last_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_last_name"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_last_name_heading"/>
+
+        <TextView
+            android:id="@+id/account_tele_number_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Tele Number"
+            android:layout_below="@+id/account_last_name_edit"/>
+
+        <EditText
+            android:id="@+id/account_tele_number_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_tele_number"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_tele_number_heading"/>
+
+        <TextView
+            android:id="@+id/account_profile_description_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:text="Profile Description"
+            android:layout_below="@+id/account_tele_number_edit"/>
+
+        <EditText
+            android:id="@+id/account_profile_description_edit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:textSize="13sp"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:singleLine="true"
+            android:hint="@string/account_profile_description"
+            android:gravity="top"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/account_profile_description_heading"/>
+
+        <ImageView
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#aa000000"
+            android:layout_below="@+id/account_profile_description_edit"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/create_account_btn"
+            android:layout_width="82dp"
+            android:layout_height="30dp"
+            android:text=" Create"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@drawable/button_state"
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/line2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/cancel_account_btn"
+            android:layout_width="82dp"
+            android:layout_height="30dp"
+            android:text=" Cancel"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@drawable/button_state"
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/line2"
+            android:layout_toRightOf="@+id/create_account_btn"
+            android:layout_marginBottom="10dp"/>
+
+    </RelativeLayout>
+</LinearLayout>
