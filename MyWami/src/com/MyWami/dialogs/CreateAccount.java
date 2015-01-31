@@ -40,23 +40,41 @@ public class CreateAccount {
     btnCreateAccount.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-//
-//        String[] postData = { newFlashMsg};
-//        JsonGetData jsonGetData = new JsonGetData();
-//        jsonGetData.jsonGetData(context, INSERT_FLASH, postData);
-//        try {
-//          Method m = Flash.class.getMethod("refreshFlash");
-//          m.invoke(context);
-//        }
-//        catch (NoSuchMethodException e) {
-//          e.printStackTrace();
-//        }
-//        catch (InvocationTargetException e) {
-//          e.printStackTrace();
-//        }
-//        catch (IllegalAccessException e) {
-//          e.printStackTrace();
-//        }
+        String fieldVal = String.valueOf(etAccountUsername.getText());
+        if (fieldVal.equals("")) {
+          Toast.makeText(context.getApplicationContext(), "Account Username is a required field!", Toast.LENGTH_LONG).show();
+          return;
+        }
+        String password = (String.valueOf(etAccountPassword.getText())).trim();
+        if (password.equals("")) {
+          Toast.makeText(context.getApplicationContext(), "Password is a required field!", Toast.LENGTH_LONG).show();
+          return;
+        }
+        String retypePassword = (String.valueOf(etAccountRetypePassword.getText())).trim();
+        if (retypePassword.equals("")) {
+          Toast.makeText(context.getApplicationContext(), "Retype Password is required!", Toast.LENGTH_LONG).show();
+          return;
+        }
+        fieldVal = String.valueOf(etAccountEmailAddress.getText());
+        if (fieldVal.equals("")) {
+          Toast.makeText(context.getApplicationContext(), "Email Address is a required field!", Toast.LENGTH_LONG).show();
+          return;
+        }
+        fieldVal = String.valueOf(etAccountFirstProfileName.getText());
+        if (fieldVal.equals("")) {
+          Toast.makeText(context.getApplicationContext(), "First Profile Name is a required field!", Toast.LENGTH_LONG).show();
+          return;
+        }
+
+//        int result = indexOf(password).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g);
+
+        if (!password.equals(retypePassword)) {
+          Toast.makeText(context.getApplicationContext(), "Password and Retype Password must be the same!", Toast.LENGTH_LONG).show();
+          return;
+        }
+
+        Toast.makeText(context.getApplicationContext(), "Congrats...Account created, login and start connecting...", Toast.LENGTH_LONG).show();
+        dialog.dismiss();
       }
     });
 

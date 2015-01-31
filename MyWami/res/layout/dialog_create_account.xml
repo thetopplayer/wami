@@ -14,9 +14,16 @@
         android:layout_marginBottom="10dp"
         android:background="#666666"/>
 
+    <ImageView
+        android:src="@drawable/create_account_blurb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"/>
+
+
     <RelativeLayout
-        android:layout_width="280dp"
-        android:layout_height="490dp"
+        android:layout_width="270dp"
+        android:layout_height="480dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center_horizontal">
@@ -51,7 +58,7 @@
             android:singleLine="true"
             android:hint="@string/account_username"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_username_heading"/>
 
         <TextView
@@ -76,6 +83,7 @@
             android:layout_toRightOf="@+id/asteric2"/>
 
         <EditText
+            android:inputType="textPassword"
             android:id="@+id/account_password_edit"
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -86,7 +94,7 @@
             android:singleLine="true"
             android:hint="@string/account_password"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_password_heading"/>
 
         <TextView
@@ -112,6 +120,7 @@
 
         <EditText
             android:id="@+id/account_retype_password_edit"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:textSize="13sp"
@@ -121,7 +130,7 @@
             android:singleLine="true"
             android:hint="@string/account_retype_password"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_retype_password_heading"/>
 
         <TextView
@@ -147,6 +156,7 @@
 
         <EditText
             android:id="@+id/account_email_address_edit"
+            android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:textSize="13sp"
@@ -156,7 +166,7 @@
             android:singleLine="true"
             android:hint="@string/account_email_address"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_email_address_heading"/>
 
         <TextView
@@ -191,7 +201,7 @@
             android:singleLine="true"
             android:hint="@string/account_first_profile_name"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_first_profile_name_heading"/>
 
         <TextView
@@ -202,8 +212,8 @@
             android:textStyle="bold"
             android:textSize="13sp"
             android:text="* - Required Field"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="1dp"
             android:layout_below="@+id/account_first_profile_name_edit"/>
 
         <TextView
@@ -227,7 +237,7 @@
             android:singleLine="true"
             android:hint="@string/account_first_name"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_first_name_heading"/>
 
         <TextView
@@ -251,7 +261,7 @@
             android:singleLine="true"
             android:hint="@string/account_last_name"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_last_name_heading"/>
 
         <TextView
@@ -275,7 +285,7 @@
             android:singleLine="true"
             android:hint="@string/account_tele_number"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:layout_below="@+id/account_tele_number_heading"/>
 
         <TextView
@@ -299,7 +309,6 @@
             android:singleLine="true"
             android:hint="@string/account_profile_description"
             android:gravity="top"
-            android:layout_marginBottom="5dp"
             android:layout_below="@+id/account_profile_description_heading"/>
 
         <ImageView
@@ -323,11 +332,11 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:background="@drawable/button_state"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="33dp"
             android:layout_below="@+id/line2"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="5dp"/>
 
         <Button
             android:layout_weight="1"
@@ -342,7 +351,7 @@
             android:layout_marginLeft="30dp"
             android:layout_below="@+id/line2"
             android:layout_toRightOf="@+id/create_account_btn"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="5dp"/>
 
     </RelativeLayout>
 </LinearLayout>
