@@ -7,6 +7,10 @@ import android.view.Window;
 import android.widget.*;
 import com.MyWami.R;
 import com.MyWami.util.Constants;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by robertlanter on 1/31/15.
  */
@@ -66,14 +70,20 @@ public class CreateAccount {
           return;
         }
 
-//        int result = indexOf(password).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g);
+        Pattern pattern = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#?!@$%^&*-]).{8,20})");
+        Matcher matcher = pattern.matcher(password);
+        if (!matcher.matches()) {
+          Toast.makeText(context.getApplicationContext(), "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
+              " and at least 1 of the following characters: # ? ! @ $ % ^ & * - \"", Toast.LENGTH_LONG).show();
+          return;
+        }
 
         if (!password.equals(retypePassword)) {
           Toast.makeText(context.getApplicationContext(), "Password and Retype Password must be the same!", Toast.LENGTH_LONG).show();
           return;
         }
 
-        Toast.makeText(context.getApplicationContext(), "Congrats...Account created, login and start connecting...", Toast.LENGTH_LONG).show();
+        Toast.makeText(context.getApplicationContext(), "Congrats...Account created. Login and start connecting...", Toast.LENGTH_LONG).show();
         dialog.dismiss();
       }
     });
