@@ -260,10 +260,10 @@ function validateAccount(account_status) {
 		return false;
 	}
 	//At least 8 chars, at least 1 upper and lower case letter, at least 1 number, at least one special char.
-	result = ((password_val.value).trim()).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g);
+	result = ((password_val.value).trim()).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/g);
 	if (result === null) {
 		my_account_alert("Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
-		" and at least 1 of the following characters: # ? ! @ $ % ^ & * - ", "alert-danger", "Alert! ", "account_alert");
+		" and at least 1 of the following characters: # ? ! @ $ % ^ & * - _", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	if ((retype_password.value).trim() == '') {
