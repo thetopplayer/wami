@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:scaleType="center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:background="#666666"/>
 
     <ImageView
         android:src="@drawable/create_account_blurb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="2dp"/>
 
 
     <RelativeLayout
@@ -201,7 +201,7 @@
             android:singleLine="true"
             android:hint="@string/account_first_profile_name"
             android:gravity="top"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="3dp"
             android:layout_below="@+id/account_first_profile_name_heading"/>
 
         <TextView
@@ -213,7 +213,6 @@
             android:textSize="13sp"
             android:text="* - Required Field"
             android:layout_marginBottom="3dp"
-            android:layout_marginTop="1dp"
             android:layout_below="@+id/account_first_profile_name_edit"/>
 
         <TextView
@@ -301,12 +300,12 @@
         <EditText
             android:id="@+id/account_profile_description_edit"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="35dp"
             android:textSize="13sp"
             android:background="@drawable/edittext_background"
             android:padding="5dp"
             android:textColor="#000000"
-            android:singleLine="true"
+            android:lines="2"
             android:hint="@string/account_profile_description"
             android:gravity="top"
             android:layout_below="@+id/account_profile_description_heading"/>
