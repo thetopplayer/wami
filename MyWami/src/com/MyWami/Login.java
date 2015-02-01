@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.MyWami.dialogs.CreateAccount;
 import com.MyWami.model.UserModel;
 import com.MyWami.sqlite.SQLiteHelper;
 import com.MyWami.util.Constants;
@@ -99,6 +100,15 @@ public class Login extends Activity {
 					}
 					Toast.makeText(that.getApplicationContext(), "Invalid password or username, please re-enter", Toast.LENGTH_LONG).show();
 				}
+			}
+		});
+
+		final Button btnCreateAccount = (Button) findViewById(R.id.btnCreateAccount);
+		btnCreateAccount.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CreateAccount createAccount = new CreateAccount();
+				createAccount.createAccount(that);
 			}
 		});
 	}
