@@ -2,10 +2,13 @@ package com.MyWami.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
+import com.MyWami.Login;
 import com.MyWami.R;
+import com.MyWami.WamiListActivity;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
 import org.json.JSONException;
@@ -20,7 +23,7 @@ import java.util.regex.Pattern;
  */
 public class CreateAccount {
   private Context context;
-  final private String INSERT_NEW_ACCOUNT_DATA = Constants.IP + "inert_new_account_data.php";
+  final private String INSERT_NEW_ACCOUNT_DATA = Constants.IP + "insert_new_account_data.php";
   final private String CHECK_ACCOUNT_DATA = Constants.IP + "check_account_data.php";
 
   public CreateAccount() {
@@ -123,7 +126,7 @@ public class CreateAccount {
         String lastName = (String.valueOf(etAccountLastName.getText())).trim();
         String teleNumber = (String.valueOf(etAccountTeleNumber.getText())).trim();
         String description = (String.valueOf(etAccountProfileDescription.getText())).trim();
-        String[] postData1 = { username, emailAddress, firstName, lastName, emailAddress, firstProfileName, teleNumber, description };
+        String[] postData1 = { username, password, firstName, lastName, emailAddress, firstProfileName, teleNumber, description };
         jsonGetData = new JsonGetData();
         jsonGetData.jsonGetData(context, INSERT_NEW_ACCOUNT_DATA, postData1);
         jsonResult = jsonGetData.getJsonResult();
@@ -142,6 +145,13 @@ public class CreateAccount {
         }
 
         Toast.makeText(context.getApplicationContext(), "Congrats...Account created. Login and start connecting...", Toast.LENGTH_LONG).show();
+
+        Intent i = new Intent(context, Login.class);
+        i.putExtra("new_account", true);
+        i.putExtra("username", username);
+        i.putExtra("password", password);
+        context.startActivity(i);
+
         dialog.dismiss();
       }
     });
