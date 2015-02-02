@@ -45,37 +45,62 @@
 
 <div class="container" style="margin-top: 25px">
 	<div style="margin-left:330px; width: 500px" id="account_alert"></div>
-	<div class="row centering" style="height: 350px; width: 650px; border: 3px solid #ff9933; background-color: #efefef">
+	<div class="row centering" style="height: 510px; width: 650px; border: 3px solid #ff9933; background-color: #efefef">
 
 		<form action="account_profile.html" method="post">
 			<div class="col-md-12">
 				<h3 style="color: #8a8a8a; margin-bottom: 20px">Create Account</h3>
 				<hr style="height: 5px; border-top: 2px solid #969696; margin-bottom: 10px">
 				<div class="col-md-4" style="width: 300px;" >
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> First Name</h5>
-					<label for="first_name"></label><input id="first_name" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 140px">
+						<span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>
+						<span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Account Username
+					</h5>
+					<label for="username_val"></label><input id="username_val" class="input-wami" type="text" style="margin-bottom: 7px; width: 250px">
 
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Last Name</h5>
-					<label for="last_name"></label><input id="last_name" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px">
+						<span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>
+						<span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Password
+					</h5>
+					<label for="password_val"></label><input id="password_val" name="password_val" class="input-wami" type="password" style="margin-bottom: 7px; width: 250px">
 
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Email</h5>
-					<label for="email"></label><input id="email" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px">
+						<span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>
+						<span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Retype Password
+					</h5>
+					<label for="retype_password"></label><input id="retype_password" name="retype_password" class="input-wami" type="password" style="margin-bottom: 7px; width: 250px">
 
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px">
+						<span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>
+						<span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Email
+					</h5>
+					<label for="email"></label><input id="email" class="input-wami" type="text" style="margin-bottom: 7px; width: 250px">
+
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px">
+						<span style="color: #ff9933; font-weight: bolder; font-size: 20px">*</span>
+						<span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> First Profile Name
+					</h5>
+					<label for="first_profile_name"></label><input id="first_profile_name" class="input-wami" type="text" style="width: 250px">
+
+					<h6 style="color: #858585">Fields with an<span style="color: #ff9933; font-weight: bolder; font-size: 20px">&nbsp;*&nbsp;</span>are required. </h6>
+
+					<hr>
 					<input type="submit" class="btn btn-md btn-primary" style="margin-top: 15px" value="Sign-up" onclick="return validateAccountData('new')">
 					<input type="button" class="btn btn-md btn-default" style="margin-top: 15px; margin-left: 15px" value="Not Now?" onClick="location.href='index.html'">
 				</div>
 				<div class="col-md-4" style="width: 300px;">
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 140px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Account Username</h5>
-					<label for="username_val"></label><input id="username_val" class="input-wami" type="text" style="margin-bottom: 10px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> First Name</h5>
+					<label for="first_name"></label><input id="first_name" class="input-wami" type="text" style="margin-bottom: 7px; width: 250px">
 
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Password</h5>
-					<label for="password_val"></label><input id="password_val" name="password_val" class="input-wami" type="password" style="margin-bottom: 10px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Last Name</h5>
+					<label for="last_name"></label><input id="last_name" class="input-wami" type="text" style="margin-bottom: 7px; width: 250px">
 
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Retype Password</h5>
-					<label for="retype_password"></label><input id="retype_password" name="retype_password" class="input-wami" type="password" style="margin-bottom: 10px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 100px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Tele Number</h5>
+					<label for="tele_number"></label><input id="tele_number" class="input-wami" type="text" style="margin-bottom: 7px; width: 250px">
 
-					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> First Profile Name</h5>
-					<label for="first_profile_name"></label><input id="first_profile_name" class="input-wami" type="text" style="margin-bottom: 20px; width: 250px">
+					<h5 class="wami-margin-t2 wami-margin-b2" style="width: 150px"><span style="color: #8f8f8f; font-weight: bolder; font-size: 20px"></span> Profile Description</h5>
+					<label for="first_profile_description"></label>
+					<textarea id="first_profile_description" class='input-wami' style='width: 250px; height: 60px; border-style: inset; resize: none; line-height: 98%'></textarea>
 				</div>
 			</div>
 		</form>

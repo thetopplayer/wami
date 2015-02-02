@@ -207,51 +207,16 @@ function checkProfileName() {
 // Validate all required fields
 function validateAccount(account_status) {
 	my_account_alert("", "", "", "account_alert");
-	if ((first_name.value).trim() == '') {
-		my_account_alert("Missing First Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
-	if ((last_name.value).trim() == '') {
-		my_account_alert("Missing Last Name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
-
-	//email "lite" validation
-	if ((email.value).trim() == '') {
-		my_account_alert("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
-	if (((email.value).trim()).indexOf("@") < 0) {
-		my_account_alert("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
-	if (((email.value).trim()).indexOf(".") < 0) {
-		my_account_alert("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert");
-		return false;
-	}
 
 	//username validation
 	if ((username_val.value).trim() == '') {
-		my_account_alert("Missing Username. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
+		my_account_alert("Missing Account Username. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	var result = ((username_val.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
 	if (result !== null) {
-		my_account_alert("Username must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
+		my_account_alert("Account Username must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
 		return false;
-	}
-
-	//first profile name validation
-	if (account_status === "new") {
-		if ((first_profile_name.value).trim() == '') {
-			my_account_alert("Missing Profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
-			return false;
-		}
-		result = ((first_profile_name.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
-		if (result !== null) {
-			my_account_alert("Profile names must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
-			return false;
-		}
 	}
 
 	// Password validations
@@ -273,6 +238,33 @@ function validateAccount(account_status) {
 	if ((password_val.value).trim() != (retype_password.value).trim()) {
 		my_account_alert ("Passwords do not match. Please retype password.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
+	}
+
+	//email "lite" validation
+	if ((email.value).trim() == '') {
+		my_account_alert("Missing Email. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
+	if (((email.value).trim()).indexOf("@") < 0) {
+		my_account_alert("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
+	if (((email.value).trim()).indexOf(".") < 0) {
+		my_account_alert("Invalid email address. Must contain at least an ampersand and period.", "alert-danger", "Alert! ", "account_alert");
+		return false;
+	}
+
+	//first profile name validation
+	if (account_status === "new") {
+		if ((first_profile_name.value).trim() == '') {
+			my_account_alert("Missing Profile name. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert");
+			return false;
+		}
+		result = ((first_profile_name.value).trim()).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
+		if (result !== null) {
+			my_account_alert("Profile names must only contain letters, numbers, underscores and hyphens", "alert-danger", "Alert! ", "account_alert");
+			return false;
+		}
 	}
 
 	return true;
@@ -322,9 +314,11 @@ function insertAccount() {
 	var last_name = (document.getElementById("last_name").value).trim();
 	var profile_name = (document.getElementById("first_profile_name").value).trim();
 	var email = (document.getElementById("email").value).trim();
+	var tele_number = (document.getElementById("tele_number").value).trim();
+	var first_profile_description = (document.getElementById("first_profile_description").value).trim();
 
 	var params = "first_name=" + first_name + "&last_name=" + last_name + "&profile_name=" + profile_name
-			+ "&password=" + password + "&email=" + email
+			+ "&password=" + password + "&email=" + email + "&tele_number=" + tele_number + "&first_profile_description=" + first_profile_description
 			+ "&username=" + username;
 
 	var url = "insert_new_account_data.php";

@@ -17,6 +17,8 @@ $first_name = $_POST["first_name"];
 $last_name = $_POST["last_name"];
 $email = $_POST["email"];
 $profile_name = $_POST["profile_name"];
+$tele_number =  $_POST["tele_number"];
+$first_profile_description = $_POST["first_profile_description"];
 $active_ind = 1;
 $delete_ind = 0;
 $user_id = '';
@@ -28,8 +30,8 @@ $con = $db->connect();
 $con->autocommit(FALSE);
 try {
     // Create user
-    $sql = "INSERT INTO user (username, password, first_name, last_name, email, active_ind, delete_ind, create_date, modified_date)
-            VALUES ('".$username."', '".$password."','".$first_name."','".$last_name."','".$email."',".$active_ind.", ".$delete_ind.", NOW(), NOW())";
+    $sql = "INSERT INTO user (username, password, first_name, last_name, email, telephone, active_ind, delete_ind, create_date, modified_date)
+            VALUES ('".$username."', '".$password."', '".$first_name."', '".$last_name."', '".$email."', '".$tele_number."', ".$active_ind.", ".$delete_ind.", NOW(), NOW())";
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
@@ -57,8 +59,8 @@ try {
     }
 
     // Create default profile
-    $sql = "INSERT INTO identity_profile (user_id, profile_name, first_name, last_name, email, active_ind, delete_ind, default_profile_ind, image_url, create_date, modified_date)
-            VALUES (".$user_id.", '".$profile_name."','".$first_name."','".$last_name."', '".$email."',".$active_ind.", ".$delete_ind.",  ".$default_profile_ind.",'defaultimage', NOW(), NOW())";
+    $sql = "INSERT INTO identity_profile (user_id, profile_name, first_name, last_name, email, description, active_ind, delete_ind, default_profile_ind, image_url, create_date, modified_date)
+            VALUES (".$user_id.", '".$profile_name."','".$first_name."','".$last_name."', '".$email."', '".$first_profile_description."', ".$active_ind.", ".$delete_ind.",  ".$default_profile_ind.",'defaultimage', NOW(), NOW())";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["message"] = "insert_new_account_data: Problem creating default profile: " .$username. " MySQL Error: " .mysqli_error($con);
