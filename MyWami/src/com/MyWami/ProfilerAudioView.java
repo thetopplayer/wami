@@ -7,18 +7,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
+import android.os.*;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.MyWami.dialogs.ActionList;
 import com.MyWami.util.Constants;
 import org.apache.http.params.BasicHttpParams;
@@ -36,8 +29,6 @@ import java.util.concurrent.ExecutionException;
  * Created by robertlanter on 3/4/14.
  */
 public class ProfilerAudioView extends ListActivity {
-	private TextView textView;
-	private WebView webView;
 	private String[] fileName;
 	private String[] fileLocation;
 	private String[] audioDescription;
@@ -83,17 +74,6 @@ public class ProfilerAudioView extends ListActivity {
 		audioDescription = extras.getStringArray("audio_description");
 
 		setListAdapter(new ProfilerAudioAdapter(this, audioFileName, audioDescription));
-
-//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(ProfilerAudioView.this, WamiListActivity.class);
-//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-//				i.putExtra("use_default", useDefault);
-//				startActivity(i);
-//			}
-//		});
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -183,11 +163,7 @@ public class ProfilerAudioView extends ListActivity {
 				String folder = String.valueOf(params[0].get(2));
 
 				String path = Constants.ASSETS_IP + fileLocation + fileName;
-//				String ipNoSlash = Constants.ASSETS_IP.substring(0, Constants.ASSETS_IP.length() - 1);
-//				String path = ipNoSlash + ":80/" + fileLocation + fileName;
-
 				URL u = new URL(path);
-
 				HttpParams httpParameters = new BasicHttpParams();
 				HttpURLConnection c = (HttpURLConnection) u.openConnection();
 				int timeoutConnection = 3000;

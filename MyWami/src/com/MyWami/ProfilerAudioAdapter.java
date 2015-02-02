@@ -33,9 +33,6 @@ public class ProfilerAudioAdapter extends ArrayAdapter<String> {
 		Button listButton = (Button) rowView.findViewById(R.id.audio_description);
 		listText.setText(audioFileName[position]);
 
-//		TextView listDescription = (TextView) rowView.findViewById(R.id.audio_description);
-//		listDescription.setText(audioDescription[position]);
-
 		listButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
