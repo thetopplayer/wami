@@ -119,17 +119,6 @@ public class Profiler extends ListActivity {
 			}
 		});
 
-//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(Profiler.this, WamiListActivity.class);
-//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-//				i.putExtra("use_default", useDefault);
-//				startActivity(i);
-//			}
-//		});
-
 		String[] postData = { identityProfileId };
 		JsonGetData jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(this, GET_PROFILER_DATA, postData);
