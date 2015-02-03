@@ -204,6 +204,15 @@ public class WamiInfoExtended extends Activity {
 					String message = jsonResponse.optString("message");
 					String toastMessage = message.substring(2, message.length() - 2);
 					Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_LONG).show();
+					Intent i = new Intent(WamiInfoExtended.this, Flash.class);
+					i.putExtra("identity_profile_id", identityProfileId);
+					i.putExtra("image_url", imageUrl);
+					i.putExtra("profile_name", profileName);
+					i.putExtra("first_name", firstName);
+					i.putExtra("last_name", lastName);
+					i.putExtra("user_identity_profile_id", userIdentityProfileId);
+					i.putExtra("use_default", useDefault);
+					startActivity(i);
 					return;
 				}
 				if (ret_code == -1) {
@@ -222,17 +231,6 @@ public class WamiInfoExtended extends Activity {
 				startActivity(i);
 			}
 		});
-
-//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(WamiInfoExtended.this, WamiListActivity.class);
-//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-//				i.putExtra("use_default", useDefault);
-//				startActivity(i);
-//			}
-//		});
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

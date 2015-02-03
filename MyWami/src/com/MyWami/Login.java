@@ -44,19 +44,30 @@ public class Login extends Activity {
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.black));
 
-		SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
-		userModel = sqLiteHelper.getUserInfo();
-
-		if ((userModel == null) || (!userModel.getUserName().equals("") && !userModel.getPassWord().equals(""))) {
-			EditText etUserName = (EditText) findViewById(R.id.login_username);
-			EditText etPassword = (EditText) findViewById(R.id.login_password);
-			if (userModel == null) {
-				userModel = new UserModel();
+		EditText etUserName = (EditText) findViewById(R.id.login_username);
+		EditText etPassword = (EditText) findViewById(R.id.login_password);
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String userName = extras.getString("username");
+			String password = extras.getString("password");
+			boolean newAccount = extras.getBoolean("new_account");
+			if (newAccount) {
+				etUserName.setText(userName);
+				etPassword.setText(password);
 			}
-			etUserName.setText(userModel.getUserName());
-			etPassword.setText(userModel.getPassWord());
 		}
+		else {
+			SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
+			userModel = sqLiteHelper.getUserInfo();
 
+			if ((userModel == null) || (!userModel.getUserName().equals("") && !userModel.getPassWord().equals(""))) {
+				if (userModel == null) {
+					userModel = new UserModel();
+				}
+				etUserName.setText(userModel.getUserName());
+				etPassword.setText(userModel.getPassWord());
+			}
+		}
 		final Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
