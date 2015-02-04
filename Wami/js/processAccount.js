@@ -287,6 +287,7 @@ function saveAccountData() {
 	//if (active_ind.checked) {
 	//	active_ind = 1;
 	//} else active_ind = 0;
+	var active_ind = 1;
 
 	var data = localStorage.getItem("user_info");
 	var obj = JSON.parse(data);

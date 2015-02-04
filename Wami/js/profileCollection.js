@@ -166,6 +166,7 @@ function loadData(identity_profile_id) {
 					'<div style="vertical-align: top">' +
 						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="show_extended_info(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
 						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Manage Groups</button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" id="transmit_profile' + i + '" style="width: 120px; margin-bottom: 10px" onclick="transmit_profile_dialog(this.value)" value="' + list_identity_profile_id + '">Transmit</button>' +
 					'</div>' +
 				'</div></div><hr>';
 	}
@@ -563,10 +564,10 @@ function transmitProfiles() {
 		for (var i = 0; i < num_transmit_to_profile; i++) {
 			end_pos = pos[i];
 			transmit_str = transmit_to_profile_name.slice(start_pos, end_pos);
-			if (transmit_str.length < 7) {
-				my_profile_collection_alert("Profile names must be seven or more characters: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
-				return;
-			}
+			//if (transmit_str.length < 7) {
+			//	my_profile_collection_alert("Profile names must be seven or more characters: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
+			//	return;
+			//}
 			var result = transmit_str.match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
 			if (result !== null) {
 				my_profile_collection_alert("Profile names must only contain letters, numbers, dashes and hyphens: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
@@ -801,6 +802,14 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 	};
 	xmlhttp.send(param_string);
 	my_profile_collection_alert("Profile successfully transmitted to email address!", "alert-success","Success! ", "transmit");
+}
+
+//
+// Transmit profile by choosing transmit button on profile
+//
+function transmit_profile_dialog(selected_profile_id) {
+	$("#transmit_list").val(selected_profile_id);
+	$('#transmit_wami').modal();
 }
 
 //
