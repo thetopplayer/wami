@@ -87,10 +87,6 @@ public class ActionList {
 					return;
 				}
 				int no_categories_ret_code = jsonResponse.optInt("no_categories_ret_code");
-				if (ret_code == 1) {
-					String message = jsonResponse.optString("message");
-					Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-				}
 				if (no_categories_ret_code == 1) {
 					String message = jsonResponse.optString("message");
 					String toastMessage = message.substring(2, message.length() - 2);
