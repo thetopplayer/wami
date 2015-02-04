@@ -82,10 +82,10 @@ public class TransmitWami {
 
 					if (!toProfileNames.equals("")) retCode = parseToProfileName(toProfileNames);
 					else retCode = 0;
-					if (retCode == -1) {
-						Toast.makeText(context.getApplicationContext(), "Profile names must be six or more characters.", Toast.LENGTH_LONG).show();
-						return;
-					}
+//					if (retCode == -1) {
+//						Toast.makeText(context.getApplicationContext(), "Profile names must be six or more characters.", Toast.LENGTH_LONG).show();
+//						return;
+//					}
 					if (retCode == -2) {
 						Toast.makeText(context.getApplicationContext(), "Profile names must only contain letters, numbers, dashes and hyphens.", Toast.LENGTH_LONG).show();
 						return;
@@ -418,20 +418,20 @@ public class TransmitWami {
 		endPos = list.indexOf(";");
 		if (endPos == -1) {
 			toProfileName = list.substring(begPos, list.length());
-			if (toProfileName.length() < 7) return -1;
+//			if (toProfileName.length() < 7) return -1;
 			if (!toProfileName.matches("^[a-zA-Z0-9-_]*$")) return -2;
 			alTransmitToProfiles.add(toProfileName);
 			return 1;
 		}
 		while (true) {
 			toProfileName = list.substring(begPos, endPos);
-			if (toProfileName.length() < 7) return -1;
+//			if (toProfileName.length() < 7) return -1;
 			if (!toProfileName.matches("^[a-zA-Z0-9-_]*$")) return -2;
 			alTransmitToProfiles.add(toProfileName);
 			begPos = endPos;
 			if (list.indexOf(";", begPos + 1) == -1) {
 				toProfileName = list.substring(begPos + 1, list.length());
-				if (toProfileName.length() < 7) return -1;
+//				if (toProfileName.length() < 7) return -1;
 				if (!toProfileName.matches("^[a-zA-Z0-9-_]*$")) return -2;
 				alTransmitToProfiles.add(toProfileName);
 				break;
