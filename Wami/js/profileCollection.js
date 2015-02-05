@@ -478,6 +478,9 @@ function checkForChosenProfiles(action) {
 			if (action == "transmit") {
 				var transmit_list = getProfilesToTransmit();
 				if (transmit_list == false) return false;
+				my_profile_collection_alert ("", "", "", "transmit");
+				$("#transmit_to_profile_name").val("");
+				$("#transmit_to_email_address").val("");
 				$("#transmit_list").val(transmit_list);
 				$('#transmit_wami').modal();
 			}
@@ -808,7 +811,30 @@ function send_serverside_email(profile_data_obj, transmit_str) {
 // Transmit profile by choosing transmit button on profile
 //
 function transmit_profile_dialog(selected_profile_id) {
-	$("#transmit_list").val(selected_profile_id);
+	my_profile_collection_alert ("", "", "", "transmit");
+	var param_str = "identity_profile_id=" + selected_profile_id;
+	processData(param_str, "get_profile_name.php", "profile_name", false);
+
+	try {
+		var profile_name_data = localStorage.getItem("profile_name");
+		var profile_name_obj = JSON.parse(profile_name_data);
+	} catch (err) {
+		console.log(err.message)
+		my_profile_collection_alert("get_profile_name: Problem getting profile name = " + err.message, "alert-danger", "Severe Error!  ", "transmit");
+		return;
+	}
+
+	var ret_code = profile_name_obj.ret_code;
+	if (ret_code === 1) {
+		var message = profile_data_obj.message;
+		my_profile_collection_alert (message, "alert-danger", "Alert! ", "transmit");
+		return;
+	}
+	var profile_name = profile_name_obj.profile_name;
+	$("#transmit_to_profile_name").val("");
+	$("#transmit_to_email_address").val("");
+	$("#transmit_list").val(profile_name);
+	//localStorage.setItem("profile_ids_to_transmit", JSON.stringify(selected_profile_id));
 	$('#transmit_wami').modal();
 }
 
@@ -816,8 +842,9 @@ function transmit_profile_dialog(selected_profile_id) {
 // Transmit - clean up fields in dialog
 //
 function clean_up_transmit() {
+	my_profile_collection_alert ("", "", "", "transmit");
 	$("#transmit_to_profile_name").val('');
-	$("#transmit_to_email_address").val('');
+	$("#transmit_to_email_address").val('')
 	//$("#transmit_to_group_name").val('');
 }
 
@@ -864,15 +891,12 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 						"<strong>" + message_type_string[i] + "</strong> " + message_clean + "</div>";
 			}
 			document.getElementById("transmit_alert_message").innerHTML = full_message;
+			return;
 		}
-		else {
-			full_message = "<div class='alert " + message_type_class + " alert-dismissable'> " +
-					"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
-					"<strong>" + message_type_string + "</strong> " + message + "</div>";
-
-			document.getElementById("transmit_alert_message").innerHTML = full_message;
+		if (message === '') {
+			document.getElementById("transmit_alert_message").innerHTML = message;
+			return;
 		}
-		return;
 	}
 
 	full_message = "<div class='alert " + message_type_class + " alert-dismissable'> " +
@@ -884,4 +908,5 @@ function my_profile_collection_alert (message, message_type_class, message_type_
 	if (message_placement === "no_selected_profiles") document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "group_dialog") document.getElementById("profile_collection_alert").innerHTML = full_message;
 	if (message_placement === "assign_group_dialog") document.getElementById("assign_group_alert_message").innerHTML = full_message;
+	if (message_placement === "transmit") document.getElementById("transmit_alert_message").innerHTML = full_message;
 }
