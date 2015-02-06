@@ -71,7 +71,7 @@ function searchProfiles(selected_item, search_str, search_context) {
 	if (ret_code === 1) {
 		var message = profile_list_obj.message;
 		my_search_alert (message, "alert-info", "Alert! ", "search_alert");
-		return;
+		//return;
 	}
 
 	var list = '';
