@@ -68,7 +68,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     $response["ret_code"] = 1;
-    $response["message"] = "No Wami Profiles data for search string: <strong>" .$search_str. "</strong>";
+    $response["message"] = "No Wami Profiles found for search string: <strong>" .$search_str. "</strong>";
     echo json_encode($response);
     exit(-1);
 }
