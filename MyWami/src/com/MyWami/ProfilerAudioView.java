@@ -3,6 +3,7 @@ package com.MyWami;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,8 @@ public class ProfilerAudioView extends ListActivity {
 	private String userIdentityProfileId;
 	private boolean useDefault;
 	private Context that;
+
+	private ProgressDialog pd;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -82,39 +85,31 @@ public class ProfilerAudioView extends ListActivity {
 		Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
 
 		GetFile task = new GetFile();
-		try {
-			String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
-			File folder = new File(extStorageDirectory, "Audio");
-			folder.mkdir();
-			ArrayList<String> params = new ArrayList<String>();
-			params.add(fileLocation[position]);
-			params.add(fileName[position]);
-			params.add(String.valueOf(folder));
-			task.execute(new ArrayList[] { params }).get();
+		String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+		File folder = new File(extStorageDirectory, "Audio");
+		folder.mkdir();
+		ArrayList<String> params = new ArrayList<String>();
+		params.add(fileLocation[position]);
+		params.add(fileName[position]);
+		params.add(String.valueOf(folder));
+		task.execute(new ArrayList[]{params});
 
-			try {
-				Intent intent = new Intent();
-				intent.setAction(Intent.ACTION_VIEW);
-				File fileToRead = new File(folder + "/" + fileName[position]);
-				Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
-				intent.setDataAndType(uri, "audio/mp3");
-				startActivity(intent);
-			}
-			catch (ActivityNotFoundException activityNotFoundException) {
-				activityNotFoundException.printStackTrace();
-				Toast.makeText(this, "There doesn't seem to be an Audio player installed.",	Toast.LENGTH_LONG).show();
-			}
-			catch (Exception ex) {
-				ex.printStackTrace();
-				Toast.makeText(this, "Cannot open the selected file.",	Toast.LENGTH_LONG).show();
-			}
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		catch (ExecutionException e) {
-			e.printStackTrace();
-		}
+		try {
+      Intent intent = new Intent();
+      intent.setAction(Intent.ACTION_VIEW);
+      File fileToRead = new File(folder + "/" + fileName[position]);
+      Uri uri = Uri.fromFile(fileToRead.getAbsoluteFile());
+      intent.setDataAndType(uri, "audio/mp3");
+      startActivity(intent);
+    }
+    catch (ActivityNotFoundException activityNotFoundException) {
+      activityNotFoundException.printStackTrace();
+      Toast.makeText(this, "There doesn't seem to be an Audio player installed.",	Toast.LENGTH_LONG).show();
+    }
+    catch (Exception ex) {
+      ex.printStackTrace();
+      Toast.makeText(this, "Cannot open the selected file.",	Toast.LENGTH_LONG).show();
+    }
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,7 +150,28 @@ public class ProfilerAudioView extends ListActivity {
 	}
 
 	public class GetFile extends AsyncTask<ArrayList, Void, Void> {
+
 		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pd = new ProgressDialog(that);
+			pd.setTitle("Getting File...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(true);
+			pd.setCanceledOnTouchOutside(true);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if (pd != null)	{
+				pd.dismiss();
+			}
+		}
+
+			@Override
 		protected Void doInBackground(ArrayList... params) {
 			try {
 				String fileLocation = String.valueOf(params[0].get(0));
