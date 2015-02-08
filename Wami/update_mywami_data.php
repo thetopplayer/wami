@@ -46,6 +46,6 @@ if (!$result) {
 }
 
 $response["ret_code"] = 0;
-$response["message"] = "Account data updated. ";
+$response["message"] = "Profile data updated. ";
 echo json_encode($response);
 ?>
