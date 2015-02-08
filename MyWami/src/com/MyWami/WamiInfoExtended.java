@@ -95,6 +95,9 @@ public class WamiInfoExtended extends Activity {
 			tvContactName.setText(firstName + " " + lastName);
 
 			TextView tvTags = (TextView) findViewById(R.id.tags);
+			if (tags.equals("null")) {
+				tags = "";
+			}
 			tvTags.setText(tags);
 
 			TextView tvEmail = (TextView) findViewById(R.id.email);
@@ -142,21 +145,39 @@ public class WamiInfoExtended extends Activity {
 			});
 
 			TextView tvProfileType = (TextView) findViewById(R.id.profile_type);
+			if (profileType.equals("null")) {
+				profileType = "";
+			}
 			tvProfileType.setText(profileType);
 
 			TextView tvStreetAddress = (TextView) findViewById(R.id.street_address);
+			if (streetAddress.equals("null")) {
+				streetAddress = "";
+			}
 			tvStreetAddress.setText(streetAddress);
 
 			TextView tvCity = (TextView) findViewById(R.id.city);
+			if (city.equals("null")) {
+				city = "";
+			}
 			tvCity.setText(city);
 
 			TextView tvState = (TextView) findViewById(R.id.state);
+			if (state.equals("null")) {
+				state = "";
+			}
 			tvState.setText(state);
 
 			TextView tvZipcode = (TextView) findViewById(R.id.zipcode);
+			if (zipcode.equals("null")) {
+				zipcode = "";
+			}
 			tvZipcode.setText(zipcode);
 
 			TextView tvCountry = (TextView) findViewById(R.id.country);
+			if (country.equals("null")) {
+				country = "";
+			}
 			tvCountry.setText(country);
 
 			TextView tvCreateDate = (TextView) findViewById(R.id.create_date);
