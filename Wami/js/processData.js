@@ -11,7 +11,7 @@ function processData(param_string, url, identifier, sync_ind, call_back) {
 	var response;
 
 	param_string = 'x999=' + Math.random() + '&' + param_string;
-	xmlhttp.open("POST", url, sync_ind);
+	xmlhttp.open("POST", url, false);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 ) {
