@@ -7,7 +7,7 @@
  * Date: 2/3/14
  * Time: 2:48 PM
  *
- * List of profiles collected by user filtered by group.
+ * List of profiles collected by user, filtered by group.
  */
 require_once __DIR__ . '/db_connect.php';
 $identityProfileId = $_POST["param1"];
@@ -19,7 +19,8 @@ $response = array();
 $sql = "SELECT first_name, last_name, image_url, profile_name, tags, ip.identity_profile_id, assign_to_identity_profile_id, rating, default_profile_ind
         FROM profile_group_assign pga, identity_profile ip
         WHERE  pga.assign_to_identity_profile_id = " .$identityProfileId. " AND pga.profile_group_id = " .$profile_group_id. "
-        AND pga.identity_profile_id = ip.identity_profile_id AND  pga.delete_ind = 0 AND active_ind = 1";
+        AND pga.identity_profile_id = ip.identity_profile_id AND  pga.delete_ind = 0 AND active_ind = 1
+        ORDER BY profile_name";
 
 $result = mysqli_query($con, $sql) or  die(mysqli_error($con));
 $response["profile_collection"] = array();

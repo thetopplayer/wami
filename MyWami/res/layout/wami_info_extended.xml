@@ -113,7 +113,7 @@
             android:layout_below="@+id/contact_name"
             android:paddingTop="10dp"
             android:text="Email Address"
-            android:textColor="#ff465eba"
+            android:textColor="#ff4d7bc7"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -126,7 +126,7 @@
             android:background="@drawable/textfield_background"
             android:padding="5dp"
             android:singleLine="true"
-            android:textColor="#ff465eba"
+            android:textColor="#FF4D7BC7"
             android:textSize="17sp" />
 
         <TextView
@@ -136,7 +136,7 @@
             android:layout_below="@+id/email"
             android:paddingTop="10dp"
             android:text="Telephone"
-            android:textColor="#ff465eba"
+            android:textColor="#FF4D7BC7"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -147,7 +147,7 @@
             android:background="@drawable/textfield_background"
             android:padding="5dp"
             android:singleLine="true"
-            android:textColor="#FF465EBA"
+            android:textColor="#FF4D7BC7"
             android:textSize="17sp"
             android:layout_below="@+id/telephone_title"
             android:layout_alignParentRight="true"

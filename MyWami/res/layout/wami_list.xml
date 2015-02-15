@@ -33,22 +33,45 @@
 			android:layout_centerVertical="true">
 
 		<TextView
-				android:id="@+id/list_text_name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="16sp"
-				android:textStyle="bold"
-				android:textColor="#ff767676">
+			android:id="@+id/list_text_profile_name_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Profile: "
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:textColor="#ff767676">
 		</TextView>
 
 		<TextView
-				android:id="@+id/list_text_profile_name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="16sp"
-				android:textStyle="bold|italic"
-				android:textColor="@color/text_color"
-				android:layout_below="@+id/list_text_name">
+			android:id="@+id/list_text_profile_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:textStyle="bold|italic"
+			android:textColor="@color/text_color"
+			android:layout_toRightOf="@+id/list_text_profile_name_title">
+		</TextView>
+
+		<TextView
+			android:id="@+id/list_text_name_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Contact: "
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:textColor="#ff767676"
+			android:layout_below="@+id/list_text_profile_name_title">
+		</TextView>
+
+		<TextView
+			android:id="@+id/list_text_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:textStyle="bold"
+			android:textColor="#ff767676"
+			android:layout_below="@+id/list_text_profile_name"
+			android:layout_toRightOf="@+id/list_text_name_title">
 		</TextView>
 
 		<Button
@@ -63,7 +86,7 @@
 				android:layout_marginTop="5dp"
 				android:text="Transmit"
 				android:focusable="false"
-				android:layout_below="@+id/list_text_profile_name"/>
+				android:layout_below="@+id/list_text_name"/>
 
 		<Button
 			android:id="@+id/list_add_to_contacts"
@@ -78,7 +101,7 @@
 			android:layout_marginLeft="5dp"
 			android:text="Add To Contacts"
 			android:focusable="false"
-			android:layout_below="@+id/list_text_profile_name"
+			android:layout_below="@+id/list_text_name"
 			android:layout_toRightOf="@+id/list_transmit_btn"/>
 	</RelativeLayout>
 
