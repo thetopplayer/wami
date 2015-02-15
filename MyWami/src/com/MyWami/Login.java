@@ -21,8 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class Login extends Activity {
 	final private String GET_USER_DATA = Constants.IP + "get_user_data.php";
 	final private String GET_DEFAULT_IDENTITY_PROFILE_ID = Constants.IP + "get_default_identity_profile_id.php";
