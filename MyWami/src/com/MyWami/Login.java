@@ -76,8 +76,8 @@ public class Login extends Activity {
 				userName = etUserName.getText().toString().trim();
 				password = etPassword.getText().toString().trim();
 
-				if (userName.equals("") && password.equals("")) {
-					Toast.makeText(that.getApplicationContext(), "Please enter password and username", Toast.LENGTH_LONG).show();
+				if (userName.equals("") || password.equals("")) {
+					Toast.makeText(that.getApplicationContext(), "Please enter Username and Password", Toast.LENGTH_LONG).show();
 				}
 				else {
 					JsonGetData jsonGetData = new JsonGetData();
