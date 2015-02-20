@@ -101,17 +101,6 @@ public class Flash extends ListActivity {
 			}
 		});
 
-//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(Flash.this, WamiListActivity.class);
-//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-//				i.putExtra("use_default", useDefault);
-//				startActivity(i);
-//			}
-//		});
-
 		if (!userIdentityProfileId.equals(identityProfileId)) {
 			Button btnNewFlash = (Button) findViewById(R.id.new_flash_btn);
 			btnNewFlash.setVisibility(View.GONE);

@@ -72,7 +72,6 @@ public class JsonGetData {
 				e.printStackTrace();
 			}
 
-
 			try {
 				HttpResponse response = httpclient.execute(httppost);
 				try {
@@ -87,7 +86,8 @@ public class JsonGetData {
 						}
 					}
 				}
-				finally {
+				catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			catch (ClientProtocolException e) {
