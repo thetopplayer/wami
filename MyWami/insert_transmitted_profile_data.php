@@ -9,7 +9,7 @@
  *
  * Insert profiles into profile collections
  */
-$json = file_get_contents('php://input');
+$json = file_get_contents(' php://input');
 $data = json_decode($json);
 require_once __DIR__ . '/db_connect.php';
 
