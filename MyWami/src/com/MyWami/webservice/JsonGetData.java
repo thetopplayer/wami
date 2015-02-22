@@ -26,7 +26,6 @@ import java.util.concurrent.ExecutionException;
 public class JsonGetData {
 	private String jsonResult;
 	private Context context;
-	private String url;
 
 	@TargetApi(Build.VERSION_CODES.CUPCAKE)
 	public String jsonGetData(Context context, String url, String[] postData) {
