@@ -38,11 +38,11 @@
         $user["password"] = $row[2];
         
         array_push($response["user_info"], $user);
-        $response["ret_code"] = 1;
+        $response["ret_code"] = 0;
         echo json_encode($response);
     }
     else {
-        $response["ret_code"] = 0;
+        $response["ret_code"] = 1;
         $response["message"] = "User not found. Username or Password might be incorrect.";
         echo json_encode($response);
     }

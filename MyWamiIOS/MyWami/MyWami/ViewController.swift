@@ -28,9 +28,12 @@ class ViewController: UIViewController {
             return
         }
         let jsonData = JsonGetData()
-        
-//        var data: () = jsonData.jsonGetData("http://localhost/MyWami/get_user_data.php")
-        var data = jsonData.jsonGetData("http://localhost/MyWami/get_user_data.php", params: ["param1":"rlanter", "param2":"st00p!DD"])
+        let CONSTANTS = Constants()
+        let GET_USER_DATA = CONSTANTS.IP + "get_user_data.php"
+        var data: String
+        data = jsonData.jsonGetData(GET_USER_DATA, params: ["param1":"rlanter", "param2":"st00p!DD"])
+        println ("Data = '\(data)'")
+
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
