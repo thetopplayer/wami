@@ -9,10 +9,8 @@
 import Foundation
 
 public class JsonGetData {
-   // var jsonResult: String = " "
-  //  var urlString: String!
 
-  func jsonGetData (url: String, params : Dictionary<String, String>) -> String {
+    func jsonGetData (processJsonData: (JSON) -> Void, url: String, params : Dictionary<String, String>) {
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         var session = NSURLSession.sharedSession()
         request.HTTPMethod = "POST"
@@ -34,18 +32,14 @@ public class JsonGetData {
                 println("Error could not parse JSON: \(jsonStr)")
             }
             else {
-              let json = JSON(data: data)
-              if let user_id = json["user_info"][0]["user_id"].string {
-                  println("SwiftyJSON: \(user_id)")
-//                  return user_id
-              }
+                let json = JSON(data: data)
+                processJsonData(json)
             }
         })
 
         task.resume()
-        return  " "
-     //   return self.jsonResult
+        return
     }
     init() { }
-    
+
 }
