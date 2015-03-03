@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
-    var retCode: Int = 0
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
@@ -28,15 +27,13 @@ class ViewController: UIViewController {
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
-        if identifier == "showProfileCollection" {
-            if (usernameText.text.isEmpty || passwordText.text.isEmpty) {
-                return false
-            }
-            if self.retCode == 1 {
-                return false
-            }
-        }
-        return true
+//        if identifier == "showProfileCollection" {
+//            if (usernameText.text.isEmpty || passwordText.text.isEmpty) {
+//                return false
+//            }
+//        }
+
+        return false
     }
     
     override func viewDidLoad() {
@@ -44,7 +41,7 @@ class ViewController: UIViewController {
         
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
-        
+
         let titleBar = UIImage(named: "actionbar_heading.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
@@ -56,12 +53,17 @@ class ViewController: UIViewController {
     }
 
     func processJsonData (jsonData: JSON) {
-        self.retCode = jsonData["ret_code"].int!
-//        var retCode = jsonData["ret_code"]
-        if self.retCode == 1 {
-//            self.retCode = retCode.int!
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
             var message = jsonData["message"].string
-            alertMessage(message!)
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.alertMessage(message!)
+            }
+        }
+        else {
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.performSegueWithIdentifier("showProfileCollection", sender: self)
+            }
         }
     }
 
@@ -69,8 +71,6 @@ class ViewController: UIViewController {
         var alertController = UIAlertController(title: "", message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
-        var height:NSLayoutConstraint = NSLayoutConstraint(item: alertController.view, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.20)
-        alertController.view.addConstraint(height);
         alertController.view.backgroundColor = UIColor.blackColor()
         alertController.view.tintColor = UIColor.blackColor()
         presentViewController(alertController, animated: true, completion: nil)
