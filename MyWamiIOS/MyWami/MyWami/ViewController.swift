@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     let JSONDATA = JsonGetData()
     let CONSTANTS = Constants()
+    var identityProfileId: String!
+    var userName: String!
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
@@ -47,12 +49,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-//    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-//        if (segue.identifier == "showProfileCollection") {
-//
-//
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showProfileCollection") {
+            var svc = segue.destinationViewController as? ProfileCollection;
+//            svc.identityProfileId = self.identityProfileId
+//            svc.userName = self.userName
+        }
+    }
 
     func getUserData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
@@ -64,6 +67,7 @@ class ViewController: UIViewController {
         }
         else {
             var userId = jsonData["user_info"][0]["user_id"].string!
+            userName = jsonData["user_info"][0]["username"].string!
             let GET_DEFAULT_IDENTITY_PROFILE_ID = CONSTANTS.IP + "get_default_identity_profile_id.php"
             JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
         }
@@ -78,8 +82,7 @@ class ViewController: UIViewController {
             }
         }
         else {
-            var identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
-            println("identityProfileId = \(identityProfileId)")
+            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
