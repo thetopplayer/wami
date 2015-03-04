@@ -9,5 +9,5 @@
 import Foundation
 
 class Constants {
-    var IP = "http://localhost/MyWami/"
+    var IP = "http://localhost/MyWamiIOS/MyWami/MyWami/"
 }

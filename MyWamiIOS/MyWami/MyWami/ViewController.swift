@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
+    let JSONDATA = JsonGetData()
+    let CONSTANTS = Constants()
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
@@ -20,19 +22,12 @@ class ViewController: UIViewController {
             alertMessage("Please enter a Username and Password")
             return
         }
-        let jsonData = JsonGetData()
-        let CONSTANTS = Constants()
+
         let GET_USER_DATA = CONSTANTS.IP + "get_user_data.php"
-        jsonData.jsonGetData(processJsonData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
+        JSONDATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
-//        if identifier == "showProfileCollection" {
-//            if (usernameText.text.isEmpty || passwordText.text.isEmpty) {
-//                return false
-//            }
-//        }
-
         return false
     }
     
@@ -52,7 +47,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func processJsonData (jsonData: JSON) {
+//    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+//        if (segue.identifier == "showProfileCollection") {
+//
+//
+//        }
+//    }
+
+    func getUserData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
@@ -61,6 +63,23 @@ class ViewController: UIViewController {
             }
         }
         else {
+            var userId = jsonData["user_info"][0]["user_id"].string!
+            let GET_DEFAULT_IDENTITY_PROFILE_ID = CONSTANTS.IP + "get_default_identity_profile_id.php"
+            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
+        }
+    }
+
+    func getDefaultIdentityProfileId (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.alertMessage(message!)
+            }
+        }
+        else {
+            var identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
+            println("identityProfileId = \(identityProfileId)")
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
