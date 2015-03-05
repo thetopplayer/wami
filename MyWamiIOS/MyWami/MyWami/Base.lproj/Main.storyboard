@@ -79,12 +79,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-143" y="-322"/>
+            <point key="canvasLocation" x="-706" y="-294"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Profile Collection Controller-->
         <scene sceneID="f1U-kG-KQE">
             <objects>
-                <tableViewController wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" id="8BU-M7-bNb" sceneMemberID="viewController">
+                <tableViewController wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8BU-M7-bNb" customClass="ProfileCollectionController" customModule="MyWami" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qqo-5D-Kiq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,7 +112,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zib-z3-rgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10" y="759"/>
+            <point key="canvasLocation" x="-321" y="-294"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CED-Aa-Ujs">
@@ -129,7 +129,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lqk-O7-bzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1074" y="-301"/>
+            <point key="canvasLocation" x="-1220" y="-285"/>
         </scene>
     </scenes>
     <resources>

@@ -49,11 +49,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showProfileCollection") {
-//            var svc = segue.destinationViewController as ProfileCollection;
-//            svc.identityProfileId = self.identityProfileId
-//            svc.userName = self.userName
+            var svc = segue.destinationViewController as ProfileCollectionController;
+            svc.identityProfileId = self.identityProfileId
+            svc.userName = self.userName
         }
     }
 
