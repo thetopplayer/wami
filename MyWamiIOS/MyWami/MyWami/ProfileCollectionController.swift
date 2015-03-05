@@ -4,8 +4,18 @@
 //
 
 import Foundation
+import UIKit
 
-class ProfileCollection {
+class ProfileCollectionController: UITableViewController {
 //    var identityProfileId: String!
 //    var userName: String!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+      println("I am here")
+
+
+    }
+
 }

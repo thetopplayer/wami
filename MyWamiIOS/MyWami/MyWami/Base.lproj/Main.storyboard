@@ -53,7 +53,7 @@
                                 </state>
                                 <connections>
                                     <action selector="loginButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="15f-a6-jPk"/>
-                                    <segue destination="8BU-M7-bNb" kind="push" identifier="showProfileCollection" id="aDP-65-6Jt"/>
+                                    <segue destination="8BU-M7-bNb" kind="push" identifier="showProfileCollection" id="cul-Be-lku"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqW-5b-GeO">
@@ -79,23 +79,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="222" y="-104"/>
+            <point key="canvasLocation" x="-143" y="-322"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="f1U-kG-KQE">
             <objects>
-                <tableViewController id="8BU-M7-bNb" sceneMemberID="viewController" customClass="UITableViewController" title="Wami Profile Collection">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qqo-5D-Kiq">
+                <tableViewController wantsFullScreenLayout="YES" hidesBottomBarWhenPushed="YES" id="8BU-M7-bNb" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qqo-5D-Kiq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="separatorColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.63100000000000001" green="0.63100000000000001" blue="0.63100000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="separatorInset" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" showsReorderControl="YES" indentationWidth="10" reuseIdentifier="ProfileCollection" id="S2r-TM-FKm">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Profile" rowHeight="101" id="S2r-TM-FKm">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S2r-TM-FKm" id="ehI-zH-0aX">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S2r-TM-FKm" id="ehI-zH-0aX" customClass="UITableViewCellContentView">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.96899999999999997" green="0.96899999999999997" blue="0.96899999999999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -103,10 +106,13 @@
                             <outlet property="delegate" destination="8BU-M7-bNb" id="bVi-0Q-5gu"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="xTa-l1-CHH"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zib-z3-rgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="692" y="-120"/>
+            <point key="canvasLocation" x="10" y="759"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CED-Aa-Ujs">
@@ -123,7 +129,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lqk-O7-bzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-323" y="-113"/>
+            <point key="canvasLocation" x="-1074" y="-301"/>
         </scene>
     </scenes>
     <resources>
