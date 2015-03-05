@@ -51,7 +51,7 @@ class ViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showProfileCollection") {
-            var svc = segue.destinationViewController as? ProfileCollection;
+//            var svc = segue.destinationViewController as ProfileCollection;
 //            svc.identityProfileId = self.identityProfileId
 //            svc.userName = self.userName
         }

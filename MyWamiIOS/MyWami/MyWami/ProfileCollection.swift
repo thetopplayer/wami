@@ -6,4 +6,6 @@
 import Foundation
 
 class ProfileCollection {
+//    var identityProfileId: String!
+//    var userName: String!
 }
