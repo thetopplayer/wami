@@ -3,12 +3,16 @@
 // Copyright (c) 2015 Robert Lanter. All rights reserved.
 //
 
-import Foundation
+// import Foundation
 import UIKit
 
-class ProfileCollectionController: UITableViewController {
+class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+
     var identityProfileId: String!
     var userName: String!
+
+    let swiftBlogs = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
+    let textCellIdentifier = "Profile"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +27,37 @@ class ProfileCollectionController: UITableViewController {
         var image : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let backButton = UIBarButtonItem(image: image, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
+
+        tableView.delegate = self
+        tableView.dataSource = self
+
     }
 
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return swiftBlogs.count
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+
+        let row = indexPath.row
+        cell.textLabel?.text = swiftBlogs[row]
+
+        return cell
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+        let row = indexPath.row
+        println(swiftBlogs[row])
+    }
 }
