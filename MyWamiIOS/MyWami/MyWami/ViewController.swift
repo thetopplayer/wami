@@ -12,20 +12,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     let JSONDATA = JsonGetData()
-    let CONSTANTS = Constants()
+    let UTILITIES = Utilities()
     var identityProfileId: String!
     var userName: String!
+    var userId: String!
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
         var password = self.passwordText.text
         
         if (username.isEmpty || password.isEmpty) {
-            alertMessage("Please enter a Username and Password")
+            UTILITIES.alertMessage("Please enter a Username and Password", viewController: self)
             return
         }
 
-        let GET_USER_DATA = CONSTANTS.IP + "get_user_data.php"
+        let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
         JSONDATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
     }
     
@@ -54,31 +55,39 @@ class ViewController: UIViewController {
             var svc = segue.destinationViewController as ProfileCollectionController;
             svc.identityProfileId = self.identityProfileId
             svc.userName = self.userName
+            svc.userId = self.userId
         }
     }
 
+
+    // Callback func - getUserData
     func getUserData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.alertMessage(message!)
+                self.UTILITIES.alertMessage(message!, viewController: self)
             }
         }
         else {
-            var userId = jsonData["user_info"][0]["user_id"].string!
+            userId = jsonData["user_info"][0]["user_id"].string!
             userName = jsonData["user_info"][0]["username"].string!
-            let GET_DEFAULT_IDENTITY_PROFILE_ID = CONSTANTS.IP + "get_default_identity_profile_id.php"
-            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
+
+            let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
+            JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
+
+//            let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
+//            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
         }
     }
 
+    // Callback func - getDefaultIdentityProfileId
     func getDefaultIdentityProfileId (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.alertMessage(message!)
+                self.UTILITIES.alertMessage(message!, viewController: self)
             }
         }
         else {
@@ -89,14 +98,18 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func alertMessage(message: NSString) {
-        var alertController = UIAlertController(title: "", message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertController.addAction(defaultAction)
-        alertController.view.backgroundColor = UIColor.blackColor()
-        alertController.view.tintColor = UIColor.blackColor()
-        presentViewController(alertController, animated: true, completion: nil)
-        return
+    //Callback function
+    func getDefaultProfileCollection (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+//        if retCode == 1 {
+//            var message = jsonData["message"].string
+//            NSOperationQueue.mainQueue().addOperationWithBlock {
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+//            }
+//        }
+//        else {
+//            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
+//        }
     }
 }
 

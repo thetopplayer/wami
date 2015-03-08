@@ -7,11 +7,13 @@
 import UIKit
 
 class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
-
+    let JSONDATA = JsonGetData()
+    let UTILITIES = Utilities()
     var identityProfileId: String!
     var userName: String!
+    var userId: String!
 
-    let swiftBlogs = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
+    let profiles = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
     let textCellIdentifier = "Profile"
 
     override func viewDidLoad() {
@@ -31,6 +33,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         tableView.delegate = self
         tableView.dataSource = self
 
+//        let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
+//        JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
     }
 
     func back(sender: UIBarButtonItem) {
@@ -42,14 +46,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return swiftBlogs.count
+        return profiles.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
         let row = indexPath.row
-        cell.textLabel?.text = swiftBlogs[row]
+        cell.textLabel?.text = profiles[row]
 
         return cell
     }
@@ -58,6 +62,20 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
         let row = indexPath.row
-        println(swiftBlogs[row])
+        println(profiles[row])
+    }
+
+    //Callback function
+    func getDefaultProfileCollection (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+//        if retCode == 1 {
+//            var message = jsonData["message"].string
+//            NSOperationQueue.mainQueue().addOperationWithBlock {
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+//            }
+//        }
+//        else {
+//            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
+//        }
     }
 }
