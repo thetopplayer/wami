@@ -73,11 +73,8 @@ class ViewController: UIViewController {
             userId = jsonData["user_info"][0]["user_id"].string!
             userName = jsonData["user_info"][0]["username"].string!
 
-            let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
-            JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
-
-//            let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
-//            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
+            let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
+            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
         }
     }
 
@@ -96,20 +93,6 @@ class ViewController: UIViewController {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
         }
-    }
-
-    //Callback function
-    func getDefaultProfileCollection (jsonData: JSON) {
-        var retCode = jsonData["ret_code"]
-//        if retCode == 1 {
-//            var message = jsonData["message"].string
-//            NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
-//            }
-//        }
-//        else {
-//            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
-//        }
     }
 }
 

@@ -33,8 +33,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         tableView.delegate = self
         tableView.dataSource = self
 
-//        let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
-//        JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
+        let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
+        JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
     }
 
     func back(sender: UIBarButtonItem) {
@@ -67,13 +67,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
 
     //Callback function
     func getDefaultProfileCollection (jsonData: JSON) {
+        println("jsonData = \(jsonData)")
         var retCode = jsonData["ret_code"]
-//        if retCode == 1 {
-//            var message = jsonData["message"].string
-//            NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
-//            }
-//        }
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.UTILITIES.alertMessage(message!, viewController: self)
+            }
+        }
 //        else {
 //            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
 //        }

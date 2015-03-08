@@ -12,10 +12,12 @@
 $jsonInput = file_get_contents('php://input');
 $data = json_decode($jsonInput);
 $user_id = $data->param1;
+
 require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
 $con = $db->connect();
 
+$response = array();
 $sql = "SELECT identity_profile_id
         FROM identity_profile WHERE user_id = " .$user_id.  " AND default_profile_ind = 1";
 
