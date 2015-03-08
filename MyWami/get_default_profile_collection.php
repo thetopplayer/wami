@@ -15,6 +15,7 @@ $userId = $_POST["param1"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
+$response = array();
 $sql = "SELECT u2.first_name, u2.last_name, image_url, profile_name, tags, ipc.identity_profile_id, assign_to_identity_profile_id, ip2.email, ip2.telephone
         FROM identity_profile_collection ipc, identity_profile ip2, user u2
         WHERE ip2.delete_ind = 0 AND ipc.delete_ind = 0 AND ipc.identity_profile_id = ip2.identity_profile_id AND u2.user_id = ip2.user_id AND assign_to_identity_profile_id =

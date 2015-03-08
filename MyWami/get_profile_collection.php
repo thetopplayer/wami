@@ -14,6 +14,7 @@ $identityProfileId = $_POST["param1"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
+$response = array();
 $sql = "SELECT ip.first_name, ip.last_name, image_url, profile_name, tags, ipc.identity_profile_id, assign_to_identity_profile_id, email, telephone
         FROM identity_profile_collection ipc, identity_profile ip
         WHERE ip.delete_ind = 0 AND ipc.delete_ind = 0 AND active_ind = 1 AND ipc.identity_profile_id = ip.identity_profile_id
