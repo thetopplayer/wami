@@ -13,7 +13,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var userName: String!
     var userId: String!
 
-    let profiles = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
+    var profileNames = [String]()
     let textCellIdentifier = "Profile"
 
     override func viewDidLoad() {
@@ -46,28 +46,24 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profiles.count
+        return profileNames.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-
         let row = indexPath.row
-        cell.textLabel?.text = profiles[row]
-
+        cell.textLabel?.text = profileNames[row]
         return cell
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
         let row = indexPath.row
-        println(profiles[row])
+//        println(profileNames[row])
     }
 
-    //Callback function
+    //Callback function - getDefaultProfileCollection
     func getDefaultProfileCollection (jsonData: JSON) {
-        println("jsonData = \(jsonData)")
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
@@ -75,8 +71,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                 self.UTILITIES.alertMessage(message!, viewController: self)
             }
         }
-//        else {
-//            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
-//        }
+        else {
+            let numProfiles: Int! = jsonData["profile_collection"].array?.count
+            for index in 0...numProfiles - 1 {
+                var profileName = jsonData["profile_collection"][index]["profile_name"].string!
+                profileNames.append(profileName)
+            }
+
+        }
     }
 }
