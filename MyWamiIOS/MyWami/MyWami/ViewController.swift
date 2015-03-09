@@ -72,7 +72,10 @@ class ViewController: UIViewController {
         else {
             userId = jsonData["user_info"][0]["user_id"].string!
             userName = jsonData["user_info"][0]["username"].string!
-
+      //****
+//            NSOperationQueue.mainQueue().addOperationWithBlock {
+//                self.performSegueWithIdentifier("showProfileCollection", sender: self)
+//            }
             let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
             JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
         }

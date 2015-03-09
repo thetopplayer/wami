@@ -14,6 +14,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var userId: String!
 
     var profileNames = [String]()
+//    var firstNames = [String]()
+//    var lastNames = [String]()
+//    var imageUrls = [String]()
+//    var emails = [String]()
+//    var telephones = [String]()
+////    var identityProfileIds = [String]()
+//    var assignToIdentityProfileIds = [String]()
+
     let textCellIdentifier = "Profile"
 
     override func viewDidLoad() {
@@ -76,6 +84,27 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             for index in 0...numProfiles - 1 {
                 var profileName = jsonData["profile_collection"][index]["profile_name"].string!
                 profileNames.append(profileName)
+
+//                var firstName = jsonData["profile_collection"][index]["first_name"].string!
+//                firstNames.append(firstName)
+//
+//                var lastName = jsonData["profile_collection"][index]["last_name"].string!
+//                lastNames.append(lastName)
+//
+//                var imageUrl = jsonData["profile_collection"][index]["image_url"].string!
+//                imageUrls.append(imageUrl)
+//
+//                var email = jsonData["profile_collection"][index]["email"].string!
+//                emails.append(email)
+//
+//                var telephone = jsonData["profile_collection"][index]["telephone"].string!
+//                telephones.append(telephone)
+//
+////                var identityProfileId = jsonData["profile_collection"][index]["identity_profile_id"].string!
+////                identityProfileIds.append(identityProfileId)
+//
+//                var assignToIdentityProfileId = jsonData["profile_collection"][index]["assign_to_identity_profile_id"].string!
+//                assignToIdentityProfileIds.append(assignToIdentityProfileId)
             }
 
         }
