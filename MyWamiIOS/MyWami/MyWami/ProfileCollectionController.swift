@@ -59,10 +59,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfileListTableViewCell
-//        cell.textLabel?.text = self.profileNames[indexPath.row]
+        
+        var contactName = self.firstNames[indexPath.row] + " " + self.lastNames[indexPath.row]
+        
         cell.profileNameTxt.text = self.profileNames[indexPath.row]
-        cell.contactNameTxt.text = self.profileNames[indexPath.row]
-
+        cell.contactNameTxt.text = contactName
+        
+        var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
+        cell.profileImage.image = image
         return cell
     }
 

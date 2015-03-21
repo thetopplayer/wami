@@ -8,8 +8,8 @@ import UIKit
 class ProfileListTableViewCell: UITableViewCell  {
 
     @IBOutlet var profileName: UILabel!
-    
     @IBOutlet var profileNameTxt: UITextField!
-    
     @IBOutlet var contactNameTxt: UITextField!
+    @IBOutlet var profileImage: UIImageView!
+    
 }
