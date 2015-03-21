@@ -7,25 +7,30 @@
 import UIKit
 
 class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
-    var identityProfileId: String!
     var userName: String!
     var userId: String!
 
     var profileNames = [String]()
-//    var firstNames = [String]()
-//    var lastNames = [String]()
-//    var imageUrls = [String]()
-//    var emails = [String]()
-//    var telephones = [String]()
-////    var identityProfileIds = [String]()
-//    var assignToIdentityProfileIds = [String]()
+    var firstNames = [String]()
+    var lastNames = [String]()
+    var imageUrls = [String]()
+    var emails = [String]()
+    var telephones = [String]()
+    var identityProfileIds = [String]()
+    var assignToIdentityProfileIds = [String]()
 
-    let textCellIdentifier = "Profile"
+    let textCellIdentifier = "ProfileListTableViewCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
+        JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
+
+        usleep(100000)
 
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
@@ -38,11 +43,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let backButton = UIBarButtonItem(image: image, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
 
-        tableView.delegate = self
-        tableView.dataSource = self
-
-        let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
-        JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
     }
 
     func back(sender: UIBarButtonItem) {
@@ -58,16 +58,17 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-        let row = indexPath.row
-        cell.textLabel?.text = profileNames[row]
+        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfileListTableViewCell
+//        cell.textLabel?.text = self.profileNames[indexPath.row]
+        cell.profileNameTxt.text = self.profileNames[indexPath.row]
+        cell.contactNameTxt.text = self.profileNames[indexPath.row]
+
         return cell
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
-//        println(profileNames[row])
     }
 
     //Callback function - getDefaultProfileCollection
@@ -85,28 +86,27 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                 var profileName = jsonData["profile_collection"][index]["profile_name"].string!
                 profileNames.append(profileName)
 
-//                var firstName = jsonData["profile_collection"][index]["first_name"].string!
-//                firstNames.append(firstName)
-//
-//                var lastName = jsonData["profile_collection"][index]["last_name"].string!
-//                lastNames.append(lastName)
-//
-//                var imageUrl = jsonData["profile_collection"][index]["image_url"].string!
-//                imageUrls.append(imageUrl)
-//
-//                var email = jsonData["profile_collection"][index]["email"].string!
-//                emails.append(email)
-//
-//                var telephone = jsonData["profile_collection"][index]["telephone"].string!
-//                telephones.append(telephone)
-//
-////                var identityProfileId = jsonData["profile_collection"][index]["identity_profile_id"].string!
-////                identityProfileIds.append(identityProfileId)
-//
-//                var assignToIdentityProfileId = jsonData["profile_collection"][index]["assign_to_identity_profile_id"].string!
-//                assignToIdentityProfileIds.append(assignToIdentityProfileId)
-            }
+                var firstName = jsonData["profile_collection"][index]["first_name"].string!
+                firstNames.append(firstName)
 
+                var lastName = jsonData["profile_collection"][index]["last_name"].string!
+                lastNames.append(lastName)
+
+                var imageUrl = jsonData["profile_collection"][index]["image_url"].string!
+                imageUrls.append(imageUrl)
+
+                var email = jsonData["profile_collection"][index]["email"].string!
+                emails.append(email)
+
+                var telephone = jsonData["profile_collection"][index]["telephone"].string!
+                telephones.append(telephone)
+
+                var identityProfileId = jsonData["profile_collection"][index]["identity_profile_id"].string!
+                identityProfileIds.append(identityProfileId)
+
+                var assignToIdentityProfileId = jsonData["profile_collection"][index]["assign_to_identity_profile_id"].string!
+                assignToIdentityProfileIds.append(assignToIdentityProfileId)
+            }
         }
     }
 }

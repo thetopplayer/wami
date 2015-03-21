@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
-    var identityProfileId: String!
     var userName: String!
     var userId: String!
 
@@ -53,7 +52,6 @@ class ViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showProfileCollection") {
             var svc = segue.destinationViewController as ProfileCollectionController;
-            svc.identityProfileId = self.identityProfileId
             svc.userName = self.userName
             svc.userId = self.userId
         }
@@ -72,26 +70,6 @@ class ViewController: UIViewController {
         else {
             userId = jsonData["user_info"][0]["user_id"].string!
             userName = jsonData["user_info"][0]["username"].string!
-      //****
-//            NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.performSegueWithIdentifier("showProfileCollection", sender: self)
-//            }
-            let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
-            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
-        }
-    }
-
-    // Callback func - getDefaultIdentityProfileId
-    func getDefaultIdentityProfileId (jsonData: JSON) {
-        var retCode = jsonData["ret_code"]
-        if retCode == 1 {
-            var message = jsonData["message"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
-            }
-        }
-        else {
-            identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
