@@ -4,19 +4,20 @@ package com.MyWami.util;
  * Created by robertlanter on 3/3/14.
  */
 public final class Constants {
-//	final static public String IP = "http://192.168.15.6/MyWami/";
-//	final static public String ASSETS_IP = "http://192.168.15.6:80/Wami/";
+	final static public String IP = "http://192.168.15.48/MyWami/";
+	final static public String ASSETS_IP = "http://192.168.15.48:80/Wami/";
 
 //	final static public String IP = "http://192.168.1.10/MyWami/";
 //	final static public String ASSETS_IP = "http://192.168.1.10:80/Wami/";
 
-//	final static public String IP = "http://192.168.1.2/MyWami/";
-//	final static public String ASSETS_IP = "http://192.168.1.2:80/Wami/";
+//	final static public String IP = "http://192.168.1.3/MyWami/";
+//	final static public String ASSETS_IP = "http://192.168.1.3:80/Wami/";
 
-	final static public String IP = "http://192.168.254.42/MyWami/";
-	final static public String ASSETS_IP = "http://192.168.254.42:80/Wami/";
+//	final static public String IP = "http://192.168.254.42/MyWami/";
+//	final static public String ASSETS_IP = "http://192.168.254.42:80/Wami/";
 
 	final static public String EMAIL_IP = "http://www.mywami.com/";
+
 //	final static public String IP = 	"http://localhost:63342/WamiGradle/" ;
 //	final static public String IP = "http://172.31.99.12/";
 //	final static public String IP = "http://10.0.1.11/";
