@@ -143,6 +143,15 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NE-XV-7Mg" customClass="WamiCheckBox" customModule="MyWami" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="27" width="21" height="21.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <state key="normal" title="Button" image="checkboxUnchecked">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -152,6 +161,7 @@
                                     <outlet property="profileImage" destination="ETI-pj-BSK" id="kL7-vF-l3d"/>
                                     <outlet property="profileName" destination="cRf-m5-iwj" id="QOV-LE-fYK"/>
                                     <outlet property="profileNameTxt" destination="9qo-Ws-kLQ" id="DI1-9j-r5j"/>
+                                    <outlet property="wamiCheckBox" destination="0NE-XV-7Mg" id="4a8-Qw-PwX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -185,6 +195,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkboxUnchecked" width="16" height="16"/>
         <image name="logo.png" width="500" height="350"/>
     </resources>
 </document>

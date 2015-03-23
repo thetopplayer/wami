@@ -3,7 +3,6 @@
 // Copyright (c) 2015 Robert Lanter. All rights reserved.
 //
 
-// import Foundation
 import UIKit
 
 class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
@@ -42,8 +41,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         var image : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let backButton = UIBarButtonItem(image: image, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
-
+        
     }
+
 
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
@@ -67,6 +67,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
         var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
         cell.profileImage.image = image
+
         return cell
     }
 
