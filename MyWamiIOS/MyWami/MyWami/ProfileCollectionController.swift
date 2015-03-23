@@ -7,6 +7,15 @@ import UIKit
 
 class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBAction func transmitButtonPressed(sender: AnyObject) {
+       
+    }
+    
+
+    @IBAction func addToContactsButtonPressed(sender: AnyObject) {
+        
+    }
+    
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
     var userName: String!

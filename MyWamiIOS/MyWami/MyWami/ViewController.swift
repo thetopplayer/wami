@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
+    
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
     var userName: String!
