@@ -9,10 +9,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
 
     @IBAction func transmitButtonPressed(sender: AnyObject) {
        
-    }
-    
+    }    
 
     @IBAction func addToContactsButtonPressed(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func extendedInfoButtonPressed(sender: AnyObject) {
         
     }
     
@@ -53,7 +56,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
     }
 
-
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -83,6 +85,18 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "showInfoExtended") {
+//            var svc = segue.destinationViewController as WamiInfoExtended;
+//            svc.identityProfileId = self.identityProfileId
+//            svc.userId = self.userId
+        }
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
+        return false
     }
 
     //Callback function - getDefaultProfileCollection

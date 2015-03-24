@@ -58,7 +58,6 @@ class ViewController: UIViewController {
         }
     }
 
-
     // Callback func - getUserData
     func getUserData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]

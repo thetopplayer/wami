@@ -125,13 +125,13 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ETI-pj-BSK">
                                             <rect key="frame" x="37" y="5" width="81" height="68"/>
                                         </imageView>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9qo-Ws-kLQ">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9qo-Ws-kLQ">
                                             <rect key="frame" x="169" y="6" width="102" height="15"/>
                                             <color key="textColor" red="0.2023435089" green="0.4601108954" blue="0.43489436930000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="11"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vak-mk-xGj">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vak-mk-xGj">
                                             <rect key="frame" x="176" y="19" width="99" height="15"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
@@ -158,9 +158,16 @@
                                                 <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="next_item_right" translatesAutoresizingMaskIntoConstraints="NO" id="7Vx-Eo-Q1y">
-                                            <rect key="frame" x="287" y="25" width="26" height="29"/>
-                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Icy-bc-HMs">
+                                            <rect key="frame" x="283" y="23" width="26" height="27"/>
+                                            <state key="normal" image="next_item_right">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="extendedInfoButtonPressed:" destination="8BU-M7-bNb" eventType="touchUpInside" id="auX-AY-a9U"/>
+                                                <segue destination="h4P-q6-wcP" kind="show" identifier="showInfoExtended" id="SUn-Pr-KiM"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -177,31 +184,37 @@
                     </tableView>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <connections>
-                        <outlet property="view" destination="qqo-5D-Kiq" id="V2o-MR-Fvo"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zib-z3-rgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-321" y="-295"/>
+            <point key="canvasLocation" x="-307" y="-301"/>
         </scene>
-        <!--View Controller-->
+        <!--Wami Info Extended-->
         <scene sceneID="PiI-RA-J65">
             <objects>
-                <viewController id="h4P-q6-wcP" sceneMemberID="viewController">
+                <viewController id="h4P-q6-wcP" customClass="WamiInfoExtended" customModule="MyWami" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dIl-s9-D9E"/>
                         <viewControllerLayoutGuide type="bottom" id="vhy-bh-Wba"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eYu-s7-bhA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hi There" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpf-ze-FJg">
+                                <rect key="frame" x="109" y="207" width="90" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="0MK-nU-p4V"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17h-cd-PaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="275" y="-311"/>
+            <point key="canvasLocation" x="84" y="-351"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CED-Aa-Ujs">
