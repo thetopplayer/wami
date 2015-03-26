@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     let UTILITIES = Utilities()
     var userName: String!
     var userId: String!
+    var identityProfileId: String!
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
@@ -28,6 +29,11 @@ class ViewController: UIViewController {
 
         let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
         JSONDATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
+
+        usleep(100000)
+
+        let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
+        JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
@@ -55,6 +61,7 @@ class ViewController: UIViewController {
             var svc = segue.destinationViewController as ProfileCollectionController;
             svc.userName = self.userName
             svc.userId = self.userId
+            svc.identityProfileId = self.identityProfileId
         }
     }
 
@@ -68,12 +75,28 @@ class ViewController: UIViewController {
             }
         }
         else {
-            userId = jsonData["user_info"][0]["user_id"].string!
-            userName = jsonData["user_info"][0]["username"].string!
+            self.userId = jsonData["user_info"][0]["user_id"].string!
+            self.userName = jsonData["user_info"][0]["username"].string!
+        }
+    }
+
+    // Callback func - getDefaultIdentityProfileId
+    func getDefaultIdentityProfileId (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.UTILITIES.alertMessage(message!, viewController: self)
+            }
+        }
+        else {
+            self.identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
         }
+
+
     }
 }
 

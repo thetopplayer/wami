@@ -16,13 +16,17 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     @IBAction func extendedInfoButtonPressed(sender: AnyObject) {
-        
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
+        var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+        self.row = row
     }
     
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
     var userName: String!
     var userId: String!
+    var identityProfileId: String!
 
     var profileNames = [String]()
     var firstNames = [String]()
@@ -34,6 +38,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var assignToIdentityProfileIds = [String]()
 
     let textCellIdentifier = "ProfileListTableViewCell"
+    var row = 0
+    var numProfiles = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +71,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return profileNames.count
+        return numProfiles
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -89,14 +95,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showInfoExtended") {
-//            var svc = segue.destinationViewController as WamiInfoExtended;
-//            svc.identityProfileId = self.identityProfileId
-//            svc.userId = self.userId
+            var svc = segue.destinationViewController as WamiInfoExtended;
+            svc.identityProfileId = self.identityProfileIds[self.row]
         }
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
-        return false
     }
 
     //Callback function - getDefaultProfileCollection
@@ -110,6 +111,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         }
         else {
             let numProfiles: Int! = jsonData["profile_collection"].array?.count
+            self.numProfiles = numProfiles
             for index in 0...numProfiles - 1 {
                 var profileName = jsonData["profile_collection"][index]["profile_name"].string!
                 profileNames.append(profileName)

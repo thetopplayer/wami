@@ -11,5 +11,6 @@ class ProfileListTableViewCell: UITableViewCell  {
     @IBOutlet var profileNameTxt: UITextField!
     @IBOutlet var contactNameTxt: UITextField!
     @IBOutlet var profileImage: UIImageView!
-    @IBOutlet var wamiCheckBox: WamiCheckBox!
+    @IBOutlet var wamiCheckBox: WamiCheckBox!    
+    @IBOutlet var infoExtendedButton: UIButton!
 }

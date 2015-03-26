@@ -165,7 +165,7 @@
                                             </state>
                                             <connections>
                                                 <action selector="extendedInfoButtonPressed:" destination="8BU-M7-bNb" eventType="touchUpInside" id="auX-AY-a9U"/>
-                                                <segue destination="h4P-q6-wcP" kind="show" identifier="showInfoExtended" id="SUn-Pr-KiM"/>
+                                                <segue destination="h4P-q6-wcP" kind="push" identifier="showInfoExtended" id="SUn-Pr-KiM"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -174,6 +174,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="contactNameTxt" destination="Vak-mk-xGj" id="3Oz-Qk-1Ec"/>
+                                    <outlet property="infoExtendedButton" destination="Icy-bc-HMs" id="oVG-uu-Zsq"/>
                                     <outlet property="profileImage" destination="ETI-pj-BSK" id="kL7-vF-l3d"/>
                                     <outlet property="profileName" destination="cRf-m5-iwj" id="QOV-LE-fYK"/>
                                     <outlet property="profileNameTxt" destination="9qo-Ws-kLQ" id="DI1-9j-r5j"/>

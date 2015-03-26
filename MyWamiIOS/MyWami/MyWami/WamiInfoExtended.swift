@@ -9,6 +9,9 @@
 import UIKit
 
 class WamiInfoExtended: UIViewController {
+    var identityProfileId: String!
+    var userIdentityProfileId: String!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
