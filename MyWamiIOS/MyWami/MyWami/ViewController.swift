@@ -16,12 +16,12 @@ class ViewController: UIViewController {
     let UTILITIES = Utilities()
     var userName: String!
     var userId: String!
-    var identityProfileId: String!
+    var userIdentityProfileId: String!
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
         var password = self.passwordText.text
-        
+
         if (username.isEmpty || password.isEmpty) {
             UTILITIES.alertMessage("Please enter a Username and Password", viewController: self)
             return
@@ -29,11 +29,6 @@ class ViewController: UIViewController {
 
         let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
         JSONDATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
-
-        usleep(100000)
-
-        let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
-        JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
@@ -61,7 +56,7 @@ class ViewController: UIViewController {
             var svc = segue.destinationViewController as ProfileCollectionController;
             svc.userName = self.userName
             svc.userId = self.userId
-            svc.identityProfileId = self.identityProfileId
+            svc.userIdentityProfileId = self.userIdentityProfileId
         }
     }
 
@@ -77,6 +72,9 @@ class ViewController: UIViewController {
         else {
             self.userId = jsonData["user_info"][0]["user_id"].string!
             self.userName = jsonData["user_info"][0]["username"].string!
+
+            let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
+            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
         }
     }
 
@@ -90,7 +88,7 @@ class ViewController: UIViewController {
             }
         }
         else {
-            self.identityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
+            self.userIdentityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }

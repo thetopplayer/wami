@@ -21,12 +21,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let row = indexPath.row
         self.row = row
     }
-    
-    let JSONDATA = JsonGetData()
-    let UTILITIES = Utilities()
+
     var userName: String!
     var userId: String!
-    var identityProfileId: String!
+    var userIdentityProfileId: String!
+
+    let JSONDATA = JsonGetData()
+    let UTILITIES = Utilities()
 
     var profileNames = [String]()
     var firstNames = [String]()
@@ -97,6 +98,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         if (segue.identifier == "showInfoExtended") {
             var svc = segue.destinationViewController as WamiInfoExtended;
             svc.identityProfileId = self.identityProfileIds[self.row]
+            svc.userIdentityProfileId = self.userIdentityProfileId
         }
     }
 
