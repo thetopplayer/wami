@@ -28,6 +28,8 @@ class WamiInfoExtended: UIViewController {
     @IBOutlet var activeIndText: UITextField!
     @IBOutlet var groupsText: UITextField!
     
+  //  @IBOutlet var telephoneText: UIButton!
+    
     @IBOutlet var profileImage: UIButton!
     
     @IBOutlet var scrollView: UIScrollView!
@@ -83,7 +85,13 @@ class WamiInfoExtended: UIViewController {
         self.descriptionText.text = self.descript
         self.contactNameText.text = self.contactName
         self.emailText.text = self.email
+        
+        let url = NSURL(string: "mailto:\(self.email)")
+        UIApplication.sharedApplication().openURL(url!)
+        
+        
         self.telephoneText.text = self.telephone
+        
         self.profileTypeText.text = self.profileType
         self.tagsText.text = self.tags
         self.streetAddressText.text = self.streetAddress
@@ -107,7 +115,7 @@ class WamiInfoExtended: UIViewController {
         
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         profileImage   = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        profileImage.frame = CGRectMake(50, 70, 110, 120)
+        profileImage.frame = CGRectMake(50, 70, 130, 100)
         profileImage.setImage(profileHeaderImage, forState: .Normal)
         self.view.addSubview(profileImage)
         
