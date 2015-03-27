@@ -28,6 +28,8 @@ class WamiInfoExtended: UIViewController {
     @IBOutlet var activeIndText: UITextField!
     @IBOutlet var groupsText: UITextField!
     
+    @IBOutlet var profileImage: UIButton!
+    
     @IBOutlet var scrollView: UIScrollView!
     
     var identityProfileId: String!
@@ -102,6 +104,13 @@ class WamiInfoExtended: UIViewController {
         else {
             self.activeIndText.text = "Inactive"
         }
+        
+        var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
+        profileImage   = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        profileImage.frame = CGRectMake(50, 70, 110, 120)
+        profileImage.setImage(profileHeaderImage, forState: .Normal)
+        self.view.addSubview(profileImage)
+        
         //            self.groupsText.text =
     
     }
