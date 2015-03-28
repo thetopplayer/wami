@@ -7,11 +7,33 @@
 //
 
 import UIKit
-import CoreGraphics
+import MessageUI
 
-class WamiInfoExtended: UIViewController {
-    @IBOutlet var profileNameText: UITextField!
+class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
+   
+    @IBAction func emailAction(sender: AnyObject) {
+        let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
+        JSONDATA.jsonGetData(getProfileName, url: GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
+        usleep(100000)
+        
+        var emailTitle = "Message From Wami Profile: " + userProfileName
+        var messageBody = ""
+        var toRecipents = [email]
+        var mc: MFMailComposeViewController = MFMailComposeViewController()
+        mc.mailComposeDelegate = self
+        mc.setSubject(emailTitle)
+        mc.setMessageBody(messageBody, isHTML: false)
+        mc.setToRecipients(toRecipents)
+        
+        self.presentViewController(mc, animated: true, completion: nil)
+    }
     
+    @IBAction func telephoneAction(sender: AnyObject) {
+        
+    }
+    
+    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var profileNameText: UITextField!    
     @IBOutlet var descriptionText: UITextView!
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var emailText: UITextField!
@@ -28,15 +50,15 @@ class WamiInfoExtended: UIViewController {
     @IBOutlet var activeIndText: UITextField!
     @IBOutlet var groupsText: UITextField!
     
-  //  @IBOutlet var telephoneText: UIButton!
-    
-    @IBOutlet var profileImage: UIButton!
+  //  @IBOutlet var profileImage: UIButton!
     
     @IBOutlet var scrollView: UIScrollView!
     
     var identityProfileId: String!
     var userIdentityProfileId: String!
     var fromUserIdentityProfileId: String!
+    
+    var userProfileName = ""
 
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
@@ -84,13 +106,20 @@ class WamiInfoExtended: UIViewController {
         self.profileNameText.text = self.profileName
         self.descriptionText.text = self.descript
         self.contactNameText.text = self.contactName
+        
         self.emailText.text = self.email
-        
-        let url = NSURL(string: "mailto:\(self.email)")
-        UIApplication.sharedApplication().openURL(url!)
-        
+        var fieldWidth = (Float(self.email.utf16Count) * 8)
+        var bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0.0, emailText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
+        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
+        emailText.layer.addSublayer(bottomBorder)
         
         self.telephoneText.text = self.telephone
+        fieldWidth = (Float(self.telephone.utf16Count) * 8)
+        bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0.0, telephoneText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
+        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
+        telephoneText.layer.addSublayer(bottomBorder)
         
         self.profileTypeText.text = self.profileType
         self.tagsText.text = self.tags
@@ -114,18 +143,13 @@ class WamiInfoExtended: UIViewController {
         }
         
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
-        profileImage   = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        profileImage.frame = CGRectMake(50, 70, 130, 100)
-        profileImage.setImage(profileHeaderImage, forState: .Normal)
-        self.view.addSubview(profileImage)
+        self.profileImageView.image = profileHeaderImage
         
         //            self.groupsText.text =
-    
-    }
-    
+     }
+ 
     override func viewDidLayoutSubviews() {
         scrollView.scrollEnabled = true
-        // Do any additional setup after loading the view
         scrollView.contentSize = CGSizeMake(300, 1100)
     }
     
@@ -136,6 +160,22 @@ class WamiInfoExtended: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func mailComposeController(controller:MFMailComposeViewController, didFinishWithResult result:MFMailComposeResult, error:NSError) {
+        switch result.value {
+            case MFMailComposeResultCancelled.value:
+                println("Mail cancelled")
+            case MFMailComposeResultSaved.value:
+                println("Mail saved")
+            case MFMailComposeResultSent.value:
+                println("Mail sent")
+            case MFMailComposeResultFailed.value:
+                println("Mail sent failure: %@", [error.localizedDescription])
+            default:
+                break
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     //Callback function - getProfileData
@@ -169,4 +209,20 @@ class WamiInfoExtended: UIViewController {
             self.contactName = firstName + " " + lastName
         }
     }
+    
+    //Callback function - getProfileName
+    func getProfileName (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.UTILITIES.alertMessage(message!, viewController: self)
+            }
+        }
+        else {
+            userProfileName = jsonData["profile_name"].string!
+        }
+    }
 }
+
+
