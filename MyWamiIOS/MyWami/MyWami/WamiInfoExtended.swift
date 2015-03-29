@@ -188,41 +188,41 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.UTILITIES.alertMessage(message!, viewController: self)
             }
+            return
+        }
+        var jsonIndex = 0
+        if let jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array? {
+            var numGroups = jsonGroups.count
+            for index in 0...numGroups - 1 {
+                var group = jsonData["identity_profile_data"][0]["group_data"][index]["group"].string!
+                groups = groups + ", " + group
+            }
+            groups = groups.substringFromIndex(advance(groups.startIndex, 2))
+            jsonIndex = 1
         }
         else {
-            var jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array?
-            if jsonGroups == nil || jsonGroups?.isEmpty == true {
-                groups = ""
-            }
-            else {
-                var numGroups: Int! = jsonGroups?.count
-                for index in 0...numGroups - 1 {
-                    var group = jsonData["identity_profile_data"][0]["group_data"][index]["group"].string!
-                    groups = groups + ", " + group
-                }
-                groups = groups.substringFromIndex(advance(groups.startIndex, 2))
-            }
-            
-            profileName = jsonData["identity_profile_data"][1]["profile_name"].string!
-            descript = jsonData["identity_profile_data"][1]["description"].string!
-            firstName = jsonData["identity_profile_data"][1]["first_name"].string!
-            lastName = jsonData["identity_profile_data"][1]["last_name"].string!
-            email = jsonData["identity_profile_data"][1]["email"].string!
-            telephone = jsonData["identity_profile_data"][1]["telephone"].string!
-            profileType = jsonData["identity_profile_data"][1]["profile_type"].string!
-            tags = jsonData["identity_profile_data"][1]["tags"].string!
-            streetAddress = jsonData["identity_profile_data"][1]["street_address"].string!
-            city = jsonData["identity_profile_data"][1]["city"].string!
-            state = jsonData["identity_profile_data"][1]["state"].string!
-            zipcode = jsonData["identity_profile_data"][1]["zipcode"].string!
-            country = jsonData["identity_profile_data"][1]["country"].string!
-            createDate = jsonData["identity_profile_data"][1]["create_date"].string!
-            searchable = jsonData["identity_profile_data"][1]["searchable"].string!
-            activeInd = jsonData["identity_profile_data"][1]["active_ind"].string!
-            imageUrl = jsonData["identity_profile_data"][1]["image_url"].string!
-
-            self.contactName = firstName + " " + lastName
+            groups = ""
+            jsonIndex = 0
         }
+        profileName = jsonData["identity_profile_data"][jsonIndex]["profile_name"].string!
+        descript = jsonData["identity_profile_data"][jsonIndex]["description"].string!
+        firstName = jsonData["identity_profile_data"][jsonIndex]["first_name"].string!
+        lastName = jsonData["identity_profile_data"][jsonIndex]["last_name"].string!
+        email = jsonData["identity_profile_data"][jsonIndex]["email"].string!
+        telephone = jsonData["identity_profile_data"][jsonIndex]["telephone"].string!
+        profileType = jsonData["identity_profile_data"][jsonIndex]["profile_type"].string!
+        tags = jsonData["identity_profile_data"][jsonIndex]["tags"].string!
+        streetAddress = jsonData["identity_profile_data"][jsonIndex]["street_address"].string!
+        city = jsonData["identity_profile_data"][jsonIndex]["city"].string!
+        state = jsonData["identity_profile_data"][jsonIndex]["state"].string!
+        zipcode = jsonData["identity_profile_data"][jsonIndex]["zipcode"].string!
+        country = jsonData["identity_profile_data"][jsonIndex]["country"].string!
+        createDate = jsonData["identity_profile_data"][jsonIndex]["create_date"].string!
+        searchable = jsonData["identity_profile_data"][jsonIndex]["searchable"].string!
+        activeInd = jsonData["identity_profile_data"][jsonIndex]["active_ind"].string!
+        imageUrl = jsonData["identity_profile_data"][jsonIndex]["image_url"].string!
+
+        self.contactName = firstName + " " + lastName
     }
     
     //Callback function - getProfileName

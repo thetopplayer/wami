@@ -16,7 +16,7 @@ class Profiler: UIViewController  {
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
         
-        let titleBar = UIImage(named: "actionbar_wami_extended_info.png")
+        let titleBar = UIImage(named: "actionbar_profiler.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
         
