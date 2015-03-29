@@ -20,7 +20,7 @@ $con = $db->connect();
     
 $response = array();
 $sql = "SELECT first_name, last_name, profile_name, image_url, email, profile_type, street_address, city, state, zipcode, country, telephone,
-        create_date, tags, searchable, active_ind, description, rating
+        create_date, tags, searchable, active_ind, description
         FROM identity_profile WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
 
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
@@ -50,7 +50,6 @@ if (mysqli_num_rows($result) > 0) {
     $item["searchable"] = $row[14];
     $item["active_ind"] = $row[15];
     $item["description"] = $row[16];
-    $item["rating"] = $row[17];
     mysqli_free_result($result);
 } else {
     $response["ret_code"] = 1;

@@ -29,7 +29,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     @IBAction func telephoneAction(sender: AnyObject) {
-        
+        var url:NSURL = NSURL(string: telephone)!
+        UIApplication.sharedApplication().openURL(url)
     }
     
     @IBOutlet var profileImageView: UIImageView!
@@ -62,7 +63,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
 
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
-
+    
     var firstName = ""
     var lastName = ""
     var contactName = ""
@@ -79,9 +80,10 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     var telephone = ""
     var createDate = ""
     var tags = ""
-    var groups = ""
     var searchable = ""
     var activeInd = ""
+    
+    var groups = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,7 +147,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
         
-        //            self.groupsText.text =
+        self.groupsText.text = self.groups
      }
  
     override func viewDidLayoutSubviews() {
@@ -188,6 +190,19 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             }
         }
         else {
+            var jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array?
+            if jsonGroups == nil || jsonGroups?.isEmpty == true {
+                groups = ""
+            }
+            else {
+                var numGroups: Int! = jsonGroups?.count
+                for index in 0...numGroups - 1 {
+                    var group = jsonData["identity_profile_data"][0]["group_data"][index]["group"].string!
+                    groups = groups + ", " + group
+                }
+                groups = groups.substringFromIndex(advance(groups.startIndex, 2))
+            }
+            
             profileName = jsonData["identity_profile_data"][1]["profile_name"].string!
             descript = jsonData["identity_profile_data"][1]["description"].string!
             firstName = jsonData["identity_profile_data"][1]["first_name"].string!
