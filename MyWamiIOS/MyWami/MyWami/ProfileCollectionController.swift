@@ -41,6 +41,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     let textCellIdentifier = "ProfileListTableViewCell"
     var row = 0
     var numProfiles = 0
+    
+    let menuView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,21 +63,41 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let backButton = UIBarButtonItem(image: backButtonImage, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
         
-        var menuImage : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let menuButton = UIBarButtonItem(image: menuImage, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
+        menuView.hidden = true
+        var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
-        
     }
     
     func showMenu(sender: UIBarButtonItem) {
-        println("cdcdcd")
+        toggleMenu(menuView)
+        menuView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.9)
+        view.addSubview(menuView)
         
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("menuController") as MenuController
-        self.presentViewController(vc, animated: true, completion: nil)
+        let viewsDictionary = ["menuView":menuView]
+        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(140)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let menuView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuView(>=270)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        menuView.addConstraints(menuView_constraint_H)
+        menuView.addConstraints(menuView_constraint_V)
+        
+        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-170-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        view.addConstraints(view_constraint_H)
+        view.addConstraints(view_constraint_V)
+
     }
     
-        
-    
+    func toggleMenu (menuView: UIView) {
+        if menuView.hidden {
+            menuView.hidden = false
+        }
+        else {
+            menuView.hidden = true
+        }
+    }
 
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)

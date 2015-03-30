@@ -190,43 +190,6 @@
             </objects>
             <point key="canvasLocation" x="-307" y="-301"/>
         </scene>
-        <!--Menu Controller-->
-        <scene sceneID="hua-PK-Hl9">
-            <objects>
-                <tableViewController id="JfG-lj-hEY" customClass="MenuController" customModule="MyWami" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vHh-ip-4ji">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="300"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="separatorColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="8wq-Fy-yie" customClass="MenuTableViewCell" customModule="MyWami" customModuleProvider="target">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8wq-Fy-yie" id="dnv-uo-zTx">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GwO-8Z-d7e">
-                                            <rect key="frame" x="251" y="0.0" width="46" height="30"/>
-                                            <state key="normal" title="Button">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                        </button>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="JfG-lj-hEY" id="ZgM-Qy-5C8"/>
-                            <outlet property="delegate" destination="JfG-lj-hEY" id="ZKU-38-5AG"/>
-                        </connections>
-                    </tableView>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="250" height="300"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ccN-HX-6tR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="186" y="64"/>
-        </scene>
         <!--Wami Info Extended-->
         <scene sceneID="PiI-RA-J65">
             <objects>
