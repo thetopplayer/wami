@@ -57,11 +57,25 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
 
-        var image : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
+        var backButtonImage : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let backButton = UIBarButtonItem(image: backButtonImage, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
         navigationItem.leftBarButtonItem = backButton
         
+        var menuImage : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let menuButton = UIBarButtonItem(image: menuImage, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
+        navigationItem.rightBarButtonItem = menuButton
+        
     }
+    
+    func showMenu(sender: UIBarButtonItem) {
+        println("cdcdcd")
+        
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("menuController") as MenuController
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
+        
+    
 
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
