@@ -43,6 +43,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var numProfiles = 0
     
     let menuView = UIView()
+    let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+    let logoutBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+    var menuLine = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,18 +78,53 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.9)
         view.addSubview(menuView)
         
-        let viewsDictionary = ["menuView":menuView]
+        transmitBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+        transmitBtn.setTitle("Transmit Profile(s)...", forState: UIControlState.Normal)
+        transmitBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        transmitBtn.addTarget(self, action: "transmitProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
+        transmitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        transmitBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+        menuView.addSubview(transmitBtn)
+        
+        logoutBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+        logoutBtn.setTitle("Logout", forState: UIControlState.Normal)
+        logoutBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
+        logoutBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        logoutBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+        menuView.addSubview(logoutBtn)
+        
+        menuLine = createMenuLine(0)
+        menuView.addSubview(menuLine)
+        
+        menuLine = createMenuLine(28)
+        menuView.addSubview(menuLine)
+        
+        let viewsDictionary = ["menuView":menuView, "transmitBtn":transmitBtn, "logoutBtn":logoutBtn, "menuLine":menuLine]
+        
+        //size of menu
         let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(140)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let menuView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuView(>=270)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        
         menuView.addConstraints(menuView_constraint_H)
         menuView.addConstraints(menuView_constraint_V)
         
-        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-170-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        //placement of menu
+        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-165-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        
         view.addConstraints(view_constraint_H)
         view.addConstraints(view_constraint_V)
+        
+        //placement of transmit button
+        let transmit_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[transmitBtn(>=80)]", options: NSLayoutFormatOptions.AlignAllCenterY, metrics: nil, views: viewsDictionary)
+        let transmit_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:[transmitBtn(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        menuView.addConstraints(transmit_constraint_H)
+        menuView.addConstraints(transmit_constraint_V)
+        
+        //placement of logout button
+        let logout_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[logoutBtn(>=45)]", options: NSLayoutFormatOptions.AlignAllCenterY, metrics: nil, views: viewsDictionary)
+        let logout_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:[logoutBtn(85)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        menuView.addConstraints(logout_constraint_H)
+        menuView.addConstraints(logout_constraint_V)
 
     }
     
@@ -97,6 +135,21 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         else {
             menuView.hidden = true
         }
+    }
+    
+    func createMenuLine (offset: Int) -> UILabel {
+        var line: UILabel = UILabel()
+        line.frame = CGRectMake(0, CGFloat(32 + offset), 140, 1)
+        line.backgroundColor = UIColor.grayColor()
+        return line
+    }
+    
+    func transmitProfileAction () {
+        println("transmit")
+    }
+    
+    func logoutAction () {
+        println("logout")
     }
 
     func back(sender: UIBarButtonItem) {
