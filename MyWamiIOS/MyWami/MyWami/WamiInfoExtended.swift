@@ -168,6 +168,11 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         scrollView.contentSize = CGSizeMake(300, 1100)
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
     func showMenu(sender: UIBarButtonItem) {
         toggleMenu(menuView)
         menuView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -287,7 +292,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     func createMenuLine (offset: Int) -> UILabel {
         var line: UILabel = UILabel()
-        line.frame = CGRectMake(0, CGFloat(25 + offset), 180, 1)
+        line.frame = CGRectMake(0, CGFloat(25 + offset), 170, 1)
         line.backgroundColor = UIColor.grayColor()
         return line
     }
@@ -317,9 +322,16 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "showProfiler") {
+            var svc = segue.destinationViewController as Profiler;
+            svc.identityProfileId = self.identityProfileId
+            svc.userIdentityProfileId = self.userIdentityProfileId
+            svc.imageUrl = self.imageUrl
+            svc.profileName = self.profileName
+            svc.firstName = self.firstName
+            svc.lastName = self.lastName
+        }
     }
     
     func mailComposeController(controller:MFMailComposeViewController, didFinishWithResult result:MFMailComposeResult, error:NSError) {
