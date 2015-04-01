@@ -43,13 +43,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-9x-I3V">
                                 <rect key="frame" x="49" y="412" width="222" height="156"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
                                 <rect key="frame" x="120" y="309" width="81" height="30"/>
                                 <color key="backgroundColor" red="0.31763377409999999" green="0.71612610480000005" blue="0.67621705830000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.502" green="0.502" blue="0.502" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.2023435089" green="0.4601108954" blue="0.43489436930000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="loginButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="15f-a6-jPk"/>
