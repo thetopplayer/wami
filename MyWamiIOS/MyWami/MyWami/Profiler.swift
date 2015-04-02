@@ -33,8 +33,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     var numCategories = 0
     var categories = [String]()
     
-  //  var tableView = UITableView()
-    
     let menuView = UIView()
     let transmitThisWamiBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
     let navigateToBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -72,11 +70,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         usleep(100000)
         
-        self.profilerTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: textCellIdentifier)
         profilerTableView.dataSource = self
         profilerTableView.delegate = self
-//        self.view.addSubview(tableView)
-
     }
     
     func showMenu(sender: UIBarButtonItem) {
@@ -210,25 +205,23 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(profilerTableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(profilerTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.numCategories
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfilerTableViewCell
-        println("ha ha ha111")
+    func tableView(profilerTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = profilerTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfilerTableViewCell
         cell.profileCategoryText.text = self.categories[indexPath.row]
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        println("ha ha ha")
+    func tableView(profilerTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        profilerTableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
     }
     
