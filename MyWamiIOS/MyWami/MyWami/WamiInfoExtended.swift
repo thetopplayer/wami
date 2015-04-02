@@ -51,8 +51,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet var activeIndText: UITextField!
     @IBOutlet var groupsText: UITextField!
     
-  //  @IBOutlet var profileImage: UIButton!
-    
     @IBOutlet var scrollView: UIScrollView!
     
     var identityProfileId: String!
@@ -239,13 +237,13 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         let viewsDictionary = ["menuView":menuView, "homeBtn":homeBtn, "transmitThisWamiBtn":transmitThisWamiBtn, "navigateToBtn":navigateToBtn,  "addToContactListBtn":addToContactListBtn, "logoutBtn":logoutBtn]
         
         //size of menu
-        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(170)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(150)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let menuView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuView(>=128)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         menuView.addConstraints(menuView_constraint_H)
         menuView.addConstraints(menuView_constraint_V)
         
         //placement of menu
-        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-140-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-157-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-62-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         scrollView.addConstraints(view_constraint_H)
         scrollView.addConstraints(view_constraint_V)
@@ -292,7 +290,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     func createMenuLine (offset: Int) -> UILabel {
         var line: UILabel = UILabel()
-        line.frame = CGRectMake(0, CGFloat(25 + offset), 170, 1)
+        line.frame = CGRectMake(0, CGFloat(25 + offset), 150, 1)
         line.backgroundColor = UIColor.grayColor()
         return line
     }
