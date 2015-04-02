@@ -43,12 +43,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var numProfiles = 0
     
     let menuView = UIView()
-    let selectCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let filterByGroupBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let refeshListBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let searchProfilesBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let logoutBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+//    let selectCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+//    let filterByGroupBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+//    let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+//    let refeshListBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+//    let searchProfilesBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+//    let logoutBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
     var menuLine = UILabel()
 
     override func viewDidLoad() {
@@ -77,78 +77,101 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func showMenu(sender: UIBarButtonItem) {
-        toggleMenu(menuView)
+//        toggleMenu(menuView)
         menuView.setTranslatesAutoresizingMaskIntoConstraints(false)
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
         view.addSubview(menuView)
         
-        selectCollectionBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        selectCollectionBtn.setTitle("Select a Profile Collection...", forState: UIControlState.Normal)
-        selectCollectionBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        let menu = Menu()
+        menu.toggleMenu(menuView)
+        
+        var selectCollectionBtn = menu.setMenuBtnAttributes("Select a Profile Collection...")
         selectCollectionBtn.addTarget(self, action: "selectCollectionAction", forControlEvents: UIControlEvents.TouchUpInside)
-        selectCollectionBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        selectCollectionBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        selectCollectionBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(selectCollectionBtn)
         
-        filterByGroupBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        filterByGroupBtn.setTitle("Filter Collection by Group...", forState: UIControlState.Normal)
-        filterByGroupBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var filterByGroupBtn = menu.setMenuBtnAttributes("Filter Collection by Group...")
         filterByGroupBtn.addTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
-        filterByGroupBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        filterByGroupBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        filterByGroupBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(filterByGroupBtn)
         
-        transmitBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        transmitBtn.setTitle("Transmit Profile(s)...", forState: UIControlState.Normal)
-        transmitBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
         transmitBtn.addTarget(self, action: "transmitProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        transmitBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        transmitBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(transmitBtn)
         
-        refeshListBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        refeshListBtn.setTitle("Refresh Wami List", forState: UIControlState.Normal)
-        refeshListBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var refeshListBtn = menu.setMenuBtnAttributes("Refresh Wami List")
         refeshListBtn.addTarget(self, action: "refeshListAction", forControlEvents: UIControlEvents.TouchUpInside)
-        refeshListBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        refeshListBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        refeshListBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(refeshListBtn)
         
-        searchProfilesBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        searchProfilesBtn.setTitle("Search for Profiles...", forState: UIControlState.Normal)
-        searchProfilesBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var searchProfilesBtn = menu.setMenuBtnAttributes("Search for Profiles...")
         searchProfilesBtn.addTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-        searchProfilesBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        searchProfilesBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        searchProfilesBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(searchProfilesBtn)
         
-        logoutBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        logoutBtn.setTitle("Logout", forState: UIControlState.Normal)
-        logoutBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
-        logoutBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        logoutBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        logoutBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(logoutBtn)
         
-        menuLine = createMenuLine(0)
-        menuView.addSubview(menuLine)
+//        selectCollectionBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        selectCollectionBtn.setTitle("Select a Profile Collection...", forState: UIControlState.Normal)
+//        selectCollectionBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+//        selectCollectionBtn.addTarget(self, action: "selectCollectionAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        selectCollectionBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        selectCollectionBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+//        selectCollectionBtn.showsTouchWhenHighlighted = true
+//        menuView.addSubview(selectCollectionBtn)
+//        
+//        filterByGroupBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        filterByGroupBtn.setTitle("Filter Collection by Group...", forState: UIControlState.Normal)
+//        filterByGroupBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+//        filterByGroupBtn.addTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        filterByGroupBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        filterByGroupBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+//        filterByGroupBtn.showsTouchWhenHighlighted = true
+//        menuView.addSubview(filterByGroupBtn)
+//        
+//        transmitBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        transmitBtn.setTitle("Transmit Profile(s)...", forState: UIControlState.Normal)
+//        transmitBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+//        transmitBtn.addTarget(self, action: "transmitProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        transmitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        transmitBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+//        transmitBtn.showsTouchWhenHighlighted = true
+//        menuView.addSubview(transmitBtn)
+//        
+//        refeshListBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        refeshListBtn.setTitle("Refresh Wami List", forState: UIControlState.Normal)
+//        refeshListBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+//        refeshListBtn.addTarget(self, action: "refeshListAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        refeshListBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        refeshListBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+//        refeshListBtn.showsTouchWhenHighlighted = true
+//        menuView.addSubview(refeshListBtn)
+//        
+//        searchProfilesBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        searchProfilesBtn.setTitle("Search for Profiles...", forState: UIControlState.Normal)
+//        searchProfilesBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+//        searchProfilesBtn.addTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        searchProfilesBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        searchProfilesBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+//        searchProfilesBtn.showsTouchWhenHighlighted = true
+//        menuView.addSubview(searchProfilesBtn)
+//        
+//        logoutBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        logoutBtn.setTitle("Logout", forState: UIControlState.Normal)
+//        logoutBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+//        logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        logoutBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+//        logoutBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
+//        logoutBtn.showsTouchWhenHighlighted = true
+//        menuView.addSubview(logoutBtn)
         
-        menuLine = createMenuLine(25)
+        menuLine = menu.createMenuLine(0)
         menuView.addSubview(menuLine)
-        
-        menuLine = createMenuLine(50)
+        menuLine = menu.createMenuLine(25)
         menuView.addSubview(menuLine)
-
-        menuLine = createMenuLine(75)
+        menuLine = menu.createMenuLine(50)
         menuView.addSubview(menuLine)
-        
-        menuLine = createMenuLine(100)
+        menuLine = menu.createMenuLine(75)
+        menuView.addSubview(menuLine)
+        menuLine = menu.createMenuLine(100)
         menuView.addSubview(menuLine)
 
         
@@ -204,21 +227,21 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
 
     }
     
-    func toggleMenu (menuView: UIView) {
-        if menuView.hidden {
-            menuView.hidden = false
-        }
-        else {
-            menuView.hidden = true
-        }
-    }
-    
-    func createMenuLine (offset: Int) -> UILabel {
-        var line: UILabel = UILabel()
-        line.frame = CGRectMake(0, CGFloat(25 + offset), 180, 1)
-        line.backgroundColor = UIColor.grayColor()
-        return line
-    }
+//    func toggleMenu (menuView: UIView) {
+//        if menuView.hidden {
+//            menuView.hidden = false
+//        }
+//        else {
+//            menuView.hidden = true
+//        }
+//    }
+//    
+//    func createMenuLine (offset: Int) -> UILabel {
+//        var line: UILabel = UILabel()
+//        line.frame = CGRectMake(0, CGFloat(25 + offset), 180, 1)
+//        line.backgroundColor = UIColor.grayColor()
+//        return line
+//    }
     
     func selectCollectionAction () {
         println("selectup")

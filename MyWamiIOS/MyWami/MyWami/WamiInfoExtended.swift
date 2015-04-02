@@ -84,11 +84,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     var groups = ""
     
     let menuView = UIView()
-    let transmitThisWamiBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let addToContactListBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let navigateToBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let homeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-    let logoutBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
     var menuLine = UILabel()
 
     override func viewDidLoad() {
@@ -172,66 +167,40 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     }
 
     func showMenu(sender: UIBarButtonItem) {
-        toggleMenu(menuView)
         menuView.setTranslatesAutoresizingMaskIntoConstraints(false)
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
         scrollView.addSubview(menuView)
         
-        transmitThisWamiBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        transmitThisWamiBtn.setTitle("Transmit This Wami...", forState: UIControlState.Normal)
-        transmitThisWamiBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        let menu = Menu()
+        menu.toggleMenu(menuView)
+        
+        var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitThisWamiBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        transmitThisWamiBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        transmitThisWamiBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(transmitThisWamiBtn)
         
-        addToContactListBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        addToContactListBtn.setTitle("Add To Contact List...", forState: UIControlState.Normal)
-        addToContactListBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var addToContactListBtn = menu.setMenuBtnAttributes("Add To Contact List...")
         addToContactListBtn.addTarget(self, action: "addToContactListAction", forControlEvents: UIControlEvents.TouchUpInside)
-        addToContactListBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        addToContactListBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        addToContactListBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(addToContactListBtn)
         
-        navigateToBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        navigateToBtn.setTitle("Navigate To...", forState: UIControlState.Normal)
-        navigateToBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var navigateToBtn = menu.setMenuBtnAttributes("Navigate To...")
         navigateToBtn.addTarget(self, action: "navigateToAction", forControlEvents: UIControlEvents.TouchUpInside)
-        navigateToBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        navigateToBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        navigateToBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(navigateToBtn)
         
-        homeBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        homeBtn.setTitle("Home", forState: UIControlState.Normal)
-        homeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var homeBtn = menu.setMenuBtnAttributes("Home")
         homeBtn.addTarget(self, action: "homeAction", forControlEvents: UIControlEvents.TouchUpInside)
-        homeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        homeBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        homeBtn.showsTouchWhenHighlighted = true
         menuView.addSubview(homeBtn)
         
-        logoutBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        logoutBtn.setTitle("Logout", forState: UIControlState.Normal)
-        logoutBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
-        logoutBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        logoutBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        logoutBtn.showsTouchWhenHighlighted = true
+        
         menuView.addSubview(logoutBtn)
-        
-        menuLine = createMenuLine(0)
+        menuLine = menu.createMenuLine(0)
         menuView.addSubview(menuLine)
-        
-        menuLine = createMenuLine(25)
+        menuLine = menu.createMenuLine(25)
         menuView.addSubview(menuLine)
-        
-        menuLine = createMenuLine(50)
+        menuLine = menu.createMenuLine(50)
         menuView.addSubview(menuLine)
-        
-        menuLine = createMenuLine(75)
+        menuLine = menu.createMenuLine(75)
         menuView.addSubview(menuLine)
         
         let viewsDictionary = ["menuView":menuView, "homeBtn":homeBtn, "transmitThisWamiBtn":transmitThisWamiBtn, "navigateToBtn":navigateToBtn,  "addToContactListBtn":addToContactListBtn, "logoutBtn":logoutBtn]
@@ -244,7 +213,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         
         //placement of menu
         let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-157-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-62-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         scrollView.addConstraints(view_constraint_H)
         scrollView.addConstraints(view_constraint_V)
         
@@ -277,22 +246,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         let logout_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-98-[logoutBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         menuView.addConstraints(logout_constraint_H)
         menuView.addConstraints(logout_constraint_V)
-    }
-    
-    func toggleMenu (menuView: UIView) {
-        if menuView.hidden {
-            menuView.hidden = false
-        }
-        else {
-            menuView.hidden = true
-        }
-    }
-    
-    func createMenuLine (offset: Int) -> UILabel {
-        var line: UILabel = UILabel()
-        line.frame = CGRectMake(0, CGFloat(25 + offset), 150, 1)
-        line.backgroundColor = UIColor.grayColor()
-        return line
     }
     
     func addToContactListAction () {
