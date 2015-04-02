@@ -8,14 +8,32 @@
 
 import UIKit
 
-class Profiler: UIViewController  {
+class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
+    @IBOutlet var profileImageView: UIImageView!
+    
+    @IBOutlet var profileNameText: UITextField!
+    
+    @IBOutlet var contactNameText: UITextField!
+    
+    @IBOutlet var profilerTableView: UITableView!
+    
+    let textCellIdentifier = "ProfilerTableViewCell"
+    
+    let JSONDATA = JsonGetData()
+    let UTILITIES = Utilities()
+   
     var identityProfileId: String!
     var userIdentityProfileId: String!
     var imageUrl: String!
     var profileName: String!
     var firstName: String!
     var lastName: String!
+    
+    var numCategories = 0
+    var categories = [String]()
+    
+  //  var tableView = UITableView()
     
     let menuView = UIView()
     let transmitThisWamiBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -42,6 +60,23 @@ class Profiler: UIViewController  {
         var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
+        
+        var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
+        self.profileImageView.image = profileHeaderImage
+        
+        self.profileNameText.text = self.profileName
+        self.contactNameText.text = self.firstName + " " + self.lastName
+        
+        let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
+        JSONDATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
+        
+        usleep(100000)
+        
+        self.profilerTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: textCellIdentifier)
+        profilerTableView.dataSource = self
+        profilerTableView.delegate = self
+//        self.view.addSubview(tableView)
+
     }
     
     func showMenu(sender: UIBarButtonItem) {
@@ -101,13 +136,13 @@ class Profiler: UIViewController  {
         let viewsDictionary = ["menuView":menuView, "homeBtn":homeBtn, "transmitThisWamiBtn":transmitThisWamiBtn, "navigateToBtn":navigateToBtn, "logoutBtn":logoutBtn]
         
         //size of menu
-        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(170)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(150)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let menuView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuView(>=100)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         menuView.addConstraints(menuView_constraint_H)
         menuView.addConstraints(menuView_constraint_V)
         
         //placement of menu
-        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-142-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-157-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-67-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         view.addConstraints(view_constraint_H)
         view.addConstraints(view_constraint_V)
@@ -149,7 +184,7 @@ class Profiler: UIViewController  {
     
     func createMenuLine (offset: Int) -> UILabel {
         var line: UILabel = UILabel()
-        line.frame = CGRectMake(0, CGFloat(25 + offset), 170, 1)
+        line.frame = CGRectMake(0, CGFloat(25 + offset), 150, 1)
         line.backgroundColor = UIColor.grayColor()
         return line
     }
@@ -175,11 +210,54 @@ class Profiler: UIViewController  {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.numCategories
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfilerTableViewCell
+        println("ha ha ha111")
+        cell.profileCategoryText.text = self.categories[indexPath.row]
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        println("ha ha ha")
+        let row = indexPath.row
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    
+    //Callback function - getProfileName
+    func getProfilerData (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.UTILITIES.alertMessage(message!, viewController: self)
+            }
+        }
+        else {
+            let numCategories: Int! = jsonData["identity_profiler_data"].array?.count
+            self.numCategories = numCategories
+            for index in 0...numCategories - 1 {
+                var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
+                categories.append(categoryName)
+            }
+        }
+    }
 }
+
+
+
+
+
