@@ -176,24 +176,29 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         
         var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
+        transmitThisWamiBtn.frame = CGRectMake(0, 0, 145, 20)
         menuView.addSubview(transmitThisWamiBtn)
         
         var addToContactListBtn = menu.setMenuBtnAttributes("Add To Contact List...")
         addToContactListBtn.addTarget(self, action: "addToContactListAction", forControlEvents: UIControlEvents.TouchUpInside)
+        addToContactListBtn.frame = CGRectMake(0, 25, 145, 20)
         menuView.addSubview(addToContactListBtn)
         
         var navigateToBtn = menu.setMenuBtnAttributes("Navigate To...")
         navigateToBtn.addTarget(self, action: "navigateToAction", forControlEvents: UIControlEvents.TouchUpInside)
+        navigateToBtn.frame = CGRectMake(0, 50, 145, 20)
         menuView.addSubview(navigateToBtn)
         
         var homeBtn = menu.setMenuBtnAttributes("Home")
         homeBtn.addTarget(self, action: "homeAction", forControlEvents: UIControlEvents.TouchUpInside)
+        homeBtn.frame = CGRectMake(0, 75, 145, 20)
         menuView.addSubview(homeBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
+        logoutBtn.frame = CGRectMake(0, 100, 145, 20)
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
-        
         menuView.addSubview(logoutBtn)
+ 
         menuLine = menu.createMenuLine(0)
         menuView.addSubview(menuLine)
         menuLine = menu.createMenuLine(25)
@@ -216,36 +221,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         scrollView.addConstraints(view_constraint_H)
         scrollView.addConstraints(view_constraint_V)
-        
-        //placement of transmit button
-        let transmit_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[transmitThisWamiBtn(>=80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let transmit_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[transmitThisWamiBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(transmit_constraint_H)
-        menuView.addConstraints(transmit_constraint_V)
-        
-        //placement of add to contact button
-        let addToContactList_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[addToContactListBtn(>=80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let addToContactList_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-23-[addToContactListBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(addToContactList_constraint_H)
-        menuView.addConstraints(addToContactList_constraint_V)
-        
-        //placement of navigate to button
-        let navigateTo_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[navigateToBtn(>=80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let navigateTo_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-48-[navigateToBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(navigateTo_constraint_H)
-        menuView.addConstraints(navigateTo_constraint_V)
-        
-        //placement of home button
-        let home_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[homeBtn(>=38)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let home_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-73-[homeBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(home_constraint_H)
-        menuView.addConstraints(home_constraint_V)
-        
-        //placement of logout button
-        let logout_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[logoutBtn(>=45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let logout_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-98-[logoutBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(logout_constraint_H)
-        menuView.addConstraints(logout_constraint_V)
     }
     
     func addToContactListAction () {

@@ -81,18 +81,22 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
+        transmitThisWamiBtn.frame = CGRectMake(0, 0, 145, 20)
         menuView.addSubview(transmitThisWamiBtn)
         
         var navigateToBtn = menu.setMenuBtnAttributes("Navigate To...")
         navigateToBtn.addTarget(self, action: "navigateToAction", forControlEvents: UIControlEvents.TouchUpInside)
+        navigateToBtn.frame = CGRectMake(0, 25, 145, 20)
         menuView.addSubview(navigateToBtn)
         
         var homeBtn = menu.setMenuBtnAttributes("Home")
         homeBtn.addTarget(self, action: "homeAction", forControlEvents: UIControlEvents.TouchUpInside)
+        homeBtn.frame = CGRectMake(0, 50, 145, 20)
         menuView.addSubview(homeBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
+        logoutBtn.frame = CGRectMake(0, 75, 145, 20)
         menuView.addSubview(logoutBtn)
         
         menuLine = menu.createMenuLine(0)
@@ -117,31 +121,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-67-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         view.addConstraints(view_constraint_H)
         view.addConstraints(view_constraint_V)
-        
-        //placement of transmit button
-        let transmit_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[transmitThisWamiBtn(>=80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let transmit_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[transmitThisWamiBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(transmit_constraint_H)
-        menuView.addConstraints(transmit_constraint_V)
-        
-        //placement of navigate to button
-        let navigateTo_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[navigateToBtn(>=80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let navigateTo_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-23-[navigateToBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(navigateTo_constraint_H)
-        menuView.addConstraints(navigateTo_constraint_V)
-        
-        //placement of home button
-        let home_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[homeBtn(>=37)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let home_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-47-[homeBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(home_constraint_H)
-        menuView.addConstraints(home_constraint_V)
-        
-        //placement of logout button
-        let logout_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[logoutBtn(>=40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let logout_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-73-[logoutBtn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(logout_constraint_H)
-        menuView.addConstraints(logout_constraint_V)
-        
     }
 
     func navigateToAction () {

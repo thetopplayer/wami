@@ -13,7 +13,7 @@ class Menu {
     func setMenuBtnAttributes(title: String) -> UIButton {
         let menuBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         
-        menuBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+    //    menuBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
         menuBtn.setTitle(title, forState: UIControlState.Normal)
         menuBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
         menuBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
