@@ -159,7 +159,7 @@
                                             </state>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Icy-bc-HMs">
-                                            <rect key="frame" x="283" y="23" width="29" height="30"/>
+                                            <rect key="frame" x="283" y="23" width="29" height="28"/>
                                             <state key="normal" image="next_item_right">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -202,8 +202,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="768" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="LRg-sc-dGQ">
-                                <rect key="frame" x="0.0" y="-59" width="320" height="818"/>
+                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="768" indicatorStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="LRg-sc-dGQ">
+                                <rect key="frame" x="3" y="-47" width="313" height="818"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsN-OX-AMq">
                                         <rect key="frame" x="13" y="188" width="89" height="20"/>
@@ -416,7 +416,7 @@
                                         <rect key="frame" x="88" y="66" width="148" height="102"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xd-ro-hnM">
-                                        <rect key="frame" x="267" y="107" width="33" height="32"/>
+                                        <rect key="frame" x="270" y="107" width="29" height="28"/>
                                         <state key="normal" image="next_item_right">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -495,7 +495,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dtw-Er-AvN">
-                                                    <rect key="frame" x="281" y="5" width="29" height="30"/>
+                                                    <rect key="frame" x="281" y="5" width="29" height="28"/>
                                                     <state key="normal" image="next_item_right">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -530,7 +530,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVB-5J-U5L">
-                                <rect key="frame" x="276" y="110" width="32" height="33"/>
+                                <rect key="frame" x="276" y="110" width="29" height="28"/>
                                 <state key="normal" image="next_item_right">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
