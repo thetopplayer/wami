@@ -72,6 +72,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         profilerTableView.dataSource = self
         profilerTableView.delegate = self
+        self.profilerTableView.rowHeight = 44
     }
     
     func showMenu(sender: UIBarButtonItem) {

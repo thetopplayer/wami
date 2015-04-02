@@ -416,7 +416,7 @@
                                         <rect key="frame" x="88" y="66" width="148" height="102"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Xd-ro-hnM">
-                                        <rect key="frame" x="269" y="107" width="29" height="30"/>
+                                        <rect key="frame" x="267" y="107" width="33" height="32"/>
                                         <state key="normal" image="next_item_right">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -479,7 +479,7 @@
                                 <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oP2-NO-nWV">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -488,7 +488,7 @@
                                     <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </label>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ProfilerTableViewCell" rowHeight="43" id="Jj2-do-F9R" customClass="ProfilerTableViewCell" customModule="MyWami" customModuleProvider="target">
+                                    <tableViewCell contentMode="center" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="ProfilerTableViewCell" rowHeight="44" id="Jj2-do-F9R" customClass="ProfilerTableViewCell" customModule="MyWami" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="318" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jj2-do-F9R" id="eVb-6t-zPQ">
@@ -530,7 +530,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tVB-5J-U5L">
-                                <rect key="frame" x="280" y="110" width="29" height="30"/>
+                                <rect key="frame" x="276" y="110" width="32" height="33"/>
                                 <state key="normal" image="next_item_right">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
