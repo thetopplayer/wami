@@ -167,8 +167,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     }
 
     func showMenu(sender: UIBarButtonItem) {
-        menuView.setTranslatesAutoresizingMaskIntoConstraints(false)
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
+        menuView.frame = CGRectMake(147, 50, 150, 128)
         scrollView.addSubview(menuView)
         
         let menu = Menu()
@@ -207,20 +207,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         menuView.addSubview(menuLine)
         menuLine = menu.createMenuLine(75)
         menuView.addSubview(menuLine)
-        
-        let viewsDictionary = ["menuView":menuView, "homeBtn":homeBtn, "transmitThisWamiBtn":transmitThisWamiBtn, "navigateToBtn":navigateToBtn,  "addToContactListBtn":addToContactListBtn, "logoutBtn":logoutBtn]
-        
-        //size of menu
-        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(150)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let menuView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuView(>=128)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(menuView_constraint_H)
-        menuView.addConstraints(menuView_constraint_V)
-        
-        //placement of menu
-        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-157-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        scrollView.addConstraints(view_constraint_H)
-        scrollView.addConstraints(view_constraint_V)
     }
     
     func addToContactListAction () {
@@ -242,7 +228,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     func logoutAction () {
         println("logout")
     }
-
     
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)

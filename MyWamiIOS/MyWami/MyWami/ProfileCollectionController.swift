@@ -71,7 +71,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func showMenu(sender: UIBarButtonItem) {
-        menuView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        menuView.frame = CGRectMake(130, 2, 180, 150)
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
         view.addSubview(menuView)
         
@@ -90,22 +90,22 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
         var transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
         transmitBtn.addTarget(self, action: "transmitProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitBtn.frame = CGRectMake(0, 50, 175, 20)
+        transmitBtn.frame = CGRectMake(-24, 50, 175, 20)
         menuView.addSubview(transmitBtn)
         
         var refeshListBtn = menu.setMenuBtnAttributes("Refresh Wami List")
         refeshListBtn.addTarget(self, action: "refeshListAction", forControlEvents: UIControlEvents.TouchUpInside)
-        refeshListBtn.frame = CGRectMake(0, 75, 175, 20)
+        refeshListBtn.frame = CGRectMake(-27, 75, 175, 20)
         menuView.addSubview(refeshListBtn)
         
         var searchProfilesBtn = menu.setMenuBtnAttributes("Search for Profiles...")
         searchProfilesBtn.addTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-        searchProfilesBtn.frame = CGRectMake(0, 100, 175, 20)
+        searchProfilesBtn.frame = CGRectMake(-21, 100, 175, 20)
         menuView.addSubview(searchProfilesBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
-        logoutBtn.frame = CGRectMake(0, 125, 175, 20)
+        logoutBtn.frame = CGRectMake(-58, 125, 175, 20)
         menuView.addSubview(logoutBtn)
         
         menuLine = menu.createMenuLine(0)
@@ -118,20 +118,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.addSubview(menuLine)
         menuLine = menu.createMenuLine(100)
         menuView.addSubview(menuLine)
-
-        let viewsDictionary = ["menuView":menuView, "selectCollectionBtn":selectCollectionBtn, "filterByGroupBtn":filterByGroupBtn, "transmitBtn":transmitBtn, "refeshListBtn":refeshListBtn,  "searchProfilesBtn":searchProfilesBtn, "logoutBtn":logoutBtn]
-        
-        //size of menu
-        let menuView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[menuView(180)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let menuView_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[menuView(>=150)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        menuView.addConstraints(menuView_constraint_H)
-        menuView.addConstraints(menuView_constraint_V)
-        
-        //placement of menu
-        let view_constraint_H:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("H:|-130-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let view_constraint_V:NSArray = NSLayoutConstraint.constraintsWithVisualFormat("V:|-2-[menuView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        view.addConstraints(view_constraint_H)
-        view.addConstraints(view_constraint_V)
     }
     
     func selectCollectionAction () {

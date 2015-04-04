@@ -1,38 +1,37 @@
 //
-//  Profiler.swift
+//  Flash.swift
 //  MyWami
 //
-//  Created by Robert Lanter on 3/28/15.
+//  Created by Robert Lanter on 4/2/15.
 //  Copyright (c) 2015 Robert Lanter. All rights reserved.
 //
 
 import UIKit
 
-class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class Flash: UIViewController {
     
     @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var profileNameText: UITextField!
-    @IBOutlet var contactNameText: UITextField!
-    @IBOutlet var profilerTableView: UITableView!
+    @IBOutlet var flashTableView: UITableView!
+
+    var imageUrl: String!
     
-    let textCellIdentifier = "ProfilerTableViewCell"
+    let textCellIdentifier = "FlashTableViewCell"
     
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
-   
-    var identityProfileId: String!
-    var userIdentityProfileId: String!
-    var imageUrl: String!
-    var profileName: String!
-    var firstName: String!
-    var lastName: String!
     
-    var numCategories = 0
-    var categories = [String]()
+//    var identityProfileId: String!
+//    var userIdentityProfileId: String!
+//    var imageUrl: String!
+//    var profileName: String!
+//    var firstName: String!
+//    var lastName: String!
+    
+    var numFlash = 0
     
     let menuView = UIView()
     var menuLine = UILabel()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,18 +53,18 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
-        
-        self.profileNameText.text = self.profileName
-        self.contactNameText.text = self.firstName + " " + self.lastName
-        
-        let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
-        JSONDATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
+//
+//        self.profileNameText.text = self.profileName
+//        self.contactNameText.text = self.firstName + " " + self.lastName
+//        
+//        let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
+//        JSONDATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
         
         usleep(100000)
         
-        profilerTableView.dataSource = self
-        profilerTableView.delegate = self
-        self.profilerTableView.rowHeight = 44
+//        profilerTableView.dataSource = self
+//        profilerTableView.delegate = self
+        self.flashTableView.rowHeight = 44
     }
     
     func showMenu(sender: UIBarButtonItem) {
@@ -105,7 +104,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         menuLine = menu.createMenuLine(75)
         menuView.addSubview(menuLine)
     }
-
+    
     func navigateToAction () {
         println("fnavigte to")
     }
@@ -126,23 +125,23 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func numberOfSectionsInTableView(profilerTableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(flashTableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(profilerTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.numCategories
+    func tableView(flashTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.numFlash
     }
     
-    func tableView(profilerTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = profilerTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfilerTableViewCell
-        cell.profileCategoryText.text = self.categories[indexPath.row]
+    func tableView(flashTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as FlashTableViewCell
+//        cell.profileCategoryText.text = self.categories[indexPath.row]
         
         return cell
     }
     
-    func tableView(profilerTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        profilerTableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(flashTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        flashTableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
     }
     
@@ -150,40 +149,5 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "showFlash") {
-            var svc = segue.destinationViewController as Flash;
-//            svc.identityProfileId = self.identityProfileId
-//            svc.userIdentityProfileId = self.userIdentityProfileId
-            svc.imageUrl = self.imageUrl
-//            svc.profileName = self.profileName
-//            svc.firstName = self.firstName
-//            svc.lastName = self.lastName
-        }
-    }
-    
-    //Callback function - getProfileName
-    func getProfilerData (jsonData: JSON) {
-        var retCode = jsonData["ret_code"]
-        if retCode == 1 {
-            var message = jsonData["message"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
-            }
-        }
-        else {
-            let numCategories: Int! = jsonData["identity_profiler_data"].array?.count
-            self.numCategories = numCategories
-            for index in 0...numCategories - 1 {
-                var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
-                categories.append(categoryName)
-            }
-        }
-    }
+
 }
-
-
-
-
-
