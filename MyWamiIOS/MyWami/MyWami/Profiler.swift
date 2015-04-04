@@ -154,12 +154,12 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showFlash") {
             var svc = segue.destinationViewController as Flash;
-//            svc.identityProfileId = self.identityProfileId
-//            svc.userIdentityProfileId = self.userIdentityProfileId
+            svc.identityProfileId = self.identityProfileId
+            svc.userIdentityProfileId = self.userIdentityProfileId
             svc.imageUrl = self.imageUrl
-//            svc.profileName = self.profileName
-//            svc.firstName = self.firstName
-//            svc.lastName = self.lastName
+            svc.profileName = self.profileName
+            svc.firstName = self.firstName
+            svc.lastName = self.lastName
         }
     }
     

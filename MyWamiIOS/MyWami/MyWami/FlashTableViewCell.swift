@@ -10,5 +10,6 @@ import UIKit
 
 class FlashTableViewCell: UITableViewCell  {
     
-
+    @IBOutlet var flashText: UITextField!
+    @IBOutlet var createDateText: UITextField!
 }

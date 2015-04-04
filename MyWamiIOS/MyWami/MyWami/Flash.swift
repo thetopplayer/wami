@@ -8,26 +8,31 @@
 
 import UIKit
 
-class Flash: UIViewController {
+class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
+    @IBOutlet var profileNameText: UITextField!
+    @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var flashTableView: UITableView!
-
-    var imageUrl: String!
+    
+    @IBAction func newFlashButtonPressed(sender: AnyObject) {
+    }
     
     let textCellIdentifier = "FlashTableViewCell"
     
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
     
-//    var identityProfileId: String!
-//    var userIdentityProfileId: String!
-//    var imageUrl: String!
-//    var profileName: String!
-//    var firstName: String!
-//    var lastName: String!
+    var identityProfileId: String!
+    var userIdentityProfileId: String!
+    var imageUrl: String!
+    var profileName: String!
+    var firstName: String!
+    var lastName: String!
     
     var numFlash = 0
+    var flashes = [String]()
+    var createDates = [String]()
     
     let menuView = UIView()
     var menuLine = UILabel()
@@ -38,7 +43,7 @@ class Flash: UIViewController {
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
         
-        let titleBar = UIImage(named: "actionbar_profiler.png")
+        let titleBar = UIImage(named: "actionbar_flash.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
         
@@ -53,18 +58,18 @@ class Flash: UIViewController {
         
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
-//
-//        self.profileNameText.text = self.profileName
-//        self.contactNameText.text = self.firstName + " " + self.lastName
-//        
-//        let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
-//        JSONDATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
+        
+        let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
+        JSONDATA.jsonGetData(getFlashData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
+
+        self.profileNameText.text = self.profileName
+        self.contactNameText.text = self.firstName + " " + self.lastName
         
         usleep(100000)
         
-//        profilerTableView.dataSource = self
-//        profilerTableView.delegate = self
-        self.flashTableView.rowHeight = 44
+        flashTableView.dataSource = self
+        flashTableView.delegate = self
+        self.flashTableView.rowHeight = 25
     }
     
     func showMenu(sender: UIBarButtonItem) {
@@ -135,8 +140,8 @@ class Flash: UIViewController {
     
     func tableView(flashTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as FlashTableViewCell
-//        cell.profileCategoryText.text = self.categories[indexPath.row]
-        
+        cell.flashText.text = self.flashes[indexPath.row]
+        cell.createDateText.text = self.createDates[indexPath.row]
         return cell
     }
     
@@ -149,5 +154,25 @@ class Flash: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    //Callback function - getFlashData
+    func getFlashData (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.UTILITIES.alertMessage(message!, viewController: self)
+            }
+        }
+        else {
+            let numFlash: Int! = jsonData["profile_flash_data"].array?.count
+            self.numFlash = numFlash
+            for index in 0...numFlash - 1 {
+                var flash = jsonData["profile_flash_data"][index]["flash"].string!
+                flashes.append(flash)
+                var createDate = jsonData["profile_flash_data"][index]["create_date"].string!
+                createDates.append(createDate)
+            }
+        }
+    }
 }
