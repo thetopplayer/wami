@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Menu {   
+class Menu {       
     func setMenuBtnAttributes(title: String) -> UIButton {
         let menuBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         menuBtn.setTitle(title, forState: UIControlState.Normal)
@@ -35,5 +35,4 @@ class Menu {
         line.backgroundColor = UIColor.grayColor()
         return line
     }
-    
 }

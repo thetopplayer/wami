@@ -181,21 +181,21 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         
         var addToContactListBtn = menu.setMenuBtnAttributes("Add To Contact List...")
         addToContactListBtn.addTarget(self, action: "addToContactListAction", forControlEvents: UIControlEvents.TouchUpInside)
-        addToContactListBtn.frame = CGRectMake(0, 25, 145, 20)
+        addToContactListBtn.frame = CGRectMake(2, 25, 145, 20)
         menuView.addSubview(addToContactListBtn)
         
         var navigateToBtn = menu.setMenuBtnAttributes("Navigate To...")
         navigateToBtn.addTarget(self, action: "navigateToAction", forControlEvents: UIControlEvents.TouchUpInside)
-        navigateToBtn.frame = CGRectMake(0, 50, 145, 20)
+        navigateToBtn.frame = CGRectMake(-20, 50, 145, 20)
         menuView.addSubview(navigateToBtn)
         
         var homeBtn = menu.setMenuBtnAttributes("Home")
         homeBtn.addTarget(self, action: "homeAction", forControlEvents: UIControlEvents.TouchUpInside)
-        homeBtn.frame = CGRectMake(0, 75, 145, 20)
+        homeBtn.frame = CGRectMake(-40, 75, 145, 20)
         menuView.addSubview(homeBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
-        logoutBtn.frame = CGRectMake(0, 100, 145, 20)
+        logoutBtn.frame = CGRectMake(-38, 100, 145, 20)
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
         menuView.addSubview(logoutBtn)
  
@@ -214,7 +214,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     }
     
     func navigateToAction () {
-        println("fnavigte to")
+        println("navigte to")
     }
     
     func transmitThisWamiAction () {
