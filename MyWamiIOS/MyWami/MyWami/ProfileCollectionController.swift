@@ -177,6 +177,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showInfoExtended") {
+            menuView.hidden = true
             var svc = segue.destinationViewController as WamiInfoExtended;
             svc.identityProfileId = self.identityProfileIds[self.row]
             svc.userIdentityProfileId = self.userIdentityProfileId

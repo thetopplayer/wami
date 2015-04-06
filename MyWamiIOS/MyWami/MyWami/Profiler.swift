@@ -153,6 +153,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showFlash") {
+            menuView.hidden = true
             var svc = segue.destinationViewController as Flash;
             svc.identityProfileId = self.identityProfileId
             svc.userIdentityProfileId = self.userIdentityProfileId
