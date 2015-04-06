@@ -11,6 +11,9 @@ import MessageUI
 
 class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
    
+    @IBOutlet var profileNameHdrTxt: UITextField!
+    @IBOutlet var contactNameHdrTxt: UITextField!
+    
     @IBAction func emailAction(sender: AnyObject) {
         let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
         JSONDATA.jsonGetData(getProfileName, url: GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
@@ -33,8 +36,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         UIApplication.sharedApplication().openURL(url)
     }
     
+    @IBOutlet var profileNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var profileNameText: UITextField!    
     @IBOutlet var descriptionText: UITextView!
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var emailText: UITextField!
@@ -111,6 +114,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
  
         usleep(100000)
         
+        self.profileNameHdrTxt.text = self.profileName
+        self.contactNameHdrTxt.text = self.contactName
         self.profileNameText.text = self.profileName
         self.descriptionText.text = self.descript
         self.contactNameText.text = self.contactName
