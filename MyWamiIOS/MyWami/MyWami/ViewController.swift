@@ -44,6 +44,9 @@ class ViewController: UIViewController {
         let titleBar = UIImage(named: "actionbar_login.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
+        
+        let sqliteHelper = SQLiteHelper()
+        sqliteHelper.getUserInfo()
     }
 
     override func didReceiveMemoryWarning() {
