@@ -14,9 +14,12 @@ class ViewController: UIViewController {
     
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
+    var userPassword: String!
     var userName: String!
     var userId: String!
     var userIdentityProfileId: String!
+    var userModel = UserModel()
+    let sqliteHelper = SQLiteHelper()
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
@@ -44,14 +47,18 @@ class ViewController: UIViewController {
         let titleBar = UIImage(named: "actionbar_login.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
-        
-        let sqliteHelper = SQLiteHelper()
-        sqliteHelper.getUserInfo()
+        if let userModel = sqliteHelper.getUserInfo() {
+            self.userName = userModel.getUserName()
+            self.userId = String(userModel.getUserId())
+            self.userPassword = userModel.getUserPassword()
+            self.usernameText.text = self.userName
+            self.passwordText.text = self.userPassword
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        sqliteHelper.cleanup()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
@@ -60,6 +67,10 @@ class ViewController: UIViewController {
             svc.userName = self.userName
             svc.userId = self.userId
             svc.userIdentityProfileId = self.userIdentityProfileId
+            userModel.setUserId(self.userId.toInt()!)
+            userModel.setUserName(self.userName)
+            userModel.setUserPassword(self.userPassword )
+            sqliteHelper.saveUserInfo(userModel)
         }
     }
 
@@ -75,6 +86,7 @@ class ViewController: UIViewController {
         else {
             self.userId = jsonData["user_info"][0]["user_id"].string!
             self.userName = jsonData["user_info"][0]["username"].string!
+            self.userPassword = jsonData["user_info"][0]["password"].string!
 
             let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
             JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
@@ -96,8 +108,6 @@ class ViewController: UIViewController {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
         }
-
-
     }
 }
 

@@ -14,29 +14,26 @@ public class UserModel {
     var userPassword: String = ""
 
     func setUserId(userId: Int) {
-        
+        self.userId = userId
     }
     
     func getUserId() -> Int {
-        
         return self.userId
     }
     
     func setUserName(userName: String) {
-        
+        self.userName = userName
     }
     
     func getUserName() -> String {
-        
         return self.userName
     }
     
     func setUserPassword(userPassword: String) {
-        
+        self.userPassword = userPassword
     }
     
     func getUserPassword() -> String {
-        
         return self.userPassword
     }
     
