@@ -15,7 +15,25 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var flashTableView: UITableView!
     
+    @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
+        
+    }
+    
     @IBAction func newFlashButtonPressed(sender: AnyObject) {
+        newFlashView.frame = CGRectMake(60, 140, 210, 180)
+        newFlashView.backgroundColor = UIColor(red: 0x228/255, green: 0x228/255, blue: 0x228/255, alpha: 1.0)
+        let headingLbl = UILabel()
+        headingLbl.backgroundColor = UIColor.blackColor()
+        headingLbl.textAlignment = NSTextAlignment.Center
+        headingLbl.text = "Create New Flash"
+        headingLbl.textColor = UIColor.whiteColor()
+        headingLbl.frame = CGRectMake(0, 0, 210, 30)
+                
+        
+        
+        newFlashView.addSubview(headingLbl)
+        
+        view.addSubview(newFlashView)
     }
     
     let textCellIdentifier = "FlashTableViewCell"
@@ -36,6 +54,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     let menuView = UIView()
     var menuLine = UILabel()
+    
+    let newFlashView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
