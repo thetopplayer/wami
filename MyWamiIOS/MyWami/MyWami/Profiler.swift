@@ -61,8 +61,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
         JSONDATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
         
-        usleep(100000)
-        
         profilerTableView.dataSource = self
         profilerTableView.delegate = self
         self.profilerTableView.rowHeight = 44

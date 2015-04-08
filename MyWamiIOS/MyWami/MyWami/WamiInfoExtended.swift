@@ -17,7 +17,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     @IBAction func emailAction(sender: AnyObject) {
         let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
         JSONDATA.jsonGetData(getProfileName, url: GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
-        usleep(100000)
         
         var emailTitle = "Message From Wami Profile: " + userProfileName
         var messageBody = ""
@@ -111,9 +110,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         fromUserIdentityProfileId = "NA"
         let GET_PROFILE_DATA = UTILITIES.IP + "get_profile_data.php"
         JSONDATA.jsonGetData(getProfileData, url: GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromUserIdentityProfileId, "param3": userIdentityProfileId])
- 
-        usleep(100000)
-        
+         
         self.profileNameHdrTxt.text = self.profileName
         self.contactNameHdrTxt.text = self.contactName
         self.profileNameText.text = self.profileName

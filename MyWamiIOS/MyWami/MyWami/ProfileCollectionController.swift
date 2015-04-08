@@ -51,8 +51,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
         JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
 
-        usleep(100000)
-
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
 

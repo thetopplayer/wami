@@ -38,6 +38,7 @@ public class JsonGetData {
         })
 
         task.resume()
+        usleep(100000)
         return
     }
     init() { }

@@ -34,7 +34,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     @IBOutlet var flashTableView: UITableView!
     
     @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
-        
+        getFlashData()
     }
     
     let newFlashView = UIView()
@@ -96,7 +96,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     }
     
     func createFlash() {
-        println("in here")
+        var flashData = textView.text
+        let INSERT_FLASH = UTILITIES.IP + "insert_flash.php"
+        JSONDATA.jsonGetData(insertFlashData, url: INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
     }
     
     func closeNewFlash() {
@@ -125,18 +127,15 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
         
-        let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
-        JSONDATA.jsonGetData(getFlashData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
+        getFlashData()
 
         self.profileNameText.text = self.profileName
         self.contactNameText.text = self.firstName + " " + self.lastName
         
-        usleep(100000)
-        
         flashTableView.dataSource = self
         flashTableView.delegate = self
         self.flashTableView.rowHeight = 25
-    }
+     }
     
     func showMenu(sender: UIBarButtonItem) {
         menuView.frame = CGRectMake(157, 67, 150, 100)
@@ -221,8 +220,14 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         // Dispose of any resources that can be recreated.
     }
     
-    //Callback function - getFlashData
-    func getFlashData (jsonData: JSON) {
+    func getFlashData() {
+        let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
+        JSONDATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
+        self.flashTableView.reloadData()
+    }
+    
+    //Callback function - getFlashJsonData
+    func getFlashJsonData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
@@ -231,6 +236,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
             }
         }
         else {
+            flashes.removeAll(keepCapacity: false)
             let numFlash: Int! = jsonData["profile_flash_data"].array?.count
             self.numFlash = numFlash
             for index in 0...numFlash - 1 {
@@ -241,4 +247,20 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
             }
         }
     }
+    
+    //Callback function - insertFlashData
+    func insertFlashData (jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.UTILITIES.alertMessage(message!, viewController: self)
+            }
+        }
+        else {
+            getFlashData()
+        }
+    }
 }
+
+
