@@ -67,7 +67,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func showMenu(sender: UIBarButtonItem) {
-        menuView.frame = CGRectMake(157, 67, 150, 100)
+        menuView.frame = CGRectMake(157, 70, 150, 100)
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
         view.addSubview(menuView)
         

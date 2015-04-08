@@ -465,6 +465,7 @@
                         <outlet property="streetAddressText" destination="a2w-Nh-EfR" id="Ptc-qr-caT"/>
                         <outlet property="tagsText" destination="yWZ-S1-uhe" id="eKE-sO-7kz"/>
                         <outlet property="telephoneText" destination="MDr-q7-2Xu" id="4sz-ha-vFW"/>
+                        <outlet property="uiView" destination="eYu-s7-bhA" id="6jJ-mm-WQh"/>
                         <outlet property="zipText" destination="WxC-rR-JCg" id="fsv-6j-VJ4"/>
                     </connections>
                 </viewController>

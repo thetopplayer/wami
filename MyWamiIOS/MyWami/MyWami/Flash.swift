@@ -97,6 +97,10 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     
     func createFlash() {
         var flashData = textView.text
+        if flashData == "" || flashData == "New Flash up to 110 characters" {
+            UTILITIES.alertMessage("Please enter a Flash message before saving", viewController: self)
+            return
+        }
         let INSERT_FLASH = UTILITIES.IP + "insert_flash.php"
         JSONDATA.jsonGetData(insertFlashData, url: INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
     }
@@ -138,7 +142,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
      }
     
     func showMenu(sender: UIBarButtonItem) {
-        menuView.frame = CGRectMake(157, 67, 150, 100)
+        menuView.frame = CGRectMake(157, 70, 150, 100)
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
         view.addSubview(menuView)
         
@@ -217,12 +221,12 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func getFlashData() {
         let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
         JSONDATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
+
         self.flashTableView.reloadData()
     }
     

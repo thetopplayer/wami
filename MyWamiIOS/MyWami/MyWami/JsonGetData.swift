@@ -38,7 +38,7 @@ public class JsonGetData {
         })
 
         task.resume()
-        usleep(100000)
+        usleep(50000)
         return
     }
     init() { }

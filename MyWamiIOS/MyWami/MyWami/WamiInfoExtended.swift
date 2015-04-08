@@ -53,6 +53,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet var activeIndText: UITextField!
     @IBOutlet var groupsText: UITextField!
     
+    @IBOutlet var uiView: UIView!
     @IBOutlet var scrollView: UIScrollView!
     
     var identityProfileId: String!
@@ -170,8 +171,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
 
     func showMenu(sender: UIBarButtonItem) {
         menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
-        menuView.frame = CGRectMake(147, 50, 150, 128)
-        scrollView.addSubview(menuView)
+        menuView.frame = CGRectMake(153, 70, 150, 128)
+        uiView.addSubview(menuView)
         
         let menu = Menu()
         menu.toggleMenu(menuView)
