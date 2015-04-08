@@ -95,6 +95,14 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         }
     }
     
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if countElements(textView.text) > 109 {
+            UTILITIES.alertMessage("Only 110 characters allowed.", viewController: self)
+            textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, countElements(textView.text) - 1))
+        }
+        return true
+    }
+    
     func createFlash() {
         var flashData = textView.text
         if flashData == "" || flashData == "New Flash up to 110 characters" {
