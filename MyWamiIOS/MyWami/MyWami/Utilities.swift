@@ -15,12 +15,12 @@ class Utilities {
     var DB_PATH = "/Users/robertlanter/projects/"
 
     @IBAction func alertMessage(message: NSString, viewController: UIViewController) {
-        var alertController = UIAlertController(title: "", message: message, preferredStyle: .Alert)
+        var alertController = UIAlertController(title: "ALERT", message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         alertController.view.backgroundColor = UIColor.blackColor()
         alertController.view.tintColor = UIColor.blackColor()
-        viewController.presentViewController(alertController, animated: true, completion: nil)
+        viewController.presentViewController(alertController, animated: false, completion: nil)
         return
     }
 }

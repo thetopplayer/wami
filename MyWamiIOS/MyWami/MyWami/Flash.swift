@@ -8,34 +8,7 @@
 
 import UIKit
 
-class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    
-    @IBOutlet var profileNameText: UITextField!
-    @IBOutlet var contactNameText: UITextField!
-    @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var flashTableView: UITableView!
-    
-    @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
-        
-    }
-    
-    @IBAction func newFlashButtonPressed(sender: AnyObject) {
-        newFlashView.frame = CGRectMake(60, 140, 210, 180)
-        newFlashView.backgroundColor = UIColor(red: 0x228/255, green: 0x228/255, blue: 0x228/255, alpha: 1.0)
-        let headingLbl = UILabel()
-        headingLbl.backgroundColor = UIColor.blackColor()
-        headingLbl.textAlignment = NSTextAlignment.Center
-        headingLbl.text = "Create New Flash"
-        headingLbl.textColor = UIColor.whiteColor()
-        headingLbl.frame = CGRectMake(0, 0, 210, 30)
-                
-        
-        
-        newFlashView.addSubview(headingLbl)
-        
-        view.addSubview(newFlashView)
-    }
-    
+class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate  {
     let textCellIdentifier = "FlashTableViewCell"
     
     let JSONDATA = JsonGetData()
@@ -55,7 +28,80 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     let menuView = UIView()
     var menuLine = UILabel()
     
+    @IBOutlet var profileNameText: UITextField!
+    @IBOutlet var contactNameText: UITextField!
+    @IBOutlet var profileImageView: UIImageView!
+    @IBOutlet var flashTableView: UITableView!
+    
+    @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
+        
+    }
+    
     let newFlashView = UIView()
+    var textView = UITextView()
+    @IBAction func newFlashButtonPressed(sender: AnyObject) {
+        newFlashView.frame = CGRectMake(45, 200, 240, 230)
+        newFlashView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        newFlashView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        newFlashView.layer.borderWidth = 1.5
+        
+        let headingLbl = UILabel()
+        headingLbl.backgroundColor = UIColor.blackColor()
+        headingLbl.textAlignment = NSTextAlignment.Center
+        headingLbl.text = "New Flash Anncouncement"
+        headingLbl.textColor = UIColor.whiteColor()
+        headingLbl.font = UIFont.boldSystemFontOfSize(13)
+        headingLbl.frame = CGRectMake(0, 0, 240, 30)
+        newFlashView.addSubview(headingLbl)
+        
+        textView.font = UIFont.systemFontOfSize(12)
+        textView.textAlignment = .Left
+        textView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        textView.layer.borderWidth = 0.5
+        textView.frame = CGRectMake(20, 40, 200, 120)
+        
+        textView.text = "New Flash up to 110 characters"
+        textView.textColor = UIColor.lightGrayColor()
+        textView.delegate = self
+        newFlashView.addSubview(textView)
+        
+        let createBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        createBtn.setTitle("Create", forState: UIControlState.Normal)
+        createBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        createBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        createBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        createBtn.showsTouchWhenHighlighted = true
+        createBtn.addTarget(self, action: "createFlash", forControlEvents: UIControlEvents.TouchUpInside)
+        createBtn.frame = CGRectMake(45, 180, 60, 25)
+        newFlashView.addSubview(createBtn)
+        
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.setTitle("Close", forState: UIControlState.Normal)
+        closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
+        closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        closeBtn.showsTouchWhenHighlighted = true
+        closeBtn.addTarget(self, action: "closeNewFlash", forControlEvents: UIControlEvents.TouchUpInside)
+        closeBtn.frame = CGRectMake(135, 180, 60, 25)
+        newFlashView.addSubview(closeBtn)
+        
+        view.addSubview(newFlashView)
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.textColor == UIColor.lightGrayColor() {
+            textView.text = nil
+            textView.textColor = UIColor.blackColor()
+        }
+    }
+    
+    func createFlash() {
+        println("in here")
+    }
+    
+    func closeNewFlash() {
+        newFlashView.removeFromSuperview()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
