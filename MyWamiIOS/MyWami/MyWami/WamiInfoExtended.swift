@@ -253,19 +253,21 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
-    func gotoFlashAnnouncements () {
-        performSegueWithIdentifier("show_flash", sender: self)
-        var svc = segue.destinationViewController as Flash;
+    func gotoProfiler () {
+        performSegueWithIdentifier("showProfiler", sender: self)
+        var svc = segue.destinationViewController as Profiler;
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
         svc.imageUrl = self.imageUrl
         svc.profileName = self.profileName
         svc.firstName = self.firstName
         svc.lastName = self.lastName
+        navigateToView.removeFromSuperview()
     }
-    func gotoProfiler () {
+    func gotoFlashAnnouncements () {
         performSegueWithIdentifier("showProfiler", sender: self)
-        var svc = segue.destinationViewController as Profiler;
+        performSegueWithIdentifier("show_flash", sender: self)
+        var svc = segue.destinationViewController as Flash;
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
         svc.imageUrl = self.imageUrl
