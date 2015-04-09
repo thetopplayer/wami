@@ -9,6 +9,7 @@
 import Foundation
 
 public class JsonGetData {
+    let UTILITIES = Utilities()
 
     func jsonGetData (processJsonData: (JSON) -> Void, url: String, params : Dictionary<String, String>) {
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -38,7 +39,7 @@ public class JsonGetData {
         })
 
         task.resume()
-        usleep(50000)
+        usleep(UTILITIES.WAIT_TIME)
         return
     }
     init() { }

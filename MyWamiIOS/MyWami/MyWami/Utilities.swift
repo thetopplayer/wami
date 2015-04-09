@@ -13,6 +13,7 @@ class Utilities {
     var IP = "http://localhost/MyWamiIOS/MyWami/MyWami/"
     var DB_NAME = "wamilocal.db"
     var DB_PATH = "/Users/robertlanter/projects/"
+    let WAIT_TIME: useconds_t = 20000
 
     @IBAction func alertMessage(message: NSString, viewController: UIViewController) {
         var alertController = UIAlertController(title: "ALERT", message: message, preferredStyle: .Alert)

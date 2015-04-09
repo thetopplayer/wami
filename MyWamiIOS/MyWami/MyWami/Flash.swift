@@ -196,11 +196,11 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     }
     
     func homeAction () {
-        println("home")
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: false)
     }
     
     func logoutAction () {
-        println("logout")
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: false)
     }
     
     func back(sender: UIBarButtonItem) {
@@ -216,7 +216,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     }
     
     func tableView(flashTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as FlashTableViewCell
+        var cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as FlashTableViewCell
         cell.flashText.text = self.flashes[indexPath.row]
         cell.createDateText.text = self.createDates[indexPath.row]
         return cell
@@ -234,7 +234,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     func getFlashData() {
         let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
         JSONDATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
-
         self.flashTableView.reloadData()
     }
     
