@@ -37,6 +37,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         getFlashData()
     }
     
+    // new flash btn
     let newFlashView = UIView()
     var textView = UITextView()
     @IBAction func newFlashButtonPressed(sender: AnyObject) {
@@ -87,14 +88,14 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         
         view.addSubview(newFlashView)
     }
-    
+    // used for text view placeholder
     func textViewDidBeginEditing(textView: UITextView) {
         if textView.textColor == UIColor.lightGrayColor() {
             textView.text = nil
             textView.textColor = UIColor.blackColor()
         }
     }
-    
+    // limit number of chars in flash msg
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if countElements(textView.text) > 109 {
             UTILITIES.alertMessage("Only 110 characters allowed.", viewController: self)
@@ -102,7 +103,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         }
         return true
     }
-    
+    // create button processing
     func createFlash() {
         var flashData = textView.text
         if flashData == "" || flashData == "New Flash up to 110 characters" {
@@ -112,10 +113,11 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         let INSERT_FLASH = UTILITIES.IP + "insert_flash.php"
         JSONDATA.jsonGetData(insertFlashData, url: INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
     }
-    
+    // close button processing
     func closeNewFlash() {
         newFlashView.removeFromSuperview()
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,12 +151,15 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         self.flashTableView.rowHeight = 25
      }
     
+    // create menu
+    let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
         menuView.frame = CGRectMake(157, 70, 150, 100)
-        menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
+        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
+        menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.layer.borderWidth = 1.5
         view.addSubview(menuView)
         
-        let menu = Menu()
         menu.toggleMenu(menuView)
         
         var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
@@ -177,60 +182,100 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         logoutBtn.frame = CGRectMake(-38, 75, 145, 20)
         menuView.addSubview(logoutBtn)
         
-        menuLine = menu.createMenuLine(0)
+        menuLine = menu.createMenuLine(0, length: 150)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(25)
+        menuLine = menu.createMenuLine(25, length: 150)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(50)
+        menuLine = menu.createMenuLine(50, length: 150)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(75)
+        menuLine = menu.createMenuLine(75, length: 150)
         menuView.addSubview(menuLine)
     }
     
-    func navigateToAction () {
-        println("fnavigte to")
-    }
     
+    // menu options
     func transmitThisWamiAction () {
         println("transmit")
     }
     
+    var navigateToView = UIView()
+    func navigateToAction () {
+        let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        profileInfoBtn.addTarget(self, action: "gotoProfileInfo", forControlEvents: UIControlEvents.TouchUpInside)
+        let profilerBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        profilerBtn.addTarget(self, action: "gotoProfiler", forControlEvents: UIControlEvents.TouchUpInside)
+        let flashBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        flashBtn.addTarget(self, action: "gotoFlashAnnouncements", forControlEvents: UIControlEvents.TouchUpInside)
+        let profileCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        profileCollectionBtn.addTarget(self, action: "gotoProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeNavigateTo", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        menu.toggleMenu(menuView)
+        
+        let navigateTo = NavigateTo()
+        navigateToView = navigateTo.navigateTo(navigateToView, closeBtn: closeBtn,
+            profileInfoBtn: profileInfoBtn, profilerBtn: profilerBtn, flashBtn: flashBtn, profileCollectionBtn: profileCollectionBtn)
+        
+        view.addSubview(navigateToView)
+    }
+    func closeNavigateTo() {
+        navigateToView.removeFromSuperview()
+    }
+    func gotoProfileCollection () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
+        navigateToView.removeFromSuperview()
+    }
+    func gotoFlashAnnouncements () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[4] as UIViewController, animated: true)
+        navigateToView.removeFromSuperview()
+    }
+    func gotoProfiler () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[3] as UIViewController, animated: true)
+        navigateToView.removeFromSuperview()
+    }
+    func gotoProfileInfo () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[2] as UIViewController, animated: true)
+        navigateToView.removeFromSuperview()
+    }
+  
     func homeAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: false)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
     }
     
     func logoutAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: false)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
     }
     
-    func back(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
     
+    // table cell processing
     func numberOfSectionsInTableView(flashTableView: UITableView) -> Int {
         return 1
     }
-    
     func tableView(flashTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.numFlash
     }
-    
     func tableView(flashTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as FlashTableViewCell
         cell.flashText.text = self.flashes[indexPath.row]
         cell.createDateText.text = self.createDates[indexPath.row]
         return cell
     }
-    
     func tableView(flashTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         flashTableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
     }
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    func back(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    // data processing
     func getFlashData() {
         let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
         JSONDATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])

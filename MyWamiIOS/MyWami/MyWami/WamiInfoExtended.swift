@@ -88,6 +88,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     let menuView = UIView()
     var menuLine = UILabel()
+    var segue = UIStoryboardSegue()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,12 +170,15 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    // menu processing
+    let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
-        menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
+        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
+        menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.layer.borderWidth = 1.5
         menuView.frame = CGRectMake(153, 70, 150, 128)
         uiView.addSubview(menuView)
-        
-        let menu = Menu()
+ 
         menu.toggleMenu(menuView)
         
         var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
@@ -202,41 +206,94 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
         menuView.addSubview(logoutBtn)
  
-        menuLine = menu.createMenuLine(0)
+        menuLine = menu.createMenuLine(0, length: 150)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(25)
+        menuLine = menu.createMenuLine(25, length: 150)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(50)
+        menuLine = menu.createMenuLine(50, length: 150)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(75)
+        menuLine = menu.createMenuLine(75, length: 150)
         menuView.addSubview(menuLine)
     }
     
+    // menu options
     func addToContactListAction () {
         println("addToContact")
-    }
-    
-    func navigateToAction () {
-        println("navigte to")
     }
     
     func transmitThisWamiAction () {
         println("transmit")
     }
     
+    var navigateToView = UIView()
+    func navigateToAction () {
+        let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        profileInfoBtn.addTarget(self, action: "gotoProfileInfo", forControlEvents: UIControlEvents.TouchUpInside)
+        let profilerBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        profilerBtn.addTarget(self, action: "gotoProfiler", forControlEvents: UIControlEvents.TouchUpInside)
+        let flashBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        flashBtn.addTarget(self, action: "gotoFlashAnnouncements", forControlEvents: UIControlEvents.TouchUpInside)
+        let profileCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        profileCollectionBtn.addTarget(self, action: "gotoProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeNavigateTo", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        menu.toggleMenu(menuView)
+        
+        let navigateTo = NavigateTo()
+        navigateToView = navigateTo.navigateTo(navigateToView, closeBtn: closeBtn,
+            profileInfoBtn: profileInfoBtn, profilerBtn: profilerBtn, flashBtn: flashBtn, profileCollectionBtn: profileCollectionBtn)
+        
+        view.addSubview(navigateToView)
+    }
+    func closeNavigateTo() {
+        navigateToView.removeFromSuperview()
+    }
+    func gotoProfileCollection () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
+        navigateToView.removeFromSuperview()
+    }
+    func gotoFlashAnnouncements () {
+        performSegueWithIdentifier("show_flash", sender: self)
+        var svc = segue.destinationViewController as Flash;
+        svc.identityProfileId = self.identityProfileId
+        svc.userIdentityProfileId = self.userIdentityProfileId
+        svc.imageUrl = self.imageUrl
+        svc.profileName = self.profileName
+        svc.firstName = self.firstName
+        svc.lastName = self.lastName
+    }
+    func gotoProfiler () {
+        performSegueWithIdentifier("showProfiler", sender: self)
+        var svc = segue.destinationViewController as Profiler;
+        svc.identityProfileId = self.identityProfileId
+        svc.userIdentityProfileId = self.userIdentityProfileId
+        svc.imageUrl = self.imageUrl
+        svc.profileName = self.profileName
+        svc.firstName = self.firstName
+        svc.lastName = self.lastName
+        navigateToView.removeFromSuperview()
+    }
+    func gotoProfileInfo () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[2] as UIViewController, animated: true)
+        navigateToView.removeFromSuperview()
+    }
+    
     func homeAction () {
-        println("home")
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
     }
     
     func logoutAction () {
-        println("logout")
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
     }
+    
     
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        self.segue = segue
         if (segue.identifier == "showProfiler") {
             menuView.hidden = true
             var svc = segue.destinationViewController as Profiler;
@@ -265,6 +322,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    
     //Callback function - getProfileData
     func getProfileData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]

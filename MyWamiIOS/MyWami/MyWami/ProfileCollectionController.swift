@@ -70,7 +70,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     func showMenu(sender: UIBarButtonItem) {
         menuView.frame = CGRectMake(130, 2, 180, 150)
-        menuView.backgroundColor = UIColor(red: 0x66/255, green: 0x66/255, blue: 0x66/255, alpha: 0.95)
+        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
+        menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.layer.borderWidth = 1.5
         view.addSubview(menuView)
         
         let menu = Menu()
@@ -106,15 +108,15 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         logoutBtn.frame = CGRectMake(-58, 125, 175, 20)
         menuView.addSubview(logoutBtn)
         
-        menuLine = menu.createMenuLine(0)
+        menuLine = menu.createMenuLine(0, length: 180)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(25)
+        menuLine = menu.createMenuLine(25, length: 180)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(50)
+        menuLine = menu.createMenuLine(50, length: 180)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(75)
+        menuLine = menu.createMenuLine(75, length: 180)
         menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(100)
+        menuLine = menu.createMenuLine(100, length: 180)
         menuView.addSubview(menuLine)
     }
     

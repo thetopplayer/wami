@@ -29,9 +29,9 @@ class Menu {
         }
     }
     
-    func createMenuLine (offset: Int) -> UILabel {
+    func createMenuLine (offset: Int, length: Int) -> UILabel {
         var line: UILabel = UILabel()
-        line.frame = CGRectMake(0, CGFloat(25 + offset), 150, 1)
+        line.frame = CGRectMake(0, CGFloat(25 + offset), CGFloat(length), 1)
         line.backgroundColor = UIColor.grayColor()
         return line
     }
