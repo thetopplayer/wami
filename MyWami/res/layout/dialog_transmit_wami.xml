@@ -38,7 +38,7 @@
 				android:textColor="#000000"
 				android:textStyle="bold"
 				android:textSize="14sp"
-				android:text="Profile name"/>
+				android:text="Profile Name"/>
 
 		<AutoCompleteTextView
 				android:id="@+id/profile_name"
