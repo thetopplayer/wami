@@ -98,7 +98,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tU9-se-z4g" id="OzR-Vs-dsu" customClass="UITableViewCellContentView">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCY-ps-ldD">
+                                        <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCY-ps-ldD">
                                             <rect key="frame" x="123" y="38" width="57" height="22"/>
                                             <color key="backgroundColor" red="0.3254304542" green="0.73370422980000005" blue="0.69281557059999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
@@ -110,7 +110,7 @@
                                                 <action selector="transmitButtonPressed:" destination="8BU-M7-bNb" eventType="touchUpInside" id="ji1-cj-rT9"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iz-l9-mkw">
+                                        <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iz-l9-mkw">
                                             <rect key="frame" x="185" y="38" width="88" height="22"/>
                                             <color key="backgroundColor" red="0.31763377409999999" green="0.71612610480000005" blue="0.67621705830000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
@@ -480,7 +480,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17h-cd-PaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="58" y="-934"/>
+            <point key="canvasLocation" x="74" y="-1157"/>
         </scene>
         <!--Profiler-->
         <scene sceneID="dxZ-8X-v5X">
@@ -574,7 +574,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Zw-rI-qOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="-573"/>
+            <point key="canvasLocation" x="497" y="-1063"/>
         </scene>
         <!--Flash-->
         <scene sceneID="ydX-vs-iVy">
@@ -680,7 +680,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0L-4a-K6A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="755" y="-994"/>
+            <point key="canvasLocation" x="964" y="-1165"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CED-Aa-Ujs">

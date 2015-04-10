@@ -194,8 +194,21 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     
     
     // menu options
+    var transmitProfileView = UIView()
     func transmitThisWamiAction () {
-        println("transmit")
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        transmitBtn.addTarget(self, action: "transmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let transmitProfile = TransmitProfile()
+        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        
+        view.addSubview(transmitProfileView)
+        menu.toggleMenu(menuView)
+    }
+    func closeTransmitProfile() {
+        transmitProfileView.removeFromSuperview()
     }
     
     var navigateToView = UIView()
@@ -211,13 +224,12 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         closeBtn.addTarget(self, action: "closeNavigateTo", forControlEvents: UIControlEvents.TouchUpInside)
         
-        menu.toggleMenu(menuView)
-        
         let navigateTo = NavigateTo()
         navigateToView = navigateTo.navigateTo(navigateToView, closeBtn: closeBtn,
             profileInfoBtn: profileInfoBtn, profilerBtn: profilerBtn, flashBtn: flashBtn, profileCollectionBtn: profileCollectionBtn)
         
         view.addSubview(navigateToView)
+        menu.toggleMenu(menuView)
     }
     func closeNavigateTo() {
         navigateToView.removeFromSuperview()

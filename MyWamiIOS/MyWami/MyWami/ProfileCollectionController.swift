@@ -141,7 +141,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func logoutAction () {
-        println("logout")
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
     }
 
     func back(sender: UIBarButtonItem) {
