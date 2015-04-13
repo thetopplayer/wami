@@ -9,7 +9,13 @@
 import UIKit
 
 class TransmitProfile: UIViewController {
+    let JSONDATA = JsonGetData()
+    let UTILITIES = Utilities()
+    var uview = UIView()
+    
+    let profileNameTxt = UITextField()
     func transmitProfile(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
+        self.uview = transmitProfileView
             
         transmitProfileView.frame = CGRectMake(45, 200, 240, 215)
         transmitProfileView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
@@ -27,7 +33,7 @@ class TransmitProfile: UIViewController {
         
         let profileNameLbl = UILabel()
         profileNameLbl.backgroundColor = UIColor.whiteColor()
-        profileNameLbl.text = "Profile Name"
+        profileNameLbl.text = "To Profile Name"
         profileNameLbl.textColor = UIColor.blackColor()
         profileNameLbl.font = UIFont.boldSystemFontOfSize(13)
         profileNameLbl.frame = CGRectMake(10, 40, 100, 20)
@@ -38,7 +44,6 @@ class TransmitProfile: UIViewController {
         txtFldBorderLbL1.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         txtFldBorderLbL1.layer.borderWidth = 1.5
         
-        let profileNameTxt = UITextField()
         profileNameTxt.backgroundColor = UIColor.whiteColor()
         profileNameTxt.textColor = UIColor.blackColor()
         profileNameTxt.font = UIFont.systemFontOfSize(12)
@@ -50,7 +55,7 @@ class TransmitProfile: UIViewController {
         
         let emailAddressLbl = UILabel()
         emailAddressLbl.backgroundColor = UIColor.whiteColor()
-        emailAddressLbl.text = "Email Address"
+        emailAddressLbl.text = "To Email Address"
         emailAddressLbl.textColor = UIColor.blackColor()
         emailAddressLbl.font = UIFont.boldSystemFontOfSize(12)
         emailAddressLbl.frame = CGRectMake(10, 100, 100, 20)
@@ -94,4 +99,35 @@ class TransmitProfile: UIViewController {
         
         return transmitProfileView
     }
+    
+    func transmit(fromProfileId: String, identityProfileId: String) {
+        var num_to_transmit = "1"
+        var transmit_to_profile = profileNameTxt.text
+        var from_profile_id = String(fromProfileId)
+        var profiles_to_transmit = identityProfileId as NSString
+        let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
+        JSONDATA.jsonGetData(insertTransmittedData, url: INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
+    }
+    
+    func insertTransmittedData(jsonData: JSON) {
+        var retCode = jsonData["ret_code"]
+        if retCode != 0 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+        }
+        if retCode == 0 {
+            var numProfilesTransmitted = jsonData["num_profiles_transmitted"]
+            var message = "Number of profiles transmitted = \(numProfilesTransmitted)"
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.uview.makeToast(message: message, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+            }
+
+        }
+    }
 }
+
+
+

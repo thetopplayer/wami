@@ -98,7 +98,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     // limit number of chars in flash msg
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if countElements(textView.text) > 109 {
-            UTILITIES.alertMessage("Only 110 characters allowed.", viewController: self)
+//            UTILITIES.alertMessage("Only 110 characters allowed.", viewController: self)
+            self.view.makeToast(message: "Only 110 characters allowed.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, countElements(textView.text) - 1))
         }
         return true
@@ -107,7 +108,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     func createFlash() {
         var flashData = textView.text
         if flashData == "" || flashData == "New Flash up to 110 characters" {
-            UTILITIES.alertMessage("Please enter a Flash message before saving", viewController: self)
+//            UTILITIES.alertMessage("Please enter a Flash message before saving", viewController: self)
+            self.view.makeToast(message: "Please enter a Flash message before creating", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
         let INSERT_FLASH = UTILITIES.IP + "insert_flash.php"
@@ -195,13 +197,13 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     
     // menu options
     var transmitProfileView = UIView()
+    let transmitProfile = TransmitProfile()
     func transmitThisWamiAction () {
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        transmitBtn.addTarget(self, action: "transmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let transmitProfile = TransmitProfile()
         transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
         
         view.addSubview(transmitProfileView)
@@ -209,6 +211,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     }
     func closeTransmitProfile() {
         transmitProfileView.removeFromSuperview()
+    }
+    func transmit() {
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: identityProfileId)
     }
     
     var navigateToView = UIView()
@@ -300,7 +305,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {
@@ -322,7 +328,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {

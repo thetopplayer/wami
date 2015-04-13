@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         var password = self.passwordText.text
 
         if (username.isEmpty || password.isEmpty) {
-            UTILITIES.alertMessage("Please enter a Username and Password", viewController: self)
+            self.view.makeToast(message: "Please enter a Username and Password", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
 
@@ -80,7 +80,8 @@ class ViewController: UIViewController {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
             }
         }
         else {
@@ -99,7 +100,9 @@ class ViewController: UIViewController {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+
             }
         }
         else {
