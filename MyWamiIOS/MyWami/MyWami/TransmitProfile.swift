@@ -96,7 +96,7 @@ class TransmitProfile: UIViewController {
         closeBtn.showsTouchWhenHighlighted = true
         closeBtn.frame = CGRectMake(135, 180, 60, 20)
         transmitProfileView.addSubview(closeBtn)
-        
+                
         return transmitProfileView
     }
     

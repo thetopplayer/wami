@@ -109,8 +109,24 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
 
     // menu options
+    var transmitProfileView = UIView()
+    let transmitProfile = TransmitProfile()
     func transmitThisWamiAction () {
-        println("transmit")
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        
+        view.addSubview(transmitProfileView)
+        menu.toggleMenu(menuView)
+    }
+    func closeTransmitProfile() {
+        transmitProfileView.removeFromSuperview()
+    }
+    func transmit() {
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: identityProfileId)
     }
     
     var navigateToView = UIView()
