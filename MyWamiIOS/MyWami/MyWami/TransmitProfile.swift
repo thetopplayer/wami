@@ -26,7 +26,7 @@ class TransmitProfile: UIViewController {
         let headingLbl = UILabel()
         headingLbl.backgroundColor = UIColor.blackColor()
         headingLbl.textAlignment = NSTextAlignment.Center
-        headingLbl.text = "Transmit This Profile"
+        headingLbl.text = "Transmit Profile(s)"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 240, 30)

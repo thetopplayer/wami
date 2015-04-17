@@ -7,35 +7,28 @@ import UIKit
 
 class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBAction func checkBoxPressed(sender: AnyObject) {
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
+        var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+
+        if checkBoxs[row] == false {
+            checkBoxs[row] = true
+        }
+        else {
+            checkBoxs[row] = false
+        }
+    }
+    
+    @IBOutlet var tableViewCell: ProfileListTableViewCell!
+    
     @IBAction func transmitButtonPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
         var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
         selectedIdentityProfileId = identityProfileIds[row]
-        transmitThisWamiAction()
+        transmitProfileAction()
     }
-    // Transmit profile
-    var transmitProfileView = UIView()
-    let transmitProfile = TransmitProfile()
-    func transmitThisWamiAction () {
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
-        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
-        
-        view.addSubview(transmitProfileView)
-        menu.toggleMenu(menuView)
-    }
-    func closeTransmitProfile() {
-        transmitProfileView.removeFromSuperview()
-    }
-    func transmit() {
-        transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId)
-    }
-    
-
 
     @IBAction func addToContactsButtonPressed(sender: AnyObject) {
         
@@ -64,6 +57,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var telephones = [String]()
     var identityProfileIds = [String]()
     var assignToIdentityProfileIds = [String]()
+    var checkBoxs = [Bool]()
+    var chosenProfilesIdsToTransmit = [String]()
 
     let textCellIdentifier = "ProfileListTableViewCell"
     var row = 0
@@ -148,7 +143,21 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func transmitProfilesAction() {
-        
+        var profilesToTransmit = false
+        var profileIndex = 0
+        for index in 0...numProfiles - 1 {
+            if checkBoxs[index] == true {
+                chosenProfilesIdsToTransmit[profileIndex] = identityProfileIds[index]
+                profileIndex++
+                profilesToTransmit = true
+            }
+        }
+        if profilesToTransmit == true {
+            transmitProfileAction()
+        }
+        else {
+            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking the checkbox.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+        }
     }
     
     func selectCollectionAction () {
@@ -169,6 +178,27 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     func logoutAction () {
         self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
+    }
+    
+    // Transmit profile(s)
+    var transmitProfileView = UIView()
+    let transmitProfile = TransmitProfile()
+    func transmitProfileAction () {
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        
+        view.addSubview(transmitProfileView)
+        menu.toggleMenu(menuView)
+    }
+    func closeTransmitProfile() {
+        transmitProfileView.removeFromSuperview()
+    }
+    func transmit() {
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId)
     }
 
     func back(sender: UIBarButtonItem) {
@@ -193,7 +223,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
         var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
         cell.profileImage.image = image
-
+        
         return cell
     }
 
@@ -217,7 +247,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {
@@ -247,6 +278,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
 
                 var assignToIdentityProfileId = jsonData["profile_collection"][index]["assign_to_identity_profile_id"].string!
                 assignToIdentityProfileIds.append(assignToIdentityProfileId)
+                
+                checkBoxs.append(false)
+                chosenProfilesIdsToTransmit.append("")
             }
         }
     }
