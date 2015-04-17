@@ -220,11 +220,27 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     func addToContactListAction () {
         println("addToContact")
     }
-    
+    // Transmit profile
+    var transmitProfileView = UIView()
+    let transmitProfile = TransmitProfile()
     func transmitThisWamiAction () {
-        println("transmit")
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        
+        view.addSubview(transmitProfileView)
+        menu.toggleMenu(menuView)
     }
-    
+    func closeTransmitProfile() {
+        transmitProfileView.removeFromSuperview()
+    }
+    func transmit() {
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: identityProfileId)
+    }
+    // Navigate to 
     var navigateToView = UIView()
     func navigateToAction () {
         let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
@@ -331,7 +347,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
             return
         }
@@ -376,7 +393,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {

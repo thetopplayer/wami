@@ -235,7 +235,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.UTILITIES.alertMessage(message!, viewController: self)
+//                self.UTILITIES.alertMessage(message!, viewController: self)
+                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {

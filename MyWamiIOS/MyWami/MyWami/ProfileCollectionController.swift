@@ -8,8 +8,34 @@ import UIKit
 class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBAction func transmitButtonPressed(sender: AnyObject) {
-       
-    }    
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
+        var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+        selectedIdentityProfileId = identityProfileIds[row]
+        transmitThisWamiAction()
+    }
+    // Transmit profile
+    var transmitProfileView = UIView()
+    let transmitProfile = TransmitProfile()
+    func transmitThisWamiAction () {
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        
+        view.addSubview(transmitProfileView)
+        menu.toggleMenu(menuView)
+    }
+    func closeTransmitProfile() {
+        transmitProfileView.removeFromSuperview()
+    }
+    func transmit() {
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId)
+    }
+    
+
 
     @IBAction func addToContactsButtonPressed(sender: AnyObject) {
         
@@ -25,6 +51,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var userName: String!
     var userId: String!
     var userIdentityProfileId: String!
+    var selectedIdentityProfileId: String!
 
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
@@ -68,6 +95,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         navigationItem.rightBarButtonItem = menuButton
     }
     
+    let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
         menuView.frame = CGRectMake(130, 2, 180, 150)
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
@@ -75,7 +103,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.layer.borderWidth = 1.5
         view.addSubview(menuView)
         
-        let menu = Menu()
         menu.toggleMenu(menuView)
         
         var selectCollectionBtn = menu.setMenuBtnAttributes("Select a Profile Collection...")
@@ -89,7 +116,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.addSubview(filterByGroupBtn)
         
         var transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
-        transmitBtn.addTarget(self, action: "transmitProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
+        transmitBtn.addTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
         transmitBtn.frame = CGRectMake(-24, 50, 175, 20)
         menuView.addSubview(transmitBtn)
         
@@ -120,6 +147,10 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.addSubview(menuLine)
     }
     
+    func transmitProfilesAction() {
+        
+    }
+    
     func selectCollectionAction () {
         println("selectup")
     }
@@ -127,11 +158,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     func filterByGroupAction () {
         println("filter by group")
     }
-
-    func transmitProfileAction () {
-        println("transmit")
-    }
-
+    
     func refeshListAction () {
         println("Refresh")
     }

@@ -12,6 +12,7 @@ class TransmitProfile: UIViewController {
     let JSONDATA = JsonGetData()
     let UTILITIES = Utilities()
     var uview = UIView()
+    var userProfileName = ""
     
     let profileNameTxt = UITextField()
     func transmitProfile(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
@@ -109,6 +110,7 @@ class TransmitProfile: UIViewController {
         JSONDATA.jsonGetData(insertTransmittedData, url: INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
     }
     
+    //Callback function - insertTransmittedData
     func insertTransmittedData(jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode != 0 {
