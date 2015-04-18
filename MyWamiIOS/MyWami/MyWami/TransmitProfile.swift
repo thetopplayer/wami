@@ -116,17 +116,22 @@ class TransmitProfile: UIViewController {
         if retCode != 0 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         if retCode == 0 {
             var numProfilesTransmitted = jsonData["num_profiles_transmitted"]
             var message = "Number of profiles transmitted = \(numProfilesTransmitted)"
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.uview.makeToast(message: message, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+            var fullMsg = ""
+            if let dupMessage = jsonData["record_already_exist"][0].string {
+                fullMsg = message + ".\n" + dupMessage
             }
-
+            else {
+                fullMsg = message
+            }
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.uview.makeToast(message: fullMsg, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+            }
         }
     }
 }

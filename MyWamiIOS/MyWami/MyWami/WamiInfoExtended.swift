@@ -347,24 +347,32 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
             return
         }
         var jsonIndex = 0
-        if let jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array? {
-            var numGroups = jsonGroups.count
-            for index in 0...numGroups - 1 {
-                var group = jsonData["identity_profile_data"][0]["group_data"][index]["group"].string!
-                groups = groups + ", " + group
+        retCode = jsonData["group_ret_code"]
+        if retCode == 2 {
+            var message = jsonData["group_message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
             }
-            groups = groups.substringFromIndex(advance(groups.startIndex, 2))
-            jsonIndex = 1
         }
         else {
-            groups = ""
-            jsonIndex = 0
+            if let jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array? {
+                var numGroups = jsonGroups.count
+                for index in 0...numGroups - 1 {
+                    var group = jsonData["identity_profile_data"][0]["group_data"][index]["group"].string!
+                    groups = groups + ", " + group
+                }
+                groups = groups.substringFromIndex(advance(groups.startIndex, 2))
+                jsonIndex = 1
+            }
+            else {
+                groups = ""
+                jsonIndex = 0
+            }
         }
         profileName = jsonData["identity_profile_data"][jsonIndex]["profile_name"].string!
         descript = jsonData["identity_profile_data"][jsonIndex]["description"].string!

@@ -80,9 +80,10 @@ if ($user_identity_profile_id != "NA") {
     }
     if (mysqli_num_rows($result) === 0) {
         $response["group_ret_code"] = 2;
-        $response["message"] = "No Group data found";
+        $response["group_message"] = "No Group data found";
     } else {
         array_push($response["identity_profile_data"], $groups);
+        $response["group_ret_code"] = 0;
     }
 }
 

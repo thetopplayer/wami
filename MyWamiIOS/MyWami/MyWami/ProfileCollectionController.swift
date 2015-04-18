@@ -23,10 +23,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     @IBOutlet var tableViewCell: ProfileListTableViewCell!
     
     @IBAction func transmitButtonPressed(sender: AnyObject) {
+        menuView.hidden = false
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
         var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
         selectedIdentityProfileId = identityProfileIds[row]
+        numProfilesToTransmit = 1
         transmitProfileAction()
     }
 
@@ -146,20 +148,22 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     func transmitProfilesAction() {
         var profilesToTransmit = false
         var profileIndex = 0
+        selectedIdentityProfileId = ""
         for index in 0...numProfiles - 1 {
             if checkBoxs[index] == true {
                 chosenProfilesIdsToTransmit[profileIndex] = identityProfileIds[index]
-                selectedIdentityProfileId = identityProfileIds[index]
+                selectedIdentityProfileId = identityProfileIds[index] + "," + selectedIdentityProfileId
                 profileIndex++
                 profilesToTransmit = true
             }
         }
         if profilesToTransmit == true {
             numProfilesToTransmit = profileIndex
+            selectedIdentityProfileId = selectedIdentityProfileId.substringToIndex(selectedIdentityProfileId.endIndex.predecessor())
             transmitProfileAction()
         }
         else {
-            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking the checkbox.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
     
