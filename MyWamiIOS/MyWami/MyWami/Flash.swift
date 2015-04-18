@@ -213,7 +213,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         transmitProfileView.removeFromSuperview()
     }
     func transmit() {
-        transmitProfile.transmit(userIdentityProfileId, identityProfileId: identityProfileId)
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: identityProfileId, numToTransmit: "1")
     }
     
     var navigateToView = UIView()

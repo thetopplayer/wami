@@ -101,8 +101,8 @@ class TransmitProfile: UIViewController {
         return transmitProfileView
     }
     
-    func transmit(fromProfileId: String, identityProfileId: String) {
-        var num_to_transmit = "1"
+    func transmit(fromProfileId: String, identityProfileId: String, numToTransmit: String) {
+        var num_to_transmit = numToTransmit
         var transmit_to_profile = profileNameTxt.text
         var from_profile_id = String(fromProfileId)
         var profiles_to_transmit = identityProfileId as NSString

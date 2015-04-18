@@ -63,6 +63,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     let textCellIdentifier = "ProfileListTableViewCell"
     var row = 0
     var numProfiles = 0
+    var numProfilesToTransmit = 0
     
     let menuView = UIView()
     var menuLine = UILabel()
@@ -148,11 +149,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         for index in 0...numProfiles - 1 {
             if checkBoxs[index] == true {
                 chosenProfilesIdsToTransmit[profileIndex] = identityProfileIds[index]
+                selectedIdentityProfileId = identityProfileIds[index]
                 profileIndex++
                 profilesToTransmit = true
             }
         }
         if profilesToTransmit == true {
+            numProfilesToTransmit = profileIndex
             transmitProfileAction()
         }
         else {
@@ -198,7 +201,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         transmitProfileView.removeFromSuperview()
     }
     func transmit() {
-        transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId)
+        transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId, numToTransmit: String(numProfilesToTransmit))
     }
 
     func back(sender: UIBarButtonItem) {
