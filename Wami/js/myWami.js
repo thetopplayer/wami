@@ -6,7 +6,7 @@
  */
 $(document).ready(function(){
 	var data = localStorage.getItem("user_info");
-	var obj = JSON.parse(data)
+	var obj = JSON.parse(data);
 	var user_id = obj.user_info[0].user_id;
 	var username = obj.user_info[0].username;
 	localStorage.setItem("username", username);
@@ -31,7 +31,7 @@ function loadData(identity_profile_id) {
 		var wami_count_obj = JSON.parse(wami_count_data);
 		var wami_count = wami_count_obj.wami_count;
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("Error getting web page: status = " + err.message, "alert-danger", "Severe Error!  ", "header");
 	}
 
@@ -46,7 +46,7 @@ function loadData(identity_profile_id) {
 		var mywami_data = localStorage.getItem("mywami_data");
 		var mywami_obj = JSON.parse(mywami_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("get_mywami_data: Error getting data for profile: status = " + err.message, "alert-danger", "Error!  ", "header");
 		return;
 	}
@@ -179,10 +179,10 @@ function loadData(identity_profile_id) {
 				media_tag = '<div class="col-md-2" style="width: 140px"><img src="' + media_url + '"style="margin-top: 3px; margin-bottom: 10px"></div>';
 				flash_tag = '<div class="col-md-2" style="width: 630px;">' + flash + '</div>';
 			} else {
-				flash_tag = '<div class="col-md-1" style="min-width: 770px; padding-left: 0px">' + flash + '</div>';
+				flash_tag = '<div class="col-md-1" style="min-width: 750px; padding-left: 0px">' + flash + '</div>';
 			}
 			flash_announcements = flash_announcements +
-				'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
+				'<a href="#" class="list-group-item" style="width: 1010px; padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
 					'<div class="list-group">' +
 						'<div class="col-md-1" style="width: 3px">' +
 							'<input type="checkbox" id="flash_checkbox' + i + '">' +
@@ -213,7 +213,7 @@ function get_default_identity_profile () {
 	var active_ind = $('#inactive').val();
 	if (active_ind === "inactive") {
 		var data = localStorage.getItem("user_info");
-		var obj = JSON.parse(data)
+		var obj = JSON.parse(data);
 		var user_id = obj.user_info[0].user_id;
 
 		processData("user_id=" + user_id, "get_default_identity_profile_id.php", "default_identity_profile_id", false);
@@ -244,7 +244,7 @@ function get_default_identity_profile () {
 function fill_from_account() {
 	if ($('#use_account_info').is(':checked')) {
 		var data = localStorage.getItem("user_info");
-		var obj = JSON.parse(data)
+		var obj = JSON.parse(data);
 		var user_id = obj.user_info[0].user_id;
 
 		processData("user_id=" + user_id, "get_account_data.php", "account_data", false);
@@ -339,7 +339,7 @@ function remove_profile() {
 		var update_mywami_profile_data = localStorage.getItem("update_mywami_profile_data");
 		var update_mywami_profile_obj = JSON.parse(update_mywami_profile_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("update_for_delete_mywami_profile: Error deleting profile = " + err.message, "alert-danger", "Error!  ", "header");
 		return;
 	}
@@ -354,7 +354,7 @@ function remove_profile() {
 		var default_identity_profile_id = localStorage.getItem("default_identity_profile_id");
 
 		var data = localStorage.getItem("user_info");
-		var obj = JSON.parse(data)
+		var obj = JSON.parse(data);
 		var user_id = obj.user_info[0].user_id;
 
 		//from common.js, loads list of profiles for the current user
@@ -367,7 +367,7 @@ function remove_profile() {
 // Change the default profile
 function updateDefaultProfile() {
 	var data = localStorage.getItem("user_info");
-	var obj = JSON.parse(data)
+	var obj = JSON.parse(data);
 	var user_id = obj.user_info[0].user_id;
 
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
@@ -378,7 +378,7 @@ function updateDefaultProfile() {
 		var update_default_profile_data = localStorage.getItem("update_default_profile_data");
 		var update_default_profile_obj = JSON.parse(update_default_profile_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("update_default_profile: Error updating default profile = " + err.message, "alert-danger", "Error!  ", "header");
 		return;
 	}
@@ -458,7 +458,7 @@ function save_my_wami_data() {
 		var update_mywami_data = localStorage.getItem("update_mywami_data");
 		var update_mywami_obj = JSON.parse(update_mywami_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("update_mywami_data: Error updating MyWami data = " + err.message, "alert-danger", "Error!  ", "mywami");
 		return false;
 	}
@@ -502,7 +502,7 @@ function new_profile(profile_name, email) {
 	}
 	else {
 		var data = localStorage.getItem("user_info");
-		var obj = JSON.parse(data)
+		var obj = JSON.parse(data);
 		var user_id = obj.user_info[0].user_id;
 		result_obj = insert_new_profile(profile_name, email, user_id);
 		if (result_obj.ret_code != 0) {
@@ -527,7 +527,7 @@ function check_new_profile(profile_name) {
 		var result_data = localStorage.getItem("result");
 		var result_obj = JSON.parse(result_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		return ("check_profile_name: Error checking for duplicate profile name = " + err.message);
 	}
 
@@ -543,7 +543,7 @@ function insert_new_profile(profile_name, email, user_id) {
 		var result_data = localStorage.getItem("result");
 		var result_obj = JSON.parse(result_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("insert_new_profile_data: Error inserting new profile = " + err.message, "alert-danger", "Error!  ", "mywami");
 		return ("insert_new_profile_data: Error inserting new profile = " + err.message);
 	}
@@ -578,7 +578,7 @@ function upload_new_profile_image() {
 			image_id.innerHTML = "";
 			preview.src = reader.result;
 			image_id.appendChild(preview);
-		}
+		};
 
 	//save to file system and database
 	byte_reader.onload =
@@ -598,7 +598,7 @@ function upload_new_profile_image() {
 				var result_data = localStorage.getItem("result");
 				var result_obj = JSON.parse(result_data);
 			} catch (err) {
-					console.log(err.message)
+					console.log(err.message);
 					my_wami_alert("update_new_profile_image_data: Error updating new profile image = " + err.message, "alert-danger", "Error!  ", "image_upload");
 					return;
 			}
@@ -651,7 +651,7 @@ function save_new_flash () {
 		var result_data = localStorage.getItem("result");
 		var result_obj = JSON.parse(result_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("insert_flash: Error inserting a new Flash = " + err.message, "alert-danger", "Error!  ", "flash_dialog");
 		return;
 	}
@@ -674,7 +674,7 @@ function refresh_flash() {
 		var flash_data = localStorage.getItem("result");
 		var flash_obj = JSON.parse(flash_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("get_profile_flash_data: Error getting Flash data = " + err.message, "alert-danger", "Error!  ", "flash_dialog");
 		return;
 	}
@@ -760,7 +760,7 @@ function update_for_delete_flash() {
 		var flash_data = localStorage.getItem("result");
 		var flash_obj = JSON.parse(flash_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("update_for_delete_flash: Error deleting Flash data = " + err.message, "alert-danger", "Error!  ", "remove_flash");
 		return false;
 	}
@@ -806,7 +806,7 @@ function save_group () {
 		var result_data = localStorage.getItem("result");
 		var result_obj = JSON.parse(result_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("insert_group: Error inserting a new Group = " + err.message, "alert-danger", "Error!  ", "group_dialog");
 		return;
 	}
@@ -834,7 +834,7 @@ function refresh_group() {
 		var group_data = localStorage.getItem("result");
 		var group_obj = JSON.parse(group_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("get_profile_group_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
 		return;
 	}
@@ -911,7 +911,7 @@ function update_for_delete_group() {
 		var group_data = localStorage.getItem("result");
 		var group_obj = JSON.parse(group_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_wami_alert("update_for_delete_group: Error deleting Group data = " + err.message, "alert-danger", "Error!  ", "remove_group");
 		return false;
 	}
