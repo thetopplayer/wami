@@ -701,15 +701,15 @@ function refresh_flash() {
 				media_tag = '<div class="col-md-2" style="width: 140px"><img src="' + media_url + '"style="margin-top: 3px; margin-bottom: 10px"></div>';
 				flash_tag = '<div class="col-md-2" style="width: 730px;">' + flash + '</div>';
 			} else {
-				flash_tag = '<div class="col-md-1" style="min-width: 870px">' + flash + '</div>';
+				flash_tag = '<div class="col-md-1" style="min-width: 750px; padding-left: 0px">' + flash + '</div>';
 			}
 			flash_announcements = flash_announcements +
-					'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
+					'<a href="#" class="list-group-item" style="width: 1010px; padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
 						'<div class="list-group">' +
 							'<div class="col-md-1" style="width: 3px">' +
 								'<input type="checkbox" id="flash_checkbox' + i + '">' +
 							'</div>' +
-							'<div class="col-md-1" style="width: 170px">' +
+							'<div class="col-md-1" style="width: 165px; padding-right: 0px">' +
 								'<h5 style="margin-top: 3px; margin-bottom: 3px">' + date + '</h5>' +
 							'</div>' +
 							media_tag + flash_tag +
