@@ -17,7 +17,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     let textCellIdentifier = "ProfilerTableViewCell"
     
-    let JSONDATA = JsonGetData()
+    let JSON_DATA = JsonGetData()
+    let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
    
     var identityProfileId: String!
@@ -60,7 +61,9 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         self.contactNameText.text = self.firstName + " " + self.lastName
         
         let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
-        JSONDATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILER_DATA, params: ["param1": identityProfileId])
+        getProfilerData(jsonData)
+//        JSON_DATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
         
         profilerTableView.dataSource = self
         profilerTableView.delegate = self
@@ -235,8 +238,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
-                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {

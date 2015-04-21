@@ -16,7 +16,9 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     @IBAction func emailAction(sender: AnyObject) {
         let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
-        JSONDATA.jsonGetData(getProfileName, url: GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
+        getProfileName(jsonData)
+//        JSON_DATA.jsonGetData(getProfileName, url: GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
         
         var emailTitle = "Message From Wami Profile: " + userProfileName
         var messageBody = ""
@@ -62,7 +64,8 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     var userProfileName = ""
 
-    let JSONDATA = JsonGetData()
+    let JSON_DATA = JsonGetData()
+    let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
     
     var firstName = ""
@@ -111,8 +114,10 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
 
         fromUserIdentityProfileId = "NA"
         let GET_PROFILE_DATA = UTILITIES.IP + "get_profile_data.php"
-        JSONDATA.jsonGetData(getProfileData, url: GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromUserIdentityProfileId, "param3": userIdentityProfileId])
-         
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromUserIdentityProfileId, "param3": userIdentityProfileId])
+        getProfileData(jsonData)
+//        JSON_DATA.jsonGetData(getProfileData, url: GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromUserIdentityProfileId, "param3": userIdentityProfileId])
+        
         self.profileNameHdrTxt.text = self.profileName
         self.contactNameHdrTxt.text = self.contactName
         self.profileNameText.text = self.profileName
@@ -401,7 +406,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }

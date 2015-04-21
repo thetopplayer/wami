@@ -48,7 +48,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var userIdentityProfileId: String!
     var selectedIdentityProfileId: String!
 
-    let JSONDATA = JsonGetData()
+    let JSON_DATA = JsonGetData()
+    let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
 
     var profileNames = [String]()
@@ -74,7 +75,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         super.viewDidLoad()
 
         let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
-        JSONDATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
+        getDefaultProfileCollection(jsonData)
+//        JSON_DATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
 
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
@@ -254,7 +257,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }

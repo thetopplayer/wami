@@ -11,7 +11,8 @@ import UIKit
 class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate  {
     let textCellIdentifier = "FlashTableViewCell"
     
-    let JSONDATA = JsonGetData()
+    let JSON_DATA = JsonGetData()
+    let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
     
     var identityProfileId: String!
@@ -32,6 +33,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var flashTableView: UITableView!
+    @IBOutlet var newFlashButton: UIButton!
     
     @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
         getFlashData()
@@ -98,7 +100,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     // limit number of chars in flash msg
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if countElements(textView.text) > 109 {
-//            UTILITIES.alertMessage("Only 110 characters allowed.", viewController: self)
             self.view.makeToast(message: "Only 110 characters allowed.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, countElements(textView.text) - 1))
         }
@@ -108,12 +109,13 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     func createFlash() {
         var flashData = textView.text
         if flashData == "" || flashData == "New Flash up to 110 characters" {
-//            UTILITIES.alertMessage("Please enter a Flash message before saving", viewController: self)
             self.view.makeToast(message: "Please enter a Flash message before creating", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
         let INSERT_FLASH = UTILITIES.IP + "insert_flash.php"
-        JSONDATA.jsonGetData(insertFlashData, url: INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
+        insertFlashData(jsonData)
+//        JSON_DATA.jsonGetData(insertFlashData, url: INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
     }
     // close button processing
     func closeNewFlash() {
@@ -142,8 +144,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
-        
-        getFlashData()
 
         self.profileNameText.text = self.profileName
         self.contactNameText.text = self.firstName + " " + self.lastName
@@ -151,6 +151,12 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         flashTableView.dataSource = self
         flashTableView.delegate = self
         self.flashTableView.rowHeight = 25
+        
+        if userIdentityProfileId != identityProfileId {
+            newFlashButton.hidden = true
+        }
+        
+        getFlashData()
      }
     
     // create menu
@@ -295,8 +301,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     // data processing
     func getFlashData() {
         let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
-        JSONDATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
-        self.flashTableView.reloadData()
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
+        getFlashJsonData(jsonData)
+//        JSON_DATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
     }
     
     //Callback function - getFlashJsonData
@@ -305,7 +312,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
@@ -320,6 +326,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
                 createDates.append(createDate)
             }
         }
+        self.flashTableView.reloadData()
     }
     
     //Callback function - insertFlashData
@@ -328,7 +335,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }

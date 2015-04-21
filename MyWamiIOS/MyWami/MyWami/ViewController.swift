@@ -12,7 +12,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     
-    let JSONDATA = JsonGetData()
+    let JSON_DATA = JsonGetData()
+    
+    let JSON_DATA_SYNCH = JsonGetDataSynchronous()
+    
     let UTILITIES = Utilities()
     var userPassword: String!
     var userName: String!
@@ -31,7 +34,9 @@ class ViewController: UIViewController {
         }
 
         let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
-        JSONDATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_USER_DATA, params: ["param1": username, "param2": password])
+        getUserData(jsonData)
+//        JSON_DATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
@@ -81,7 +86,6 @@ class ViewController: UIViewController {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-//                self.UTILITIES.alertMessage(message!, viewController: self)
             }
         }
         else {
@@ -90,7 +94,9 @@ class ViewController: UIViewController {
             self.userPassword = jsonData["user_info"][0]["password"].string!
 
             let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
-            JSONDATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
+            getDefaultIdentityProfileId(jsonData)
+//            JSON_DATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
         }
     }
 
@@ -100,7 +106,6 @@ class ViewController: UIViewController {
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-//                self.UTILITIES.alertMessage(message!, viewController: self)
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
 
             }

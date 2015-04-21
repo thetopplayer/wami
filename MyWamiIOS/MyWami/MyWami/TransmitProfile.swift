@@ -9,7 +9,8 @@
 import UIKit
 
 class TransmitProfile: UIViewController {
-    let JSONDATA = JsonGetData()
+    let JSON_DATA = JsonGetData()
+    let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
     var uview = UIView()
     var userProfileName = ""
@@ -107,7 +108,9 @@ class TransmitProfile: UIViewController {
         var from_profile_id = String(fromProfileId)
         var profiles_to_transmit = identityProfileId as NSString
         let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
-        JSONDATA.jsonGetData(insertTransmittedData, url: INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
+        insertTransmittedData(jsonData)
+//        JSON_DATA.jsonGetData(insertTransmittedData, url: INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
     }
     
     //Callback function - insertTransmittedData
