@@ -174,16 +174,16 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     let transmitProfile = TransmitProfile()
     func transmitProfileAction () {
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        closeBtn.addTarget(self, action: "closeTransmitProfile", forControlEvents: UIControlEvents.TouchUpInside)
+        closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
         
-        transmitProfileView = transmitProfile.transmitProfile(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
         
         view.addSubview(transmitProfileView)
         menu.toggleMenu(menuView)
     }
-    func closeTransmitProfile() {
+    func closeTransmitProfileDialog() {
         transmitProfileView.removeFromSuperview()
     }
     func transmit() {

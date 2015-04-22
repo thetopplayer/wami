@@ -16,7 +16,7 @@ class TransmitProfile: UIViewController {
     var userProfileName = ""
     
     let profileNameTxt = UITextField()
-    func transmitProfile(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
+    func transmitProfileDialog(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
         self.uview = transmitProfileView
             
         transmitProfileView.frame = CGRectMake(45, 100, 240, 215)
