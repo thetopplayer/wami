@@ -40,73 +40,19 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     }
     
     // new flash btn
-    let newFlashView = UIView()
+    var newFlashView = UIView()
     var textView = UITextView()
+    let flashAnnouncement = FlashAnnouncement()
     @IBAction func newFlashButtonPressed(sender: AnyObject) {
-        newFlashView.frame = CGRectMake(45, 200, 240, 230)
-        newFlashView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
-        newFlashView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        newFlashView.layer.borderWidth = 1.5
-        
-        let headingLbl = UILabel()
-        headingLbl.backgroundColor = UIColor.blackColor()
-        headingLbl.textAlignment = NSTextAlignment.Center
-        headingLbl.text = "New Flash Anncouncement"
-        headingLbl.textColor = UIColor.whiteColor()
-        headingLbl.font = UIFont.boldSystemFontOfSize(13)
-        headingLbl.frame = CGRectMake(0, 0, 240, 30)
-        newFlashView.addSubview(headingLbl)
-        
-        textView.font = UIFont.systemFontOfSize(12)
-        textView.textAlignment = .Left
-        textView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        textView.layer.borderWidth = 0.5
-        textView.frame = CGRectMake(20, 40, 200, 120)
-        
-        textView.text = "New Flash up to 110 characters"
-        textView.textColor = UIColor.lightGrayColor()
-        textView.delegate = self
-        newFlashView.addSubview(textView)
-        
-        let createBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        createBtn.setTitle("Create", forState: UIControlState.Normal)
-        createBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
-        createBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        createBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
-        createBtn.showsTouchWhenHighlighted = true
-        createBtn.addTarget(self, action: "createFlash", forControlEvents: UIControlEvents.TouchUpInside)
-        createBtn.frame = CGRectMake(45, 180, 60, 25)
-        newFlashView.addSubview(createBtn)
-        
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        closeBtn.setTitle("Close", forState: UIControlState.Normal)
-        closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
-        closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
-        closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.addTarget(self, action: "closeNewFlash", forControlEvents: UIControlEvents.TouchUpInside)
-        closeBtn.frame = CGRectMake(135, 180, 60, 25)
-        newFlashView.addSubview(closeBtn)
-        
+        closeBtn.addTarget(self, action: "closeNewFlashDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        let createBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        createBtn.addTarget(self, action: "createNewFlash", forControlEvents: UIControlEvents.TouchUpInside)
+        newFlashView = flashAnnouncement.flashDialog(newFlashView, textView: textView, closeBtn: closeBtn, createBtn: createBtn)
         view.addSubview(newFlashView)
     }
-    // used for text view placeholder
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.textColor == UIColor.lightGrayColor() {
-            textView.text = nil
-            textView.textColor = UIColor.blackColor()
-        }
-    }
-    // limit number of chars in flash msg
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if countElements(textView.text) > 109 {
-            self.view.makeToast(message: "Only 110 characters allowed.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, countElements(textView.text) - 1))
-        }
-        return true
-    }
     // create button processing
-    func createFlash() {
+    func createNewFlash() {
         var flashData = textView.text
         if flashData == "" || flashData == "New Flash up to 110 characters" {
             self.view.makeToast(message: "Please enter a Flash message before creating", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
@@ -115,14 +61,12 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         let INSERT_FLASH = UTILITIES.IP + "insert_flash.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
         insertFlashData(jsonData)
-//        JSON_DATA.jsonGetData(insertFlashData, url: INSERT_FLASH, params: ["param1": flashData, "param2": identityProfileId])
     }
     // close button processing
-    func closeNewFlash() {
+    func closeNewFlashDialog() {
         newFlashView.removeFromSuperview()
     }
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -200,7 +144,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         menuView.addSubview(menuLine)
     }
     
-    
     // menu options
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()
@@ -209,9 +152,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
-        
         transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
-        
         view.addSubview(transmitProfileView)
         menu.toggleMenu(menuView)
     }
@@ -303,10 +244,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         let GET_PROFILE_FLASH_DATA = UTILITIES.IP + "get_profile_flash_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
         getFlashJsonData(jsonData)
-//        JSON_DATA.jsonGetData(getFlashJsonData, url: GET_PROFILE_FLASH_DATA, params: ["param1": identityProfileId])
     }
     
-    //Callback function - getFlashJsonData
     func getFlashJsonData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
@@ -329,7 +268,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         self.flashTableView.reloadData()
     }
     
-    //Callback function - insertFlashData
     func insertFlashData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {

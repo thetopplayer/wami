@@ -12,7 +12,7 @@ class SelectProfile: UIViewController {
     let JSON_DATA = JsonGetData()
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
-    var uview = UIView()
+    var selectProfileView = UIView()
     
     func selectProfileDialog(selectProfileView: UIView, closeBtn: UIButton, selectBtn: UIButton) -> UIView {
         getProfileList()
@@ -86,10 +86,7 @@ class SelectProfile: UIViewController {
                 
                 var defaultInd = jsonData["profile_list_data"][index]["default_profile_ind"].string!
             }
-            
         }
-
-    
     }
 }
 
