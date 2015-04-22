@@ -107,7 +107,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menu.toggleMenu(menuView)
         
         var selectCollectionBtn = menu.setMenuBtnAttributes("Select a Profile Collection...")
-        selectCollectionBtn.addTarget(self, action: "selectCollectionAction", forControlEvents: UIControlEvents.TouchUpInside)
+        selectCollectionBtn.addTarget(self, action: "selectProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
         selectCollectionBtn.frame = CGRectMake(0, 0, 175, 20)
         menuView.addSubview(selectCollectionBtn)
         
@@ -148,6 +148,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.addSubview(menuLine)
     }
     
+    // Transmit profile(s)
     func transmitProfilesAction() {
         var profilesToTransmit = false
         var profileIndex = 0
@@ -169,28 +170,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
-    
-    func selectCollectionAction () {
-        println("selectup")
-    }
-    
-    func filterByGroupAction () {
-        println("filter by group")
-    }
-    
-    func refeshListAction () {
-        println("Refresh")
-    }
-
-    func searchProfilesAction () {
-        println("Search")
-    }
-    
-    func logoutAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
-    }
-    
-    // Transmit profile(s)
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()
     func transmitProfileAction () {
@@ -209,6 +188,43 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     func transmit() {
         transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId, numToTransmit: String(numProfilesToTransmit))
+    }
+    
+    // Select profile collection
+    var selectProfileView = UIView()
+    let selectProfile = SelectProfile()
+    func selectProfileAction () {
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        let selectBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        selectBtn.addTarget(self, action: "selectProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        selectProfileView = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
+        
+        view.addSubview(selectProfileView)
+        menu.toggleMenu(menuView)
+    }
+    func closeSelectProfileDialog() {
+        selectProfileView.removeFromSuperview()
+    }
+    func selectProfileCollection() {
+        selectProfile.selectProfileCollection(userIdentityProfileId)
+    }
+    
+    func filterByGroupAction () {
+        println("filter by group")
+    }
+    
+    func refeshListAction () {
+        println("Refresh")
+    }
+
+    func searchProfilesAction () {
+        println("Search")
+    }
+    
+    func logoutAction () {
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
     }
 
     func back(sender: UIBarButtonItem) {

@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     
     let JSON_DATA = JsonGetData()
-    
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     
     let UTILITIES = Utilities()

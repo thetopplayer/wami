@@ -19,7 +19,7 @@ class TransmitProfile: UIViewController {
     func transmitProfile(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
         self.uview = transmitProfileView
             
-        transmitProfileView.frame = CGRectMake(45, 200, 240, 215)
+        transmitProfileView.frame = CGRectMake(45, 100, 240, 215)
         transmitProfileView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
         transmitProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         transmitProfileView.layer.borderWidth = 1.5

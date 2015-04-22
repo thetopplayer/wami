@@ -17,10 +17,19 @@ public class JsonGetDataSynchronous {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse? >= nil
-        var error: NSErrorPointer = nil
-        var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(request, returningResponse: response, error: nil)!
-        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+        var response: NSURLResponse?
+        var error: NSError?
+        let dataVal = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        if let httpResponse = response as? NSHTTPURLResponse {
+            
+        }
+        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+
+        
+//        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse? >= nil
+//        var error: NSErrorPointer = nil
+//        var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(request, returningResponse: response, error: nil)!
+//        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
         return JSON(jsonResult)
     }
 }
