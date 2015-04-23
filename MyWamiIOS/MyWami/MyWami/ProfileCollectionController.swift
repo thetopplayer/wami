@@ -77,7 +77,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
         getDefaultProfileCollection(jsonData)
-//        JSON_DATA.jsonGetData(getDefaultProfileCollection, url: GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
 
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black

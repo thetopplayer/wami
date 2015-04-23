@@ -18,7 +18,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
         getProfileName(jsonData)
-//        JSON_DATA.jsonGetData(getProfileName, url: GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
         
         var emailTitle = "Message From Wami Profile: " + userProfileName
         var messageBody = ""
@@ -116,7 +115,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         let GET_PROFILE_DATA = UTILITIES.IP + "get_profile_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromUserIdentityProfileId, "param3": userIdentityProfileId])
         getProfileData(jsonData)
-//        JSON_DATA.jsonGetData(getProfileData, url: GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromUserIdentityProfileId, "param3": userIdentityProfileId])
         
         self.profileNameHdrTxt.text = self.profileName
         self.contactNameHdrTxt.text = self.contactName
@@ -344,7 +342,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
     
     //Callback function - getProfileData
     func getProfileData (jsonData: JSON) {

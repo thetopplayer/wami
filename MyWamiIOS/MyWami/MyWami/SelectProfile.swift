@@ -8,17 +8,20 @@
 
 import UIKit
 
-class SelectProfile: UIViewController {
+class SelectProfile: UIViewController, UIScrollViewDelegate {
     let JSON_DATA = JsonGetData()
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
-    var selectProfileView = UIView()
+    var selectProfileView: UIView!
+    var scrollView: UIScrollView!
+    var containerView: UIView!
     var numProfiles = 0
     var profileModels = [ProfileModel?]()
+    var checkbox: WamiCheckBox!
     
     func selectProfileDialog(selectProfileView: UIView, closeBtn: UIButton, selectBtn: UIButton) -> UIView {
         getProfileList()
-        
+    
         self.selectProfileView = selectProfileView
         
         selectProfileView.frame = CGRectMake(45, 100, 240, 215)
@@ -35,24 +38,49 @@ class SelectProfile: UIViewController {
         headingLbl.frame = CGRectMake(0, 0, 240, 30)
         selectProfileView.addSubview(headingLbl)
         
+        self.scrollView = UIScrollView()
+        self.scrollView.delegate = self
+        self.scrollView.contentSize = CGSizeMake(230, 400)
+        self.scrollView.frame = CGRectMake(0, 35, 230, 120)
+        
+        containerView = UIView()
+        containerView.frame = CGRectMake(0, 0, 230, 400)
+        
         var profileModel = ProfileModel()
-        self.numProfiles = profileModels.count
         var widthPlacement = CGFloat(35)
-        var heightPlacement = CGFloat(40)
+        var heightPlacement = CGFloat(0)
+        var line: UILabel!
+        self.numProfiles = profileModels.count
         for index in 0...numProfiles - 1 {
             profileModel = profileModels[index]!
             
+            checkbox = WamiCheckBox()
+            checkbox.frame = CGRectMake(5, heightPlacement, 30, 30)
+            checkbox.awakeFromNib()
+            checkbox.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+            checkbox.tag = Int(profileModel.getIdentityProfileId())
+            containerView.addSubview(checkbox)
+            
             var profileNameTxt = UITextField()
-            profileNameTxt.frame = CGRectMake(widthPlacement, heightPlacement, 210, 20)
+            profileNameTxt.frame = CGRectMake(widthPlacement, heightPlacement, 220, 30)
             profileNameTxt.font = UIFont.boldSystemFontOfSize(12)
             profileNameTxt.textColor = UIColor.blackColor()
-            
+            profileNameTxt.enabled = false
             profileNameTxt.text = profileModel.getProfileName()
-            selectProfileView.addSubview(profileNameTxt)
-            heightPlacement = heightPlacement + 15
+            containerView.addSubview(profileNameTxt)
+            
+            line = UILabel()
+            line.frame = CGRectMake(10, heightPlacement + 24, 240, 1)
+            line.backgroundColor = UIColor.grayColor()
+            containerView.addSubview(line)
+            
+            heightPlacement = heightPlacement + 20
         }
         
-        var line: UILabel = UILabel()
+        scrollView.addSubview(containerView)
+        selectProfileView.addSubview(scrollView)
+    
+        line = UILabel()
         line.frame = CGRectMake(10, 165, 220, 1)
         line.backgroundColor = UIColor.blackColor()
         selectProfileView.addSubview(line)
@@ -72,7 +100,6 @@ class SelectProfile: UIViewController {
         closeBtn.showsTouchWhenHighlighted = true
         closeBtn.frame = CGRectMake(135, 180, 60, 20)
         selectProfileView.addSubview(closeBtn)
-
     
         return selectProfileView
     }
@@ -80,6 +107,11 @@ class SelectProfile: UIViewController {
     func selectProfileCollection(userIdentityProfileId: String) {
         
         
+    }
+    
+    func buttonClicked(sender: UIButton) {
+        var identityProfileId = sender.tag
+        println("IdentityProfileId= \(identityProfileId)")
     }
     
     private func getProfileList() {
@@ -110,6 +142,8 @@ class SelectProfile: UIViewController {
                 
                 var defaultInd = jsonData["profile_list_data"][index]["default_profile_ind"].string!
                 profileModel.setDefaultProfileInd(defaultInd.toInt()!)
+                
+                profileModel.setSelected(false)
                 
                 profileModels[index] = profileModel
             }
