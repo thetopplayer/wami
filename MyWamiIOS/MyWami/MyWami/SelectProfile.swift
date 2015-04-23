@@ -13,11 +13,13 @@ class SelectProfile: UIViewController {
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
     var selectProfileView = UIView()
+    var numProfiles = 0
+    var profileModels = [ProfileModel?]()
     
     func selectProfileDialog(selectProfileView: UIView, closeBtn: UIButton, selectBtn: UIButton) -> UIView {
         getProfileList()
         
-        self.uview = selectProfileView
+        self.selectProfileView = selectProfileView
         
         selectProfileView.frame = CGRectMake(45, 100, 240, 215)
         selectProfileView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
@@ -32,6 +34,23 @@ class SelectProfile: UIViewController {
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 240, 30)
         selectProfileView.addSubview(headingLbl)
+        
+        var profileModel = ProfileModel()
+        self.numProfiles = profileModels.count
+        var widthPlacement = CGFloat(35)
+        var heightPlacement = CGFloat(40)
+        for index in 0...numProfiles - 1 {
+            profileModel = profileModels[index]!
+            
+            var profileNameTxt = UITextField()
+            profileNameTxt.frame = CGRectMake(widthPlacement, heightPlacement, 210, 20)
+            profileNameTxt.font = UIFont.boldSystemFontOfSize(12)
+            profileNameTxt.textColor = UIColor.blackColor()
+            
+            profileNameTxt.text = profileModel.getProfileName()
+            selectProfileView.addSubview(profileNameTxt)
+            heightPlacement = heightPlacement + 15
+        }
         
         var line: UILabel = UILabel()
         line.frame = CGRectMake(10, 165, 220, 1)
@@ -79,13 +98,22 @@ class SelectProfile: UIViewController {
         }
         else {
             let numProfiles: Int! = jsonData["profile_list_data"].array?.count
+            var profileModels = [ProfileModel?](count: numProfiles, repeatedValue: nil)
             for index in 0...numProfiles - 1 {
+                var profileModel = ProfileModel()
+                
                 var profileName = jsonData["profile_list_data"][index]["profile_name"].string!
+                profileModel.setProfileName(profileName)
                 
                 var identityProfileId = jsonData["profile_list_data"][index]["identity_profile_id"].string!
+                profileModel.setIdentityProfileId(identityProfileId.toInt()!)
                 
                 var defaultInd = jsonData["profile_list_data"][index]["default_profile_ind"].string!
+                profileModel.setDefaultProfileInd(defaultInd.toInt()!)
+                
+                profileModels[index] = profileModel
             }
+            self.profileModels+=profileModels
         }
     }
 }
