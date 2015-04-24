@@ -18,8 +18,16 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
     var numProfiles = 0
     var profileModels = [ProfileModel?]()
     var checkbox: WamiCheckBox!
+    var checkBoxes = [WamiCheckBox?]()
+    
+    func initSelect () {
+        var numProfiles = 0
+        self.profileModels.removeAll()
+        self.checkBoxes.removeAll()
+    }
     
     func selectProfileDialog(selectProfileView: UIView, closeBtn: UIButton, selectBtn: UIButton) -> UIView {
+        initSelect()
         getProfileList()
     
         self.selectProfileView = selectProfileView
@@ -59,6 +67,7 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
             checkbox.awakeFromNib()
             checkbox.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
             checkbox.tag = Int(profileModel.getIdentityProfileId())
+            checkBoxes.append(checkbox)
             containerView.addSubview(checkbox)
             
             var profileNameTxt = UITextField()
@@ -111,7 +120,16 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
     
     func buttonClicked(sender: UIButton) {
         var identityProfileId = sender.tag
-        println("IdentityProfileId= \(identityProfileId)")
+        var profileModel = ProfileModel()
+        for index in 0...numProfiles - 1 {
+            profileModel = profileModels[index]!
+            var identityProfileIdCheck = profileModel.getIdentityProfileId()
+            if identityProfileId == identityProfileIdCheck {
+                continue
+            }
+            checkbox = checkBoxes[index]
+            checkbox.awakeFromNib()
+        }
     }
     
     private func getProfileList() {
@@ -129,8 +147,9 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
             }
         }
         else {
-            let numProfiles: Int! = jsonData["profile_list_data"].array?.count
-            var profileModels = [ProfileModel?](count: numProfiles, repeatedValue: nil)
+            var numProfiles: Int! = jsonData["profile_list_data"].array?.count
+//            var profileModels = [ProfileModel?](count: numProfiles, repeatedValue: nil)
+            self.profileModels = [ProfileModel?](count: numProfiles, repeatedValue: nil)
             for index in 0...numProfiles - 1 {
                 var profileModel = ProfileModel()
                 
@@ -147,7 +166,7 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
                 
                 profileModels[index] = profileModel
             }
-            self.profileModels+=profileModels
+//            self.profileModels = profileModels
         }
     }
 }

@@ -191,20 +191,21 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     // Select profile collection
     var selectProfileView = UIView()
-    let selectProfile = SelectProfile()
+    var selectProfile = SelectProfile()
     func selectProfileAction () {
+        var selectProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let selectBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
         selectBtn.addTarget(self, action: "selectProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
         
-        selectProfileView = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
+        self.selectProfileView = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
         
-        view.addSubview(selectProfileView)
+        view.addSubview(self.selectProfileView)
         menu.toggleMenu(menuView)
     }
     func closeSelectProfileDialog() {
-        selectProfileView.removeFromSuperview()
+        self.selectProfileView.removeFromSuperview()
     }
     func selectProfileCollection() {
         selectProfile.selectProfileCollection(userIdentityProfileId)
