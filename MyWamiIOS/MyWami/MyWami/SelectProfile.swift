@@ -148,7 +148,6 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
         }
         else {
             var numProfiles: Int! = jsonData["profile_list_data"].array?.count
-//            var profileModels = [ProfileModel?](count: numProfiles, repeatedValue: nil)
             self.profileModels = [ProfileModel?](count: numProfiles, repeatedValue: nil)
             for index in 0...numProfiles - 1 {
                 var profileModel = ProfileModel()
@@ -162,11 +161,9 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
                 var defaultInd = jsonData["profile_list_data"][index]["default_profile_ind"].string!
                 profileModel.setDefaultProfileInd(defaultInd.toInt()!)
                 
-                profileModel.setSelected(false)
-                
+                profileModel.setSelected(false)                
                 profileModels[index] = profileModel
             }
-//            self.profileModels = profileModels
         }
     }
 }
