@@ -123,14 +123,14 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.contactNameText.text = self.contactName
         
         self.emailText.text = self.email
-        var fieldWidth = (Float(self.email.utf16Count) * 8)
+        var fieldWidth = (Float(count(self.email)) * 8)
         var bottomBorder = CALayer()
         bottomBorder.frame = CGRectMake(0.0, emailText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
         bottomBorder.backgroundColor = UIColor.blueColor().CGColor
         emailText.layer.addSublayer(bottomBorder)
         
         self.telephoneText.text = self.telephone
-        fieldWidth = (Float(self.telephone.utf16Count) * 8)
+        fieldWidth = (Float(count(self.telephone)) * 8)
         bottomBorder = CALayer()
         bottomBorder.frame = CGRectMake(0.0, telephoneText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
         bottomBorder.backgroundColor = UIColor.blueColor().CGColor
@@ -227,9 +227,9 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()
     func transmitThisWamiAction () {
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
         
         transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
@@ -246,15 +246,15 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     // Navigate to 
     var navigateToView = UIView()
     func navigateToAction () {
-        let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         profileInfoBtn.addTarget(self, action: "gotoProfileInfo", forControlEvents: UIControlEvents.TouchUpInside)
-        let profilerBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let profilerBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         profilerBtn.addTarget(self, action: "gotoProfiler", forControlEvents: UIControlEvents.TouchUpInside)
-        let flashBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let flashBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         flashBtn.addTarget(self, action: "gotoFlashAnnouncements", forControlEvents: UIControlEvents.TouchUpInside)
-        let profileCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let profileCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         profileCollectionBtn.addTarget(self, action: "gotoProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeNavigateTo", forControlEvents: UIControlEvents.TouchUpInside)
         
         menu.toggleMenu(menuView)
@@ -269,12 +269,12 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         navigateToView.removeFromSuperview()
     }
     func gotoProfileCollection () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as! UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
     func gotoProfiler () {
         performSegueWithIdentifier("showProfiler", sender: self)
-        var svc = segue.destinationViewController as Profiler;
+        var svc = segue.destinationViewController as! Profiler;
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
         svc.imageUrl = self.imageUrl
@@ -286,7 +286,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     func gotoFlashAnnouncements () {
         performSegueWithIdentifier("showProfiler", sender: self)
         performSegueWithIdentifier("show_flash", sender: self)
-        var svc = segue.destinationViewController as Flash;
+        var svc = segue.destinationViewController as! Flash;
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
         svc.imageUrl = self.imageUrl
@@ -296,16 +296,16 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         navigateToView.removeFromSuperview()
     }
     func gotoProfileInfo () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[2] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[2] as! UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
     
     func homeAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as! UIViewController, animated: true)
     }
     
     func logoutAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as! UIViewController, animated: true)
     }
     
     
@@ -317,7 +317,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.segue = segue
         if (segue.identifier == "showProfiler") {
             menuView.hidden = true
-            var svc = segue.destinationViewController as Profiler;
+            var svc = segue.destinationViewController as! Profiler;
             svc.identityProfileId = self.identityProfileId
             svc.userIdentityProfileId = self.userIdentityProfileId
             svc.imageUrl = self.imageUrl
@@ -362,7 +362,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             }
         }
         else {
-            if let jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array? {
+            if let jsonGroups = jsonData["identity_profile_data"][0]["group_data"].array {
                 var numGroups = jsonGroups.count
                 for index in 0...numGroups - 1 {
                     var group = jsonData["identity_profile_data"][0]["group_data"][index]["group"].string!

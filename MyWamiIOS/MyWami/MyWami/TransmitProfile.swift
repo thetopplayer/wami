@@ -106,11 +106,11 @@ class TransmitProfile: UIViewController {
         var num_to_transmit = numToTransmit
         var transmit_to_profile = profileNameTxt.text
         var from_profile_id = String(fromProfileId)
-        var profiles_to_transmit = identityProfileId as NSString
+        var profiles_to_transmit = identityProfileId
         let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
-        var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE,
+            params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
         insertTransmittedData(jsonData)
-//        JSON_DATA.jsonGetData(insertTransmittedData, url: INSERT_TRANSMITTED_PROFILE, params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
     }
     
     //Callback function - insertTransmittedData

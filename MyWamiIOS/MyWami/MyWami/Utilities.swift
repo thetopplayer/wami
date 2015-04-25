@@ -16,7 +16,7 @@ class Utilities {
     let WAIT_TIME: useconds_t = 30000
 
     @IBAction func alertMessage(message: NSString, viewController: UIViewController) {
-        var alertController = UIAlertController(title: "ALERT", message: message, preferredStyle: .Alert)
+        var alertController = UIAlertController(title: "ALERT", message: message as String, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(defaultAction)
         alertController.view.backgroundColor = UIColor.blackColor()

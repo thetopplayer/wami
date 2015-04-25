@@ -44,9 +44,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     var textView = UITextView()
     let flashAnnouncement = FlashAnnouncement()
     @IBAction func newFlashButtonPressed(sender: AnyObject) {
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeNewFlashDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let createBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let createBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         createBtn.addTarget(self, action: "createNewFlash", forControlEvents: UIControlEvents.TouchUpInside)
         newFlashView = flashAnnouncement.flashDialog(newFlashView, textView: textView, closeBtn: closeBtn, createBtn: createBtn)
         view.addSubview(newFlashView)
@@ -148,9 +148,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()
     func transmitThisWamiAction () {
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
         transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
         view.addSubview(transmitProfileView)
@@ -165,15 +165,15 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     
     var navigateToView = UIView()
     func navigateToAction () {
-        let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let profileInfoBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         profileInfoBtn.addTarget(self, action: "gotoProfileInfo", forControlEvents: UIControlEvents.TouchUpInside)
-        let profilerBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let profilerBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         profilerBtn.addTarget(self, action: "gotoProfiler", forControlEvents: UIControlEvents.TouchUpInside)
-        let flashBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let flashBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         flashBtn.addTarget(self, action: "gotoFlashAnnouncements", forControlEvents: UIControlEvents.TouchUpInside)
-        let profileCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let profileCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         profileCollectionBtn.addTarget(self, action: "gotoProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeNavigateTo", forControlEvents: UIControlEvents.TouchUpInside)
         
         let navigateTo = NavigateTo()
@@ -187,28 +187,28 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         navigateToView.removeFromSuperview()
     }
     func gotoProfileCollection () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as! UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
     func gotoFlashAnnouncements () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[4] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[4] as! UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
     func gotoProfiler () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[3] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[3] as! UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
     func gotoProfileInfo () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[2] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[2] as! UIViewController, animated: true)
         navigateToView.removeFromSuperview()
     }
   
     func homeAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[1] as! UIViewController, animated: true)
     }
     
     func logoutAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as! UIViewController, animated: true)
     }
     
     
@@ -220,7 +220,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         return self.numFlash
     }
     func tableView(flashTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as FlashTableViewCell
+        var cell = flashTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! FlashTableViewCell
         cell.flashText.text = self.flashes[indexPath.row]
         cell.createDateText.text = self.createDates[indexPath.row]
         return cell

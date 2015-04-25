@@ -174,9 +174,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()
     func transmitProfileAction () {
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
         
         transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
@@ -196,9 +196,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var selectProfile = SelectProfile()
     func selectProfileAction () {
         var selectProfileView = UIView()
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let selectBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        let selectBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         selectBtn.addTarget(self, action: "selectProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.selectProfileView = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
@@ -237,7 +237,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func logoutAction () {
-        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as UIViewController, animated: true)
+        self.navigationController!.popToViewController(navigationController!.viewControllers[0] as! UIViewController, animated: true)
     }
 
     func back(sender: UIBarButtonItem) {
@@ -253,7 +253,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as ProfileListTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! ProfileListTableViewCell
         
         var contactName = self.firstNames[indexPath.row] + " " + self.lastNames[indexPath.row]
         
@@ -274,7 +274,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showInfoExtended") {
             menuView.hidden = true
-            var svc = segue.destinationViewController as WamiInfoExtended;
+            var svc = segue.destinationViewController as! WamiInfoExtended;
             svc.identityProfileId = self.identityProfileIds[self.row]
             svc.userIdentityProfileId = self.userIdentityProfileId
         }

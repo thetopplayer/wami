@@ -23,7 +23,7 @@ public class JsonGetDataSynchronous {
         if let httpResponse = response as? NSHTTPURLResponse {
             
         }
-        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
 
         
 //        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse? >= nil
