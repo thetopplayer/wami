@@ -19,8 +19,9 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
     var profileModels = [ProfileModel?]()
     var checkbox: WamiCheckBox!
     var checkBoxes = [WamiCheckBox?]()
+    var identityProfileId = 0
     
-    func initSelect () {
+    func initSelect() {
         var numProfiles = 0
         self.profileModels.removeAll()
         self.checkBoxes.removeAll()
@@ -113,13 +114,9 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
         return selectProfileView
     }
     
-    func selectProfileCollection(userIdentityProfileId: String) {
-        
-        
-    }
-    
     func buttonClicked(sender: UIButton) {
         var identityProfileId = sender.tag
+        self.identityProfileId = identityProfileId
         var profileModel = ProfileModel()
         for index in 0...numProfiles - 1 {
             profileModel = profileModels[index]!
@@ -130,6 +127,10 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
             checkbox = checkBoxes[index]
             checkbox.awakeFromNib()
         }
+    }
+    
+    func getNewIdentityProfileId () -> String {
+        return String(self.identityProfileId)
     }
     
     private func getProfileList() {

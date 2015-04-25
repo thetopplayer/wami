@@ -35,7 +35,6 @@ class ViewController: UIViewController {
         let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_USER_DATA, params: ["param1": username, "param2": password])
         getUserData(jsonData)
-//        JSON_DATA.jsonGetData(getUserData, url: GET_USER_DATA, params: ["param1": username, "param2": password])
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
@@ -95,7 +94,6 @@ class ViewController: UIViewController {
             let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
             var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
             getDefaultIdentityProfileId(jsonData)
-//            JSON_DATA.jsonGetData(getDefaultIdentityProfileId, url: GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": self.userId])
         }
     }
 

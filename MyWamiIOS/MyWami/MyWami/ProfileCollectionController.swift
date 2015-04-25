@@ -70,13 +70,15 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     let menuView = UIView()
     var menuLine = UILabel()
+    
+    var newIdentityProfileId: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let GET_DEFAULT_PROFILE_COLLECTION = UTILITIES.IP + "get_default_profile_collection.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_PROFILE_COLLECTION, params: ["param1": userId])
-        getDefaultProfileCollection(jsonData)
+        getProfileCollection(jsonData)
 
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
@@ -208,7 +210,18 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         self.selectProfileView.removeFromSuperview()
     }
     func selectProfileCollection() {
-        selectProfile.selectProfileCollection(userIdentityProfileId)
+        self.newIdentityProfileId = selectProfile.getNewIdentityProfileId()
+        if self.newIdentityProfileId != "0" {
+            let GET_PROFILE_COLLECTION = UTILITIES.IP + "get_profile_collection.php"
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION, params: ["param1": newIdentityProfileId])
+            getProfileCollection(jsonData)
+            closeSelectProfileDialog()
+            tableView.reloadData()
+        }
+        else {
+            self.view.makeToast(message: "Please select a Profile Collection or hit Close", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+        }
+        
     }
     
     func filterByGroupAction () {
@@ -267,8 +280,20 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         }
     }
 
-    //Callback function - getDefaultProfileCollection
-    func getDefaultProfileCollection (jsonData: JSON) {
+    func initData() {
+        self.profileNames.removeAll()
+        self.firstNames.removeAll()
+        self.lastNames.removeAll()
+        self.imageUrls.removeAll()
+        self.emails.removeAll()
+        self.telephones.removeAll()
+        self.identityProfileIds.removeAll()
+        self.assignToIdentityProfileIds.removeAll()
+        self.checkBoxs.removeAll()
+        self.chosenProfilesIdsToTransmit.removeAll()
+    }
+    
+    func getProfileCollection (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
@@ -277,6 +302,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             }
         }
         else {
+            initData()
             let numProfiles: Int! = jsonData["profile_collection"].array?.count
             self.numProfiles = numProfiles
             for index in 0...numProfiles - 1 {
