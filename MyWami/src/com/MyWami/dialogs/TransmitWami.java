@@ -39,7 +39,8 @@ public class TransmitWami {
 	private ArrayList alProfilesToTransmit = new ArrayList();
 	private TransmitModel transmitModel;
 	private String toastMessage = "";
-	final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile_data.php";
+//	final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile_data.php";
+final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile.php";
 	final private String GET_PROFILE_DATA = Constants.IP + "get_profile_data.php";
 	final private String GET_PROFILE_NAMES = Constants.IP + "get_profile_names.php";
 	final private String TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_profile_to_email_address_mobile.php";
@@ -313,12 +314,21 @@ public class TransmitWami {
 					fromProfileId = transmitModel.getFromIdentityProfileId();
 				}
 				int numToTransmit = alProfilesToTransmit.size();
+
+        //****
+        String transmitToProfile = (String) alTransmitToProfiles.get(0);
+        //***
+
 				JSONObject json = new JSONObject();
-				json.put("num_transmit_to", numTransmitTo);
-				json.put("transmit_to_profiles", alTransmitToProfiles);
-				json.put("num_to_transmit", numToTransmit);
-				json.put("profiles_to_transmit", alProfilesToTransmit);
-				json.put("from_profile_id", fromProfileId);
+        json.put("param1", numToTransmit);
+        json.put("param2", fromProfileId);
+        json.put("param3", alProfilesToTransmit);
+        json.put("param4", transmitToProfile);
+//				json.put("num_transmit_to", numTransmitTo);
+//				json.put("transmit_to_profiles", alTransmitToProfiles);
+//				json.put("num_to_transmit", numToTransmit);
+//				json.put("profiles_to_transmit", alProfilesToTransmit);
+//				json.put("from_profile_id", fromProfileId);
 
 				HttpParams httpParams = new BasicHttpParams();
 				HttpConnectionParams.setConnectionTimeout(httpParams, 5000);

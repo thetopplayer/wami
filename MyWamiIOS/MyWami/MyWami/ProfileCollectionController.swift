@@ -309,20 +309,36 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                 var profileName = jsonData["profile_collection"][index]["profile_name"].string!
                 profileNames.append(profileName)
 
-                var firstName = jsonData["profile_collection"][index]["first_name"].string!
-                firstNames.append(firstName)
-
-                var lastName = jsonData["profile_collection"][index]["last_name"].string!
-                lastNames.append(lastName)
-
-                var imageUrl = jsonData["profile_collection"][index]["image_url"].string!
-                imageUrls.append(imageUrl)
-
+                if let firstName = jsonData["profile_collection"][index]["first_name"].string {
+                    firstNames.append(firstName)
+                }
+                else {
+                    firstNames.append("")
+                }
+                
+                if let lastName = jsonData["profile_collection"][index]["last_name"].string {
+                    lastNames.append(lastName)
+                }
+                else {
+                    lastNames.append("")
+                }
+                
+                if let imageUrl = jsonData["profile_collection"][index]["image_url"].string {
+                    imageUrls.append(imageUrl)
+                }
+                else {
+                    imageUrls.append("")
+                }
+            
                 var email = jsonData["profile_collection"][index]["email"].string!
                 emails.append(email)
 
-                var telephone = jsonData["profile_collection"][index]["telephone"].string!
-                telephones.append(telephone)
+                if let telephone = jsonData["profile_collection"][index]["telephone"].string {
+                    telephones.append(telephone)
+                }
+                else {
+                    telephones.append("")
+                }
 
                 var identityProfileId = jsonData["profile_collection"][index]["identity_profile_id"].string!
                 identityProfileIds.append(identityProfileId)
