@@ -296,7 +296,7 @@ final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_tr
 			}
 
 			Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage, Toast.LENGTH_LONG);
-			toast.setGravity(Gravity.BOTTOM, 0, 0);
+			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 			toastMessage = "";
 		}
@@ -306,30 +306,22 @@ final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_tr
 			JSONObject jsonResponse = null;
 			try {
 				ArrayList alTransmitToProfiles = params[0];
-				int numTransmitTo = alTransmitToProfiles.size();
+        String profilesToTransmit = "";
 				int fromProfileId = 0;
 				for (int i = 0; i < alWamiTransmitModel.size(); i++) {
 					transmitModel = (TransmitModel) alWamiTransmitModel.get(i);
 					alProfilesToTransmit.add(transmitModel.getWamiToTransmitId());
 					fromProfileId = transmitModel.getFromIdentityProfileId();
+          profilesToTransmit = transmitModel.getWamiToTransmitId() + "," + profilesToTransmit;
 				}
+        profilesToTransmit = profilesToTransmit.substring(0, (profilesToTransmit.length() -1));
 				int numToTransmit = alProfilesToTransmit.size();
-
-        //****
         String transmitToProfile = (String) alTransmitToProfiles.get(0);
-        //***
-
 				JSONObject json = new JSONObject();
         json.put("param1", numToTransmit);
         json.put("param2", fromProfileId);
-        json.put("param3", alProfilesToTransmit);
+        json.put("param3", profilesToTransmit);
         json.put("param4", transmitToProfile);
-//				json.put("num_transmit_to", numTransmitTo);
-//				json.put("transmit_to_profiles", alTransmitToProfiles);
-//				json.put("num_to_transmit", numToTransmit);
-//				json.put("profiles_to_transmit", alProfilesToTransmit);
-//				json.put("from_profile_id", fromProfileId);
-
 				HttpParams httpParams = new BasicHttpParams();
 				HttpConnectionParams.setConnectionTimeout(httpParams, 5000);
 				HttpConnectionParams.setSoTimeout(httpParams, 5000);
