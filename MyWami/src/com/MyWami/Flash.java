@@ -199,8 +199,13 @@ public class Flash extends ListActivity {
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.flash_menu, menu);
-		return super.onCreateOptionsMenu(menu);
+    if (userIdentityProfileId.equals(identityProfileId)) {
+      inflater.inflate(R.menu.flash_new_allow_menu, menu);
+    }
+    else {
+      inflater.inflate(R.menu.flash_menu, menu);
+    }
+    return super.onCreateOptionsMenu(menu);
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {

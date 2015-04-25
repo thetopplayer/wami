@@ -2,9 +2,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.MyWami.Flash">
 
-	<item android:id="@+id/action_new_flash"
-	      android:title="@string/action_new_flash"/>
-
 	<item android:id="@+id/action_transmit_wami"
 	      android:title="@string/action_transmit_this_wami"/>
 
