@@ -8,11 +8,54 @@
 
 import UIKit
 import MessageUI
+import AddressBook
 
 class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
    
     @IBOutlet var profileNameHdrTxt: UITextField!
     @IBOutlet var contactNameHdrTxt: UITextField!
+    
+    @IBAction func addToContactsAction(sender: AnyObject) {
+        if !self.authDone {
+            self.authDone = true
+            let status = ABAddressBookGetAuthorizationStatus()
+            
+            switch status {
+            case .Denied, .Restricted:
+                println("no access")
+            case .Authorized, .NotDetermined:
+                var err : Unmanaged<CFError>? = nil
+                var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+                if adbk == nil {
+                    println(err)
+                    return
+                }
+                ABAddressBookRequestAccessWithCompletion(adbk) {
+                    (granted:Bool, err:CFError!) in
+                    if granted {
+                        self.adbk = adbk
+                    }
+                    else {
+                        println(err)
+                    }
+                }
+            }
+        }
+        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
+        var success:Bool = false
+        var newFirstName:NSString = self.firstName
+        var newLastName = self.lastName
+        
+        var error: Unmanaged<CFErrorRef>? = nil
+        success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
+        println("\(success)")
+        success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
+        println("\(success)")
+        success = ABAddressBookAddRecord(adbk, newContact, &error)
+        println("\(success)")
+        success = ABAddressBookSave(adbk, &error)
+        println("\(success)")
+    }
     
     @IBAction func emailAction(sender: AnyObject) {
         let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
@@ -91,6 +134,9 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     let menuView = UIView()
     var menuLine = UILabel()
     var segue = UIStoryboardSegue()
+    
+    var adbk : ABAddressBook?
+    var authDone: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,6 +208,10 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         
         self.groupsText.text = self.groups
      }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
  
     override func viewDidLayoutSubviews() {
         scrollView.scrollEnabled = true
@@ -378,21 +428,83 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         }
         profileName = jsonData["identity_profile_data"][jsonIndex]["profile_name"].string!
         descript = jsonData["identity_profile_data"][jsonIndex]["description"].string!
-        firstName = jsonData["identity_profile_data"][jsonIndex]["first_name"].string!
-        lastName = jsonData["identity_profile_data"][jsonIndex]["last_name"].string!
+        if let telephone = jsonData["identity_profile_data"][jsonIndex]["telephone"].string {
+            self.telephone = jsonData["identity_profile_data"][jsonIndex]["telephone"].string!
+        }
+        else {
+            telephone = ""
+        }
+        if let lastName = jsonData["identity_profile_data"][jsonIndex]["last_name"].string {
+            self.lastName = jsonData["identity_profile_data"][jsonIndex]["last_name"].string!
+        }
+        else {
+            lastName = ""
+        }
+        if let firstName = jsonData["identity_profile_data"][jsonIndex]["first_name"].string {
+            self.firstName = jsonData["identity_profile_data"][jsonIndex]["first_name"].string!
+        }
+        else {
+            firstName = ""
+        }
         email = jsonData["identity_profile_data"][jsonIndex]["email"].string!
-        telephone = jsonData["identity_profile_data"][jsonIndex]["telephone"].string!
-        profileType = jsonData["identity_profile_data"][jsonIndex]["profile_type"].string!
-        tags = jsonData["identity_profile_data"][jsonIndex]["tags"].string!
-        streetAddress = jsonData["identity_profile_data"][jsonIndex]["street_address"].string!
-        city = jsonData["identity_profile_data"][jsonIndex]["city"].string!
-        state = jsonData["identity_profile_data"][jsonIndex]["state"].string!
-        zipcode = jsonData["identity_profile_data"][jsonIndex]["zipcode"].string!
-        country = jsonData["identity_profile_data"][jsonIndex]["country"].string!
+        
+        if let telephone = jsonData["identity_profile_data"][jsonIndex]["telephone"].string {
+            self.telephone = jsonData["identity_profile_data"][jsonIndex]["telephone"].string!
+        }
+        else {
+            telephone = ""
+        }
+        if let profileType = jsonData["identity_profile_data"][jsonIndex]["profile_type"].string {
+            self.profileType = jsonData["identity_profile_data"][jsonIndex]["profile_type"].string!
+        }
+        else {
+            profileType = ""
+        }
+        if let tags = jsonData["identity_profile_data"][jsonIndex]["tags"].string {
+            self.tags = jsonData["identity_profile_data"][jsonIndex]["tags"].string!
+        }
+        else {
+            tags = ""
+        }
+        if let streetAddress = jsonData["identity_profile_data"][jsonIndex]["street_address"].string {
+            self.streetAddress = jsonData["identity_profile_data"][jsonIndex]["street_address"].string!
+        }
+        else {
+            streetAddress = ""
+        }
+        if let city = jsonData["identity_profile_data"][jsonIndex]["city"].string {
+            self.city = jsonData["identity_profile_data"][jsonIndex]["city"].string!
+        }
+        else {
+            city = ""
+        }
+        if let state = jsonData["identity_profile_data"][jsonIndex]["state"].string {
+            self.state = jsonData["identity_profile_data"][jsonIndex]["state"].string!
+        }
+        else {
+            state = ""
+        }
+        if let zipcode = jsonData["identity_profile_data"][jsonIndex]["zipcode"].string {
+            self.zipcode = jsonData["identity_profile_data"][jsonIndex]["zipcode"].string!
+        }
+        else {
+            zipcode = ""
+        }
+        if let country = jsonData["identity_profile_data"][jsonIndex]["country"].string {
+            self.country = jsonData["identity_profile_data"][jsonIndex]["country"].string!
+        }
+        else {
+            country = ""
+        }
         createDate = jsonData["identity_profile_data"][jsonIndex]["create_date"].string!
         searchable = jsonData["identity_profile_data"][jsonIndex]["searchable"].string!
         activeInd = jsonData["identity_profile_data"][jsonIndex]["active_ind"].string!
-        imageUrl = jsonData["identity_profile_data"][jsonIndex]["image_url"].string!
+        if let imageUrl = jsonData["identity_profile_data"][jsonIndex]["image_url"].string {
+            self.imageUrl = jsonData["identity_profile_data"][jsonIndex]["image_url"].string!
+        }
+        else {
+            imageUrl = ""
+        }
 
         self.contactName = firstName + " " + lastName
     }

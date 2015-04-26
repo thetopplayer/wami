@@ -234,7 +234,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     //Callback function - getProfileName
     func getProfilerData (jsonData: JSON) {
-        var retCode = jsonData["ret_code"]
+        
+        var retCode = jsonData["no_categories_ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
@@ -242,11 +243,15 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
             }
         }
         else {
-            let numCategories: Int! = jsonData["identity_profiler_data"].array?.count
-            self.numCategories = numCategories
-            for index in 0...numCategories - 1 {
-                var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
-                categories.append(categoryName)
+            if let numCategories: Int! = jsonData["identity_profiler_data"].array?.count {
+                self.numCategories = numCategories
+                for index in 0...numCategories - 1 {
+                    var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
+                    categories.append(categoryName)
+                }
+            }
+            else {
+                self.numCategories = 0
             }
         }
     }

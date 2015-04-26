@@ -212,6 +212,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     func selectProfileCollection() {
         self.newIdentityProfileId = selectProfile.getNewIdentityProfileId()
         if self.newIdentityProfileId != "0" {
+            self.userIdentityProfileId = newIdentityProfileId
             let GET_PROFILE_COLLECTION = UTILITIES.IP + "get_profile_collection.php"
             var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION, params: ["param1": newIdentityProfileId])
             getProfileCollection(jsonData)
@@ -229,7 +230,11 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func refeshListAction () {
-        println("Refresh")
+        let GET_PROFILE_COLLECTION = UTILITIES.IP + "get_profile_collection.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION, params: ["param1": userIdentityProfileId])
+        getProfileCollection(jsonData)
+        menu.toggleMenu(menuView)
+        tableView.reloadData()
     }
 
     func searchProfilesAction () {
