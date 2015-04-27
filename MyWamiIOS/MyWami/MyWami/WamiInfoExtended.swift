@@ -45,12 +45,70 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         var success:Bool = false
         var newFirstName:NSString = self.firstName
         var newLastName = self.lastName
+        var email = self.email
+        var telephone: [(String, String)] = [("Home", self.telephone)]
+        var streetAddress = self.streetAddress
+        var city = self.city
+        var state = self.state
+        var zipcode = self.zipcode
+        var country = self.country
         
         var error: Unmanaged<CFErrorRef>? = nil
         success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
         println("\(success)")
         success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
         println("\(success)")
+//        success = ABRecordSetValue(newContact, kABPersonEmailProperty, email, &error)
+//        println("\(success)")
+        
+
+//        success = ABRecordSetValue(newContact, kABPersonPhoneProperty, telephone, &error)
+//        println("\(success)")
+        
+        var multiAddress = ABMultiValueCreateMutable(ABPropertyType(kABMultiDictionaryPropertyType))
+        var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : streetAddress])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : city])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : state])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : zipcode])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : country])
+        
+    
+        
+//        let cfstring:CFString = kABHomeLabel as NSString
+//        
+//        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABHomeLabel, nil);
+        
+//        success = ABRecordSetValue(newContact, kABPersonAddressProperty, multiAddress, &error)
+        
+//        ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
+        
+        
+    
+
+//        ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+//        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
+//        [addressDictionary setObject:@"750 North Orleans Street, Ste 601" forKey:(NSString *) kABPersonAddressStreetKey];
+//        [addressDictionary setObject:@"Chicago" forKey:(NSString *)kABPersonAddressCityKey];
+//        [addressDictionary setObject:@"IL" forKey:(NSString *)kABPersonAddressStateKey];
+//        [addressDictionary setObject:@"60654" forKey:(NSString *)kABPersonAddressZIPKey];
+//        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABWorkLabel, NULL);
+//        ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
+//        CFRelease(multiAddress);
+        
+        
+        
+
+//        success = ABRecordSetValue(newContact, kABPersonAddressStreetKey, streetAddress, &error)
+//        println("\(success)")
+//        success = ABRecordSetValue(newContact, kABPersonAddressCityKey, city, &error)
+//        println("\(success)")
+//        success = ABRecordSetValue(newContact, kABPersonAddressStateKey, state, &error)
+//        println("\(success)")
+//        success = ABRecordSetValue(newContact, kABPersonAddressZIPKey, zipcode, &error)
+//        println("\(success)")
+//        success = ABRecordSetValue(newContact, kABPersonAddressCountryKey, country, &error)
+//        println("\(success)")
+        
         success = ABAddressBookAddRecord(adbk, newContact, &error)
         println("\(success)")
         success = ABAddressBookSave(adbk, &error)
@@ -229,33 +287,33 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.5
-        menuView.frame = CGRectMake(153, 70, 150, 128)
+        menuView.frame = CGRectMake(153, 70, 150, 133)
         uiView.addSubview(menuView)
  
         menu.toggleMenu(menuView)
         
         var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitThisWamiBtn.frame = CGRectMake(0, 0, 145, 20)
+        transmitThisWamiBtn.frame = CGRectMake(0, 0, 145, 30)
         menuView.addSubview(transmitThisWamiBtn)
         
         var addToContactListBtn = menu.setMenuBtnAttributes("Add To Contact List...")
         addToContactListBtn.addTarget(self, action: "addToContactListAction", forControlEvents: UIControlEvents.TouchUpInside)
-        addToContactListBtn.frame = CGRectMake(2, 25, 145, 20)
+        addToContactListBtn.frame = CGRectMake(2, 25, 145, 30)
         menuView.addSubview(addToContactListBtn)
         
         var navigateToBtn = menu.setMenuBtnAttributes("Navigate To...")
         navigateToBtn.addTarget(self, action: "navigateToAction", forControlEvents: UIControlEvents.TouchUpInside)
-        navigateToBtn.frame = CGRectMake(-20, 50, 145, 20)
+        navigateToBtn.frame = CGRectMake(-22, 50, 145, 30)
         menuView.addSubview(navigateToBtn)
         
         var homeBtn = menu.setMenuBtnAttributes("Home")
         homeBtn.addTarget(self, action: "homeAction", forControlEvents: UIControlEvents.TouchUpInside)
-        homeBtn.frame = CGRectMake(-40, 75, 145, 20)
+        homeBtn.frame = CGRectMake(-45, 75, 145, 30)
         menuView.addSubview(homeBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
-        logoutBtn.frame = CGRectMake(-38, 100, 145, 20)
+        logoutBtn.frame = CGRectMake(-42, 100, 145, 30)
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
         menuView.addSubview(logoutBtn)
  

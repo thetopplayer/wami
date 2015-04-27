@@ -73,7 +73,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     // create menu
     let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
-        menuView.frame = CGRectMake(157, 70, 150, 100)
+        menuView.frame = CGRectMake(157, 70, 150, 105)
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.5
@@ -83,22 +83,22 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitThisWamiBtn.frame = CGRectMake(0, 0, 145, 20)
+        transmitThisWamiBtn.frame = CGRectMake(2, 0, 145, 30)
         menuView.addSubview(transmitThisWamiBtn)
         
         var navigateToBtn = menu.setMenuBtnAttributes("Navigate To...")
         navigateToBtn.addTarget(self, action: "navigateToAction", forControlEvents: UIControlEvents.TouchUpInside)
-        navigateToBtn.frame = CGRectMake(-20, 25, 145, 20)
+        navigateToBtn.frame = CGRectMake(-20, 25, 145, 30)
         menuView.addSubview(navigateToBtn)
         
         var homeBtn = menu.setMenuBtnAttributes("Home")
         homeBtn.addTarget(self, action: "homeAction", forControlEvents: UIControlEvents.TouchUpInside)
-        homeBtn.frame = CGRectMake(-40, 50, 145, 20)
+        homeBtn.frame = CGRectMake(-44, 50, 145, 30)
         menuView.addSubview(homeBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
-        logoutBtn.frame = CGRectMake(-38, 75, 145, 20)
+        logoutBtn.frame = CGRectMake(-40, 75, 145, 30)
         menuView.addSubview(logoutBtn)
         
         menuLine = menu.createMenuLine(0, length: 150)
@@ -106,8 +106,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         menuLine = menu.createMenuLine(25, length: 150)
         menuView.addSubview(menuLine)
         menuLine = menu.createMenuLine(50, length: 150)
-        menuView.addSubview(menuLine)
-        menuLine = menu.createMenuLine(75, length: 150)
         menuView.addSubview(menuLine)
     }
 
