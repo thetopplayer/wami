@@ -13,7 +13,7 @@ class Menu {
     func setMenuBtnAttributes(title: String) -> UIButton {
         let menuBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         menuBtn.setTitle(title, forState: UIControlState.Normal)
-        menuBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(13)
+        menuBtn.titleLabel?.font = UIFont.systemFontOfSize(13)
         menuBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         menuBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
         menuBtn.showsTouchWhenHighlighted = true

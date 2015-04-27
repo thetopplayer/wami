@@ -9,14 +9,17 @@
  *
  * get group data
  */
-$response = array();
+$jsonInput = file_get_contents('php://input');
+$data = json_decode($jsonInput);
+$identity_profile_id = $data->param1;
+    
 require_once __DIR__ . '/db_connect.php';
-$identity_profile_id = $_POST["param1"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
 $sql = "SELECT profile_group_id, group_name FROM profile_group WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
 
+$response = array();
 $result = mysqli_query($con, $sql)  or  die(mysql_error($con));
 if (!$result) {
     $response["ret_code"] = -1;

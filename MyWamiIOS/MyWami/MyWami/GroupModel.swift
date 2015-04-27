@@ -1,19 +1,19 @@
 //
-//  ProfileModel.swift
+//  GroupModel.swift
 //  MyWami
 //
-//  Created by Robert Lanter on 4/21/15.
+//  Created by Robert Lanter on 4/27/15.
 //  Copyright (c) 2015 Robert Lanter. All rights reserved.
 //
 
 import Foundation
 
-public class ProfileModel {
+public class GroupModel {
     var identityProfileId: Int = 0
-    var profileName: String = ""
-    var defaultProfileInd: Int = 0
+    var groupName: String = ""
+    var groupId: Int = 0
     var selected: Bool = false
-    
+
     func setIdentityProfileId(identityProfileId: Int) {
         self.identityProfileId = identityProfileId
     }
@@ -22,20 +22,20 @@ public class ProfileModel {
         return self.identityProfileId
     }
     
-    func setProfileName(profileName: String) {
-        self.profileName = profileName
+    func setGroupName(groupName: String) {
+        self.groupName = groupName
     }
     
-    func getProfileName() -> String {
-        return self.profileName
+    func getGroupName() -> String {
+        return self.groupName
     }
     
-    func setDefaultProfileInd(defaultProfileInd: Int) {
-        self.defaultProfileInd = defaultProfileInd
+    func setGroupId(groupId: Int) {
+        self.groupId = groupId
     }
     
-    func getDefaultProfileInd() -> Int {
-        return self.defaultProfileInd
+    func getGroupId() -> Int {
+        return self.groupId
     }
     
     func setSelected(selected: Bool) {
@@ -45,6 +45,5 @@ public class ProfileModel {
     func getSelected() -> Bool {
         return self.selected
     }
-    
-}
 
+}

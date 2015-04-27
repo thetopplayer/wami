@@ -109,32 +109,32 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
         var selectCollectionBtn = menu.setMenuBtnAttributes("Select a Profile Collection...")
         selectCollectionBtn.addTarget(self, action: "selectProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
-        selectCollectionBtn.frame = CGRectMake(1, 0, 175, 30)
+        selectCollectionBtn.frame = CGRectMake(4, 0, 175, 30)
         menuView.addSubview(selectCollectionBtn)
         
         var filterByGroupBtn = menu.setMenuBtnAttributes("Filter Collection by Group...")
         filterByGroupBtn.addTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
-        filterByGroupBtn.frame = CGRectMake(1, 25, 175, 30)
+        filterByGroupBtn.frame = CGRectMake(4, 25, 175, 30)
         menuView.addSubview(filterByGroupBtn)
         
         var transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
         transmitBtn.addTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitBtn.frame = CGRectMake(-23, 50, 175, 30)
+        transmitBtn.frame = CGRectMake(-20, 50, 175, 30)
         menuView.addSubview(transmitBtn)
         
         var refeshListBtn = menu.setMenuBtnAttributes("Refresh Wami List")
         refeshListBtn.addTarget(self, action: "refeshListAction", forControlEvents: UIControlEvents.TouchUpInside)
-        refeshListBtn.frame = CGRectMake(-27, 75, 175, 30)
+        refeshListBtn.frame = CGRectMake(-24, 75, 175, 30)
         menuView.addSubview(refeshListBtn)
         
         var searchProfilesBtn = menu.setMenuBtnAttributes("Search for Profiles...")
         searchProfilesBtn.addTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-        searchProfilesBtn.frame = CGRectMake(-21, 100, 175, 30)
+        searchProfilesBtn.frame = CGRectMake(-18, 100, 175, 30)
         menuView.addSubview(searchProfilesBtn)
         
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
-        logoutBtn.frame = CGRectMake(-60, 125, 175, 30)
+        logoutBtn.frame = CGRectMake(-57, 125, 175, 30)
         menuView.addSubview(logoutBtn)
         
         menuLine = menu.createMenuLine(0, length: 180)
@@ -195,7 +195,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var selectProfileView = UIView()
     var selectProfile = SelectProfile()
     func selectProfileAction () {
-        var selectProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let selectBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
@@ -233,24 +232,18 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         closeBtn.addTarget(self, action: "closeFilterCollectionDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let filterCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         filterCollectionBtn.addTarget(self, action: "doFilter", forControlEvents: UIControlEvents.TouchUpInside)
-        let filterDropDownBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        filterDropDownBtn.addTarget(self, action: "processDropDown", forControlEvents: UIControlEvents.TouchUpInside)
         
-        filterCollectionView = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, filterDropDownBtn: filterDropDownBtn)
+        filterCollectionView = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId)
         
         view.addSubview(filterCollectionView)
         menu.toggleMenu(menuView)
     }
     func doFilter() {
-        filterCollection.filter()
+       
     }
     func closeFilterCollectionDialog() {
         filterCollectionView.removeFromSuperview()
-    }
-    func processDropDown() {
-        filterCollection.processDropDown(self.userIdentityProfileId)
-    }
-    
+    }    
     
     func refeshListAction () {
         let GET_PROFILE_COLLECTION = UTILITIES.IP + "get_profile_collection.php"
