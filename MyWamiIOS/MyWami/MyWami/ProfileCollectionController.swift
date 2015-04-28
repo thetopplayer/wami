@@ -72,6 +72,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var menuLine = UILabel()
     
     var newIdentityProfileId: String!
+    var newGroupId: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -220,8 +221,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         }
         else {
             self.view.makeToast(message: "Please select a Profile Collection or hit Close", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-        }
-        
+        }        
     }
     
     // Filter collection
@@ -239,7 +239,21 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menu.toggleMenu(menuView)
     }
     func doFilter() {
-       
+        self.newGroupId = filterCollection.getGroupId()
+        if self.newGroupId == -99 || self.newGroupId == 0 {
+            let GET_PROFILE_COLLECTION = UTILITIES.IP + "get_profile_collection.php"
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION, params: ["param1": userIdentityProfileId])
+            getProfileCollection(jsonData)
+        }
+        else {
+            let GET_PROFILES_ASSIGNED_TO_GROUP = UTILITIES.IP + "get_profiles_assigned_to_group.php"
+            var newGroupIdStr = String(self.newGroupId)
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILES_ASSIGNED_TO_GROUP, params: ["param1": self.userIdentityProfileId, "param2": newGroupIdStr])
+            println("jsonData=\(jsonData)")
+            //            getProfileCollection(jsonData)
+        }
+        closeFilterCollectionDialog()
+        tableView.reloadData()
     }
     func closeFilterCollectionDialog() {
         filterCollectionView.removeFromSuperview()

@@ -8,13 +8,17 @@
  *
  * Gets groups assigned to
  */
+    
+$jsonInput = file_get_contents('php://input');
+$data = json_decode($jsonInput);
+$identity_profile_id = $data->param1;
+$profile_group_id = $data->param2;
+    
 require_once __DIR__ . '/db_connect.php';
-$identity_profile_id = $_POST["param1"];
-$profile_group_id = $_POST["param2"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
-$sql = "SELECT group_name, pga.profile_group_id FROM profile_group pg, profile_group_assign pga
+$sql = "SELECT DISTINCT group_name, pga.profile_group_id FROM profile_group pg, profile_group_assign pga
         WHERE pg.profile_group_id = pga.profile_group_id AND pga.delete_ind = 0 AND pga.assign_to_identity_profile_id = " .$identity_profile_id.
         " AND pga.profile_group_id = " .$profile_group_id;
 
@@ -25,13 +29,12 @@ if (!$result) {
     echo json_encode($response);
     exit(-1);
 }
-$response["profile_group_assign_data"] = array();
+$response = array();
 if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_array($result)) {
-        $item["group"] = $row["group_name"];
-        $item["profile_group_id"] = $row["profile_group_id"];
-        array_push($response["profile_group_assign_data"], $item);
-    }
+    $row = mysqli_fetch_row($result);
+    $response["group"] = $row[0];
+    $response["profile_group_id"] = $row[1];
+    
     $response["ret_code"] = 0;
     $response["message"] = "Profile group assign data found.";
     echo json_encode($response);

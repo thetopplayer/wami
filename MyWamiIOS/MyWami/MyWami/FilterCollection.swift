@@ -68,7 +68,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             checkbox.frame = CGRectMake(5, heightPlacement, 30, 30)
             checkbox.awakeFromNib()
             checkbox.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
-            checkbox.tag = Int(groupModel.getIdentityProfileId())
+            checkbox.tag = Int(groupModel.getGroupId())
             checkBoxes.append(checkbox)
             containerView.addSubview(checkbox)
             
@@ -130,8 +130,8 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func getGroupId () -> String {
-        return String(self.groupId)
+    func getGroupId () -> Int {
+        return self.groupId
     }
 
     func getGroupList(userIdentityProfileId: String) {
