@@ -28,11 +28,14 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         self.checkBoxes.removeAll()
     }
     
-    func filterCollectionDialog(filterCollectionView: UIView, closeBtn: UIButton, filterCollectionBtn: UIButton, userIdentityProfileId: String) -> UIView {
+    func filterCollectionDialog(filterCollectionView: UIView, closeBtn: UIButton, filterCollectionBtn: UIButton, userIdentityProfileId: String) -> UIView? {
         initSelect()
-        getGroupList(userIdentityProfileId)
-        
         self.filterCollectionView = filterCollectionView
+        
+        var retCode = getGroupList(userIdentityProfileId)
+        if retCode == -1 {
+            return nil
+        }
         
         filterCollectionView.frame = CGRectMake(45, 100, 240, 215)
         filterCollectionView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
@@ -134,16 +137,13 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         return self.groupId
     }
 
-    func getGroupList(userIdentityProfileId: String) {
+    func getGroupList(userIdentityProfileId: String) -> Int {
         let GET_PROFILE_GROUP_DATA = UTILITIES.IP + "get_profile_group_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_GROUP_DATA, params: ["param1": userIdentityProfileId])
         
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
-            var message = jsonData["message"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            }
+            return -1
         }
         else {
             var numGroups: Int! = jsonData["profile_group_data"].array?.count
@@ -179,6 +179,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
                 groupModels[index] = groupModel
             }
         }
+        return 0
     }
     
 }

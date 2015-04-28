@@ -103,7 +103,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.frame = CGRectMake(130, 2, 180, 155)
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(1.0).CGColor
-        menuView.layer.borderWidth = 2
+        menuView.layer.borderWidth = 1.5
         view.addSubview(menuView)
         
         menu.toggleMenu(menuView)
@@ -233,10 +233,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let filterCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         filterCollectionBtn.addTarget(self, action: "doFilter", forControlEvents: UIControlEvents.TouchUpInside)
         
-        filterCollectionView = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId)
-        
-        view.addSubview(filterCollectionView)
-        menu.toggleMenu(menuView)
+        if let filterCollectionView = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId) {
+            view.addSubview(filterCollectionView)
+            menu.toggleMenu(menuView)
+        }
+        else {
+            self.view.makeToast(message: "No groups found for Profile!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            menu.toggleMenu(menuView)
+        }
     }
     func doFilter() {
         self.newGroupId = filterCollection.getGroupId()

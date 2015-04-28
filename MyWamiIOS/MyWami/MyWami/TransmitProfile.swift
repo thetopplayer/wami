@@ -113,7 +113,6 @@ class TransmitProfile: UIViewController {
         insertTransmittedData(jsonData)
     }
     
-    //Callback function - insertTransmittedData
     func insertTransmittedData(jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode != 0 {
