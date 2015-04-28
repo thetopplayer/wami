@@ -246,11 +246,10 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             getProfileCollection(jsonData)
         }
         else {
-            let GET_PROFILES_ASSIGNED_TO_GROUP = UTILITIES.IP + "get_profiles_assigned_to_group.php"
+            let GET_PROFILE_COLLECTION_FILTERED = UTILITIES.IP + "get_profile_collection_filtered.php"
             var newGroupIdStr = String(self.newGroupId)
-            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILES_ASSIGNED_TO_GROUP, params: ["param1": self.userIdentityProfileId, "param2": newGroupIdStr])
-            println("jsonData=\(jsonData)")
-            //            getProfileCollection(jsonData)
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION_FILTERED, params: ["param1": self.userIdentityProfileId, "param2": newGroupIdStr])
+            getProfileCollection(jsonData)
         }
         closeFilterCollectionDialog()
         tableView.reloadData()
@@ -365,9 +364,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                     imageUrls.append("")
                 }
             
-                var email = jsonData["profile_collection"][index]["email"].string!
-                emails.append(email)
-
+                if let email = jsonData["profile_collection"][index]["email"].string {
+                    emails.append(email)
+                }
+                else {
+                    emails.append("")
+                }
+                
                 if let telephone = jsonData["profile_collection"][index]["telephone"].string {
                     telephones.append(telephone)
                 }
