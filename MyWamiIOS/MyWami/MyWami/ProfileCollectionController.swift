@@ -193,21 +193,22 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     // Select profile collection
-    var selectProfileView = UIView()
     var selectProfile = SelectProfile()
+    var selectProfileViewDialog = UIView()
     func selectProfileAction () {
+        var selectProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let selectBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         selectBtn.addTarget(self, action: "selectProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
+    
+        self.selectProfileViewDialog = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
         
-        self.selectProfileView = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
-        
-        view.addSubview(self.selectProfileView)
+        view.addSubview(self.selectProfileViewDialog)
         menu.toggleMenu(menuView)
     }
     func closeSelectProfileDialog() {
-        self.selectProfileView.removeFromSuperview()
+        self.selectProfileViewDialog.removeFromSuperview()
     }
     func selectProfileCollection() {
         self.newIdentityProfileId = selectProfile.getNewIdentityProfileId()
@@ -225,16 +226,18 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     // Filter collection
-    var filterCollectionView = UIView()
-    let filterCollection = FilterCollection()
+    var filterCollection = FilterCollection()
+    var filterCollectionViewDialog = UIView()
     func filterByGroupAction () {
+        var filterCollectionView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeFilterCollectionDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let filterCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         filterCollectionBtn.addTarget(self, action: "doFilter", forControlEvents: UIControlEvents.TouchUpInside)
         
-        if let filterCollectionView = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId) {
-            view.addSubview(filterCollectionView)
+        if let filterCollectionViewDialog = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId) {
+            self.filterCollectionViewDialog = filterCollectionViewDialog
+            view.addSubview(filterCollectionViewDialog)
             menu.toggleMenu(menuView)
         }
         else {
@@ -247,19 +250,25 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         if self.newGroupId == -99 || self.newGroupId == 0 {
             let GET_PROFILE_COLLECTION = UTILITIES.IP + "get_profile_collection.php"
             var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION, params: ["param1": userIdentityProfileId])
-            getProfileCollection(jsonData)
+            var retCode = getProfileCollection(jsonData)
+            if retCode == -1 {
+                return
+            }
         }
         else {
             let GET_PROFILE_COLLECTION_FILTERED = UTILITIES.IP + "get_profile_collection_filtered.php"
             var newGroupIdStr = String(self.newGroupId)
             var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_COLLECTION_FILTERED, params: ["param1": self.userIdentityProfileId, "param2": newGroupIdStr])
-            getProfileCollection(jsonData)
+            var retCode = getProfileCollection(jsonData)
+            if retCode == -1 {
+                return
+            }
         }
         closeFilterCollectionDialog()
         tableView.reloadData()
     }
     func closeFilterCollectionDialog() {
-        filterCollectionView.removeFromSuperview()
+        self.filterCollectionViewDialog.removeFromSuperview()
     }    
     
     func refeshListAction () {
@@ -331,7 +340,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         self.chosenProfilesIdsToTransmit.removeAll()
     }
     
-    func getProfileCollection (jsonData: JSON) {
+    func getProfileCollection (jsonData: JSON) -> Int {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
             var message = jsonData["message"].string
@@ -342,6 +351,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         else {
             initData()
             let numProfiles: Int! = jsonData["profile_collection"].array?.count
+            if numProfiles == 0 {
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.view.makeToast(message: "No Profiles found matching selected Group. Select another Group or All.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+                }
+                return -1
+            }
             self.numProfiles = numProfiles
             for index in 0...numProfiles - 1 {
                 var profileName = jsonData["profile_collection"][index]["profile_name"].string!
@@ -392,5 +407,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                 chosenProfilesIdsToTransmit.append("")
             }
         }
+        return 0
     }
 }
