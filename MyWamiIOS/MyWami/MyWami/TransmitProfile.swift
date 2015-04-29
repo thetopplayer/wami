@@ -18,7 +18,7 @@ class TransmitProfile: UIViewController {
     var numNames = 0
     var profileNamesView: CompletionTableView!
     
-    let profileNameTxt = UITextField()
+    var profileNameTxt = UITextField()
     func transmitProfileDialog(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
         self.uview = transmitProfileView
         
@@ -53,6 +53,9 @@ class TransmitProfile: UIViewController {
         
         self.profileNamesView = CompletionTableView(relatedTextField: self.profileNameTxt, inView: self.uview, searchInArray: self.profileNames, tableCellNibName: nil, tableCellIdentifier: nil)
         self.profileNamesView.frame = CGRectMake(15, 80, 210, 120)
+        self.profileNamesView.layer.borderColor = UIColor.grayColor().CGColor
+        self.profileNamesView.layer.borderWidth = 1.5
+        self.profileNamesView.show(false)
 
         profileNameTxt.backgroundColor = UIColor.whiteColor()
         profileNameTxt.textColor = UIColor.blackColor()

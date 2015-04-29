@@ -63,6 +63,7 @@ class CompletionTableView : UITableView, UITableViewDelegate, UITableViewDataSou
     
     func onRelatedTextFieldEditingChanged(sender: UITextField)
     {
+        self.show(true)
         self.tryCompletion(sender.text, animated: true)
     }
     
@@ -157,9 +158,11 @@ class CompletionTableView : UITableView, UITableViewDelegate, UITableViewDataSou
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        self.relatedTextField?.text = self.resultsArray[indexPath.row] as String
         if self.completionDidSelectRowAtIndexPath != nil {
             self.completionDidSelectRowAtIndexPath!(tableView: tableView as! CompletionTableView, indexPath: indexPath)
         }
+        self.hide(true)
     }
     
     func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool
@@ -180,6 +183,7 @@ class CompletionTableView : UITableView, UITableViewDelegate, UITableViewDataSou
         UIView.animateWithDuration(0.25, animations: {() -> Void in
             self.frame = newRect
         })
+//        view.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
     }
     
     func hide(animated: Bool)
