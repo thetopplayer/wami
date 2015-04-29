@@ -173,8 +173,14 @@ class CompletionTableView : UITableView, UITableViewDelegate, UITableViewDataSou
     func show(animated: Bool)
     {
         var newRect = self.frame
-        newRect.size.height = self.rowHeight * CGFloat(self.resultsArray.count)
-        
+        if self.resultsArray.count == 0 {
+            newRect.size.height = 0
+        }
+        else {
+            newRect.size.height = self.rowHeight * CGFloat(6)
+        }
+//        newRect.size.height = self.rowHeight * CGFloat(self.resultsArray.count)
+       
         if !animated {
             self.frame = newRect
             return
@@ -183,7 +189,6 @@ class CompletionTableView : UITableView, UITableViewDelegate, UITableViewDataSou
         UIView.animateWithDuration(0.25, animations: {() -> Void in
             self.frame = newRect
         })
-//        view.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
     }
     
     func hide(animated: Bool)

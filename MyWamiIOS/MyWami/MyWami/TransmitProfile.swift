@@ -52,8 +52,8 @@ class TransmitProfile: UIViewController {
         txtFldBorderLbL1.layer.borderWidth = 1.5
         
         self.profileNamesView = CompletionTableView(relatedTextField: self.profileNameTxt, inView: self.uview, searchInArray: self.profileNames, tableCellNibName: nil, tableCellIdentifier: nil)
-        self.profileNamesView.frame = CGRectMake(15, 80, 210, 120)
-        self.profileNamesView.layer.borderColor = UIColor.grayColor().CGColor
+        self.profileNamesView.frame = CGRectMake(15, 80, 210, 0)
+        self.profileNamesView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.profileNamesView.layer.borderWidth = 1.5
         self.profileNamesView.show(false)
 
