@@ -63,7 +63,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILER_DATA, params: ["param1": identityProfileId])
         getProfilerData(jsonData)
-//        JSON_DATA.jsonGetData(getProfilerData, url: GET_PROFILER_DATA, params: ["param1": identityProfileId])
         
         profilerTableView.dataSource = self
         profilerTableView.delegate = self

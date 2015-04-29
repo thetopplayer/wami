@@ -14,16 +14,21 @@ class TransmitProfile: UIViewController {
     let UTILITIES = Utilities()
     var uview = UIView()
     var userProfileName = ""
+    var profileNames: [String] = []
+    var numNames = 0
+    var profileNamesView: CompletionTableView!
     
     let profileNameTxt = UITextField()
     func transmitProfileDialog(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
         self.uview = transmitProfileView
-            
+        
+        getProfileNames()
+        
         transmitProfileView.frame = CGRectMake(45, 100, 240, 215)
         transmitProfileView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
         transmitProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         transmitProfileView.layer.borderWidth = 1.5
-            
+        
         let headingLbl = UILabel()
         headingLbl.backgroundColor = UIColor.blackColor()
         headingLbl.textAlignment = NSTextAlignment.Center
@@ -46,6 +51,9 @@ class TransmitProfile: UIViewController {
         txtFldBorderLbL1.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         txtFldBorderLbL1.layer.borderWidth = 1.5
         
+        self.profileNamesView = CompletionTableView(relatedTextField: self.profileNameTxt, inView: self.uview, searchInArray: self.profileNames, tableCellNibName: nil, tableCellIdentifier: nil)
+        self.profileNamesView.frame = CGRectMake(15, 80, 210, 120)
+
         profileNameTxt.backgroundColor = UIColor.whiteColor()
         profileNameTxt.textColor = UIColor.blackColor()
         profileNameTxt.font = UIFont.systemFontOfSize(12)
@@ -105,6 +113,10 @@ class TransmitProfile: UIViewController {
     func transmit(fromProfileId: String, identityProfileId: String, numToTransmit: String) {
         var num_to_transmit = numToTransmit
         var transmit_to_profile = profileNameTxt.text
+        if transmit_to_profile == "" || transmit_to_profile == nil {
+            self.uview.makeToast(message: "No Profile Name was entered to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return
+        }
         var from_profile_id = String(fromProfileId)
         var profiles_to_transmit = identityProfileId
         let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
@@ -115,12 +127,27 @@ class TransmitProfile: UIViewController {
     
     func insertTransmittedData(jsonData: JSON) {
         var retCode = jsonData["ret_code"]
-        if retCode != 0 {
-            var message = jsonData["message"].string
+        var noRecExistRetCode = jsonData["no_rec_found_ret_code"]
+        var recExistRetCode = jsonData["rec_exist_ret_code"]
+        if retCode == -1 {
+            var message = jsonData["db_error"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
+        if noRecExistRetCode == 1 {
+            var message = jsonData["no_records_found"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+        }
+        if recExistRetCode == 1 {
+            var message = jsonData["record_already_exist"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+        }
+        
         if retCode == 0 {
             var numProfilesTransmitted = jsonData["num_profiles_transmitted"]
             var message = "Number of profiles transmitted = \(numProfilesTransmitted)"
@@ -136,7 +163,37 @@ class TransmitProfile: UIViewController {
             }
         }
     }
+    
+    func getProfileNames () {
+        let GET_PROFILE_NAMES = UTILITIES.IP + "get_profile_names.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAMES, params: ["param1": " "])
+
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+        }
+        else {
+            let numNames: Int! = jsonData["profile_names"].array?.count
+            self.numNames = numNames
+            for index in 0...numNames - 1 {
+                if let profileName = jsonData["profile_names"][index].string {
+                    profileNames.append(profileName)
+                }
+                else {
+                    profileNames.append("")
+                }
+            }
+        }
+    }
+
+    
 }
+
+
+
 
 
 

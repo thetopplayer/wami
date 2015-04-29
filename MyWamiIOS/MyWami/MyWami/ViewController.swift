@@ -113,6 +113,6 @@ class ViewController: UIViewController {
                 self.performSegueWithIdentifier("showProfileCollection", sender: self)
             }
         }
-    }
+    }    
 }
 
