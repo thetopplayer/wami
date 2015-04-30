@@ -72,27 +72,67 @@ class CreateAccount: UIViewController {
         descLbl6.frame = CGRectMake(53, 100, 250, 15)
         createAccountView.addSubview(descLbl6)
         
+        var requiredSymbol1 = getRequiredSymbol()
+        requiredSymbol1.frame = CGRectMake(10, 123, 20, 20)
+        createAccountView.addSubview(requiredSymbol1)
+        
         let txtFldBorderLbL1 = getLblBorder()
-        var userNameTxt = UITextField()
-        userNameTxt.backgroundColor = UIColor.whiteColor()
-        userNameTxt.textColor = UIColor.blackColor()
-        userNameTxt.font = UIFont.systemFontOfSize(12)
+        var userNameTxt = getTxtFld("Account Username")
         userNameTxt.frame = CGRectMake(15, 138, 220, 20)
-        userNameTxt.placeholder = "Account Username"
         txtFldBorderLbL1.frame = CGRectMake(10, 135, 230, 25)
         createAccountView.addSubview(txtFldBorderLbL1)
         createAccountView.addSubview(userNameTxt)
 
+        var requiredSymbol2 = getRequiredSymbol()
+        requiredSymbol2.frame = CGRectMake(10, 168, 20, 20)
+        createAccountView.addSubview(requiredSymbol2)
+        
         let txtFldBorderLbL2 = getLblBorder()
-        var passwordTxt = UITextField()
-        passwordTxt.backgroundColor = UIColor.whiteColor()
-        passwordTxt.textColor = UIColor.blackColor()
-        passwordTxt.font = UIFont.systemFontOfSize(12)
-        passwordTxt.frame = CGRectMake(15, 173, 70, 20)
-        passwordTxt.placeholder = "Password"
-        txtFldBorderLbL2.frame = CGRectMake(10, 170, 80, 25)
+        var passwordTxt = getTxtFld("Password")
+        passwordTxt.frame = CGRectMake(15, 183, 100, 20)
+        txtFldBorderLbL2.frame = CGRectMake(10, 180, 110, 25)
         createAccountView.addSubview(txtFldBorderLbL2)
         createAccountView.addSubview(passwordTxt)
+        
+        var requiredSymbol3 = getRequiredSymbol()
+        requiredSymbol3.frame = CGRectMake(130, 168, 20, 20)
+        createAccountView.addSubview(requiredSymbol3)
+        
+        let txtFldBorderLbL3 = getLblBorder()
+        var retypePasswordTxt = getTxtFld("Retype Password")
+        retypePasswordTxt.frame = CGRectMake(135, 183, 100, 20)
+        txtFldBorderLbL3.frame = CGRectMake(130, 180, 110, 25)
+        createAccountView.addSubview(txtFldBorderLbL3)
+        createAccountView.addSubview(retypePasswordTxt)
+        
+        var requiredSymbol4 = getRequiredSymbol()
+        requiredSymbol4.frame = CGRectMake(10, 213, 20, 20)
+        createAccountView.addSubview(requiredSymbol4)
+        
+        let txtFldBorderLbL4 = getLblBorder()
+        var emailTxt = getTxtFld("Email Address")
+        emailTxt.frame = CGRectMake(15, 228, 100, 20)
+        txtFldBorderLbL4.frame = CGRectMake(10, 225, 110, 25)
+        createAccountView.addSubview(txtFldBorderLbL4)
+        createAccountView.addSubview(emailTxt)
+        
+        var requiredSymbol5 = getRequiredSymbol()
+        requiredSymbol5.frame = CGRectMake(130, 213, 20, 20)
+        createAccountView.addSubview(requiredSymbol5)
+
+        let txtFldBorderLbL5 = getLblBorder()
+        var profileNameTxt = getTxtFld("First Profile Name")
+        profileNameTxt.frame = CGRectMake(135, 228, 100, 20)
+        txtFldBorderLbL5.frame = CGRectMake(130, 225, 110, 25)
+        createAccountView.addSubview(txtFldBorderLbL5)
+        createAccountView.addSubview(profileNameTxt)
+        
+        let requiredBlurbLbL = UILabel()
+        requiredBlurbLbL.textColor = UIColor.orangeColor()
+        requiredBlurbLbL.font = UIFont.boldSystemFontOfSize(12)
+        requiredBlurbLbL.frame = CGRectMake(10, 250, 110, 25)
+        requiredBlurbLbL.text = "* Required Fields"
+        createAccountView.addSubview(requiredBlurbLbL)
         
         return createAccountView
     }
@@ -105,6 +145,26 @@ class CreateAccount: UIViewController {
         
         return txtFldBorderLbL
     }
+    
+    func getTxtFld(placeHolder: String) -> UITextField {
+        var txtFld = UITextField()
+        txtFld.backgroundColor = UIColor.whiteColor()
+        txtFld.textColor = UIColor.blackColor()
+        txtFld.font = UIFont.systemFontOfSize(12)
+        txtFld.placeholder = placeHolder
+        
+        return txtFld
+    }
+    
+    func getRequiredSymbol() -> UILabel {
+        var requiredSymbol = UILabel()
+        requiredSymbol.textColor = UIColor.orangeColor()
+        requiredSymbol.font = UIFont.boldSystemFontOfSize(16)
+        requiredSymbol.text = "*"
+        
+        return requiredSymbol
+    }
+    
 }
 
 
