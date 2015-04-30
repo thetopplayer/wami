@@ -4,8 +4,10 @@
 //
 
 import UIKit
+import MessageUI
+import AddressBook
 
-class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileCollectionController: UITableViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
 
     @IBAction func checkBoxPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
@@ -33,7 +35,69 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     @IBAction func addToContactsButtonPressed(sender: AnyObject) {
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
+        var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+
+        if !self.authDone {
+            self.authDone = true
+            let status = ABAddressBookGetAuthorizationStatus()
+            
+            switch status {
+            case .Denied, .Restricted:
+                println("no access")
+            case .Authorized, .NotDetermined:
+                var err : Unmanaged<CFError>? = nil
+                var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+                if adbk == nil {
+                    println(err)
+                    return
+                }
+                ABAddressBookRequestAccessWithCompletion(adbk) {
+                    (granted:Bool, err:CFError!) in
+                    if granted {
+                        self.adbk = adbk
+                    }
+                    else {
+                        println(err)
+                    }
+                }
+            }
+        }
+        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
+        var success:Bool = false
+        var newFirstName:NSString = self.firstNames[row]
+        var newLastName = self.lastNames[row]
+        var email = self.emails[row]
+        var telephone: [(String, String)] = [("Home", self.telephones[row])]
+
+        var error: Unmanaged<CFErrorRef>? = nil
+        success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
+        println("\(success)")
+        success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
+        println("\(success)")
+
+//        var multiAddress = ABMultiValueCreateMutable(ABPropertyType(kABMultiDictionaryPropertyType))
+//        var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : streetAddress])
+//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : city])
+//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : state])
+//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : zipcode])
+//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : country])
+//        
+//        //        ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+//        //        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
+//        //        [addressDictionary setObject:@"750 North Orleans Street, Ste 601" forKey:(NSString *) kABPersonAddressStreetKey];
+//        //        [addressDictionary setObject:@"Chicago" forKey:(NSString *)kABPersonAddressCityKey];
+//        //        [addressDictionary setObject:@"IL" forKey:(NSString *)kABPersonAddressStateKey];
+//        //        [addressDictionary setObject:@"60654" forKey:(NSString *)kABPersonAddressZIPKey];
+//        //        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABWorkLabel, NULL);
+//        //        ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
+//        //        CFRelease(multiAddress);
         
+        success = ABAddressBookAddRecord(adbk, newContact, &error)
+        println("\(success)")
+        success = ABAddressBookSave(adbk, &error)
+        println("\(success)")
     }
     
     @IBAction func extendedInfoButtonPressed(sender: AnyObject) {
@@ -73,6 +137,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     var newIdentityProfileId: String!
     var newGroupId: Int!
+    
+    var adbk : ABAddressBook?
+    var authDone: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,21 +239,22 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
-    var transmitProfileView = UIView()
+    var transmitProfileViewDialog = UIView()
     let transmitProfile = TransmitProfile()
     func transmitProfileAction () {
+        var transmitProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
         
-        transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        self.transmitProfileViewDialog = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
         
-        view.addSubview(transmitProfileView)
+        view.addSubview(self.transmitProfileViewDialog)
         menu.toggleMenu(menuView)
     }
     func closeTransmitProfileDialog() {
-        transmitProfileView.removeFromSuperview()
+        self.transmitProfileViewDialog.removeFromSuperview()
     }
     func transmit() {
         transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId, numToTransmit: String(numProfilesToTransmit))

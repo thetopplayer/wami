@@ -16,103 +16,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet var contactNameHdrTxt: UITextField!
     
     @IBAction func addToContactsAction(sender: AnyObject) {
-        if !self.authDone {
-            self.authDone = true
-            let status = ABAddressBookGetAuthorizationStatus()
-            
-            switch status {
-            case .Denied, .Restricted:
-                println("no access")
-            case .Authorized, .NotDetermined:
-                var err : Unmanaged<CFError>? = nil
-                var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
-                if adbk == nil {
-                    println(err)
-                    return
-                }
-                ABAddressBookRequestAccessWithCompletion(adbk) {
-                    (granted:Bool, err:CFError!) in
-                    if granted {
-                        self.adbk = adbk
-                    }
-                    else {
-                        println(err)
-                    }
-                }
-            }
-        }
-        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
-        var success:Bool = false
-        var newFirstName:NSString = self.firstName
-        var newLastName = self.lastName
-        var email = self.email
-        var telephone: [(String, String)] = [("Home", self.telephone)]
-        var streetAddress = self.streetAddress
-        var city = self.city
-        var state = self.state
-        var zipcode = self.zipcode
-        var country = self.country
-        
-        var error: Unmanaged<CFErrorRef>? = nil
-        success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
-        println("\(success)")
-        success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
-        println("\(success)")
-//        success = ABRecordSetValue(newContact, kABPersonEmailProperty, email, &error)
-//        println("\(success)")
-        
-
-//        success = ABRecordSetValue(newContact, kABPersonPhoneProperty, telephone, &error)
-//        println("\(success)")
-        
-        var multiAddress = ABMultiValueCreateMutable(ABPropertyType(kABMultiDictionaryPropertyType))
-        var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : streetAddress])
-        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : city])
-        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : state])
-        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : zipcode])
-        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : country])
-        
-    
-        
-//        let cfstring:CFString = kABHomeLabel as NSString
-//        
-//        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABHomeLabel, nil);
-        
-//        success = ABRecordSetValue(newContact, kABPersonAddressProperty, multiAddress, &error)
-        
-//        ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
-        
-        
-    
-
-//        ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
-//        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
-//        [addressDictionary setObject:@"750 North Orleans Street, Ste 601" forKey:(NSString *) kABPersonAddressStreetKey];
-//        [addressDictionary setObject:@"Chicago" forKey:(NSString *)kABPersonAddressCityKey];
-//        [addressDictionary setObject:@"IL" forKey:(NSString *)kABPersonAddressStateKey];
-//        [addressDictionary setObject:@"60654" forKey:(NSString *)kABPersonAddressZIPKey];
-//        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABWorkLabel, NULL);
-//        ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
-//        CFRelease(multiAddress);
-        
-        
-        
-
-//        success = ABRecordSetValue(newContact, kABPersonAddressStreetKey, streetAddress, &error)
-//        println("\(success)")
-//        success = ABRecordSetValue(newContact, kABPersonAddressCityKey, city, &error)
-//        println("\(success)")
-//        success = ABRecordSetValue(newContact, kABPersonAddressStateKey, state, &error)
-//        println("\(success)")
-//        success = ABRecordSetValue(newContact, kABPersonAddressZIPKey, zipcode, &error)
-//        println("\(success)")
-//        success = ABRecordSetValue(newContact, kABPersonAddressCountryKey, country, &error)
-//        println("\(success)")
-        
-        success = ABAddressBookAddRecord(adbk, newContact, &error)
-        println("\(success)")
-        success = ABAddressBookSave(adbk, &error)
-        println("\(success)")
+        addToContactListAction()
     }
     
     @IBAction func emailAction(sender: AnyObject) {
@@ -327,10 +231,69 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         menuView.addSubview(menuLine)
     }
     
-    // menu options
+    // Add to Contacts
     func addToContactListAction () {
-        println("addToContact")
+        if !self.authDone {
+            self.authDone = true
+            let status = ABAddressBookGetAuthorizationStatus()
+            
+            switch status {
+            case .Denied, .Restricted:
+                println("no access")
+            case .Authorized, .NotDetermined:
+                var err : Unmanaged<CFError>? = nil
+                var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+                if adbk == nil {
+                    println(err)
+                    return
+                }
+                ABAddressBookRequestAccessWithCompletion(adbk) {
+                    (granted:Bool, err:CFError!) in
+                    if granted {
+                        self.adbk = adbk
+                    }
+                    else {
+                        println(err)
+                    }
+                }
+            }
+        }
+        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
+        var success:Bool = false
+        var newFirstName:NSString = self.firstName
+        var newLastName = self.lastName
+        var email = self.email
+        var telephone: [(String, String)] = [("Home", self.telephone)]
+        
+        var error: Unmanaged<CFErrorRef>? = nil
+        success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
+        println("\(success)")
+        success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
+        println("\(success)")
+
+        var multiAddress = ABMultiValueCreateMutable(ABPropertyType(kABMultiDictionaryPropertyType))
+        var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : streetAddress])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : city])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : state])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : zipcode])
+        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : country])
+        
+        //        ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+        //        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
+        //        [addressDictionary setObject:@"750 North Orleans Street, Ste 601" forKey:(NSString *) kABPersonAddressStreetKey];
+        //        [addressDictionary setObject:@"Chicago" forKey:(NSString *)kABPersonAddressCityKey];
+        //        [addressDictionary setObject:@"IL" forKey:(NSString *)kABPersonAddressStateKey];
+        //        [addressDictionary setObject:@"60654" forKey:(NSString *)kABPersonAddressZIPKey];
+        //        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABWorkLabel, NULL);
+        //        ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
+        //        CFRelease(multiAddress);
+        
+        success = ABAddressBookAddRecord(adbk, newContact, &error)
+        println("\(success)")
+        success = ABAddressBookSave(adbk, &error)
+        println("\(success)")
     }
+    
     // Transmit profile
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()

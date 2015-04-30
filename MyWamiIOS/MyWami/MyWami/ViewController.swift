@@ -23,6 +23,12 @@ class ViewController: UIViewController {
     var userModel = UserModel()
     let sqliteHelper = SQLiteHelper()
 
+    @IBAction func createAccountAction(sender: AnyObject) {
+        
+    }
+    
+    
+    
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
         var password = self.passwordText.text
