@@ -24,7 +24,17 @@ class ViewController: UIViewController {
     let sqliteHelper = SQLiteHelper()
 
     @IBAction func createAccountAction(sender: AnyObject) {
+        var createAccount = CreateAccount()
+        var createAccountViewDialog = UIView()
+        var createAccountView = UIView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeCreateAccountDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        createAccountBtn.addTarget(self, action: "createAccount", forControlEvents: UIControlEvents.TouchUpInside)
         
+        createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createAccountBtn: createAccountBtn)
+        
+        view.addSubview(createAccountViewDialog)
     }
     
     
