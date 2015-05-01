@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     var userModel = UserModel()
     let sqliteHelper = SQLiteHelper()
 
+    var createAccountViewDialog = UIView()
     @IBAction func createAccountAction(sender: AnyObject) {
         var createAccount = CreateAccount()
         var createAccountViewDialog = UIView()
@@ -32,11 +33,13 @@ class ViewController: UIViewController {
         let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         createAccountBtn.addTarget(self, action: "createAccount", forControlEvents: UIControlEvents.TouchUpInside)
         
-        createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createAccountBtn: createAccountBtn)
+        self.createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createAccountBtn: createAccountBtn)
         
-        view.addSubview(createAccountViewDialog)
+        view.addSubview(self.createAccountViewDialog)
     }
-    
+    func closeCreateAccountDialog() {
+        self.createAccountViewDialog.removeFromSuperview()
+    }
     
     
     @IBAction func loginButtonPressed(sender: AnyObject) {

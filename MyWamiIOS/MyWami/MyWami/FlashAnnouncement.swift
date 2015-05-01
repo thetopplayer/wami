@@ -69,7 +69,7 @@ class FlashAnnouncement: UIViewController, UITextViewDelegate  {
     }
     // limit number of chars in flash msg
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if count(textView.text) > 5 {
+        if count(textView.text) > 109 {
             self.newFlashView.makeToast(message: "Only 110 characters allowed.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, count(textView.text) - 1))
         }

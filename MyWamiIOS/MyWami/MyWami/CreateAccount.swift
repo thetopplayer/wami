@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateAccount: UIViewController {
+class CreateAccount: UIViewController, UITextViewDelegate  {
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
     let UTILITIES = Utilities()
     var uview = UIView()
@@ -16,11 +16,12 @@ class CreateAccount: UIViewController {
     func createAccountDialog(createAccountView: UIView, closeBtn: UIButton, createAccountBtn: UIButton) -> UIView {
         self.uview = createAccountView
         
-        var horizontalPlacement = CGFloat(40)
-        var verticalPlacement = CGFloat(32)
+        let horizontalPlacement = CGFloat(40)
+        let verticalPlacement = CGFloat(32)
         
         createAccountView.frame = CGRectMake(35, 65, 250, 480)
-        createAccountView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+//        createAccountView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        createAccountView.backgroundColor = UIColor(red: 0xfc/240, green: 0xfc/240, blue: 0xfc/240, alpha: 1.0)
         createAccountView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         createAccountView.layer.borderWidth = 1.5
         
@@ -75,7 +76,7 @@ class CreateAccount: UIViewController {
         descLbl6.frame = CGRectMake(horizontalPlacement + 13, verticalPlacement + 60, 250, 15)
         createAccountView.addSubview(descLbl6)
         
-        var verticalPlacement2 = CGFloat(22)
+        let verticalPlacement2 = CGFloat(22)
         
         var requiredSymbol1 = getRequiredSymbol()
         requiredSymbol1.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement2 + 83, 20, 20)
@@ -139,6 +140,71 @@ class CreateAccount: UIViewController {
         requiredBlurbLbL.text = "* Required Fields"
         createAccountView.addSubview(requiredBlurbLbL)
         
+        let verticalPlacement3 = CGFloat(190)
+        
+        let optionalLbL = UILabel()
+        optionalLbL.textColor = UIColor.grayColor()
+        optionalLbL.font = UIFont.boldSystemFontOfSize(11)
+        optionalLbL.frame = CGRectMake(horizontalPlacement - 25, verticalPlacement3 + 60, 110, 25)
+        optionalLbL.text = "Optional Fields"
+        createAccountView.addSubview(optionalLbL)
+        
+        let txtFldBorderLbL6 = getLblBorder()
+        var firstNameTxt = getTxtFld("First Name")
+        firstNameTxt.frame = CGRectMake(horizontalPlacement - 25, verticalPlacement3 + 87, 100, 20)
+        txtFldBorderLbL6.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement3 + 84, 110, 25)
+        createAccountView.addSubview(txtFldBorderLbL6)
+        createAccountView.addSubview(firstNameTxt)
+        
+        let txtFldBorderLbL7 = getLblBorder()
+        var lastNameTxt = getTxtFld("Last Name")
+        lastNameTxt.frame = CGRectMake(horizontalPlacement + 95, verticalPlacement3 + 87, 100, 20)
+        txtFldBorderLbL7.frame = CGRectMake(horizontalPlacement + 90, verticalPlacement3 + 84, 110, 25)
+        createAccountView.addSubview(txtFldBorderLbL7)
+        createAccountView.addSubview(lastNameTxt)
+        
+        let txtFldBorderLbL8 = getLblBorder()
+        var teleNumberTxt = getTxtFld("Telephone Number")
+        teleNumberTxt.frame = CGRectMake(horizontalPlacement - 25, verticalPlacement3 + 122, 220, 20)
+        txtFldBorderLbL8.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement3 + 119, 230, 25)
+        createAccountView.addSubview(txtFldBorderLbL8)
+        createAccountView.addSubview(teleNumberTxt)
+        
+        var textView = UITextView()
+        textView.font = UIFont.systemFontOfSize(12)
+        textView.textAlignment = .Left
+        textView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        textView.layer.borderWidth = 0.5
+        textView.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement3 + 155, 230, 50)
+        
+        textView.text = "Profile Description"
+        textView.textColor = UIColor.lightGrayColor()
+        textView.delegate = self
+        createAccountView.addSubview(textView)
+        
+        let verticalPlacement4 = CGFloat(250)
+        
+        var line: UILabel = UILabel()
+        line.frame = CGRectMake(10, verticalPlacement4 + 162, 230, 1)
+        line.backgroundColor = UIColor.blackColor()
+        createAccountView.addSubview(line)
+        
+        createAccountBtn.setTitle("Create", forState: UIControlState.Normal)
+        createAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
+        createAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        createAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        createAccountBtn.showsTouchWhenHighlighted = true
+        createAccountBtn.frame = CGRectMake(45, verticalPlacement4 + 180, 60, 23)
+        createAccountView.addSubview(createAccountBtn)
+        
+        closeBtn.setTitle("Close", forState: UIControlState.Normal)
+        closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
+        closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        closeBtn.showsTouchWhenHighlighted = true
+        closeBtn.frame = CGRectMake(135, verticalPlacement4 + 180, 60, 23)
+        createAccountView.addSubview(closeBtn)
+        
         return createAccountView
     }
 
@@ -170,6 +236,21 @@ class CreateAccount: UIViewController {
         return requiredSymbol
     }
     
+    // used for text view placeholder
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.textColor == UIColor.lightGrayColor() {
+            textView.text = nil
+            textView.textColor = UIColor.blackColor()
+        }
+    }
+    
+//    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+//        if count(textView.text) == 0 {
+//            self.uview.makeToast(message: "Profile Description", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+//            textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, count(textView.text) - 1))
+//        }
+//        return true
+//    }
 }
 
 
