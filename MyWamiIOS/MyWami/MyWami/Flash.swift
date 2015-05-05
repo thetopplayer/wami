@@ -109,7 +109,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         menuView.frame = CGRectMake(157, 70, 150, 105)
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        menuView.layer.borderWidth = 1.5
+        menuView.layer.borderWidth = 1.0
         view.addSubview(menuView)
         
         menu.toggleMenu(menuView)

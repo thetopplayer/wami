@@ -190,7 +190,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     func showMenu(sender: UIBarButtonItem) {
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        menuView.layer.borderWidth = 1.5
+        menuView.layer.borderWidth = 1.0
         menuView.frame = CGRectMake(153, 70, 150, 133)
         uiView.addSubview(menuView)
  
@@ -412,7 +412,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //Callback function - getProfileData
     func getProfileData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
@@ -528,7 +527,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.contactName = firstName + " " + lastName
     }
     
-    //Callback function - getProfileName
     func getProfileName (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
