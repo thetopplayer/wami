@@ -41,7 +41,7 @@ class FlashAnnouncement: UIViewController, UITextViewDelegate  {
         textView.textColor = UIColor.lightGrayColor()
         textView.delegate = self
         newFlashView.addSubview(textView)
-        
+
         createBtn.setTitle("Create", forState: UIControlState.Normal)
         createBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
         createBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)

@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet var createAccountBtn: UIButton!
     
     let JSON_DATA = JsonGetData()
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
@@ -24,23 +25,21 @@ class ViewController: UIViewController {
     let sqliteHelper = SQLiteHelper()
 
     var createAccountViewDialog = UIView()
+    var createAccountView = UIView()
+    var createAccount = CreateAccount()
     @IBAction func createAccountAction(sender: AnyObject) {
         var createAccount = CreateAccount()
-        var createAccountViewDialog = UIView()
-        var createAccountView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeCreateAccountDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        createAccountBtn.addTarget(self, action: "createAccount", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createAccountBtn: createAccountBtn)
-        
+        createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn)
         view.addSubview(self.createAccountViewDialog)
     }
     func closeCreateAccountDialog() {
         self.createAccountViewDialog.removeFromSuperview()
     }
-    
+    func createNewAccount() {
+        createAccount.checkForRequiredFields()
+    }
     
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text

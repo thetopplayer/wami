@@ -76,6 +76,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="createAccountBtn" destination="cqW-5b-GeO" id="840-iW-dV3"/>
                         <outlet property="passwordText" destination="UDA-Aj-xNf" id="Kdx-Ty-5FA"/>
                         <outlet property="usernameText" destination="Mhq-hz-PeO" id="g4q-hy-cSl"/>
                     </connections>

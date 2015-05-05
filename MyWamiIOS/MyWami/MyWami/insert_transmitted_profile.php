@@ -10,7 +10,7 @@
      * Insert profiles into profile collections
      */
     $profiles_to_transmit = array();
-       $transmit_to_profile = '';
+    $transmit_to_profile = '';
     
     $json = file_get_contents('php://input');
     $data = json_decode($json);

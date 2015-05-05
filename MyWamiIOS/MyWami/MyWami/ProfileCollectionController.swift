@@ -247,9 +247,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.transmitProfileViewDialog = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
-        
+        self.transmitProfileViewDialog = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)        
         view.addSubview(self.transmitProfileViewDialog)
         menu.toggleMenu(menuView)
     }

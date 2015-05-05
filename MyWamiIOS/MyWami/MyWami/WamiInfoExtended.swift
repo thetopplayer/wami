@@ -302,9 +302,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
-        
         transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
-        
         view.addSubview(transmitProfileView)
         menu.toggleMenu(menuView)
     }
