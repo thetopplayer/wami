@@ -68,12 +68,12 @@ public class CreateAccount {
         if (password.equals("")) {
           Toast.makeText(context.getApplicationContext(), "Password is a required field!", Toast.LENGTH_LONG).show();
           return;
-        }
-        Pattern patternPassword = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+-_])(?=\\S+$).{8,20}$");
+        }   //[!@#$%^&]
+        Pattern patternPassword = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&])(?=\\S+$).{8,20}$");
         Matcher matcherPassword = patternPassword.matcher(password);
         if (!matcherPassword.matches()) {
           Toast.makeText(context.getApplicationContext(), "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
-              " and at least 1 of the following characters: ! @ # $ % ^ & + - _\"", Toast.LENGTH_LONG).show();
+              " and at least 1 of the following characters: ! @ # $ % ^ & \"", Toast.LENGTH_LONG).show();
           return;
         }
 
