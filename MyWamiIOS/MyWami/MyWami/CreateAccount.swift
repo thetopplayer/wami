@@ -259,11 +259,11 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
             self.createAccountView.makeToast(message: "Password is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
-        let passwordRegex = NSRegularExpression(pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+-_])(?=\\S+$).{8,20}$", options: nil, error: nil)!
+        let passwordRegex = NSRegularExpression(pattern: "^(?=.*[0-9-_])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&])(?=\\S+$).{8,20}$", options: nil, error: nil)!
         var nsString1 = self.passwordTxt.text as NSString
         var match1 = passwordRegex.numberOfMatchesInString(self.passwordTxt.text, options: nil, range: NSMakeRange(0, nsString1.length))
         if match1 == 0 {
-            self.createAccountView.makeToast(message: "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number, and at least 1 of the following characters: ! @ # $ % ^ & - _\"", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.createAccountView.makeToast(message: "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number, and at least 1 of the following characters: ! @ # $ % ^ & \"", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
         
@@ -297,6 +297,13 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
             self.createAccountView.makeToast(message: "Profile Name is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
+        let profileNameNameRegex = NSRegularExpression(pattern: "^[a-zA-Z0-9_-]+$", options: nil, error: nil)!
+        var nsString2 = self.profileNameTxt.text as NSString
+        var match2 = profileNameNameRegex.numberOfMatchesInString(self.profileNameTxt.text, options: nil, range: NSMakeRange(0, nsString.length))
+        if match2 == 0 {
+            self.createAccountView.makeToast(message: "First Profile Name must only contain letters, numbers, underscores, and hyphens.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return
+        }
     }
     
     func getLblBorder() -> UILabel {
@@ -309,7 +316,6 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
     }
     
     func getTxtFld(txtFld: UITextField, placeHolder: String) -> UITextField {
-//        var txtFld = UITextField()
         txtFld.backgroundColor = UIColor.whiteColor()
         txtFld.textColor = UIColor.blackColor()
         txtFld.font = UIFont.systemFontOfSize(12)
@@ -330,14 +336,6 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
     
 }
 
-
-//Pattern patternPassword = Pattern.compile("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#?!@$%^&*-_]).{8,20})");
-//Matcher matcherPassword = patternPassword.matcher(password);
-//if (!matcherPassword.matches()) {
-//    Toast.makeText(context.getApplicationContext(), "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
-//        " and at least 1 of the following characters: # ? ! @ $ % ^ & * - _\"", Toast.LENGTH_LONG).show();
-//    return;
-//}
 
 
 
