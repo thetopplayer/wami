@@ -14,11 +14,11 @@ $data = json_decode($json);
 $username = $data->param1;
 $password = $data->param2;
 $first_name = $data->param3;
-$last_name = $data->param4
-$email = $data->param5
-$profile_name = $data->param6
-$tele_number = $data->param7
-$profile_description = $data->param8
+$last_name = $data->param4;
+$email = $data->param5;
+$profile_name = $data->param6;
+$tele_number = $data->param7;
+$profile_description = $data->param8;
     
 $response = array();
 require_once __DIR__ . '/db_connect.php';

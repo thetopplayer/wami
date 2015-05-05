@@ -104,7 +104,7 @@ public class CreateAccount {
           return;
         }
 
-        String[] postData = { username, emailAddress };
+        String[] postData = { username, emailAddress, firstProfileName };
         JsonGetData jsonGetData = new JsonGetData();
         jsonGetData.jsonGetData(context, CHECK_ACCOUNT_DATA, postData);
         String jsonResult = jsonGetData.getJsonResult();

@@ -23,7 +23,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
     var teleNumberTxt = UITextField()
     var textView: UITextView!
     
-    func createAccountDialog(createAccountView: UIView, closeBtn: UIButton) -> UIView {
+    func createAccountDialog(createAccountView: UIView, closeBtn: UIButton, createAccountBtn: UIButton) -> UIView {
         self.createAccountView = createAccountView
         
         let horizontalPlacement = CGFloat(40)
@@ -200,14 +200,14 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         line.backgroundColor = UIColor.blackColor()
         self.createAccountView.addSubview(line)
         
-        let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+//***        let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         createAccountBtn.setTitle("Create", forState: UIControlState.Normal)
         createAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         createAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         createAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         createAccountBtn.showsTouchWhenHighlighted = true
         createAccountBtn.frame = CGRectMake(45, verticalPlacement4 + 180, 60, 23)
-        createAccountBtn.addTarget(self, action: "createNewAccount", forControlEvents: UIControlEvents.TouchUpInside)
+//***        createAccountBtn.addTarget(self, action: "createNewAccount", forControlEvents: UIControlEvents.TouchUpInside)
         self.createAccountView.addSubview(createAccountBtn)
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
@@ -222,10 +222,10 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         return self.createAccountView
     }
     
-    func createNewAccount() {
-        checkForRequiredFields()
-    }
-    
+//    func createNewAccount() {
+//        processAccount()
+//    }
+//    
     // used for text view placeholder
     func textViewDidBeginEditing(textView: UITextView) {
         if textView.textColor == UIColor.lightGrayColor() {
@@ -234,76 +234,103 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         }
     }
  
-    func checkForRequiredFields() {
+    func processAccount() -> Bool {
         if self.userNameTxt.text == nil {
             self.createAccountView.makeToast(message: "Account Username is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         if count(self.userNameTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) == 0 {
             self.createAccountView.makeToast(message: "Account Username is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         let userNameRegex = NSRegularExpression(pattern: "^[a-zA-Z0-9_-]+$", options: nil, error: nil)!
         var nsString = self.userNameTxt.text as NSString
         var match = userNameRegex.numberOfMatchesInString(self.userNameTxt.text, options: nil, range: NSMakeRange(0, nsString.length))
         if match == 0 {
             self.createAccountView.makeToast(message: "Account Username must only contain letters, numbers, underscores, and hyphens", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         
         if self.passwordTxt.text == nil {
             self.createAccountView.makeToast(message: "Password is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         if count(self.passwordTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) == 0 {
             self.createAccountView.makeToast(message: "Password is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         let passwordRegex = NSRegularExpression(pattern: "^(?=.*[0-9-_])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&])(?=\\S+$).{8,20}$", options: nil, error: nil)!
-        var nsString1 = self.passwordTxt.text as NSString
-        var match1 = passwordRegex.numberOfMatchesInString(self.passwordTxt.text, options: nil, range: NSMakeRange(0, nsString1.length))
-        if match1 == 0 {
+        nsString = self.passwordTxt.text as NSString
+        match = passwordRegex.numberOfMatchesInString(self.passwordTxt.text, options: nil, range: NSMakeRange(0, nsString.length))
+        if match == 0 {
             self.createAccountView.makeToast(message: "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number, and at least 1 of the following characters: ! @ # $ % ^ & \"", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         
         if self.retypePasswordTxt.text == nil {
             self.createAccountView.makeToast(message: "Retype Password is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         if count(self.retypePasswordTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) == 0 {
             self.createAccountView.makeToast(message: "Retype Password is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         if self.passwordTxt.text != self.retypePasswordTxt.text {
             self.createAccountView.makeToast(message: "Password and Retype Password must be the same.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         
         if self.emailTxt.text == nil {
             self.createAccountView.makeToast(message: "Email address is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         if count(self.emailTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) == 0 {
             self.createAccountView.makeToast(message: "Email address is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         
         if self.profileNameTxt.text == nil {
             self.createAccountView.makeToast(message: "Profile Name is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         if count(self.profileNameTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())) == 0 {
             self.createAccountView.makeToast(message: "Profile Name is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
         let profileNameNameRegex = NSRegularExpression(pattern: "^[a-zA-Z0-9_-]+$", options: nil, error: nil)!
-        var nsString2 = self.profileNameTxt.text as NSString
-        var match2 = profileNameNameRegex.numberOfMatchesInString(self.profileNameTxt.text, options: nil, range: NSMakeRange(0, nsString.length))
-        if match2 == 0 {
+        nsString = self.profileNameTxt.text as NSString
+        match = profileNameNameRegex.numberOfMatchesInString(self.profileNameTxt.text, options: nil, range: NSMakeRange(0, nsString.length))
+        if match == 0 {
             self.createAccountView.makeToast(message: "First Profile Name must only contain letters, numbers, underscores, and hyphens.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+            return false
         }
+            
+        let CHECK_ACCOUNT_DATA = UTILITIES.IP + "check_account_data.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(CHECK_ACCOUNT_DATA, params: ["param1": self.userNameTxt.text, "param2": self.emailTxt.text, "param3": self.profileNameTxt.text])
+        var retCode = jsonData["ret_code"]
+        if retCode == -1 {
+            var message = jsonData["message"].string
+            self.createAccountView.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return false
+        }
+        
+        var userName = self.userNameTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var profileName = self.profileNameTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var email = self.emailTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var firstName  = self.firstNameTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var lastName = self.lastNameTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var teleNumber  = self.teleNumberTxt.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let INSERT_NEW_ACCOUNT_DATA = UTILITIES.IP + "insert_new_account_data.php"
+        jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_NEW_ACCOUNT_DATA, params: ["param1": userName, "param2": self.passwordTxt.text,
+            "param3": firstName, "param4": lastName, "param5": email, "param6": profileName, "param7": teleNumber, "param8": textView.text])
+        retCode = jsonData["ret_code"]
+        if retCode == -1 {
+            var message = jsonData["message"].string
+            self.createAccountView.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return false
+        }
+        self.createAccountView.makeToast(message: "Congrats...Account created. Login and start connecting...", duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+        return true
     }
     
     func getLblBorder() -> UILabel {
@@ -333,6 +360,14 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         return requiredSymbol
     }
     
+    func getUserName() -> String {
+        return self.userNameTxt.text
+    }
+    
+    func getPassword() -> String {
+        return self.passwordTxt.text
+    }
+
     
 }
 

@@ -28,18 +28,30 @@ class ViewController: UIViewController {
     var createAccountView = UIView()
     var createAccount = CreateAccount()
     @IBAction func createAccountAction(sender: AnyObject) {
-        var createAccount = CreateAccount()
+// ***       createAccount = CreateAccount()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeCreateAccountDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn)
+   //***
+        let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        createAccountBtn.addTarget(self, action: "createNewAccount", forControlEvents: UIControlEvents.TouchUpInside)
+   //***
+        
+        createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createAccountBtn: createAccountBtn)
         view.addSubview(self.createAccountViewDialog)
     }
     func closeCreateAccountDialog() {
         self.createAccountViewDialog.removeFromSuperview()
     }
+    //***
     func createNewAccount() {
-        createAccount.checkForRequiredFields()
+        var retCode = self.createAccount.processAccount()
+        if retCode {
+            self.usernameText.text = self.createAccount.getUserName()
+            self.passwordText.text = self.createAccount.getPassword()
+            closeCreateAccountDialog()
+        }
     }
+   //***
     
     @IBAction func loginButtonPressed(sender: AnyObject) {
         var username = self.usernameText.text
@@ -95,7 +107,6 @@ class ViewController: UIViewController {
         }
     }
 
-    // Callback func - getUserData
     func getUserData (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
@@ -115,7 +126,6 @@ class ViewController: UIViewController {
         }
     }
 
-    // Callback func - getDefaultIdentityProfileId
     func getDefaultIdentityProfileId (jsonData: JSON) {
         var retCode = jsonData["ret_code"]
         if retCode == 1 {
