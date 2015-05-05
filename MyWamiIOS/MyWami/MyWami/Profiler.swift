@@ -62,7 +62,27 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         
         let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILER_DATA, params: ["param1": identityProfileId])
-        getProfilerData(jsonData)
+        
+        var retCode = jsonData["no_categories_ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"][0].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+            return
+        }
+        else {
+            if let numCategories: Int! = jsonData["identity_profiler_data"].array?.count {
+                self.numCategories = numCategories
+                for index in 0...numCategories - 1 {
+                    var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
+                    categories.append(categoryName)
+                }
+            }
+            else {
+                self.numCategories = 0
+            }
+        }
         
         profilerTableView.dataSource = self
         profilerTableView.delegate = self
@@ -226,30 +246,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
             svc.profileName = self.profileName
             svc.firstName = self.firstName
             svc.lastName = self.lastName
-        }
-    }
-    
-    //Callback function - getProfileName
-    func getProfilerData (jsonData: JSON) {
-        
-        var retCode = jsonData["no_categories_ret_code"]
-        if retCode == 1 {
-            var message = jsonData["message"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            }
-        }
-        else {
-            if let numCategories: Int! = jsonData["identity_profiler_data"].array?.count {
-                self.numCategories = numCategories
-                for index in 0...numCategories - 1 {
-                    var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
-                    categories.append(categoryName)
-                }
-            }
-            else {
-                self.numCategories = 0
-            }
         }
     }
 }
