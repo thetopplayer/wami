@@ -7,30 +7,33 @@
  * Date: 6/11/14
  * Time: 8:44 PM
  */
+    
+    
+    $json = file_get_contents('php://input');
+    $data = json_decode($json);
+    
+    $to = $data->param1;
+    $from = $data->param2;
+    $profile_name = $data->param3;
+    $from_first_name = $data->param4;
+    $from_last_name = $data->param5;
+    $from_profile_name = $data->param6;
+    $contact_name = $data->param7;
+    $email = $data->param8;
+    $profile_type = $data->param9;
+    $description = $data->param10;
+    $street_address = $data->param11;
+    $city = $data->param12;
+    $state = $data->param13;
+    $zipcode = $data->param14;
+    $country = $data->param15;
+    $telephone = $data->param16;
+    $tags = $data->param17;
+    $create_date = $data->param18;
+    
+    $subject = 'Transmitted Wami Profile';
 
-$to = $_POST["param1"];
-$from = $_POST["param2"];
-$subject = 'Transmitted Wami Profile';
-
-$profile_name = $_POST["param3"];
-$from_first_name = $_POST["param4"];
-$from_last_name = $_POST["param5"];
-$from_profile_name = $_POST["param6"];
-$contact_name = $_POST["param7"];
-$email = $_POST["param8"];
-$profile_type = $_POST["param9"];
-$description = $_POST["param10"];
-$street_address = $_POST["param11"];
-$city = $_POST["param12"];
-$state = $_POST["param13"];
-$zipcode = $_POST["param14"];;
-$country = $_POST["param15"];
-$telephone = $_POST["param16"];
-$tags = $_POST["param17"];
-$create_date = $_POST["param18"];
-
-
-$message =
+    $message =
     "<html><body style='background-color: rgba(204, 255, 254, 0.13)'>" .
     "<link href='http://www.mywami.com/css/bootstrap.css' rel='stylesheet'>" .
     "<link href='http://www.mywami.com/css/wami.css' rel='stylesheet'>" .
@@ -76,19 +79,22 @@ $message =
     "</body></html>";
 
 
-$headers = "From: " .$from. "\n";
-$headers .= "Reply-To: " .$from. "\n";
-$headers .= "MIME-Version: 1.0\n";
-$headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
-header('Access-Control-Allow-Origin: http://localhost');
+    $headers = "From: " .$from. "\n";
+    $headers .= "Reply-To: " .$from. "\n";
+    $headers .= "MIME-Version: 1.0\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
+    header('Access-Control-Allow-Origin: http://localhost');
 
-$retCode = mail($to, $subject, $message, $headers);
-$response["ret_code"] = $retCode;
-if ($retCode) {
-    $response["message"] = "Profile has been emailed.";
-}
-else {
-    $response["message"] =  "Problem with emailing profile.";
-}
-echo json_encode($response);
+    $retCode = mail($to, $subject, $message, $headers);
+    $response["ret_code"] = $retCode;
+    if ($retCode) {
+        $response["message"] = "Profile has been emailed.";
+    }
+    else {
+        $response["message"] =  "Problem with emailing profile.";
+    }
+    echo json_encode($response);
 ?>
+
+
+

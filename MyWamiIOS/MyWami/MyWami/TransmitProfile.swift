@@ -19,6 +19,7 @@ class TransmitProfile: UIViewController {
     var profileNamesView: CompletionTableView!
     
     var profileNameTxt = UITextField()
+    var emailAddressTxt = UITextField()
     func transmitProfileDialog(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
         self.uview = transmitProfileView
         
@@ -79,7 +80,6 @@ class TransmitProfile: UIViewController {
         txtFldBorderLbL2.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         txtFldBorderLbL2.layer.borderWidth = 1.5
         
-        let emailAddressTxt = UITextField()
         emailAddressTxt.backgroundColor = UIColor.whiteColor()
         emailAddressTxt.textColor = UIColor.blackColor()
         emailAddressTxt.font = UIFont.systemFontOfSize(13)
@@ -126,6 +126,12 @@ class TransmitProfile: UIViewController {
         var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE,
             params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
         insertTransmittedData(jsonData)
+        
+        var transmit_to_email = emailAddressTxt.text
+        if transmit_to_email == "" || transmit_to_email == nil {
+            self.uview.makeToast(message: "No Email Address was entered to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return
+        }
     }
     
     func insertTransmittedData(jsonData: JSON) {
