@@ -40,7 +40,7 @@ public class TransmitWami {
 	private TransmitModel transmitModel;
 	private String toastMessage = "";
 //	final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile_data.php";
-final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile.php";
+  final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile.php";
 	final private String GET_PROFILE_DATA = Constants.IP + "get_profile_data.php";
 	final private String GET_PROFILE_NAMES = Constants.IP + "get_profile_names.php";
 	final private String TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_profile_to_email_address_mobile.php";

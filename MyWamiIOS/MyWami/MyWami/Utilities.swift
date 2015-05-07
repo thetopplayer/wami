@@ -11,6 +11,7 @@ import UIKit
 
 class Utilities {
     var IP = "http://localhost/MyWamiIOS/MyWami/MyWami/"
+    var EMAIL_IP = "http://www.mywami.com/"
     var DB_NAME = "wamilocal.db"
     var DB_PATH = "/Users/robertlanter/projects/"
     let WAIT_TIME: useconds_t = 30000

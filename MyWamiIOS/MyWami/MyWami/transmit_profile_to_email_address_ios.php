@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * transmit_profile_to_email_address_mobile.php
+ * transmit_profile_to_email_address_ios.php
  *
  * Created by Rob Lanter
  * Date: 6/11/14

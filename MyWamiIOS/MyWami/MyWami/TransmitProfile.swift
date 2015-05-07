@@ -114,63 +114,127 @@ class TransmitProfile: UIViewController {
     }
     
     func transmit(fromProfileId: String, identityProfileId: String, numToTransmit: String) {
-        var num_to_transmit = numToTransmit
+        var firstName = ""
+        var lastName = ""
+        var profileName = ""
+        var description = ""
+        var email = ""
+        var profileType = ""
+        var streetAddress = ""
+        var city = ""
+        var state = ""
+        var zipcode = ""
+        var country = ""
+        var telephone = ""
+        var createDate = ""
+        var tags = ""
+        var fromFirstName = ""
+        var fromLastName = ""
+        var fromProfileName = ""
+        var fromEmail = ""
+        
         var transmit_to_profile = profileNameTxt.text
-        if transmit_to_profile == "" || transmit_to_profile == nil {
-            self.uview.makeToast(message: "No Profile Name was entered to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+        var transmit_to_email = emailAddressTxt.text
+        if transmit_to_profile == "" && transmit_to_email == "" {
+            self.uview.makeToast(message: "Pleas provide a Profile Name and/or Email Address to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
-        var from_profile_id = String(fromProfileId)
-        var profiles_to_transmit = identityProfileId
-        let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
-        var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE,
-            params: ["param1": num_to_transmit, "param2": from_profile_id, "param3": profiles_to_transmit, "param4": transmit_to_profile])
-        insertTransmittedData(jsonData)
-        
-        var transmit_to_email = emailAddressTxt.text
-        if transmit_to_email == "" || transmit_to_email == nil {
-            self.uview.makeToast(message: "No Email Address was entered to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
+        if transmit_to_profile != "" {
+            let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE,
+                params: ["param1": numToTransmit, "param2": String(fromProfileId), "param3": identityProfileId, "param4": transmit_to_profile])
+            var retCode = insertTransmittedData(jsonData)
+            if retCode != 0 {
+                var message = jsonData["db_error"].string
+                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+            if retCode == 0 {
+                var numProfilesTransmitted = jsonData["num_profiles_transmitted"]
+                var message = "Number of profiles transmitted = \(numProfilesTransmitted)"
+                var fullMsg = ""
+                if let dupMessage = jsonData["record_already_exist"][0].string {
+                    fullMsg = message + ".\n" + dupMessage
+                }
+                else {
+                    fullMsg = message
+                }
+                self.uview.makeToast(message: fullMsg, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+            }
+        }
+        if transmit_to_email != ""  {
+            var numProfiles = numToTransmit.toInt()
+            var profileId = 0
+            for index in 0...numProfiles! - 1 {
+                let needle: Character = ","
+                if let idx = find(identityProfileId, needle) {
+                    var pos = distance(identityProfileId.startIndex, idx)
+                    profileId = identityProfileId.startIndex, pos)
+                    println("profileId=\(profileId)")
+                    return
+                }
+            
+                if transmit_to_email.rangeOfString("@") == nil {
+                    self.uview.makeToast(message: "Invalid Email address. Must be in the form of user@host.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+                    return
+                }
+                var fromIdentityProfileId = fromProfileId
+                var GET_PROFILE_DATA = UTILITIES.IP + "get_profile_data.php"
+                var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromIdentityProfileId, "param3": "NA"])
+                
+                var retCode = jsonData["ret_code"]
+                if retCode == 1 {
+                    var message = jsonData["message"].string
+                    self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+                    return
+                }
+                firstName = jsonData["identity_profile_data"][0]["first_name"].string!
+                lastName = jsonData["identity_profile_data"][0]["last_name"].string!
+                profileName = jsonData["identity_profile_data"][0]["profile_name"].string!
+                profileType = jsonData["identity_profile_data"][0]["profile_type"].string!
+                description = jsonData["identity_profile_data"][0]["description"].string!
+                streetAddress = jsonData["identity_profile_data"][0]["street_address"].string!
+                city = jsonData["identity_profile_data"][0]["city"].string!
+                state = jsonData["identity_profile_data"][0]["state"].string!
+                zipcode = jsonData["identity_profile_data"][0]["zipcode"].string!
+                country = jsonData["identity_profile_data"][0]["country"].string!
+                telephone = jsonData["identity_profile_data"][0]["telephone"].string!
+                email = jsonData["identity_profile_data"][0]["email"].string!
+                tags = jsonData["identity_profile_data"][0]["tags"].string!
+                createDate = jsonData["identity_profile_data"][0]["create_date"].string!
+                fromFirstName = jsonData["identity_profile_data"][0]["from_first_name"].string!
+                fromLastName = jsonData["identity_profile_data"][0]["from_last_name"].string!
+                fromProfileName = jsonData["identity_profile_data"][0]["from_profile_name"].string!
+                fromEmail = jsonData["identity_profile_data"][0]["from_email"].string!
+            
+                var contactName = firstName + " " + lastName
+                let TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_IOS = UTILITIES.EMAIL_IP + "transmit_profile_to_email_address_ios.php"
+                jsonData = JSON_DATA_SYNCH.jsonGetData(TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_IOS,
+                    params: ["param1": transmit_to_email, "param2": "rob@roblanter.com", "param3": profileName, "param4": fromFirstName,
+                         "param5": fromLastName, "param6": fromProfileName, "param7": contactName, "param8": email,
+                         "param9": profileType, "param10": description, "param11": streetAddress, "param12": city,
+                         "param13": state, "param14": zipcode, "param15": country, "param16": telephone,
+                         "param17": tags, "param18": createDate])
+            
+                var message = jsonData["message"].string
+                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
         }
     }
     
-    func insertTransmittedData(jsonData: JSON) {
+    func insertTransmittedData(jsonData: JSON) -> Int {
         var retCode = jsonData["ret_code"]
         var noRecExistRetCode = jsonData["no_rec_found_ret_code"]
         var recExistRetCode = jsonData["rec_exist_ret_code"]
         if retCode == -1 {
-            var message = jsonData["db_error"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            }
+            return retCode.int!
         }
         if noRecExistRetCode == 1 {
-            var message = jsonData["no_records_found"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            }
+            return noRecExistRetCode.int!
         }
         if recExistRetCode == 1 {
-            var message = jsonData["record_already_exist"].string
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            }
+            return recExistRetCode.int!
         }
-        
-        if retCode == 0 {
-            var numProfilesTransmitted = jsonData["num_profiles_transmitted"]
-            var message = "Number of profiles transmitted = \(numProfilesTransmitted)"
-            var fullMsg = ""
-            if let dupMessage = jsonData["record_already_exist"][0].string {
-                fullMsg = message + ".\n" + dupMessage
-            }
-            else {
-                fullMsg = message
-            }
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.uview.makeToast(message: fullMsg, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
-            }
-        }
+        return retCode.int!
     }
     
     func getProfileNames () {
