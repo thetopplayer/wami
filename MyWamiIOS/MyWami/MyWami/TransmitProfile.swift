@@ -162,16 +162,11 @@ class TransmitProfile: UIViewController {
             }
         }
         if transmit_to_email != ""  {
-            var numProfiles = numToTransmit.toInt()
-            var profileId = 0
-            for index in 0...numProfiles! - 1 {
-                let needle: Character = ","
-                if let idx = find(identityProfileId, needle) {
-                    var pos = distance(identityProfileId.startIndex, idx)
-                    profileId = identityProfileId.startIndex, pos)
-                    println("profileId=\(profileId)")
-                    return
-                }
+            var idArray = identityProfileId.componentsSeparatedByString(",")
+            var numProfiles = idArray.count
+            var profileId = ""
+            for index in 0...numProfiles - 1 {
+                profileId = idArray[index]
             
                 if transmit_to_email.rangeOfString("@") == nil {
                     self.uview.makeToast(message: "Invalid Email address. Must be in the form of user@host.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
@@ -179,7 +174,7 @@ class TransmitProfile: UIViewController {
                 }
                 var fromIdentityProfileId = fromProfileId
                 var GET_PROFILE_DATA = UTILITIES.IP + "get_profile_data.php"
-                var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_DATA, params: ["param1": identityProfileId, "param2": fromIdentityProfileId, "param3": "NA"])
+                var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_DATA, params: ["param1": profileId, "param2": fromIdentityProfileId, "param3": "NA"])
                 
                 var retCode = jsonData["ret_code"]
                 if retCode == 1 {
