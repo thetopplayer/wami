@@ -259,20 +259,26 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             }
         }
         
-        let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
-        let allContacts = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
-        for contact in ((allContacts as NSArray) as [ABRecord]) {
-            let name = ABRecordCopyCompositeName(contact).takeRetainedValue()
-            if name == "Robbie" {
-                
-            }
-            println(name)
-        }
-        
         var error: Unmanaged<CFErrorRef>? = nil
+        let adbk: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+        
+        let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
+        for person in people {
+            if let a = ABRecordCopyCompositeName(person) {
+                let b = a.takeRetainedValue()
+                let name = ABRecordCopyCompositeName(person).takeRetainedValue()
+                println(name)
+//                if name == "Robert Lanter" {
+//                    ABAddressBookRemoveRecord(adbk, person, nil);
+//                }
+//                ABAddressBookSave(adbk, &error)
+            }
+        }
+
+        
         var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
         var success:Bool = false
-        
+
         
         if self.firstName != "" {
             success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, self.firstName, &error)
