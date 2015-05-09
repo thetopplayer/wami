@@ -35,10 +35,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     @IBAction func addToContactsButtonPressed(sender: AnyObject) {
-        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
-        var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
-        let row = indexPath.row
-
         if !self.authDone {
             self.authDone = true
             let status = ABAddressBookGetAuthorizationStatus()
@@ -64,41 +60,64 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                 }
             }
         }
-        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
-        var success:Bool = false
+
         var newFirstName:NSString = self.firstNames[row]
         var newLastName = self.lastNames[row]
-        var email = self.emails[row]
-        var telephone: [(String, String)] = [("Home", self.telephones[row])]
-
+        var newEmail = self.emails[row]
+//        var newTelephone: [(String, String)] = [("Home", self.telephones[row])]
+        var newTelephone = self.telephones[row]
         var error: Unmanaged<CFErrorRef>? = nil
-        success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
-        println("\(success)")
-        success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
-        println("\(success)")
-
-//        var multiAddress = ABMultiValueCreateMutable(ABPropertyType(kABMultiDictionaryPropertyType))
-//        var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : streetAddress])
-//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : city])
-//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : state])
-//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : zipcode])
-//        addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : country])
-//        
-//        //        ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
-//        //        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
-//        //        [addressDictionary setObject:@"750 North Orleans Street, Ste 601" forKey:(NSString *) kABPersonAddressStreetKey];
-//        //        [addressDictionary setObject:@"Chicago" forKey:(NSString *)kABPersonAddressCityKey];
-//        //        [addressDictionary setObject:@"IL" forKey:(NSString *)kABPersonAddressStateKey];
-//        //        [addressDictionary setObject:@"60654" forKey:(NSString *)kABPersonAddressZIPKey];
-//        //        ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABWorkLabel, NULL);
-//        //        ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
-//        //        CFRelease(multiAddress);
+        let adbk: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
         
+        let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
+        for person in people {
+            if let a = ABRecordCopyCompositeName(person) {
+                let b = a.takeRetainedValue()
+                let name = ABRecordCopyCompositeName(person).takeRetainedValue()
+                println(name)
+                //                if name == "Robert Lanter" {
+                //                    ABAddressBookRemoveRecord(adbk, person, nil);
+                //                }
+                //                ABAddressBookSave(adbk, &error)
+            }
+        }
+        
+        
+        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
+        var success:Bool = false
+        
+        if newFirstName != "" {
+            success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
+            //            println("first=\(success)")
+        }
+        if newLastName != "" {
+            success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
+            //            println("last=\(success)")
+        }
+        if newTelephone != "" {
+            var phoneNumbers: ABMutableMultiValueRef = createMultiStringRef()
+            var phone = ((newTelephone as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
+            ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
+            success = ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneNumbers, &error)
+            //            println("phone=\(success)")
+        }
+        if newEmail != "" {
+            var multiEmail: ABMutableMultiValueRef = createMultiStringRef()
+            var email = ((newEmail as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
+            ABMultiValueAddValueAndLabel(multiEmail, email, kABHomeLabel, nil)
+            success = ABRecordSetValue(newContact, kABPersonEmailProperty, multiEmail, &error)
+            //            println("email=\(success)")
+        }
         success = ABAddressBookAddRecord(adbk, newContact, &error)
-        println("\(success)")
+        //        println("add=\(success)")
         success = ABAddressBookSave(adbk, &error)
-        println("\(success)")
+        //        println("save=\(success)")
     }
+    func createMultiStringRef() -> ABMutableMultiValueRef {
+        let propertyType: NSNumber = kABMultiStringPropertyType
+        return Unmanaged.fromOpaque(ABMultiValueCreateMutable(propertyType.unsignedIntValue).toOpaque()).takeUnretainedValue() as NSObject as ABMultiValueRef
+    }
+
     
     @IBAction func extendedInfoButtonPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)

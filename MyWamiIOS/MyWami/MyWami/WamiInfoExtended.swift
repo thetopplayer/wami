@@ -268,7 +268,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
                 let b = a.takeRetainedValue()
                 let name = ABRecordCopyCompositeName(person).takeRetainedValue()
                 println(name)
-//                if name == "Robert Lanter" {
+//                if name == "Bill McGregor" {
 //                    ABAddressBookRemoveRecord(adbk, person, nil);
 //                }
 //                ABAddressBookSave(adbk, &error)
