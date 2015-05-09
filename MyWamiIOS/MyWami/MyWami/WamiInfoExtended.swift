@@ -99,6 +99,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     var adbk : ABAddressBook?
     var authDone: Bool = false
+    var cancelAddContact = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -231,6 +232,18 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         menuView.addSubview(menuLine)
     }
     
+    func cancelContactAction(alertController: UIAlertAction!) {
+        self.cancelAddContact = true
+    }
+    func replaceContactAction(alertController: UIAlertAction!) {
+//        ABAddressBookRemoveRecord(adbk, person, nil)
+//        ABAddressBookSave(adbk, &error)
+    }
+    func addContactAction(alertController: UIAlertAction!) {
+        
+    }
+
+    
     // Add to Contacts
     func addToContactListAction () {
         if !self.authDone {
@@ -271,80 +284,72 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
                 println(name)
                 if name == targetContact {
                     var alertController = UIAlertController(title: "Alert!", message: "Contact Already Exists In Address Book", preferredStyle: .Alert)
-                    var replaceAction = UIAlertAction(title: "Replace", style: UIAlertActionStyle.Default) {
-                        UIAlertAction in
-                        ABAddressBookRemoveRecord(adbk, person, nil);
-                        ABAddressBookSave(adbk, &error)
+                    alertController.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: addContactAction))
+                    alertController.addAction(UIAlertAction(title: "Replace", style: UIAlertActionStyle.Default, handler: replaceContactAction))
+                    alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: cancelContactAction))
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alertController, animated: true, completion: nil)
                     }
-                    var addAction = UIAlertAction(title: "Add Anyway", style: UIAlertActionStyle.Default) {
-                        UIAlertAction in
-                        
-                    }
-                    var cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
-                        UIAlertAction in
-                        return
-                    }
-                    alertController.addAction(addAction)
-                    alertController.addAction(replaceAction)
-                    alertController.addAction(cancelAction)
-                    self.presentViewController(alertController, animated: true, completion: nil)                }
-//                if name == "Bill McGregor" {
-//                    ABAddressBookRemoveRecord(adbk, person, nil);
+                }
+//                if name == "JOHN SMITH" {
+//                    ABAddressBookRemoveRecord(adbk, person, nil)
 //                }
 //                ABAddressBookSave(adbk, &error)
             }
         }
 
-        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
-        var success:Bool = false
-
+        if self.cancelAddContact {
+            var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
+            var success:Bool = false
         
-        if self.firstName != "" {
-            success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, self.firstName, &error)
-//            println("first=\(success)")
-        }
-        if self.lastName != "" {
-            success = ABRecordSetValue(newContact, kABPersonLastNameProperty, self.lastName, &error)
-//            println("last=\(success)")
-        }
-        if self.telephone != "" {
-            var phoneNumbers: ABMutableMultiValueRef = createMultiStringRef()
-            var phone = ((self.telephone as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
-            ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
-            success = ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneNumbers, &error)
-//            println("phone=\(success)")
-        }
-        if self.email != "" {
-            var multiEmail: ABMutableMultiValueRef = createMultiStringRef()
-            var email = ((self.email as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
-            ABMultiValueAddValueAndLabel(multiEmail, email, kABHomeLabel, nil)
-            success = ABRecordSetValue(newContact, kABPersonEmailProperty, multiEmail, &error)
-//            println("email=\(success)")
-        }
-        var multiAddress: ABMutableMultiValueRef = createMultiStringRef()
-        if self.streetAddress != "" {
-            var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : self.streetAddress])
-            if self.city != "" {
-                addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : self.city])
+            if self.firstName != "" {
+                success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, self.firstName, &error)
+//              println("first=\(success)")
             }
-            if self.state != "" {
-                addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : self.state])
+            if self.lastName != "" {
+                success = ABRecordSetValue(newContact, kABPersonLastNameProperty, self.lastName, &error)
+//              println("last=\(success)")
             }
-            if self.zipcode != "" {
-                addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : self.zipcode])
+            if self.telephone != "" {
+                var phoneNumbers: ABMutableMultiValueRef = createMultiStringRef()
+                var phone = ((self.telephone as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
+                ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
+                success = ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneNumbers, &error)
+//              println("phone=\(success)")
             }
-            if self.country != "" {
-                addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : self.country])
+            if self.email != "" {
+                var multiEmail: ABMutableMultiValueRef = createMultiStringRef()
+                var email = ((self.email as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
+                ABMultiValueAddValueAndLabel(multiEmail, email, kABHomeLabel, nil)
+                success = ABRecordSetValue(newContact, kABPersonEmailProperty, multiEmail, &error)
+//              println("email=\(success)")
             }
-            ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABHomeLabel, nil)
-            success = ABRecordSetValue(newContact, kABPersonAddressProperty, multiAddress, &error)
-//            println("address=\(success)")
-        }
+            var multiAddress: ABMutableMultiValueRef = createMultiStringRef()
+            if self.streetAddress != "" {
+                var addressDictionary:NSDictionary = NSDictionary(dictionary: [kABPersonAddressStreetKey : self.streetAddress])
+                if self.city != "" {
+                    addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCityKey : self.city])
+                }
+                if self.state != "" {
+                    addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressStateKey : self.state])
+                }
+                if self.zipcode != "" {
+                    addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressZIPKey : self.zipcode])
+                }
+                if self.country != "" {
+                    addressDictionary = NSMutableDictionary(dictionary: [kABPersonAddressCountryKey : self.country])
+                }
+                ABMultiValueAddValueAndLabel(multiAddress, addressDictionary, kABHomeLabel, nil)
+                success = ABRecordSetValue(newContact, kABPersonAddressProperty, multiAddress, &error)
+//              println("address=\(success)")
+            }
         
-        success = ABAddressBookAddRecord(adbk, newContact, &error)
-//        println("add=\(success)")
-        success = ABAddressBookSave(adbk, &error)
-//        println("save=\(success)")
+            success = ABAddressBookAddRecord(adbk, newContact, &error)
+//          println("add=\(success)")
+            success = ABAddressBookSave(adbk, &error)
+//          println("save=\(success)")
+            self.cancelAddContact = false
+        }
     }
     func createMultiStringRef() -> ABMutableMultiValueRef {
         let propertyType: NSNumber = kABMultiStringPropertyType
