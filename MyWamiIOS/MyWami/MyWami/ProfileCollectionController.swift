@@ -34,84 +34,55 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         transmitProfileAction()
     }
 
+    var adbk : ABAddressBook?
+    var authDone: Bool = false
+    var replaceContact = false
+    var processAddressBook: ProcessAddressBook!
+    func cancelContactAction(alertController: UIAlertAction!) {
+        return
+    }
+    func replaceContactAction(alertController: UIAlertAction!) {
+        self.replaceContact = true
+        self.processAddressBook.addToContactListAction(firstNames[self.row], lastName: lastNames[self.row], telephone: telephones[self.row], email: emails[self.row],
+            streetAddress: "", city: "", state: "", zipcode: "", country: "", replaceContact: replaceContact)
+        NSOperationQueue.mainQueue().addOperationWithBlock {
+            self.view.makeToast(message: "Contact replaced in Address Book", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+        }
+    }
+    func addContactAction(alertController: UIAlertAction!) {
+        self.replaceContact = false
+        self.processAddressBook.addToContactListAction(firstNames[self.row], lastName: lastNames[self.row], telephone: telephones[self.row], email: emails[self.row],
+            streetAddress: "", city: "", state: "", zipcode: "", country: "", replaceContact: replaceContact)
+        NSOperationQueue.mainQueue().addOperationWithBlock {
+            self.view.makeToast(message: "Contact added to Address Book", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+        }
+    }
     @IBAction func addToContactsButtonPressed(sender: AnyObject) {
-        if !self.authDone {
-            self.authDone = true
-            let status = ABAddressBookGetAuthorizationStatus()
-            
-            switch status {
-            case .Denied, .Restricted:
-                println("no access")
-            case .Authorized, .NotDetermined:
-                var err : Unmanaged<CFError>? = nil
-                var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
-                if adbk == nil {
-                    println(err)
-                    return
-                }
-                ABAddressBookRequestAccessWithCompletion(adbk) {
-                    (granted:Bool, err:CFError!) in
-                    if granted {
-                        self.adbk = adbk
-                    }
-                    else {
-                        println(err)
-                    }
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
+        var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+        self.row = row
+        
+        self.processAddressBook = ProcessAddressBook()
+        processAddressBook.initialize()
+        var auth = processAddressBook.getAuthorization()
+        if auth {
+            var exist = processAddressBook.checkForExist(firstNames[self.row], lastName: lastNames[self.row])
+            if exist {
+                var alertController = UIAlertController(title: "Alert!", message: "Contact Already Exists In Address Book", preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: addContactAction))
+                alertController.addAction(UIAlertAction(title: "Replace", style: UIAlertActionStyle.Default, handler: replaceContactAction))
+                alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: cancelContactAction))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            else {
+                processAddressBook.addToContactListAction(firstNames[self.row], lastName: lastNames[self.row], telephone: telephones[self.row], email: emails[self.row],
+                    streetAddress: "", city: "", state: "", zipcode: "", country: "", replaceContact: replaceContact)
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.view.makeToast(message: "Contact added to Address Book", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
                 }
             }
         }
-
-        var newFirstName:NSString = self.firstNames[row]
-        var newLastName = self.lastNames[row]
-        var newEmail = self.emails[row]
-//        var newTelephone: [(String, String)] = [("Home", self.telephones[row])]
-        var newTelephone = self.telephones[row]
-        var error: Unmanaged<CFErrorRef>? = nil
-        let adbk: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
-        
-        let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
-        for person in people {
-            if let a = ABRecordCopyCompositeName(person) {
-                let b = a.takeRetainedValue()
-                let name = ABRecordCopyCompositeName(person).takeRetainedValue()
-                println(name)
-                //                if name == "Robert Lanter" {
-                //                    ABAddressBookRemoveRecord(adbk, person, nil);
-                //                }
-                //                ABAddressBookSave(adbk, &error)
-            }
-        }
-        
-        
-        var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
-        var success:Bool = false
-        
-        if newFirstName != "" {
-            success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, newFirstName, &error)
-            //            println("first=\(success)")
-        }
-        if newLastName != "" {
-            success = ABRecordSetValue(newContact, kABPersonLastNameProperty, newLastName, &error)
-            //            println("last=\(success)")
-        }
-        if newTelephone != "" {
-            var phoneNumbers: ABMutableMultiValueRef = createMultiStringRef()
-            var phone = ((newTelephone as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
-            ABMultiValueAddValueAndLabel(phoneNumbers, phone, kABPersonPhoneMainLabel, nil)
-            success = ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneNumbers, &error)
-            //            println("phone=\(success)")
-        }
-        if newEmail != "" {
-            var multiEmail: ABMutableMultiValueRef = createMultiStringRef()
-            var email = ((newEmail as String).stringByReplacingOccurrencesOfString(" ", withString: "") as NSString)
-            ABMultiValueAddValueAndLabel(multiEmail, email, kABHomeLabel, nil)
-            success = ABRecordSetValue(newContact, kABPersonEmailProperty, multiEmail, &error)
-            //            println("email=\(success)")
-        }
-        success = ABAddressBookAddRecord(adbk, newContact, &error)
-        //        println("add=\(success)")
-        success = ABAddressBookSave(adbk, &error)
-        //        println("save=\(success)")
     }
     func createMultiStringRef() -> ABMutableMultiValueRef {
         let propertyType: NSNumber = kABMultiStringPropertyType
@@ -156,9 +127,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     var newIdentityProfileId: String!
     var newGroupId: Int!
-    
-    var adbk : ABAddressBook?
-    var authDone: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()

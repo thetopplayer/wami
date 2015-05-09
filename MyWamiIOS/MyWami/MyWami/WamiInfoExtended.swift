@@ -241,7 +241,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.processAddressBook.addToContactListAction(firstName, lastName: lastName, telephone: telephone, email: email,
             streetAddress: streetAddress, city: city, state: state, zipcode: zipcode, country: country, replaceContact: replaceContact)
         NSOperationQueue.mainQueue().addOperationWithBlock {
-            self.view.makeToast(message: "Contact added to Address Book", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.view.makeToast(message: "Contact replaced in Address Book", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
     func addContactAction(alertController: UIAlertAction!) {
