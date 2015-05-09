@@ -262,12 +262,32 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         var error: Unmanaged<CFErrorRef>? = nil
         let adbk: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
         
+        var targetContact = ((self.firstName + " " + self.lastName).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
         for person in people {
             if let a = ABRecordCopyCompositeName(person) {
                 let b = a.takeRetainedValue()
-                let name = ABRecordCopyCompositeName(person).takeRetainedValue()
+                var name = ((String(ABRecordCopyCompositeName(person).takeRetainedValue())).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 println(name)
+                if name == targetContact {
+                    var alertController = UIAlertController(title: "Alert!", message: "Contact Already Exists In Address Book", preferredStyle: .Alert)
+                    var replaceAction = UIAlertAction(title: "Replace", style: UIAlertActionStyle.Default) {
+                        UIAlertAction in
+                        ABAddressBookRemoveRecord(adbk, person, nil);
+                        ABAddressBookSave(adbk, &error)
+                    }
+                    var addAction = UIAlertAction(title: "Add Anyway", style: UIAlertActionStyle.Default) {
+                        UIAlertAction in
+                        
+                    }
+                    var cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {
+                        UIAlertAction in
+                        return
+                    }
+                    alertController.addAction(addAction)
+                    alertController.addAction(replaceAction)
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)                }
 //                if name == "Bill McGregor" {
 //                    ABAddressBookRemoveRecord(adbk, person, nil);
 //                }
@@ -275,7 +295,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             }
         }
 
-        
         var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
         var success:Bool = false
 
