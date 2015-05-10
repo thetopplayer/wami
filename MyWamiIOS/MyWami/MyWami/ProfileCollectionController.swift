@@ -332,9 +332,22 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         tableView.reloadData()
     }
 
+    var searchForProfiles = SearchForProfiles()
+    var searchForProfilesViewDialog = UIView()
     func searchProfilesAction () {
-        println("Search")
+        var searchForProfilesView = UIView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeSearchForProfilesDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        let searchBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        searchBtn.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
+        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn)
+        view.addSubview(self.searchForProfilesViewDialog)
+        menu.toggleMenu(menuView)
     }
+    func closeSearchForProfilesDialog() {
+        self.transmitProfileViewDialog.removeFromSuperview()
+    }
+
     
     func logoutAction () {
         self.navigationController!.popToViewController(navigationController!.viewControllers[0] as! UIViewController, animated: true)
@@ -353,13 +366,10 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! ProfileListTableViewCell
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! ProfileListTableViewCell        
         var contactName = self.firstNames[indexPath.row] + " " + self.lastNames[indexPath.row]
-        
         cell.profileNameTxt.text = self.profileNames[indexPath.row]
         cell.contactNameTxt.text = contactName
-        
         var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
         cell.profileImage.image = image
         
