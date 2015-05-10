@@ -66,17 +66,17 @@ class ProcessAddressBook: UIViewController {
         var targetContact = ((self.firstName + " " + self.lastName).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
         //****
-        for person in people {
-            if let a = ABRecordCopyCompositeName(person) {
-                let b = a.takeRetainedValue()
-                var name = ((String(ABRecordCopyCompositeName(person).takeRetainedValue())).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                println(name)
-//                                  if name == "ROBBIE LANTER" {
-//                                      ABAddressBookRemoveRecord(adbk, person, nil)
-//                                  }
-//                                  ABAddressBookSave(adbk, &error)
-            }
-        }
+//        for person in people {
+//            if let a = ABRecordCopyCompositeName(person) {
+//                let b = a.takeRetainedValue()
+//                var name = ((String(ABRecordCopyCompositeName(person).takeRetainedValue())).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+//                println(name)
+////                                  if name == "ROBBIE LANTER" {
+////                                      ABAddressBookRemoveRecord(adbk, person, nil)
+////                                  }
+////                                  ABAddressBookSave(adbk, &error)
+//            }
+//        }
         //***
         for person in people {
             if let a = ABRecordCopyCompositeName(person) {

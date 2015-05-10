@@ -147,8 +147,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         }
         else {
             var numGroups: Int! = jsonData["profile_group_data"].array?.count
-            self.numGroups = numGroups + 1
-            self.groupModels = [GroupModel?](count: numGroups, repeatedValue: nil)
+            self.groupModels = [GroupModel?](count: numGroups + 1, repeatedValue: nil)
             
             var groupModel = GroupModel()
             var identityProfileId = -99
@@ -161,9 +160,10 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             groupModel.setGroupId(groupId)
             
             groupModel.setSelected(false)
-            groupModels[0] = groupModel
+            self.groupModels[0] = groupModel
 
-            for index in 1...numGroups - 1 {
+            var groupIndex = 1
+            for index in 0...numGroups - 1 {
                 var groupModel = GroupModel()
                 
                 identityProfileId = jsonData["profile_group_data"][index]["identity_profile_id"].intValue
@@ -176,7 +176,8 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
                 groupModel.setGroupId(groupId)
                 
                 groupModel.setSelected(false)
-                groupModels[index] = groupModel
+                self.groupModels[groupIndex] = groupModel
+                groupIndex++
             }
         }
         return 0
