@@ -18,7 +18,7 @@ class FlashAnnouncement: UIViewController, UITextViewDelegate  {
         self.newFlashView = newFlashView
         
         newFlashView.frame = CGRectMake(45, 200, 240, 230)
-        newFlashView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        newFlashView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         newFlashView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         newFlashView.layer.borderWidth = 1.5
             

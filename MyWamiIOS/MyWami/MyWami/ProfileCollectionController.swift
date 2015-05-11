@@ -347,7 +347,11 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     func closeSearchForProfilesDialog() {
         self.searchForProfilesViewDialog.removeFromSuperview()
     }
-
+    func search() {
+        var searchIn = searchForProfiles.getSearchIn()
+        var searchStringsLike = searchForProfiles.getsSearchStringLikeTxt()
+        var searchIndicator = searchForProfiles.getSearchIndicator()
+    }
     
     func logoutAction () {
         self.navigationController!.popToViewController(navigationController!.viewControllers[0] as! UIViewController, animated: true)

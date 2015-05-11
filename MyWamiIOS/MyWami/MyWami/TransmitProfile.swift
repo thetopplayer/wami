@@ -26,7 +26,7 @@ class TransmitProfile: UIViewController {
         getProfileNames()
         
         transmitProfileView.frame = CGRectMake(45, 100, 240, 215)
-        transmitProfileView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        transmitProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         transmitProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         transmitProfileView.layer.borderWidth = 1.5
         
@@ -40,7 +40,7 @@ class TransmitProfile: UIViewController {
         transmitProfileView.addSubview(headingLbl)
         
         let profileNameLbl = UILabel()
-        profileNameLbl.backgroundColor = UIColor.whiteColor()
+        profileNameLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         profileNameLbl.text = "To Profile Name"
         profileNameLbl.textColor = UIColor.blackColor()
         profileNameLbl.font = UIFont.boldSystemFontOfSize(13)
@@ -68,7 +68,7 @@ class TransmitProfile: UIViewController {
         transmitProfileView.addSubview(profileNameTxt)
         
         let emailAddressLbl = UILabel()
-        emailAddressLbl.backgroundColor = UIColor.whiteColor()
+        emailAddressLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         emailAddressLbl.text = "To Email Address"
         emailAddressLbl.textColor = UIColor.blackColor()
         emailAddressLbl.font = UIFont.boldSystemFontOfSize(12)

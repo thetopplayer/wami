@@ -38,7 +38,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         }
         
         filterCollectionView.frame = CGRectMake(45, 100, 240, 215)
-        filterCollectionView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        filterCollectionView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         filterCollectionView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         filterCollectionView.layer.borderWidth = 1.5
         

@@ -34,7 +34,7 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
         self.selectProfileView = selectProfileView
         
         selectProfileView.frame = CGRectMake(45, 100, 240, 215)
-        selectProfileView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        selectProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         selectProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         selectProfileView.layer.borderWidth = 1.5
         

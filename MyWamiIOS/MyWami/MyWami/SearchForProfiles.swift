@@ -27,6 +27,7 @@ class SearchForProfiles: UIViewController {
     
     let radioEnabledImage = UIImage(named: "radioBtnEnabled.png") as UIImage?
     let radioDisabledImage = UIImage(named: "radioBtnDisabled.png") as UIImage?
+    var entireNetwork = false
     
     var dropdownView = UIView()
     var searchProfileView = UIView()
@@ -34,8 +35,8 @@ class SearchForProfiles: UIViewController {
     func searchProfilesDialog(searchProfileView: UIView, closeBtn: UIButton, searchBtn: UIButton) -> UIView {
         self.searchProfileView = searchProfileView
         
-        searchProfileView.frame = CGRectMake(20, 100, 270, 245)
-        searchProfileView.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
+        searchProfileView.frame = CGRectMake(30, 100, 270, 245)
+        searchProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         searchProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         searchProfileView.layer.borderWidth = 1.5
         
@@ -49,7 +50,7 @@ class SearchForProfiles: UIViewController {
         searchProfileView.addSubview(headingLbl)
         
         let searchInLbl = UILabel()
-        searchInLbl.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
+        searchInLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         searchInLbl.text = "Search In"
         searchInLbl.textColor = UIColor.blackColor()
         searchInLbl.font = UIFont.boldSystemFontOfSize(12)
@@ -67,7 +68,7 @@ class SearchForProfiles: UIViewController {
         self.dropdownView.hidden = true
         
         let searchStringLikeLbl = UILabel()
-        searchStringLikeLbl.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
+        searchStringLikeLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         searchStringLikeLbl.text = "Search String Like"
         searchStringLikeLbl.textColor = UIColor.blackColor()
         searchStringLikeLbl.font = UIFont.boldSystemFontOfSize(12)
@@ -88,7 +89,7 @@ class SearchForProfiles: UIViewController {
         searchProfileView.addSubview(searchStringLikeTxt)
         
         let searchWithinLbl = UILabel()
-        searchWithinLbl.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
+        searchWithinLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         searchWithinLbl.text = "Search Within"
         searchWithinLbl.textColor = UIColor.blackColor()
         searchWithinLbl.font = UIFont.boldSystemFontOfSize(12)
@@ -103,7 +104,7 @@ class SearchForProfiles: UIViewController {
         searchProfileView.addSubview(radioBtns[0])
         
         let myWamiLbl = UILabel()
-        myWamiLbl.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
+        myWamiLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         myWamiLbl.text = "My Wami Collection"
         myWamiLbl.textColor = UIColor.blackColor()
         myWamiLbl.font = UIFont.boldSystemFontOfSize(10)
@@ -117,7 +118,7 @@ class SearchForProfiles: UIViewController {
         searchProfileView.addSubview(radioBtns[1])
        
         let entireNetworkLbl = UILabel()
-        entireNetworkLbl.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
+        entireNetworkLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         entireNetworkLbl.text = "Entire Wami Network"
         entireNetworkLbl.textColor = UIColor.blackColor()
         entireNetworkLbl.font = UIFont.boldSystemFontOfSize(10)
@@ -153,12 +154,25 @@ class SearchForProfiles: UIViewController {
         if whichRadioBtn == 1 {
             radioBtns[0].setImage(radioEnabledImage, forState: .Normal)
             radioBtns[1].setImage(radioDisabledImage, forState: .Normal)
+            entireNetwork = false
         }
         else {
             radioBtns[0].setImage(radioDisabledImage, forState: .Normal)
             radioBtns[1].setImage(radioEnabledImage, forState: .Normal)
+            entireNetwork = true
         }
     }
+    
+    func getSearchIn() -> String {
+        return searchInBtn.titleLabel!.text!
+    }
+    func getsSearchStringLikeTxt() -> String {
+        return searchStringLikeTxt.text
+    }
+    func getSearchIndicator() -> Bool {
+        return entireNetwork
+    }
+    
     
     func doDropDown() {
         dropdownView.frame = CGRectMake(15, 80, 150, 110)

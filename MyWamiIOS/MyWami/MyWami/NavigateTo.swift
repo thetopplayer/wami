@@ -13,7 +13,7 @@ class NavigateTo: UIViewController {
                     profilerBtn: UIButton, flashBtn: UIButton, profileCollectionBtn: UIButton) -> UIView {
                         
         navigateToView.frame = CGRectMake(45, 200, 240, 230)
-        navigateToView.backgroundColor = UIColor(red: 0xfc/255, green: 0xfc/255, blue: 0xfc/255, alpha: 1.0)
+        navigateToView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         navigateToView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         navigateToView.layer.borderWidth = 1.5
         
