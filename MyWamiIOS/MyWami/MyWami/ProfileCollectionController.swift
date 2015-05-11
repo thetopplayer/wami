@@ -345,7 +345,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menu.toggleMenu(menuView)
     }
     func closeSearchForProfilesDialog() {
-        self.transmitProfileViewDialog.removeFromSuperview()
+        self.searchForProfilesViewDialog.removeFromSuperview()
     }
 
     
