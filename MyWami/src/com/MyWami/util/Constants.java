@@ -4,8 +4,8 @@ package com.MyWami.util;
  * Created by robertlanter on 3/3/14.
  */
 public final class Constants {
-//	final static public String IP = "http://192.168.15.15/MyWami/";
-//	final static public String ASSETS_IP = "http://192.168.15.15:80/Wami/";
+	final static public String IP = "http://192.168.15.7/MyWami/";
+	final static public String ASSETS_IP = "http://192.168.15.7:80/Wami/";
 
 //	final static public String IP = "http://192.168.1.10/MyWami/";
 //	final static public String ASSETS_IP = "http://192.168.1.10:80/Wami/";
@@ -13,8 +13,8 @@ public final class Constants {
 //	final static public String IP = "http://192.168.1.3/MyWami/";
 //	final static public String ASSETS_IP = "http://192.168.1.3:80/Wami/";
 
-	final static public String IP = "http://192.168.254.42/MyWami/";
-	final static public String ASSETS_IP = "http://192.168.254.42:80/Wami/";
+//	final static public String IP = "http://192.168.254.42/MyWami/";
+//	final static public String ASSETS_IP = "http://192.168.254.42:80/Wami/";
 
 	final static public String EMAIL_IP = "http://www.mywami.com/";
 
