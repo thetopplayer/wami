@@ -350,7 +350,11 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     func search() {
         var searchIn = searchForProfiles.getSearchIn()
         var searchStringsLike = searchForProfiles.getsSearchStringLikeTxt()
-        var searchIndicator = searchForProfiles.getSearchIndicator()
+        var searchEntireNetwork = searchForProfiles.getSearchIndicator()
+                        
+        let GET_SEARCH_PROFILE_DATA = UTILITIES.IP + "get_search_profile_data.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_SEARCH_PROFILE_DATA, params: ["param1": searchIn, "param2": searchStringsLike, "param3": searchEntireNetwork, "param4": userIdentityProfileId])
+        getProfileCollection(jsonData)
     }
     
     func logoutAction () {

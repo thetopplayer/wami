@@ -68,7 +68,6 @@ class SearchForProfiles: UIViewController {
         self.dropdownView.hidden = true
         
         let dropDownIndicator = UILabel()
-//        dropDownIndicator.backgroundColor = UIColor.grayColor()
         dropDownIndicator.text = "v"
         dropDownIndicator.textColor = UIColor.darkGrayColor()
         dropDownIndicator.font = UIFont.boldSystemFontOfSize(12)
@@ -173,13 +172,23 @@ class SearchForProfiles: UIViewController {
     }
     
     func getSearchIn() -> String {
+        if searchInBtn.titleLabel!.text! == "Tag Keywords" {
+            return "Tags"
+        }
+        if searchInBtn.titleLabel!.text! == "Profile Description" {
+            return "Description"
+        }
         return searchInBtn.titleLabel!.text!
     }
     func getsSearchStringLikeTxt() -> String {
         return searchStringLikeTxt.text
     }
-    func getSearchIndicator() -> Bool {
-        return entireNetwork
+    func getSearchIndicator() -> String {
+        var searchEntireNetwork = "0"
+        if entireNetwork == true {
+            searchEntireNetwork = "1"
+        }
+        return searchEntireNetwork
     }
     
     
@@ -192,7 +201,6 @@ class SearchForProfiles: UIViewController {
         profileNameBtn.backgroundColor = UIColor.whiteColor()
         profileNameBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(13)
         profileNameBtn.setTitle("Profile Name", forState: UIControlState.Normal)
-//        profileNameBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         profileNameBtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         profileNameBtn.addTarget(self, action: "profileName", forControlEvents: UIControlEvents.TouchUpInside)
         profileNameBtn.frame = CGRectMake(0, 5, 140, 15)
@@ -202,7 +210,6 @@ class SearchForProfiles: UIViewController {
         firstNameBtn.backgroundColor = UIColor.whiteColor()
         firstNameBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(13)
         firstNameBtn.setTitle("First Name", forState: UIControlState.Normal)
-//        firstNameBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         firstNameBtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         firstNameBtn.addTarget(self, action: "firstName", forControlEvents: UIControlEvents.TouchUpInside)
         firstNameBtn.frame = CGRectMake(0, 25, 140, 15)
@@ -212,7 +219,6 @@ class SearchForProfiles: UIViewController {
         lastNameBtn.backgroundColor = UIColor.whiteColor()
         lastNameBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(13)
         lastNameBtn.setTitle("Last Name", forState: UIControlState.Normal)
-//        lastNameBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         lastNameBtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         lastNameBtn.addTarget(self, action: "lastName", forControlEvents: UIControlEvents.TouchUpInside)
         lastNameBtn.frame = CGRectMake(0, 45, 140, 15)
@@ -222,7 +228,6 @@ class SearchForProfiles: UIViewController {
         tagsBtn.backgroundColor = UIColor.whiteColor()
         tagsBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(13)
         tagsBtn.setTitle("Tag Keywords", forState: UIControlState.Normal)
-//        tagsBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         tagsBtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         tagsBtn.addTarget(self, action: "tags", forControlEvents: UIControlEvents.TouchUpInside)
         tagsBtn.frame = CGRectMake(0, 65, 140, 15)
@@ -232,7 +237,6 @@ class SearchForProfiles: UIViewController {
         descriptionBtn.backgroundColor = UIColor.whiteColor()
         descriptionBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(13)
         descriptionBtn.setTitle("Profile Description", forState: UIControlState.Normal)
-//        descriptionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         descriptionBtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
         descriptionBtn.addTarget(self, action: "profileDescription", forControlEvents: UIControlEvents.TouchUpInside)
         descriptionBtn.frame = CGRectMake(0, 85, 140, 15)
