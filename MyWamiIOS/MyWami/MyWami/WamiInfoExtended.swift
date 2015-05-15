@@ -329,7 +329,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     }
     func gotoProfiler () {
         performSegueWithIdentifier("showProfiler", sender: self)
-        var svc = segue.destinationViewController as! Profiler;
+        var svc = segue.destinationViewController as! Profiler
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
         svc.imageUrl = self.imageUrl
@@ -341,7 +341,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     func gotoFlashAnnouncements () {
         performSegueWithIdentifier("showProfiler", sender: self)
         performSegueWithIdentifier("show_flash", sender: self)
-        var svc = segue.destinationViewController as! Flash;
+        var svc = segue.destinationViewController as! Flash
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
         svc.imageUrl = self.imageUrl
@@ -372,7 +372,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.segue = segue
         if (segue.identifier == "showProfiler") {
             menuView.hidden = true
-            var svc = segue.destinationViewController as! Profiler;
+            var svc = segue.destinationViewController as! Profiler
             svc.identityProfileId = self.identityProfileId
             svc.userIdentityProfileId = self.userIdentityProfileId
             svc.imageUrl = self.imageUrl

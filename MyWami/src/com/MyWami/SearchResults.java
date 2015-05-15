@@ -183,7 +183,7 @@ public class SearchResults extends ListActivity {
 				String imageURL = jsonChildNode.optString("image_url");
 				String description = jsonChildNode.optString("description");
 				String email = jsonChildNode.optString("email");
-				String rating = jsonChildNode.optString("rating");
+//				String rating = jsonChildNode.optString("rating");
 				int identityProfileId = jsonChildNode.optInt("identity_profile_id");
 				String contactName = firstName + " " + lastName;
 				ListRow listRow = new ListRow(imageURL, contactName);
@@ -196,7 +196,7 @@ public class SearchResults extends ListActivity {
 				listModel[i].setTags(tags);
 				listModel[i].setDescriptiom(description);
 				listModel[i].setEmail(email);
-				listModel[i].setRating(rating);
+//				listModel[i].setRating(rating);
 				listModel[i].setImageUrl(imageURL);
 				listModel[i].setIdentityProfileId(identityProfileId);
 			}

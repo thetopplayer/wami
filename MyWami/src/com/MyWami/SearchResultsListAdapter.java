@@ -39,7 +39,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 		ImageView listImage;
 		TextView listTextName;
 		TextView listTextProfileName;
-		TextView listTextRating;
+//		TextView listTextRating;
 		TextView listTextEmailName;
 		Button listButton;
 	}
@@ -60,7 +60,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 			viewHolder.listImage = (ImageView) row.findViewById(R.id.list_image);
 			viewHolder.listTextName = (TextView) row.findViewById(R.id.list_text_name);
 			viewHolder.listTextProfileName = (TextView) row.findViewById(R.id.list_text_profile_name);
-			viewHolder.listTextRating = (TextView) row.findViewById(R.id.list_text_rating);
+//			viewHolder.listTextRating = (TextView) row.findViewById(R.id.list_text_rating);
 			viewHolder.listTextEmailName = (TextView) row.findViewById(R.id.list_text_email_name);
 			viewHolder.listButton = (Button) row.findViewById(R.id.list_more_info_btn);
 			row.setTag( viewHolder);
@@ -74,7 +74,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 		viewHolder.listImage.setImageDrawable(imageUrlId);
 		viewHolder.listTextName.setText(listRow.listText);
 		viewHolder.listTextProfileName.setText(searchListModel[position].getProfileName());
-		viewHolder.listTextRating.setText(searchListModel[position].getRating());
+//		viewHolder.listTextRating.setText(searchListModel[position].getRating());
 		viewHolder.listTextEmailName.setText(searchListModel[position].getEmail());
 		viewHolder.listCheckBox.setChecked(checkBoxState[position]);
 

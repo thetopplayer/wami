@@ -10,7 +10,7 @@ public class SearchListModel {
 	private String profileName;
 	private String tags;
 	private String imageUrl;
-	private String rating;
+//	private String rating;
 	private String descriptiom;
 	private String email;
 	private boolean selected;
@@ -71,13 +71,13 @@ public class SearchListModel {
 		this.imageUrl = imageUrl;
 	}
 
-	public String getRating() {
-		return rating;
-	}
-
-	public void setRating(String rating) {
-		this.rating = rating;
-	}
+//	public String getRating() {
+//		return rating;
+//	}
+//
+//	public void setRating(String rating) {
+//		this.rating = rating;
+//	}
 
 	public String getDescriptiom() {
 		return descriptiom;

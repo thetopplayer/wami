@@ -1,0 +1,16 @@
+//
+//  SearchTableViewCell.swift
+//  MyWami
+//
+//  Created by Robert Lanter on 5/14/15.
+//  Copyright (c) 2015 Robert Lanter. All rights reserved.
+//
+
+import UIKit
+
+class SearchTableViewCell: UITableViewCell  {
+    
+    @IBOutlet var profileNameTxt: UITextField!
+    @IBOutlet var contactNameTxt: UITextField!
+    
+}

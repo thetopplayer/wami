@@ -127,6 +127,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     var newIdentityProfileId: String!
     var newGroupId: Int!
+    
+    var segue = UIStoryboardSegue()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -351,10 +353,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         var searchIn = searchForProfiles.getSearchIn()
         var searchStringsLike = searchForProfiles.getsSearchStringLikeTxt()
         var searchEntireNetwork = searchForProfiles.getSearchIndicator()
-                        
-        let GET_SEARCH_PROFILE_DATA = UTILITIES.IP + "get_search_profile_data.php"
-        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_SEARCH_PROFILE_DATA, params: ["param1": searchIn, "param2": searchStringsLike, "param3": searchEntireNetwork, "param4": userIdentityProfileId])
-        getProfileCollection(jsonData)
+        
+        self.searchForProfilesViewDialog.removeFromSuperview()
+        performSegueWithIdentifier("showSearchResults", sender: self)
+        var svc = segue.destinationViewController as! SearchResults
+        svc.searchIn = searchIn
+        svc.searchStringsLike = searchStringsLike
+        svc.searchEntireNetwork = searchEntireNetwork
+        svc.userIdentityProfileId = self.userIdentityProfileId
     }
     
     func logoutAction () {
@@ -390,6 +396,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        self.segue = segue
         if (segue.identifier == "showInfoExtended") {
             menuView.hidden = true
             var svc = segue.destinationViewController as! WamiInfoExtended;
