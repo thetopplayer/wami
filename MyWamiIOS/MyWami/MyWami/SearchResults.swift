@@ -28,7 +28,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     let textCellIdentifier = "SearchTableViewCell"
     
     var searchIn: String!
-    var searchStringsLike: String!
+    var searchStringLike: String!
     var searchEntireNetwork: String!
     var userIdentityProfileId: String!
     
@@ -73,7 +73,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         self.searchResultsTableView.rowHeight = 80
         
         let GET_SEARCH_PROFILE_DATA = UTILITIES.IP + "get_search_profile_data.php"
-        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_SEARCH_PROFILE_DATA, params: ["param1": searchIn, "param2": searchStringsLike, "param3": searchEntireNetwork, "param4": userIdentityProfileId])        
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_SEARCH_PROFILE_DATA, params: ["param1": searchIn, "param2": searchStringLike, "param3": searchEntireNetwork, "param4": userIdentityProfileId])        
         getProfileCollection(jsonData)
     }
     

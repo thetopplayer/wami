@@ -351,14 +351,18 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     func search() {
         var searchIn = searchForProfiles.getSearchIn()
-        var searchStringsLike = searchForProfiles.getsSearchStringLikeTxt()
+        var searchStringLike = searchForProfiles.getsSearchStringLikeTxt()
+        if searchStringLike == "" {
+            self.view.makeToast(message: "Please enter a search string.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return
+        }
         var searchEntireNetwork = searchForProfiles.getSearchIndicator()
         
         self.searchForProfilesViewDialog.removeFromSuperview()
         performSegueWithIdentifier("showSearchResults", sender: self)
         var svc = segue.destinationViewController as! SearchResults
         svc.searchIn = searchIn
-        svc.searchStringsLike = searchStringsLike
+        svc.searchStringLike = searchStringLike
         svc.searchEntireNetwork = searchEntireNetwork
         svc.userIdentityProfileId = self.userIdentityProfileId
     }
