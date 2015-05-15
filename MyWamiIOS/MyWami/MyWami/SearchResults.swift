@@ -22,12 +22,23 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         
     }
     
+    
+    @IBOutlet var searchResultsTableView: UITableView!
+    
     let textCellIdentifier = "SearchTableViewCell"
     
     var searchIn: String!
     var searchStringsLike: String!
     var searchEntireNetwork: String!
     var userIdentityProfileId: String!
+    
+    var profileNames = [String]()
+    var firstNames = [String]()
+    var lastNames = [String]()
+    var imageUrls = [String]()
+    var emails = [String]()
+    var identityProfileIds = [String]()
+    var checkBoxs = [Bool]()
     
     let JSON_DATA = JsonGetData()
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
@@ -56,9 +67,14 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
+  
+        searchResultsTableView.dataSource = self
+        searchResultsTableView.delegate = self
+        self.searchResultsTableView.rowHeight = 80
         
         let GET_SEARCH_PROFILE_DATA = UTILITIES.IP + "get_search_profile_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_SEARCH_PROFILE_DATA, params: ["param1": searchIn, "param2": searchStringsLike, "param3": searchEntireNetwork, "param4": userIdentityProfileId])        
+        getProfileCollection(jsonData)
     }
     
     let menu = Menu()
@@ -97,28 +113,98 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         self.navigationController!.popToViewController(navigationController!.viewControllers[0] as! UIViewController, animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(searchResultsTableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(searchResultsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numProfiles
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! SearchTableViewCell
-//        var contactName = self.firstNames[indexPath.row] + " " + self.lastNames[indexPath.row]
-//        cell.profileNameTxt.text = self.profileNames[indexPath.row]
-//        cell.contactNameTxt.text = contactName
-//        var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
-//        cell.profileImage.image = image
+    func tableView(searchResultsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = searchResultsTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! SearchTableViewCell
+        var contactName = self.firstNames[indexPath.row] + " " + self.lastNames[indexPath.row]
+        cell.profileNameTxt.text = self.profileNames[indexPath.row]
+        cell.contactNameTxt.text = contactName
+        cell.emailTxt.text = self.emails[indexPath.row]
+        if let image = UIImage(named: self.imageUrls[indexPath.row]) {
+            cell.profileImage.image = image
+        }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(searchResultsTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        searchResultsTableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
     }
     
+    func initData() {
+        self.profileNames.removeAll()
+        self.firstNames.removeAll()
+        self.lastNames.removeAll()
+        self.imageUrls.removeAll()
+        self.emails.removeAll()
+        self.identityProfileIds.removeAll()
+        self.checkBoxs.removeAll()
+    }
+    
+    func getProfileCollection (jsonData: JSON) -> Int {
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+        }
+        else {
+            initData()
+            let numProfiles: Int! = jsonData["profile_list"].array?.count
+            if numProfiles == 0 {
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.view.makeToast(message: "No Profiles found.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+                }
+                return -1
+            }
+            self.numProfiles = numProfiles
+            for index in 0...numProfiles - 1 {
+                var profileName = jsonData["profile_list"][index]["profile_name"].string!
+                profileNames.append(profileName)
+                
+                if let firstName = jsonData["profile_list"][index]["first_name"].string {
+                    firstNames.append(firstName)
+                }
+                else {
+                    firstNames.append("")
+                }
+                
+                if let lastName = jsonData["profile_list"][index]["last_name"].string {
+                    lastNames.append(lastName)
+                }
+                else {
+                    lastNames.append("")
+                }
+                
+                if let imageUrl = jsonData["profile_list"][index]["image_url"].string {
+                    imageUrls.append(imageUrl)
+                }
+                else {
+                    imageUrls.append("")
+                }
+                
+                if let email = jsonData["profile_list"][index]["email"].string {
+                    emails.append(email)
+                }
+                else {
+                    emails.append("")
+                }
+                
+                var identityProfileId = jsonData["profile_list"][index]["identity_profile_id"].string!
+                identityProfileIds.append(identityProfileId)
+                
+                checkBoxs.append(false)
+            }
+        }
+        return 0
+    }
 }
