@@ -9,49 +9,54 @@
 import UIKit
 
 class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var searchIn: String!
+    var searchStringLike: String!
+    var searchEntireNetwork: String!
+    var userIdentityProfileId: String!
     
     @IBAction func requestProfilePressed(sender: AnyObject) {
         
     }
     
     @IBAction func newSearchPressed(sender: AnyObject) {
-//        searchProfilesAction ()
+        self.searchProfilesAction ()
     }
     
-//    var segue = UIStoryboardSegue()
-//    var searchForProfiles = SearchForProfiles()
-//    var searchForProfilesViewDialog = UIView()
-//    func searchProfilesAction () {
-//        var searchForProfilesView = UIView()
-//        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-//        closeBtn.addTarget(self, action: "closeSearchForProfilesDialog", forControlEvents: UIControlEvents.TouchUpInside)
-//        let searchBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-//        searchBtn.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn)
-//        view.addSubview(self.searchForProfilesViewDialog)
-//        menu.toggleMenu(menuView)
-//    }
-//    func closeSearchForProfilesDialog() {
-//        self.searchForProfilesViewDialog.removeFromSuperview()
-//    }
-//    func search() {
-//        var searchIn = searchForProfiles.getSearchIn()
-//        var searchStringLike = searchForProfiles.getsSearchStringLikeTxt()
-//        if searchStringLike == "" {
-//            self.view.makeToast(message: "Please enter a search string.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-//            return
-//        }
-//        var searchEntireNetwork = searchForProfiles.getSearchIndicator()
-//        
-//        self.searchForProfilesViewDialog.removeFromSuperview()
+    var segue = UIStoryboardSegue()
+    var searchForProfiles = SearchForProfiles()
+    var searchForProfilesViewDialog = UIView()
+    func searchProfilesAction () {
+        var searchForProfilesView = UIView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeSearchForProfilesDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        let searchBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        searchBtn.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
+        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn)
+        view.addSubview(self.searchForProfilesViewDialog)
+        menu.toggleMenu(menuView)
+    }
+    func closeSearchForProfilesDialog() {
+        self.searchForProfilesViewDialog.removeFromSuperview()
+    }
+    func search() {
+        self.searchIn = searchForProfiles.getSearchIn()
+        self.searchStringLike = searchForProfiles.getsSearchStringLikeTxt()
+        if searchStringLike == "" {
+            self.view.makeToast(message: "Please enter a search string.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return
+        }
+        self.searchEntireNetwork = searchForProfiles.getSearchIndicator()
+        
+        self.searchForProfilesViewDialog.removeFromSuperview()
+        self.viewDidLoad()
 //        performSegueWithIdentifier("showSearchResults", sender: self)
 //        var svc = segue.destinationViewController as! SearchResults
 //        svc.searchIn = searchIn
 //        svc.searchStringLike = searchStringLike
 //        svc.searchEntireNetwork = searchEntireNetwork
 //        svc.userIdentityProfileId = self.userIdentityProfileId
-//    }
-//    
+    }
+    
     @IBAction func homePressed(sender: AnyObject) {
         homeAction ()
     }
@@ -60,11 +65,6 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     @IBOutlet var searchResultsTableView: UITableView!
     
     let textCellIdentifier = "SearchTableViewCell"
-    
-    var searchIn: String!
-    var searchStringLike: String!
-    var searchEntireNetwork: String!
-    var userIdentityProfileId: String!
     
     var profileNames = [String]()
     var firstNames = [String]()
@@ -238,6 +238,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
                 
                 checkBoxs.append(false)
             }
+            self.searchResultsTableView.reloadData()
         }
         return 0
     }
