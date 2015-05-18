@@ -34,6 +34,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         transmitProfileAction()
     }
 
+    // Address book processing
     var adbk : ABAddressBook?
     var authDone: Bool = false
     var replaceContact = false

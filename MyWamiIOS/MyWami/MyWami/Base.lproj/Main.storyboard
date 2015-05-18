@@ -288,6 +288,9 @@
                                                     <state key="normal" title="More Info">
                                                         <color key="titleColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="moreInfoBtnPressed:" destination="kJg-kq-gSM" eventType="touchUpInside" id="jlu-6t-WRU"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zav-uo-tuT">
                                                     <rect key="frame" x="37" y="6" width="81" height="68"/>
@@ -310,11 +313,14 @@
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="11"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXE-hl-jBt">
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXE-hl-jBt" customClass="WamiCheckBox" customModule="MyWami" customModuleProvider="target">
                                                     <rect key="frame" x="9" y="29" width="17" height="22"/>
                                                     <state key="normal" image="checkboxUnchecked">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="checkboxPressed:" destination="kJg-kq-gSM" eventType="touchUpInside" id="Rbc-An-jb6"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -325,6 +331,7 @@
                                             <outlet property="emailTxt" destination="Lca-SA-Gp2" id="T8Y-fK-v4D"/>
                                             <outlet property="profileImage" destination="Zav-uo-tuT" id="S4d-ea-cYN"/>
                                             <outlet property="profileNameTxt" destination="9eY-EX-aXX" id="z3i-ci-gR2"/>
+                                            <outlet property="wamiCheckBox" destination="RXE-hl-jBt" id="Mr9-IA-oka"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -340,7 +347,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7E-Kk-Zix" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-480" y="-773"/>
+            <point key="canvasLocation" x="-456" y="-851"/>
         </scene>
         <!--Wami Info Extended-->
         <scene sceneID="PiI-RA-J65">

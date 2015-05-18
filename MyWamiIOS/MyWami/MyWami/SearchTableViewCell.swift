@@ -14,5 +14,6 @@ class SearchTableViewCell: UITableViewCell  {
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var contactNameTxt: UITextField!
     @IBOutlet var emailTxt: UITextField!
+    @IBOutlet var wamiCheckBox: WamiCheckBox!
     
 }

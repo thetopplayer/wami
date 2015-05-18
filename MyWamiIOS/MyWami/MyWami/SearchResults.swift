@@ -14,6 +14,23 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     var searchEntireNetwork: String!
     var userIdentityProfileId: String!
     
+    @IBAction func moreInfoBtnPressed(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func checkboxPressed(sender: AnyObject) {
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.searchResultsTableView)
+        var indexPath: NSIndexPath = self.searchResultsTableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+        
+        if checkBoxs[row] == false {
+            checkBoxs[row] = true
+        }
+        else {
+            checkBoxs[row] = false
+        }
+    }
+    
     @IBAction func requestProfilePressed(sender: AnyObject) {
         
     }
@@ -49,12 +66,6 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         
         self.searchForProfilesViewDialog.removeFromSuperview()
         self.viewDidLoad()
-//        performSegueWithIdentifier("showSearchResults", sender: self)
-//        var svc = segue.destinationViewController as! SearchResults
-//        svc.searchIn = searchIn
-//        svc.searchStringLike = searchStringLike
-//        svc.searchEntireNetwork = searchEntireNetwork
-//        svc.userIdentityProfileId = self.userIdentityProfileId
     }
     
     @IBAction func homePressed(sender: AnyObject) {
