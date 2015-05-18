@@ -34,6 +34,7 @@ class SearchForProfiles: UIViewController {
     
     func searchProfilesDialog(searchProfileView: UIView, closeBtn: UIButton, searchBtn: UIButton) -> UIView {
         self.searchProfileView = searchProfileView
+        self.entireNetwork = false
         
         searchProfileView.frame = CGRectMake(50, 50, 230, 285)
         searchProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
@@ -91,6 +92,7 @@ class SearchForProfiles: UIViewController {
         searchStringLikeTxt.backgroundColor = UIColor.whiteColor()
         searchStringLikeTxt.textColor = UIColor.blackColor()
         searchStringLikeTxt.font = UIFont.systemFontOfSize(13)
+        searchStringLikeTxt.text = ""
         searchStringLikeTxt.frame = CGRectMake(15, 111, 170, 20)
         txtFldBorderLbL.frame = CGRectMake(10, 108, 210, 25)
         searchProfileView.addSubview(txtFldBorderLbL)

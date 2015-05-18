@@ -15,11 +15,45 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     @IBAction func newSearchPressed(sender: AnyObject) {
-        
+//        searchProfilesAction ()
     }
     
+//    var segue = UIStoryboardSegue()
+//    var searchForProfiles = SearchForProfiles()
+//    var searchForProfilesViewDialog = UIView()
+//    func searchProfilesAction () {
+//        var searchForProfilesView = UIView()
+//        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+//        closeBtn.addTarget(self, action: "closeSearchForProfilesDialog", forControlEvents: UIControlEvents.TouchUpInside)
+//        let searchBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+//        searchBtn.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
+//        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn)
+//        view.addSubview(self.searchForProfilesViewDialog)
+//        menu.toggleMenu(menuView)
+//    }
+//    func closeSearchForProfilesDialog() {
+//        self.searchForProfilesViewDialog.removeFromSuperview()
+//    }
+//    func search() {
+//        var searchIn = searchForProfiles.getSearchIn()
+//        var searchStringLike = searchForProfiles.getsSearchStringLikeTxt()
+//        if searchStringLike == "" {
+//            self.view.makeToast(message: "Please enter a search string.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+//            return
+//        }
+//        var searchEntireNetwork = searchForProfiles.getSearchIndicator()
+//        
+//        self.searchForProfilesViewDialog.removeFromSuperview()
+//        performSegueWithIdentifier("showSearchResults", sender: self)
+//        var svc = segue.destinationViewController as! SearchResults
+//        svc.searchIn = searchIn
+//        svc.searchStringLike = searchStringLike
+//        svc.searchEntireNetwork = searchEntireNetwork
+//        svc.userIdentityProfileId = self.userIdentityProfileId
+//    }
+//    
     @IBAction func homePressed(sender: AnyObject) {
-        
+        homeAction ()
     }
     
     
