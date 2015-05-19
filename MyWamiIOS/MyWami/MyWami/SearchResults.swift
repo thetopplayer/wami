@@ -56,7 +56,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     // Request profiles
-    var selectedIdentityProfileId = ""
+    var emailTo = ""
     @IBAction func requestProfilePressed(sender: AnyObject) {
         var profilesToRequest = false
         var profileIndex = 0
@@ -64,14 +64,14 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         for index in 0...numProfiles - 1 {
             if checkBoxs[index] == true {
                 chosenProfilesIdsToRequest[profileIndex] = identityProfileIds[index]
-                selectedIdentityProfileId = identityProfileIds[index] + "," + selectedIdentityProfileId
+                emailTo = emails[index] + "," + emailTo
                 profileIndex++
                 profilesToRequest = true
             }
         }
         if profilesToRequest == true {
             numProfilesToRequest = profileIndex
-            selectedIdentityProfileId = selectedIdentityProfileId.substringToIndex(selectedIdentityProfileId.endIndex.predecessor())
+            emailTo = emailTo.substringToIndex(emailTo.endIndex.predecessor())
             requestProfileAction()
         }
         else {
@@ -93,10 +93,30 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         self.confirmDialog.removeFromSuperview()
     }
     func request() {
-        
+        self.confirmDialog.removeFromSuperview()
+        var emailFrom = ""
+        var profileNameFrom = ""
+        let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": self.userIdentityProfileId])
+        var retCode = jsonData["ret_code"]
+        if retCode == 1 {
+            var message = jsonData["message"].string
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+            return
+        }
+        else {
+            emailFrom = jsonData["email"].string!
+            profileNameFrom = jsonData["profile_name"].string!
+        }
+        let TRANSMIT_REQUEST_TO_EMAIL_ADDRESS_MOBILE_IOS = UTILITIES.EMAIL_IP + "transmit_request_to_email_address_mobile_ios.php"
+        jsonData = JSON_DATA_SYNCH.jsonGetData(TRANSMIT_REQUEST_TO_EMAIL_ADDRESS_MOBILE_IOS,
+            params: ["param1": emailTo, "param2": emailFrom, "param3": profileNameFrom])
+        var message = jsonData["message"].string
+        self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
     }
-    
-    
+
     // New search
     @IBAction func newSearchPressed(sender: AnyObject) {
         self.searchProfilesAction ()
@@ -236,6 +256,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.profileNameTxt.text = self.profileNames[indexPath.row]
         cell.contactNameTxt.text = contactName
         cell.emailTxt.text = self.emails[indexPath.row]
+        cell.wamiCheckBox.isChecked = false
         if let image = UIImage(named: self.imageUrls[indexPath.row]) {
             cell.profileImage.image = image
         }
