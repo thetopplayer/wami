@@ -55,9 +55,47 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
     }
     
+    // Request profiles
+    var selectedIdentityProfileId = ""
     @IBAction func requestProfilePressed(sender: AnyObject) {
+        var profilesToRequest = false
+        var profileIndex = 0
+        var numProfilesToRequest = 0
+        for index in 0...numProfiles - 1 {
+            if checkBoxs[index] == true {
+                chosenProfilesIdsToRequest[profileIndex] = identityProfileIds[index]
+                selectedIdentityProfileId = identityProfileIds[index] + "," + selectedIdentityProfileId
+                profileIndex++
+                profilesToRequest = true
+            }
+        }
+        if profilesToRequest == true {
+            numProfilesToRequest = profileIndex
+            selectedIdentityProfileId = selectedIdentityProfileId.substringToIndex(selectedIdentityProfileId.endIndex.predecessor())
+            requestProfileAction()
+        }
+        else {
+            self.view.makeToast(message: "No Profiles were requested. Please request profiles by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+        }
+    }
+    var requestProfileConfirm = RequestProfileConfirm()
+    var confirmDialog = UIView()
+    func requestProfileAction() {
+        var confirmView = UIView()
+        let cancelBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        cancelBtn.addTarget(self, action: "closeConfirmDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        let requestBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        requestBtn.addTarget(self, action: "request", forControlEvents: UIControlEvents.TouchUpInside)
+        self.confirmDialog = requestProfileConfirm.confirmDialog(confirmView, cancelBtn: cancelBtn, requestBtn: requestBtn)
+        view.addSubview(self.confirmDialog)
+    }
+    func closeConfirmDialog() {
+        self.confirmDialog.removeFromSuperview()
+    }
+    func request() {
         
     }
+    
     
     // New search
     @IBAction func newSearchPressed(sender: AnyObject) {
@@ -109,6 +147,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     var tags = [String]()
     var identityProfileIds = [String]()
     var checkBoxs = [Bool]()
+    var chosenProfilesIdsToRequest = [String]()
     
     let JSON_DATA = JsonGetData()
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
@@ -217,6 +256,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         self.emails.removeAll()
         self.identityProfileIds.removeAll()
         self.checkBoxs.removeAll()
+        self.chosenProfilesIdsToRequest.removeAll()
     }
     
     func getProfileCollection (jsonData: JSON) -> Int {
@@ -287,6 +327,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
                 identityProfileIds.append(identityProfileId)
                 
                 checkBoxs.append(false)
+                chosenProfilesIdsToRequest.append("")
             }
             self.searchResultsTableView.reloadData()
         }
