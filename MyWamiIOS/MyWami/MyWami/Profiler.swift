@@ -15,6 +15,15 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profilerTableView: UITableView!
     
+    @IBAction func categoryBtnPressed(sender: AnyObject) {
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.profilerTableView)
+        var indexPath: NSIndexPath = self.profilerTableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+        
+        var category = categories[row]
+    }
+    
+    
     let textCellIdentifier = "ProfilerTableViewCell"
     
     let JSON_DATA = JsonGetData()
@@ -215,7 +224,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     }
     func tableView(profilerTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = profilerTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! ProfilerTableViewCell
-        cell.profileCategoryText.text = self.categories[indexPath.row]
+        var category = self.categories[indexPath.row]
+        cell.categoryBtn.setTitle(category, forState: UIControlState.Normal)
         
         return cell
     }
@@ -223,8 +233,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
         profilerTableView.deselectRowAtIndexPath(indexPath, animated: true)
         let row = indexPath.row
     }
-    
-    
     
     func back(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)

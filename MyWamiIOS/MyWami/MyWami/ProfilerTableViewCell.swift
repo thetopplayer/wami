@@ -10,5 +10,5 @@ import UIKit
 
 class ProfilerTableViewCell: UITableViewCell  {
         
-    @IBOutlet var profileCategoryText: UITextField!
+    @IBOutlet var categoryBtn: UIButton!
 }
