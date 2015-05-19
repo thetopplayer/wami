@@ -14,9 +14,33 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     var searchEntireNetwork: String!
     var userIdentityProfileId: String!
     
+    // More info
     @IBAction func moreInfoBtnPressed(sender: AnyObject) {
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.searchResultsTableView)
+        var indexPath: NSIndexPath = self.searchResultsTableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
         
+        self.MoreInfoAction(row)
     }
+    var searchMoreInfo = SearchMoreInfo()
+    var moreInfoViewDialog = UIView()
+    func MoreInfoAction(row: Int) {
+        var moreInfoView = UIView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var profileName = profileNames[row]
+        var tag = tags[row]
+        var description = descriptions[row]
+        self.moreInfoViewDialog = searchMoreInfo.moreInfoDialog(moreInfoView, profileName: profileName, tag: tag, description: description, closeBtn: closeBtn)
+        
+        view.addSubview(self.moreInfoViewDialog)
+        menu.toggleMenu(menuView)
+    }
+    func closeMoreInfoDialog() {
+        self.moreInfoViewDialog.removeFromSuperview()
+    }
+   
     
     @IBAction func checkboxPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.searchResultsTableView)
@@ -35,11 +59,10 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         
     }
     
+    // New search
     @IBAction func newSearchPressed(sender: AnyObject) {
         self.searchProfilesAction ()
     }
-    
-    var segue = UIStoryboardSegue()
     var searchForProfiles = SearchForProfiles()
     var searchForProfilesViewDialog = UIView()
     func searchProfilesAction () {
@@ -63,11 +86,11 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
             return
         }
         self.searchEntireNetwork = searchForProfiles.getSearchIndicator()
-        
         self.searchForProfilesViewDialog.removeFromSuperview()
         self.viewDidLoad()
     }
     
+    // Home
     @IBAction func homePressed(sender: AnyObject) {
         homeAction ()
     }
@@ -82,6 +105,8 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     var lastNames = [String]()
     var imageUrls = [String]()
     var emails = [String]()
+    var descriptions = [String]()
+    var tags = [String]()
     var identityProfileIds = [String]()
     var checkBoxs = [Bool]()
     
@@ -228,6 +253,20 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
                 }
                 else {
                     lastNames.append("")
+                }
+                
+                if let description = jsonData["profile_list"][index]["description"].string {
+                    descriptions.append(description)
+                }
+                else {
+                    descriptions.append("")
+                }
+                
+                if let tag = jsonData["profile_list"][index]["tags"].string {
+                    tags.append(tag)
+                }
+                else {
+                    tags.append("")
                 }
                 
                 if let imageUrl = jsonData["profile_list"][index]["image_url"].string {

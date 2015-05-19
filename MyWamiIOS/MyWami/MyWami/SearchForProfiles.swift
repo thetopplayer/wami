@@ -74,7 +74,6 @@ class SearchForProfiles: UIViewController {
         dropDownIndicator.font = UIFont.boldSystemFontOfSize(12)
         dropDownIndicator.frame = CGRectMake(15, 53, 22, 25)
         searchProfileView.addSubview(dropDownIndicator)
-
         
         let searchStringLikeLbl = UILabel()
         searchStringLikeLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
