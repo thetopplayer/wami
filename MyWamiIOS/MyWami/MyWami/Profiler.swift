@@ -18,31 +18,24 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     // Process categories
     var mediaType = ""
     var category = ""
+    var fileName = ""
+    var fileLocation = ""
     @IBAction func categoryBtnPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.profilerTableView)
         var indexPath: NSIndexPath = self.profilerTableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
         self.category = categories[row]
         self.mediaType = mediaTypes[row]
+        self.fileName = fileNames[row]
+        self.fileLocation = fileLocations[row]
         if mediaType == "Text" {
-            var pdfFile = UTILITIES.ASSETS_IP + "assets/text_files/RobbieRedux/bio.txt"
-            showWebViewer(pdfFile)
-            
-//            let webView:UIWebView = UIWebView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
-//            webView.loadRequest(NSURLRequest(URL: NSURL(string: pdfFile)!))
-//            webView.delegate = self;
-//            profilerTableView.addSubview(webView)
-            
+            var txtFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
+            showWebViewer(txtFile)
         }
         
         if mediaType == "PDF" {
-            var pdfFile = UTILITIES.ASSETS_IP + "assets/pdf_files/RobbieRedux/RobLanter_res.pdf"
+            var pdfFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
             showWebViewer(pdfFile)
-//            let webView:UIWebView = UIWebView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
-//            webView.loadRequest(NSURLRequest(URL: NSURL(string: pdfFile)!))
-//            webView.delegate = self;
-//            profilerTableView.addSubview(webView)
-            
         }
 
         
@@ -100,6 +93,9 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var numCategories = 0
     var categories = [String]()
     var mediaTypes = [String]()
+    var fileLocations = [String]()
+    var fileNames = [String]()
+    
     
     let menuView = UIView()
     var menuLine = UILabel()
@@ -132,7 +128,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILER_DATA, params: ["param1": identityProfileId])
-        
+        println(jsonData)
         var retCode = jsonData["no_categories_ret_code"]
         if retCode == 1 {
             var message = jsonData["message"][0].string
@@ -149,6 +145,16 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                     categories.append(categoryName)
                     var mediaType = jsonData["identity_profiler_data"][index]["media_type"].string!
                     mediaTypes.append(mediaType)
+                    if mediaType == "Text" || mediaType == "PDF"  {
+                        var fileLocation = jsonData["identity_profiler_data"][index]["file"]["file_location"].string!
+                        fileLocations.append(fileLocation)
+                        var fileName = jsonData["identity_profiler_data"][index]["file"]["file_name"].string!
+                        fileNames.append(fileName)
+                    }
+                    else {
+                        fileLocations.append("")
+                        fileNames.append("")
+                    }
                 }
             }
             else {
