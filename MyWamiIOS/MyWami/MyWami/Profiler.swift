@@ -8,21 +8,81 @@
 
 import UIKit
 
-class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate  {
     
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var profileNameText: UITextField!
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profilerTableView: UITableView!
     
+    // Process categories
+    var mediaType = ""
+    var category = ""
     @IBAction func categoryBtnPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.profilerTableView)
         var indexPath: NSIndexPath = self.profilerTableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
+        self.category = categories[row]
+        self.mediaType = mediaTypes[row]
+        if mediaType == "Text" {
+            var pdfFile = UTILITIES.ASSETS_IP + "assets/text_files/RobbieRedux/bio.txt"
+            showWebViewer(pdfFile)
+            
+//            let webView:UIWebView = UIWebView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
+//            webView.loadRequest(NSURLRequest(URL: NSURL(string: pdfFile)!))
+//            webView.delegate = self;
+//            profilerTableView.addSubview(webView)
+            
+        }
         
-        var category = categories[row]
+        if mediaType == "PDF" {
+            var pdfFile = UTILITIES.ASSETS_IP + "assets/pdf_files/RobbieRedux/RobLanter_res.pdf"
+            showWebViewer(pdfFile)
+//            let webView:UIWebView = UIWebView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
+//            webView.loadRequest(NSURLRequest(URL: NSURL(string: pdfFile)!))
+//            webView.delegate = self;
+//            profilerTableView.addSubview(webView)
+            
+        }
+
+        
+        if mediaType == "Audio" {
+            
+        }
+        
+        if mediaType == "Image" {
+            
+        }
     }
-    
+    let webViewer = UIView()
+    let webView = UIWebView()
+    func showWebViewer (inFile: String) {
+        webViewer.frame = CGRectMake(2, 2, 315, 385)
+        webViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        webViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        webViewer.layer.borderWidth = 1.5
+        
+        webView.frame = CGRectMake(5, 0, 306, 332)
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
+        webView.delegate = self;
+        
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.setTitle("Close", forState: UIControlState.Normal)
+        closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
+        closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        closeBtn.showsTouchWhenHighlighted = true
+        closeBtn.frame = CGRectMake(125, 348, 60, 20)
+        closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
+        webViewer.addSubview(closeBtn)
+
+        
+        webViewer.addSubview(webView)
+        profilerTableView.addSubview(webViewer)
+    }
+    func closeWebViewer() {
+        webViewer.removeFromSuperview()
+    }
     
     let textCellIdentifier = "ProfilerTableViewCell"
     
@@ -39,6 +99,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     var numCategories = 0
     var categories = [String]()
+    var mediaTypes = [String]()
     
     let menuView = UIView()
     var menuLine = UILabel()
@@ -86,6 +147,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource  {
                 for index in 0...numCategories - 1 {
                     var categoryName = jsonData["identity_profiler_data"][index]["category"].string!
                     categories.append(categoryName)
+                    var mediaType = jsonData["identity_profiler_data"][index]["media_type"].string!
+                    mediaTypes.append(mediaType)
                 }
             }
             else {
