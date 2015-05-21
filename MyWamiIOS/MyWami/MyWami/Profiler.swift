@@ -28,15 +28,17 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         let row = indexPath.row
         self.category = categories[row]
         self.mediaType = mediaTypes[row]
-        self.fileName = fileNames[row]
-        self.fileLocation = fileLocations[row]
         if mediaType == "Text" {
+            self.fileName = fileNames[row]
+            self.fileLocation = fileLocations[row]
             var txtFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
-            showWebViewer(txtFile)
+            showInWebViewer(txtFile, mediaType: mediaType)
         }
         if mediaType == "PDF" {
+            self.fileName = fileNames[row]
+            self.fileLocation = fileLocations[row]
             var pdfFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
-            showWebViewer(pdfFile)
+            showInWebViewer(pdfFile, mediaType: mediaType)
         }
         if mediaType == "Audio" {
             var audioFile = UTILITIES.ASSETS_IP + "assets/audio/RobLanter-Developer/SecretDream.mp3"
@@ -52,15 +54,22 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     }
     let webViewer = UIView()
     let webView = UIWebView()
-    func showWebViewer (inFile: String) {
-        webViewer.frame = CGRectMake(2, 2, 315, 385)
-        webViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        webViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        webViewer.layer.borderWidth = 1.5
+    func showInWebViewer (inFile: String, mediaType: String) {
+        if mediaType == "Text" || mediaType == "PDF" {
+            webViewer.frame = CGRectMake(2, 2, 315, 385)
+            webViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+            webViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+            webViewer.layer.borderWidth = 1.5
+            
+            webView.frame = CGRectMake(5, 0, 306, 332)
+            webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
+            webView.delegate = self;
+        }
         
-        webView.frame = CGRectMake(5, 0, 306, 332)
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
-        webView.delegate = self;
+        if mediaType == "Audio" {
+            
+            
+        }
         
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
@@ -99,10 +108,10 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var mediaTypes = [String]()
     var fileLocations = [String]()
     var fileNames = [String]()
-    var audioFiles = [String]()
-    var imageFiles = [String]()
     var audioFileLocations = [String]()
     var audioFileNames = [String]()
+    var audioFileDescriptions = [String]()
+    var audioFileIds = [String]()
     
     
     let menuView = UIView()
@@ -162,10 +171,16 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                         if let numAudio: Int! = jsonData["identity_profiler_data"][index]["file"]["audio"].array?.count {
                             self.numAudio = numAudio
                             for index2 in 0...numAudio - 1 {
-                                var audioFileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_name"].string!
+                                var audioFileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_name"].string!
                                 audioFileNames.append(audioFileName)
-                                var audioFileLocation = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_location"].string!
-                                audioFileLocations.append(audioFileLocation)
+                                var fileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_name"].string!
+                                fileNames.append(fileName)
+                                var audioFileDescription = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_description"].string!
+                                audioFileDescriptions.append(audioFileDescription)
+                                var audioFileId = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["profiler_audio_jukebox_id"].string!
+                                audioFileIds.append(audioFileId)
+                                var fileLocation = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_location"].string!
+                                fileLocations.append(fileLocation)
                             }
                         }
                         else {
