@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate  {
+class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, AVAudioPlayerDelegate  {
     
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var profileNameText: UITextField!
@@ -20,6 +21,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var category = ""
     var fileName = ""
     var fileLocation = ""
+    var player = AVPlayer()
     @IBAction func categoryBtnPressed(sender: AnyObject) {
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.profilerTableView)
         var indexPath: NSIndexPath = self.profilerTableView.indexPathForRowAtPoint(btnPos)!
@@ -32,17 +34,18 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             var txtFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
             showWebViewer(txtFile)
         }
-        
         if mediaType == "PDF" {
             var pdfFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
             showWebViewer(pdfFile)
         }
-
-        
         if mediaType == "Audio" {
-            
+            var audioFile = UTILITIES.ASSETS_IP + "assets/audio/RobLanter-Developer/SecretDream.mp3"
+            let url = audioFile
+            let playerItem = AVPlayerItem( URL:NSURL( string:url ) )
+            player = AVPlayer(playerItem:playerItem)
+            player.rate = 1.0;
+            player.play()
         }
-        
         if mediaType == "Image" {
             
         }
@@ -68,7 +71,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         closeBtn.frame = CGRectMake(125, 348, 60, 20)
         closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
         webViewer.addSubview(closeBtn)
-
         
         webViewer.addSubview(webView)
         profilerTableView.addSubview(webViewer)
@@ -91,10 +93,16 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var lastName: String!
     
     var numCategories = 0
+    var numAudio = 0
+    var numImages = 0
     var categories = [String]()
     var mediaTypes = [String]()
     var fileLocations = [String]()
     var fileNames = [String]()
+    var audioFiles = [String]()
+    var imageFiles = [String]()
+    var audioFileLocations = [String]()
+    var audioFileNames = [String]()
     
     
     let menuView = UIView()
@@ -128,7 +136,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         let GET_PROFILER_DATA = UTILITIES.IP + "get_profiler_data.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILER_DATA, params: ["param1": identityProfileId])
-        println(jsonData)
         var retCode = jsonData["no_categories_ret_code"]
         if retCode == 1 {
             var message = jsonData["message"][0].string
@@ -151,7 +158,21 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                         var fileName = jsonData["identity_profiler_data"][index]["file"]["file_name"].string!
                         fileNames.append(fileName)
                     }
-                    else {
+                    if mediaType == "Audio" {
+                        if let numAudio: Int! = jsonData["identity_profiler_data"][index]["file"]["audio"].array?.count {
+                            self.numAudio = numAudio
+                            for index2 in 0...numAudio - 1 {
+                                var audioFileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_name"].string!
+                                audioFileNames.append(audioFileName)
+                                var audioFileLocation = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_location"].string!
+                                audioFileLocations.append(audioFileLocation)
+                            }
+                        }
+                        else {
+                           self.numAudio = 0
+                        }
+                    }
+                    if mediaType == "Image" {
                         fileLocations.append("")
                         fileNames.append("")
                     }
