@@ -41,33 +41,53 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             showInWebViewer(pdfFile, mediaType: mediaType)
         }
         if mediaType == "Audio" {
-            var audioFile = UTILITIES.ASSETS_IP + "assets/audio/RobLanter-Developer/SecretDream.mp3"
-            let url = audioFile
-            let playerItem = AVPlayerItem( URL:NSURL( string:url ) )
-            player = AVPlayer(playerItem:playerItem)
-            player.rate = 1.0;
-            player.play()
+            showInWebViewer("", mediaType: mediaType)
+//            var audioFile = UTILITIES.ASSETS_IP + "assets/audio/RobLanter-Developer/SecretDream.mp3"
+//            let url = audioFile
+//            let playerItem = AVPlayerItem( URL:NSURL( string:url ) )
+//            player = AVPlayer(playerItem:playerItem)
+//            player.rate = 1.0;
+//            player.play()
         }
         if mediaType == "Image" {
             
         }
     }
-    let webViewer = UIView()
-    let webView = UIWebView()
+    var webScrollViewer = UIScrollView()
+    var webView = UIWebView()
+    var audioView = UIView()
+    var audioScrollViewer = UIScrollView()
     func showInWebViewer (inFile: String, mediaType: String) {
+        webScrollViewer.frame = CGRectMake(2, 2, 316, 385)
+        webScrollViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        webScrollViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        webScrollViewer.layer.borderWidth = 1.5
+        
         if mediaType == "Text" || mediaType == "PDF" {
-            webViewer.frame = CGRectMake(2, 2, 315, 385)
-            webViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-            webViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-            webViewer.layer.borderWidth = 1.5
-            
             webView.frame = CGRectMake(5, 0, 306, 332)
             webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
             webView.delegate = self;
+            
+            webScrollViewer.addSubview(webView)
         }
         
         if mediaType == "Audio" {
-            
+            audioScrollViewer.frame = CGRectMake(2, 2, 311, 330)
+            audioScrollViewer.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
+            audioScrollViewer.layer.borderWidth = 1.5
+
+            var verticalPlacement: CGFloat = 2
+            for index in 0...numAudio - 1 {
+                var audioView = UIView()
+                audioView.frame = CGRectMake(2, verticalPlacement, 304, 40)
+                audioView.backgroundColor = UIColor.whiteColor()
+                audioView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+                audioView.layer.borderWidth = 0.5
+                verticalPlacement = verticalPlacement + 40
+                
+                audioScrollViewer.addSubview(audioView)
+            }
+            webScrollViewer.addSubview(audioScrollViewer)
             
         }
         
@@ -79,13 +99,15 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         closeBtn.showsTouchWhenHighlighted = true
         closeBtn.frame = CGRectMake(125, 348, 60, 20)
         closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
-        webViewer.addSubview(closeBtn)
+        webScrollViewer.addSubview(closeBtn)
         
-        webViewer.addSubview(webView)
-        profilerTableView.addSubview(webViewer)
+        profilerTableView.addSubview(webScrollViewer)
     }
     func closeWebViewer() {
-        webViewer.removeFromSuperview()
+        self.audioView.removeFromSuperview()
+        self.audioScrollViewer.removeFromSuperview()
+        self.webView.removeFromSuperview()
+        self.webScrollViewer.removeFromSuperview()
     }
     
     let textCellIdentifier = "ProfilerTableViewCell"
