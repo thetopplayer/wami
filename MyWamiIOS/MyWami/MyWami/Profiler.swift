@@ -53,41 +53,48 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             
         }
     }
-    var webScrollViewer = UIScrollView()
+    var scrollViewer = UIScrollView()
     var webView = UIWebView()
-    var audioView = UIView()
-    var audioScrollViewer = UIScrollView()
+    var audioViews = [UIView]()
+    var audioViewer = UIScrollView()
     func showInWebViewer (inFile: String, mediaType: String) {
-        webScrollViewer.frame = CGRectMake(2, 2, 316, 385)
-        webScrollViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        webScrollViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        webScrollViewer.layer.borderWidth = 1.5
+        scrollViewer.frame = CGRectMake(2, 2, 316, 385)
+        scrollViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        scrollViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        scrollViewer.layer.borderWidth = 1.5
         
         if mediaType == "Text" || mediaType == "PDF" {
             webView.frame = CGRectMake(5, 0, 306, 332)
             webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
             webView.delegate = self;
             
-            webScrollViewer.addSubview(webView)
+            scrollViewer.addSubview(webView)
         }
         
         if mediaType == "Audio" {
-            audioScrollViewer.frame = CGRectMake(2, 2, 311, 330)
-            audioScrollViewer.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
-            audioScrollViewer.layer.borderWidth = 1.5
+            audioViewer.frame = CGRectMake(2, 2, 311, 330)
+            audioViewer.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
+            audioViewer.layer.borderWidth = 1.5
 
             var verticalPlacement: CGFloat = 2
             for index in 0...numAudio - 1 {
                 var audioView = UIView()
-                audioView.frame = CGRectMake(2, verticalPlacement, 304, 40)
+                audioViews.append(audioView)
+                
+                var testLbl = UILabel()
+                testLbl.frame = CGRectMake(10, 5, 100, 20)
+                testLbl.text = "testing: " + String(index)
+                audioView.addSubview(testLbl)
+                
+                audioView.frame = CGRectMake(2, verticalPlacement, 306, 40)
                 audioView.backgroundColor = UIColor.whiteColor()
                 audioView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
                 audioView.layer.borderWidth = 0.5
                 verticalPlacement = verticalPlacement + 40
                 
-                audioScrollViewer.addSubview(audioView)
+                audioViewer.addSubview(audioView)
             }
-            webScrollViewer.addSubview(audioScrollViewer)
+            scrollViewer.addSubview(audioViewer)
             
         }
         
@@ -99,15 +106,17 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         closeBtn.showsTouchWhenHighlighted = true
         closeBtn.frame = CGRectMake(125, 348, 60, 20)
         closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
-        webScrollViewer.addSubview(closeBtn)
+        scrollViewer.addSubview(closeBtn)
         
-        profilerTableView.addSubview(webScrollViewer)
+        profilerTableView.addSubview(scrollViewer)
     }
     func closeWebViewer() {
-        self.audioView.removeFromSuperview()
-        self.audioScrollViewer.removeFromSuperview()
+        for index in 0...numAudio - 1 {
+            audioViews[index].removeFromSuperview()
+        }
+        self.audioViewer.removeFromSuperview()
         self.webView.removeFromSuperview()
-        self.webScrollViewer.removeFromSuperview()
+        self.scrollViewer.removeFromSuperview()
     }
     
     let textCellIdentifier = "ProfilerTableViewCell"
@@ -132,6 +141,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var fileNames = [String]()
     var audioFileLocations = [String]()
     var audioFileNames = [String]()
+    var audioSongTitles = [String]()
     var audioFileDescriptions = [String]()
     var audioFileIds = [String]()
     
@@ -193,17 +203,23 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                         if let numAudio: Int! = jsonData["identity_profiler_data"][index]["file"]["audio"].array?.count {
                             self.numAudio = numAudio
                             for index2 in 0...numAudio - 1 {
-                                var audioFileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_name"].string!
+                                var audioSongTitle = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_name"].string!
+                                audioSongTitles.append(audioSongTitle)
+                                
+                                var audioFileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_name"].string!
                                 audioFileNames.append(audioFileName)
-                                var fileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_name"].string!
-                                fileNames.append(fileName)
+                                
+                                var audioFileLocation = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_location"].string!
+                                audioFileLocations.append(audioFileLocation)
+                                
                                 var audioFileDescription = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_description"].string!
                                 audioFileDescriptions.append(audioFileDescription)
+                                
                                 var audioFileId = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["profiler_audio_jukebox_id"].string!
                                 audioFileIds.append(audioFileId)
-                                var fileLocation = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_location"].string!
-                                fileLocations.append(fileLocation)
                             }
+                            fileNames.append("audio")
+                            fileLocations.append("")
                         }
                         else {
                            self.numAudio = 0

@@ -11,7 +11,7 @@ import UIKit
 
 class Utilities {
     var IP = "http://localhost/MyWamiIOS/MyWami/MyWami/"
-    var ASSETS_IP = "http://192.168.0.2:80/Wami/"
+    var ASSETS_IP = "http://192.168.15.3:80/Wami/" 
     var EMAIL_IP = "http://www.mywami.com/"
     var DB_NAME = "wamilocal.db"
     var DB_PATH = "/Users/robertlanter/projects/"
