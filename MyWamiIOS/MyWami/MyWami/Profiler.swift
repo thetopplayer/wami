@@ -32,16 +32,17 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             self.fileName = fileNames[row]
             self.fileLocation = fileLocations[row]
             var txtFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
-            showInWebViewer(txtFile, mediaType: mediaType)
+            showInWebViewer(txtFile)
         }
         if mediaType == "PDF" {
             self.fileName = fileNames[row]
             self.fileLocation = fileLocations[row]
             var pdfFile = UTILITIES.ASSETS_IP +  fileLocation + fileName
-            showInWebViewer(pdfFile, mediaType: mediaType)
+            showInWebViewer(pdfFile)
         }
         if mediaType == "Audio" {
-            showInWebViewer("", mediaType: mediaType)
+            showAudioViewer()
+//            showInWebViewer("", mediaType: mediaType)
 //            var audioFile = UTILITIES.ASSETS_IP + "assets/audio/RobLanter-Developer/SecretDream.mp3"
 //            let url = audioFile
 //            let playerItem = AVPlayerItem( URL:NSURL( string:url ) )
@@ -53,51 +54,33 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             
         }
     }
+    var profilerAudioViewer = ProfilerAudioViewer()
+    var profilerAudioViewerDialog = UIView()
+    func showAudioViewer () {
+        var profilerAudioView = UIView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeProfilerAudioViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        self.profilerAudioViewerDialog = profilerAudioViewer.profilerAudioViewerDialog(profilerAudioView, closeBtn: closeBtn)
+        profilerTableView.addSubview(self.profilerAudioViewerDialog)
+
+    }
+    func closeProfilerAudioViewerDialog() {
+        self.profilerAudioViewerDialog.removeFromSuperview()
+    }
+    
     var scrollViewer = UIScrollView()
     var webView = UIWebView()
-    var audioViews = [UIView]()
-    var audioViewer = UIScrollView()
-    func showInWebViewer (inFile: String, mediaType: String) {
+    func showInWebViewer (inFile: String) {
         scrollViewer.frame = CGRectMake(2, 2, 316, 385)
         scrollViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         scrollViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         scrollViewer.layer.borderWidth = 1.5
         
-        if mediaType == "Text" || mediaType == "PDF" {
-            webView.frame = CGRectMake(5, 0, 306, 332)
-            webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
-            webView.delegate = self;
-            
-            scrollViewer.addSubview(webView)
-        }
-        
-        if mediaType == "Audio" {
-            audioViewer.frame = CGRectMake(2, 2, 311, 330)
-            audioViewer.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
-            audioViewer.layer.borderWidth = 1.5
-
-            var verticalPlacement: CGFloat = 2
-            for index in 0...numAudio - 1 {
-                var audioView = UIView()
-                audioViews.append(audioView)
-                
-                var testLbl = UILabel()
-                testLbl.frame = CGRectMake(10, 5, 100, 20)
-                testLbl.text = "testing: " + String(index)
-                audioView.addSubview(testLbl)
-                
-                audioView.frame = CGRectMake(2, verticalPlacement, 306, 40)
-                audioView.backgroundColor = UIColor.whiteColor()
-                audioView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
-                audioView.layer.borderWidth = 0.5
-                verticalPlacement = verticalPlacement + 40
-                
-                audioViewer.addSubview(audioView)
-            }
-            scrollViewer.addSubview(audioViewer)
-            
-        }
-        
+        webView.frame = CGRectMake(5, 0, 306, 332)
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
+        webView.delegate = self;
+        scrollViewer.addSubview(webView)
+   
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
@@ -111,10 +94,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         profilerTableView.addSubview(scrollViewer)
     }
     func closeWebViewer() {
-        for index in 0...numAudio - 1 {
-            audioViews[index].removeFromSuperview()
-        }
-        self.audioViewer.removeFromSuperview()
         self.webView.removeFromSuperview()
         self.scrollViewer.removeFromSuperview()
     }
