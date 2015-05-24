@@ -60,7 +60,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         var profilerAudioView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeProfilerAudioViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        self.profilerAudioViewerDialog = profilerAudioViewer.profilerAudioViewerDialog(profilerAudioView, closeBtn: closeBtn)
+        self.profilerAudioViewerDialog = profilerAudioViewer.profilerAudioViewerDialog(profilerAudioView, audioProfilerModels: audioProfilerModels, closeBtn: closeBtn)
         profilerTableView.addSubview(self.profilerAudioViewerDialog)
 
     }
@@ -123,7 +123,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var audioSongTitles = [String]()
     var audioFileDescriptions = [String]()
     var audioFileIds = [String]()
-    
+    var audioProfilerModels = [AudioProfilerModel]()
     
     let menuView = UIView()
     var menuLine = UILabel()
@@ -182,20 +182,29 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                         if let numAudio: Int! = jsonData["identity_profiler_data"][index]["file"]["audio"].array?.count {
                             self.numAudio = numAudio
                             for index2 in 0...numAudio - 1 {
+                                var audioProfilerModel = AudioProfilerModel()
+                                
                                 var audioSongTitle = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_name"].string!
                                 audioSongTitles.append(audioSongTitle)
+                                audioProfilerModel.setAudioSongTitle(audioSongTitle)
                                 
                                 var audioFileName = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_name"].string!
                                 audioFileNames.append(audioFileName)
+                                audioProfilerModel.setAudioFileName(audioFileName)
                                 
                                 var audioFileLocation = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["file_location"].string!
                                 audioFileLocations.append(audioFileLocation)
+                                audioProfilerModel.setAudioFileLocation(audioFileLocation)
                                 
                                 var audioFileDescription = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["audio_file_description"].string!
                                 audioFileDescriptions.append(audioFileDescription)
+                                audioProfilerModel.setAudioFileDescription(audioFileDescription)
                                 
                                 var audioFileId = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["profiler_audio_jukebox_id"].string!
                                 audioFileIds.append(audioFileId)
+                                audioProfilerModel.setAudioFileId(audioFileId.toInt()!)
+                                
+                                audioProfilerModels.append(audioProfilerModel)
                             }
                             fileNames.append("audio")
                             fileLocations.append("")

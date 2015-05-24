@@ -10,12 +10,18 @@ import UIKit
 
 class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let textCellIdentifier = "AudioViewCell"
+    let textCellIdentifier = "AudioTableViewCell"
+    var audioProfilerModels = [AudioProfilerModel]()
+    var numAudio = 0
+    var audioFileNameCell: UITableViewCell = UITableViewCell()
+    var audioFileNameText: UITextField = UITextField()
     
     var audioTableView: UITableView = UITableView()
     var profilerAudioView = UIView()
-    func profilerAudioViewerDialog(profilerAudioView: UIView, closeBtn: UIButton) -> UIView{
+    func profilerAudioViewerDialog(profilerAudioView: UIView, audioProfilerModels: [AudioProfilerModel], closeBtn: UIButton) -> UIView{
         self.profilerAudioView = profilerAudioView
+        numAudio = audioProfilerModels.count
+        self.audioProfilerModels = audioProfilerModels
         
         self.profilerAudioView.frame = CGRectMake(2, 2, 316, 385)
         self.profilerAudioView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
@@ -25,9 +31,14 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         audioTableView.frame = CGRectMake(0, 50, 320, 200);
         audioTableView.delegate = self
         audioTableView.dataSource = self
-        audioTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "AudioViewCell")
+        audioTableView.registerClass(AudioTableViewCell.self, forCellReuseIdentifier: "AudioTableViewCell")
+                
         self.profilerAudioView.addSubview(audioTableView)
         
+        self.audioFileNameCell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
+        self.audioFileNameText.frame = CGRectMake(2, 2, 40, 20)
+        self.audioFileNameText.placeholder = "First Name"
+        self.audioFileNameCell.addSubview(self.audioFileNameText)
 
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
@@ -42,15 +53,14 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(audioTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return numAudio
     }
     
     func tableView(audioTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell = audioTableView.dequeueReusableCellWithIdentifier("AudioViewCell") as! UITableViewCell
-    
-        cell.textLabel?.text = self.items[indexPath.row]
-        
+        var cell = audioTableView.dequeueReusableCellWithIdentifier("AudioTableViewCell", forIndexPath: indexPath) as! AudioTableViewCell
+        cell.audioFileNameText.text = self.audioProfilerModels[indexPath.row].audioFileName
+        cell.audioFileDescriptionText.text = self.audioProfilerModels[indexPath.row].audioFileDescription
         return cell
         
     }

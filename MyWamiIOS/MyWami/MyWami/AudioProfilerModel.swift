@@ -9,45 +9,55 @@
 import Foundation
 
 public class AudioProfilerModel {
-    var numAudio = 0
-    var fileLocations = [String]()
-    var fileNames = [String]()
-    var audioFileLocations = [String]()
-    var audioFileNames = [String]()
-    var audioSongTitles = [String]()
-    var audioFileDescriptions = [String]()
-    var audioFileIds = [String]()
+    var audioFileLocation = ""
+    var audioFileName = ""
+    var audioSongTitle = ""
+    var audioFileDescription = ""
+    var audioFileId = 0
     
-//    func setIdentityProfileId(identityProfileId: Int) {
-//        self.identityProfileId = identityProfileId
-//    }
-//    
-//    func getIdentityProfileId() -> Int {
-//        return self.identityProfileId
-//    }
-//    
-//    func setProfileName(profileName: String) {
-//        self.profileName = profileName
-//    }
-//    
-//    func getProfileName() -> String {
-//        return self.profileName
-//    }
-//    
-//    func setDefaultProfileInd(defaultProfileInd: Int) {
-//        self.defaultProfileInd = defaultProfileInd
-//    }
-//    
-//    func getDefaultProfileInd() -> Int {
-//        return self.defaultProfileInd
-//    }
-//    
-//    func setSelected(selected: Bool) {
-//        self.selected = selected
-//    }
-//    
-//    func getSelected() -> Bool {
-//        return self.selected
-//    }
+    func setAudioFileLocation(audioFileLocation: String) {
+        self.audioFileLocation = audioFileLocation
+    }
     
+    func getAudioFileLocation() -> String {
+        return self.audioFileLocation
+    }
+    
+    func setAudioFileName(audioFileName: String) {
+        self.audioFileName = audioFileName
+    }
+    
+    func getAudioFileName() -> String {
+        return self.audioFileName
+    }
+    
+    func setAudioSongTitle(audioSongTitle: String) {
+        self.audioSongTitle = audioSongTitle
+    }
+    
+    func getAudioSongTitle() -> String {
+        return self.audioSongTitle
+    }
+    
+    func setAudioFileDescription(audioFileDescription: String) {
+        self.audioFileDescription = audioFileDescription
+    }
+    
+    func getAudioFileDescription() -> String {
+        return self.audioFileDescription
+    }
+    
+    func setAudioFileId(audioFileId: Int) {
+        self.audioFileId = audioFileId
+    }
+    
+    func getAudioFileId() -> Int {
+        return self.audioFileId
+    }
 }
+
+
+
+
+
+
