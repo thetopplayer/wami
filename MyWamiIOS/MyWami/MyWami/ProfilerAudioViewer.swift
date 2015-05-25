@@ -17,8 +17,8 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     var audioFileNameText: UITextField = UITextField()
     
     var audioTableView: UITableView = UITableView()
-    var profilerAudioView = UIView()
-    func profilerAudioViewerDialog(profilerAudioView: UIView, audioProfilerModels: [AudioProfilerModel], closeBtn: UIButton) -> UIView{
+    var profilerAudioView = UIScrollView()
+    func profilerAudioViewerDialog(profilerAudioView: UIScrollView, audioProfilerModels: [AudioProfilerModel], closeBtn: UIButton) -> UIView{
         self.profilerAudioView = profilerAudioView
         numAudio = audioProfilerModels.count
         self.audioProfilerModels = audioProfilerModels
@@ -28,7 +28,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         self.profilerAudioView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.profilerAudioView.layer.borderWidth = 1.5
         
-        audioTableView.frame = CGRectMake(0, 50, 320, 200);
+        audioTableView.frame = CGRectMake(5, 5, 305, 320)
         audioTableView.delegate = self
         audioTableView.dataSource = self
         audioTableView.registerClass(AudioTableViewCell.self, forCellReuseIdentifier: "AudioTableViewCell")
@@ -59,8 +59,9 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(audioTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell = audioTableView.dequeueReusableCellWithIdentifier("AudioTableViewCell", forIndexPath: indexPath) as! AudioTableViewCell
-        cell.audioFileNameText.text = self.audioProfilerModels[indexPath.row].audioFileName
-        cell.audioFileDescriptionText.text = self.audioProfilerModels[indexPath.row].audioFileDescription
+        
+        cell.audioSongTitle.text = self.audioProfilerModels[indexPath.row].getAudioSongTitle()
+        cell.audioFileDescription.text = self.audioProfilerModels[indexPath.row].audioFileDescription
         return cell
         
     }

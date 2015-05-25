@@ -57,7 +57,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var profilerAudioViewer = ProfilerAudioViewer()
     var profilerAudioViewerDialog = UIView()
     func showAudioViewer () {
-        var profilerAudioView = UIView()
+        var profilerAudioView = UIScrollView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeProfilerAudioViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
         self.profilerAudioViewerDialog = profilerAudioViewer.profilerAudioViewerDialog(profilerAudioView, audioProfilerModels: audioProfilerModels, closeBtn: closeBtn)
