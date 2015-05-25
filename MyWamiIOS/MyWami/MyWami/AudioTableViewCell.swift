@@ -13,30 +13,26 @@ class AudioTableViewCell: UITableViewCell  {
     var audioSongTitle : UITextField = UITextField()
     var audioFileName : UITextField = UITextField()
     var audioFileDescription : UITextField = UITextField()
+    var processAudioBtn : UIButton = UIButton()
+    var moreInfoBtn : UIButton = UIButton()
     
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String!)
-    {
-        //First Call Super
+    override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        //Initialize Text Field
-        self.audioSongTitle = UITextField(frame: CGRect(x: 5, y: 0, width: 216.00, height: 25.00));
-        self.audioFileName = UITextField(frame: CGRect(x: 5, y: 0, width: 216.00, height: 25.00));
-        self.audioFileDescription = UITextField(frame: CGRect(x: 5, y: 20, width: 216.00, height: 25.00));
-        
-        self.audioSongTitle.font = UIFont.systemFontOfSize(13)
-        self.audioFileName.font = UIFont.systemFontOfSize(13)
-        self.audioFileDescription.font = UIFont.systemFontOfSize(13)
-        
-        self.audioSongTitle.enabled = false
-        self.audioFileName.enabled = false
-        self.audioFileDescription.enabled = false
-        
-        //Add TextField to SubView
-        self.addSubview(self.audioSongTitle)
-        self.addSubview(self.audioFileName)
-        self.addSubview(self.audioFileDescription)
+//        self.audioFileName = UITextField(frame: CGRect(x: 5, y: 0, width: 216.00, height: 25.00));
+//        self.audioFileDescription = UITextField(frame: CGRect(x: 5, y: 20, width: 216.00, height: 25.00));
+//        
+//        self.audioFileName.font = UIFont.systemFontOfSize(13)
+//        self.audioFileDescription.font = UIFont.systemFontOfSize(13)
+//        
+//        
+//        self.audioFileName.enabled = false
+//        self.audioFileDescription.enabled = false
+//        
+//        self.addSubview(self.audioSongTitle)
+//        self.addSubview(self.audioFileName)
+//        self.addSubview(self.audioFileDescription)
+//        self.addSubview(self.playBtn)
     }
 
     required init(coder aDecoder: NSCoder) {
