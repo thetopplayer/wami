@@ -14,8 +14,6 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     let textCellIdentifier = "AudioTableViewCell"
     var audioProfilerModels = [AudioProfilerModel]()
     var numAudio = 0
-    var audioFileNameCell: UITableViewCell = UITableViewCell()
-    var audioFileNameText: UITextField = UITextField()
     
     var audioTableView: UITableView = UITableView()
     var profilerAudioView = UIScrollView()
@@ -30,17 +28,12 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         self.profilerAudioView.layer.borderWidth = 1.5
         
         audioTableView.frame = CGRectMake(5, 5, 305, 320)
+        audioTableView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
+        audioTableView.layer.borderWidth = 1.0
         audioTableView.delegate = self
         audioTableView.dataSource = self
         audioTableView.registerClass(AudioTableViewCell.self, forCellReuseIdentifier: "AudioTableViewCell")
-                
         self.profilerAudioView.addSubview(audioTableView)
-        
-        self.audioFileNameCell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
-        self.audioFileNameText.frame = CGRectMake(2, 2, 40, 20)
-        self.audioFileNameText.placeholder = "First Name"
-        self.audioFileNameCell.addSubview(self.audioFileNameText)
-
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
@@ -49,6 +42,8 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.showsTouchWhenHighlighted = true
         closeBtn.frame = CGRectMake(125, 348, 60, 20)
         self.profilerAudioView.addSubview(closeBtn)
+        
+        self.audioTableView.rowHeight = 50.0
         
         return profilerAudioView
     }
@@ -69,7 +64,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         }
         cell.audioSongTitle.font = UIFont.systemFontOfSize(13)
         cell.audioSongTitle.enabled = false
-        cell.audioSongTitle.frame = CGRectMake(5, 0, 200, 20)
+        cell.audioSongTitle.frame = CGRectMake(10, 0, 200, 20)
         cell.addSubview(cell.audioSongTitle)
         
         cell.processAudioBtn.setTitle("Play", forState: UIControlState.Normal)
@@ -77,7 +72,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.processAudioBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.processAudioBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.processAudioBtn.showsTouchWhenHighlighted = true
-        cell.processAudioBtn.frame = CGRectMake(5, 20, 50, 20)
+        cell.processAudioBtn.frame = CGRectMake(10, 23, 50, 20)
         cell.processAudioBtn.addTarget(self, action: "processAudio:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.processAudioBtn)
         
@@ -86,12 +81,11 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.moreInfoBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.moreInfoBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.moreInfoBtn.showsTouchWhenHighlighted = true
-        cell.moreInfoBtn.frame = CGRectMake(65, 20, 70, 20)
+        cell.moreInfoBtn.frame = CGRectMake(75, 23, 70, 20)
         cell.moreInfoBtn.addTarget(self, action: "moreInfo:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.moreInfoBtn)
         
-        return cell
-        
+        return cell        
     }
     
     let UTILITIES = Utilities()
