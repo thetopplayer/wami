@@ -77,7 +77,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.processAudioBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.processAudioBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.processAudioBtn.showsTouchWhenHighlighted = true
-        cell.processAudioBtn.frame = CGRectMake(5, 23, 50, 20)
+        cell.processAudioBtn.frame = CGRectMake(5, 20, 50, 20)
         cell.processAudioBtn.addTarget(self, action: "processAudio:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.processAudioBtn)
         
@@ -86,7 +86,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.moreInfoBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.moreInfoBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.moreInfoBtn.showsTouchWhenHighlighted = true
-        cell.moreInfoBtn.frame = CGRectMake(65, 23, 70, 20)
+        cell.moreInfoBtn.frame = CGRectMake(65, 20, 70, 20)
         cell.moreInfoBtn.addTarget(self, action: "moreInfo:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.moreInfoBtn)
         
@@ -97,7 +97,9 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     let UTILITIES = Utilities()
     var player = AVPlayer()
     var selectedRow = 0
+    var sender = UIButton()
     func processAudio(sender: UIButton) {
+        self.sender = sender
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.audioTableView)
         var indexPath: NSIndexPath = self.audioTableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
@@ -117,7 +119,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
             player.rate = 1.0
             player.play()
             sender.setTitle("Stop", forState: UIControlState.Normal)
-            sender.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            sender.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         }
         else {
             sender.setTitle("Play", forState: UIControlState.Normal)
@@ -128,7 +130,11 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func playerDidFinishPlaying(note: NSNotification) {
-        println("dedede")
+        sender.setTitle("Play", forState: UIControlState.Normal)
+        sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        player.rate = 0.0
+        player.pause()
+
     }
     
     func tableView(audioTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

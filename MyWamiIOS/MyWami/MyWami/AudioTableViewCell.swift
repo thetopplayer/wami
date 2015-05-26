@@ -16,27 +16,12 @@ class AudioTableViewCell: UITableViewCell  {
     var processAudioBtn : UIButton = UIButton()
     var moreInfoBtn : UIButton = UIButton()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-//        self.audioFileName = UITextField(frame: CGRect(x: 5, y: 0, width: 216.00, height: 25.00));
-//        self.audioFileDescription = UITextField(frame: CGRect(x: 5, y: 20, width: 216.00, height: 25.00));
-//        
-//        self.audioFileName.font = UIFont.systemFontOfSize(13)
-//        self.audioFileDescription.font = UIFont.systemFontOfSize(13)
-//        
-//        
-//        self.audioFileName.enabled = false
-//        self.audioFileDescription.enabled = false
-//        
-//        self.addSubview(self.audioSongTitle)
-//        self.addSubview(self.audioFileName)
-//        self.addSubview(self.audioFileDescription)
-//        self.addSubview(self.playBtn)
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//    }
+//
+//    required init(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 
 }

@@ -16,8 +16,8 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
     var scrollView: UIScrollView!
     var containerView: UIView!
     var groupModels = [GroupModel?]()
-    var checkbox: WamiCheckBox!
-    var checkBoxes = [WamiCheckBox?]()
+    var radioBtn: WamiRadioBtn2!
+    var radioBtns = [WamiRadioBtn2?]()
     var identityProfileId = 0
     var groupId = 0
     var numGroups: Int = 0
@@ -25,7 +25,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
     func initSelect() {
         var numGroups = 0
         self.groupModels.removeAll()
-        self.checkBoxes.removeAll()
+        self.radioBtns.removeAll()
     }
     
     func filterCollectionDialog(filterCollectionView: UIView, closeBtn: UIButton, filterCollectionBtn: UIButton, userIdentityProfileId: String) -> UIView? {
@@ -37,7 +37,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             return nil
         }
         
-        filterCollectionView.frame = CGRectMake(45, 100, 240, 215)
+        filterCollectionView.frame = CGRectMake(40, 50, 240, 300)
         filterCollectionView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         filterCollectionView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         filterCollectionView.layer.borderWidth = 1.5
@@ -52,12 +52,15 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         filterCollectionView.addSubview(headingLbl)
     
         self.scrollView = UIScrollView()
+        self.scrollView.backgroundColor = UIColor.whiteColor()
+        self.scrollView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
+        self.scrollView.layer.borderWidth = 1.0
         self.scrollView.delegate = self
         self.scrollView.contentSize = CGSizeMake(230, 400)
-        self.scrollView.frame = CGRectMake(0, 35, 230, 120)
+        self.scrollView.frame = CGRectMake(5, 35, 230, 215)
         
         containerView = UIView()
-        containerView.frame = CGRectMake(0, 0, 230, 400)
+        containerView.frame = CGRectMake(0, 0, 230, 180)
 
         var groupModel = GroupModel()
         var widthPlacement = CGFloat(35)
@@ -67,13 +70,13 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         for index in 0...numGroups - 1 {
             groupModel = groupModels[index]!
             
-            checkbox = WamiCheckBox()
-            checkbox.frame = CGRectMake(5, heightPlacement, 30, 30)
-            checkbox.awakeFromNib()
-            checkbox.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
-            checkbox.tag = Int(groupModel.getGroupId())
-            checkBoxes.append(checkbox)
-            containerView.addSubview(checkbox)
+            radioBtn = WamiRadioBtn2()
+            radioBtn.frame = CGRectMake(5, heightPlacement, 30, 30)
+            radioBtn.awakeFromNib()
+            radioBtn.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+            radioBtn.tag = Int(groupModel.getGroupId())
+            radioBtns.append(radioBtn)
+            containerView.addSubview(radioBtn)
             
             var groupNameTxt = UITextField()
             groupNameTxt.frame = CGRectMake(widthPlacement, heightPlacement, 220, 30)
@@ -84,27 +87,27 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             containerView.addSubview(groupNameTxt)
             
             line = UILabel()
-            line.frame = CGRectMake(10, heightPlacement + 24, 240, 1)
+            line.frame = CGRectMake(10, heightPlacement + 30, 240, 1)
             line.backgroundColor = UIColor.grayColor()
             containerView.addSubview(line)
             
-            heightPlacement = heightPlacement + 20
+            heightPlacement = heightPlacement + 30
         }
         
         scrollView.addSubview(containerView)
         filterCollectionView.addSubview(scrollView)
         
-        line = UILabel()
-        line.frame = CGRectMake(10, 165, 220, 1)
-        line.backgroundColor = UIColor.blackColor()
-        filterCollectionView.addSubview(line)
+//        line = UILabel()
+//        line.frame = CGRectMake(10, 165, 220, 1)
+//        line.backgroundColor = UIColor.blackColor()
+//        filterCollectionView.addSubview(line)
         
         filterCollectionBtn.setTitle("Filter", forState: UIControlState.Normal)
         filterCollectionBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         filterCollectionBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         filterCollectionBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         filterCollectionBtn.showsTouchWhenHighlighted = true
-        filterCollectionBtn.frame = CGRectMake(45, 180, 60, 20)
+        filterCollectionBtn.frame = CGRectMake(45, 265, 60, 20)
         filterCollectionView.addSubview(filterCollectionBtn)
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
@@ -112,7 +115,7 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(135, 180, 60, 20)
+        closeBtn.frame = CGRectMake(135, 265, 60, 20)
         filterCollectionView.addSubview(closeBtn)
         
         return filterCollectionView
@@ -128,8 +131,8 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             if groupId == groupIdCheck {
                 continue
             }
-            checkbox = checkBoxes[index]
-            checkbox.awakeFromNib()
+            radioBtn = radioBtns[index]
+            radioBtn.awakeFromNib()
         }
     }
     
