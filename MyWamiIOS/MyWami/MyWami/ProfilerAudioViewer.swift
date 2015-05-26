@@ -108,8 +108,11 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
             var audioFileLocation = self.audioProfilerModels[selectedRow].getAudioFileLocation()
             var audioFileName = self.audioProfilerModels[selectedRow].getAudioFileName()
             var audioFile = UTILITIES.ASSETS_IP + audioFileLocation + audioFileName
+            
             let url = audioFile
-            let playerItem = AVPlayerItem( URL:NSURL( string:url ) )
+            let playerItem = AVPlayerItem( URL:NSURL( string:url ))
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidFinishPlaying:", name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+
             player = AVPlayer(playerItem:playerItem)
             player.rate = 1.0
             player.play()
@@ -118,9 +121,14 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         }
         else {
             sender.setTitle("Play", forState: UIControlState.Normal)
+            sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             player.rate = 0.0
             player.pause()
         }
+    }
+    
+    func playerDidFinishPlaying(note: NSNotification) {
+        println("dedede")
     }
     
     func tableView(audioTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
