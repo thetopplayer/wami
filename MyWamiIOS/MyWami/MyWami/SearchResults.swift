@@ -20,11 +20,11 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         var indexPath: NSIndexPath = self.searchResultsTableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
         
-        self.MoreInfoAction(row)
+        self.moreInfoAction(row)
     }
     var searchMoreInfo = SearchMoreInfo()
     var moreInfoViewDialog = UIView()
-    func MoreInfoAction(row: Int) {
+    func moreInfoAction(row: Int) {
         var moreInfoView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)

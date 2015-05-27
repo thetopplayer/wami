@@ -17,7 +17,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     
     var audioTableView: UITableView = UITableView()
     var profilerAudioView = UIScrollView()
-    func profilerAudioViewerDialog(profilerAudioView: UIScrollView, audioProfilerModels: [AudioProfilerModel], closeBtn: UIButton) -> UIView{
+    func profilerAudioViewerDialog(profilerAudioView: UIScrollView, audioProfilerModels: [AudioProfilerModel], closeBtn: UIButton) -> UIView {
         self.profilerAudioView = profilerAudioView
         numAudio = audioProfilerModels.count
         self.audioProfilerModels = audioProfilerModels
@@ -85,7 +85,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.moreInfoBtn.addTarget(self, action: "moreInfo:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.moreInfoBtn)
         
-        return cell        
+        return cell
     }
     
     let UTILITIES = Utilities()
@@ -129,6 +129,22 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         player.rate = 0.0
         player.pause()
 
+    }
+    
+    var moreInfoView = UIView()
+    var moreInfoViewDialog = UIView()
+    func moreInfo(sender: UIButton) {
+        var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.audioTableView)
+        var indexPath: NSIndexPath = self.audioTableView.indexPathForRowAtPoint(btnPos)!
+        let row = indexPath.row
+        
+        var audioProfilerModel = audioProfilerModels[row]
+        var profilerAudioMoreInfo = ProfilerAudioMoreInfo()
+        
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        self.moreInfoViewDialog = profilerAudioMoreInfo.moreInfoDialog(moreInfoView, audioProfilerModel: AudioProfilerModel(), closeBtn: closeBtn)
+        audioTableView.addSubview(self.moreInfoViewDialog)
     }
     
     func tableView(audioTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
