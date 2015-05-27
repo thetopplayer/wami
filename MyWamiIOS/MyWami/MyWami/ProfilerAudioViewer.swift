@@ -40,7 +40,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(125, 348, 60, 20)
+        closeBtn.frame = CGRectMake(135, 348, 60, 20)
         self.profilerAudioView.addSubview(closeBtn)
         
         self.audioTableView.rowHeight = 50.0
@@ -139,12 +139,20 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         let row = indexPath.row
         
         var audioProfilerModel = audioProfilerModels[row]
+        var audioFileDecription = audioProfilerModel.getAudioFileDescription()
+        var audioSongTitle = audioProfilerModel.getAudioSongTitle()
+        var audioFileName = audioProfilerModel.getAudioFileName()
+
         var profilerAudioMoreInfo = ProfilerAudioMoreInfo()
         
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        self.moreInfoViewDialog = profilerAudioMoreInfo.moreInfoDialog(moreInfoView, audioProfilerModel: AudioProfilerModel(), closeBtn: closeBtn)
+        self.moreInfoViewDialog = profilerAudioMoreInfo.moreInfoDialog(moreInfoView, audioFileDecription: audioFileDecription,
+                                                    audioSongTitle: audioSongTitle, audioFileName: audioFileName, closeBtn: closeBtn)
         audioTableView.addSubview(self.moreInfoViewDialog)
+    }
+    func closeMoreInfoDialog() {
+        self.moreInfoViewDialog.removeFromSuperview()
     }
     
     func tableView(audioTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

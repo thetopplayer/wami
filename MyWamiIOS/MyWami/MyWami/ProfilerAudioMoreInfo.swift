@@ -15,10 +15,10 @@ class ProfilerAudioMoreInfo: UIViewController {
     
     var moreInfoView = UIView()
     
-    func moreInfoDialog(moreInfoView: UIView, audioProfilerModel: AudioProfilerModel, closeBtn: UIButton) -> UIView {
+    func moreInfoDialog(moreInfoView: UIView, audioFileDecription: String, audioSongTitle: String, audioFileName: String, closeBtn: UIButton) -> UIView {
         self.moreInfoView = moreInfoView
         
-        self.moreInfoView.frame = CGRectMake(30, 80, 270, 300)
+        self.moreInfoView.frame = CGRectMake(20, 10, 270, 300)
         self.moreInfoView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         self.moreInfoView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.moreInfoView.layer.borderWidth = 1.5
@@ -31,10 +31,6 @@ class ProfilerAudioMoreInfo: UIViewController {
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 270, 30)
         self.moreInfoView.addSubview(headingLbl)
-        
-        var audioFileDecription = audioProfilerModel.getAudioFileDescription()
-        var audioSongTitle = audioProfilerModel.getAudioSongTitle()
-        var audioFileName = audioProfilerModel.getAudioFileName()
         
         let songTitleLbl = UILabel()
         songTitleLbl.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
@@ -98,23 +94,18 @@ class ProfilerAudioMoreInfo: UIViewController {
         audioFileDecriptionView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         audioFileDecriptionView.layer.borderWidth = 1.5
         audioFileDecriptionView.editable = false
-        audioFileDecriptionView.text = description
+        audioFileDecriptionView.text = audioFileDecription
         audioFileDecriptionView.textColor = UIColor.blackColor()
         audioFileDecriptionView.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
         audioFileDecriptionView.frame = CGRectMake(10, 170, 250, 80)
         self.moreInfoView.addSubview(audioFileDecriptionView)
-        
-        var line: UILabel = UILabel()
-        line.frame = CGRectMake(10, 260, 250, 1)
-        line.backgroundColor = UIColor.blackColor()
-        moreInfoView.addSubview(line)
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(110, 270, 60, 20)
+        closeBtn.frame = CGRectMake(110, 265, 60, 20)
         self.moreInfoView.addSubview(closeBtn)
         
         return self.moreInfoView
