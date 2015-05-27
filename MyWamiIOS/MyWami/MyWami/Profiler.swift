@@ -42,16 +42,9 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
         if mediaType == "Audio" {
             showAudioViewer()
-//            showInWebViewer("", mediaType: mediaType)
-//            var audioFile = UTILITIES.ASSETS_IP + "assets/audio/RobLanter-Developer/SecretDream.mp3"
-//            let url = audioFile
-//            let playerItem = AVPlayerItem( URL:NSURL( string:url ) )
-//            player = AVPlayer(playerItem:playerItem)
-//            player.rate = 1.0;
-//            player.play()
         }
         if mediaType == "Image" {
-            
+            showImageViewer()
         }
     }
     var profilerAudioViewer = ProfilerAudioViewer()
@@ -65,6 +58,20 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 
     }
     func closeProfilerAudioViewerDialog() {
+        self.profilerAudioViewerDialog.removeFromSuperview()
+    }
+    
+    var profilerImageViewer = ProfilerImageViewer()
+    var profilerImageViewerDialog = UIView()
+    func showImageViewer() {
+        var profilerImageView = UIScrollView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeProfilerImageViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        self.profilerImageViewerDialog = profilerImageViewer.profilerImageViewerDialog(profilerImageView, imageProfilerModels: imageProfilerModels, closeBtn: closeBtn)
+        profilerTableView.addSubview(self.profilerImageViewerDialog)
+        
+    }
+    func closeProfilerImageViewerDialog() {
         self.profilerAudioViewerDialog.removeFromSuperview()
     }
     
@@ -113,7 +120,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     var numCategories = 0
     var numAudio = 0
-    var numImages = 0
+    var numImage = 0
     var categories = [String]()
     var mediaTypes = [String]()
     var fileLocations = [String]()
@@ -124,6 +131,13 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var audioFileDescriptions = [String]()
     var audioFileIds = [String]()
     var audioProfilerModels = [AudioProfilerModel]()
+    
+    var imageFileLocations = [String]()
+    var imageFileNames = [String]()
+    var imageNames = [String]()
+    var imageDescriptions = [String]()
+    var imageFileIds = [String]()
+    var imageProfilerModels = [ImageProfilerModel]()
     
     let menuView = UIView()
     var menuLine = UILabel()
@@ -214,8 +228,40 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                         }
                     }
                     if mediaType == "Image" {
-                        fileLocations.append("")
-                        fileNames.append("")
+                        println(jsonData)
+                        if let numImage: Int! = jsonData["identity_profiler_data"][index]["file"]["image"].array?.count {
+                            self.numImage = numImage
+                            for index2 in 0...numAudio - 1 {
+                                var imageProfilerModel = ImageProfilerModel()
+                                
+                                var imageName = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["image_name"].string!
+                                imageNames.append(imageName)
+                                imageProfilerModel.setImageName(imageName)
+                                
+                                var imageFileName = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["file_name"].string!
+                                imageFileNames.append(imageFileName)
+                                imageProfilerModel.setFileName(imageFileName)
+                                
+                                var imageFileLocation = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["file_location"].string!
+                                imageFileLocations.append(imageFileLocation)
+                                imageProfilerModel.setFileLocation(imageFileLocation)
+                                
+                                var imageDescription = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["image_description"].string!
+                                imageDescriptions.append(imageDescription)
+                                imageProfilerModel.setImageDescription(imageDescription)
+                                
+                                var imageFileId = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["profiler_image_gallery_id"].string!
+                                imageFileIds.append(imageFileId)
+                                imageProfilerModel.setImageId(imageFileId.toInt()!)
+                                
+                                imageProfilerModels.append(imageProfilerModel)
+                            }
+                            fileNames.append("image")
+                            fileLocations.append("")
+                        }
+                        else {
+                            self.numImage = 0
+                        }
                     }
                 }
             }

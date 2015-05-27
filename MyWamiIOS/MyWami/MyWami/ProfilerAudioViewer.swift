@@ -171,5 +171,4 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         // Dispose of any resources that can be recreated.
     }
     
-
 }
