@@ -43,7 +43,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.frame = CGRectMake(135, 348, 60, 20)
         self.profilerImageView.addSubview(closeBtn)
         
-        self.imageTableView.rowHeight = 50.0
+        self.imageTableView.rowHeight = 85.0
         
         return profilerImageView
     }
@@ -67,12 +67,23 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.imageName.frame = CGRectMake(10, 0, 200, 20)
         cell.addSubview(cell.imageName)
         
+        var imageFileName = self.imageProfilerModels[indexPath.row].getFileName()
+        var imageFileLocation = self.imageProfilerModels[indexPath.row].getFileLocation()
+        var imageGalleryImage = UTILITIES.ASSETS_IP + imageFileLocation + imageFileName
+        cell.galleryImageView.layer.borderColor = UIColor.grayColor().CGColor
+        cell.galleryImageView.layer.borderWidth = 1.0
+        cell.galleryImageView.frame = CGRectMake(10, 23, 50, 50)
+        let url = NSURL(string: imageGalleryImage)
+        let data = NSData(contentsOfURL: url!)
+        cell.galleryImageView.image = UIImage(data: data!)
+        cell.addSubview(cell.galleryImageView)
+        
         cell.processImageBtn.setTitle("Show Image", forState: UIControlState.Normal)
         cell.processImageBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         cell.processImageBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.processImageBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.processImageBtn.showsTouchWhenHighlighted = true
-        cell.processImageBtn.frame = CGRectMake(10, 23, 50, 20)
+        cell.processImageBtn.frame = CGRectMake(80, 53, 80, 20)
         cell.processImageBtn.addTarget(self, action: "processImage:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.processImageBtn)
         
@@ -81,15 +92,14 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.moreInfoBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.moreInfoBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.moreInfoBtn.showsTouchWhenHighlighted = true
-        cell.moreInfoBtn.frame = CGRectMake(75, 23, 70, 20)
+        cell.moreInfoBtn.frame = CGRectMake(180, 53, 70, 20)
         cell.moreInfoBtn.addTarget(self, action: "moreInfo:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.moreInfoBtn)
-        
+    
         return cell
     }
     
     let UTILITIES = Utilities()
-    var player = AVPlayer()
     var selectedRow = 0
     var sender = UIButton()
     func processImage(sender: UIButton) {
@@ -99,36 +109,11 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         let row = indexPath.row
         self.selectedRow = row
         
-        var btnTitle = sender.currentTitle
-        if btnTitle == "Play" {
-            var imageFileLocation = self.imageProfilerModels[selectedRow].getFileLocation()
-            var imageFileName = self.imageProfilerModels[selectedRow].getFileName()
-            var imageFile = UTILITIES.ASSETS_IP + imageFileLocation + imageFileName
+        var imageFileLocation = self.imageProfilerModels[selectedRow].getFileLocation()
+        var imageFileName = self.imageProfilerModels[selectedRow].getFileName()
+        var imageFile = UTILITIES.ASSETS_IP + imageFileLocation + imageFileName
             
-            let url = imageFile
-            let playerItem = AVPlayerItem( URL:NSURL( string:url ))
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidFinishPlaying:", name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
-            
-            player = AVPlayer(playerItem:playerItem)
-            player.rate = 1.0
-            player.play()
-            sender.setTitle("Stop", forState: UIControlState.Normal)
-            sender.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-        }
-        else {
-            sender.setTitle("Play", forState: UIControlState.Normal)
-            sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            player.rate = 0.0
-            player.pause()
-        }
-    }
-    
-    func playerDidFinishPlaying(note: NSNotification) {
-        sender.setTitle("Play", forState: UIControlState.Normal)
-        sender.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        player.rate = 0.0
-        player.pause()
-        
+        let url = imageFile
     }
     
     var moreInfoView = UIView()

@@ -72,7 +72,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
     }
     func closeProfilerImageViewerDialog() {
-        self.profilerAudioViewerDialog.removeFromSuperview()
+        self.profilerImageViewerDialog.removeFromSuperview()
     }
     
     var scrollViewer = UIScrollView()
@@ -228,10 +228,9 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                         }
                     }
                     if mediaType == "Image" {
-                        println(jsonData)
                         if let numImage: Int! = jsonData["identity_profiler_data"][index]["file"]["image"].array?.count {
                             self.numImage = numImage
-                            for index2 in 0...numAudio - 1 {
+                            for index2 in 0...numImage - 1 {
                                 var imageProfilerModel = ImageProfilerModel()
                                 
                                 var imageName = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["image_name"].string!
