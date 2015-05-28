@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
 
     let textCellIdentifier = "ImageTableViewCell"
     var imageProfilerModels = [ImageProfilerModel]()
@@ -110,10 +110,40 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         self.selectedRow = row
         
         var imageFileLocation = self.imageProfilerModels[selectedRow].getFileLocation()
+        var imageFileLocationNoThumb = imageFileLocation.substringWithRange(Range<String.Index>(start: advance(imageFileLocation.startIndex, 0), end: advance(imageFileLocation.endIndex, -7) ))
         var imageFileName = self.imageProfilerModels[selectedRow].getFileName()
-        var imageFile = UTILITIES.ASSETS_IP + imageFileLocation + imageFileName
-            
-        let url = imageFile
+        var imageFile = UTILITIES.ASSETS_IP + imageFileLocationNoThumb + imageFileName
+        showInWebViewer(imageFile)
+    }
+    
+    var scrollViewer = UIScrollView()
+    var webView = UIWebView()
+    func showInWebViewer (inFile: String) {
+        scrollViewer.frame = CGRectMake(2, 2, 316, 385)
+        scrollViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        scrollViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        scrollViewer.layer.borderWidth = 1.5
+        
+        webView.frame = CGRectMake(5, 0, 306, 332)
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
+        webView.delegate = self;
+        scrollViewer.addSubview(webView)
+        
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.setTitle("Close", forState: UIControlState.Normal)
+        closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
+        closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        closeBtn.showsTouchWhenHighlighted = true
+        closeBtn.frame = CGRectMake(125, 348, 60, 20)
+        closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
+        scrollViewer.addSubview(closeBtn)
+        
+        profilerImageView.addSubview(scrollViewer)
+    }
+    func closeWebViewer() {
+        self.webView.removeFromSuperview()
+        self.scrollViewer.removeFromSuperview()
     }
     
     var moreInfoView = UIView()

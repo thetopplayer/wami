@@ -149,7 +149,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
         self.moreInfoViewDialog = profilerAudioMoreInfo.moreInfoDialog(moreInfoView, audioFileDecription: audioFileDecription,
                                                     audioSongTitle: audioSongTitle, audioFileName: audioFileName, closeBtn: closeBtn)
-        audioTableView.addSubview(self.moreInfoViewDialog)
+        profilerAudioView.addSubview(self.moreInfoViewDialog)
     }
     func closeMoreInfoDialog() {
         self.moreInfoViewDialog.removeFromSuperview()
