@@ -43,7 +43,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.frame = CGRectMake(135, 348, 60, 20)
         self.profilerImageView.addSubview(closeBtn)
         
-        self.imageTableView.rowHeight = 85.0
+        self.imageTableView.rowHeight = 70.0
         
         return profilerImageView
     }
@@ -56,6 +56,17 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         
         var cell = imageTableView.dequeueReusableCellWithIdentifier("ImageTableViewCell", forIndexPath: indexPath) as! ImageTableViewCell
         
+        var imageFileName = self.imageProfilerModels[indexPath.row].getFileName()
+        var imageFileLocation = self.imageProfilerModels[indexPath.row].getFileLocation()
+        var imageGalleryImage = UTILITIES.ASSETS_IP + imageFileLocation + imageFileName
+        cell.galleryImageView.layer.borderColor = UIColor.grayColor().CGColor
+        cell.galleryImageView.layer.borderWidth = 1.0
+        cell.galleryImageView.frame = CGRectMake(10, 10, 50, 50)
+        let url = NSURL(string: imageGalleryImage)
+        let data = NSData(contentsOfURL: url!)
+        cell.galleryImageView.image = UIImage(data: data!)
+        cell.addSubview(cell.galleryImageView)
+        
         if self.imageProfilerModels[indexPath.row].getImageName() == "" {
             cell.imageName.text = self.imageProfilerModels[indexPath.row].getFileName()
         }
@@ -64,26 +75,15 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         }
         cell.imageName.font = UIFont.systemFontOfSize(13)
         cell.imageName.enabled = false
-        cell.imageName.frame = CGRectMake(10, 0, 200, 20)
+        cell.imageName.frame = CGRectMake(80, 10, 200, 20)
         cell.addSubview(cell.imageName)
-        
-        var imageFileName = self.imageProfilerModels[indexPath.row].getFileName()
-        var imageFileLocation = self.imageProfilerModels[indexPath.row].getFileLocation()
-        var imageGalleryImage = UTILITIES.ASSETS_IP + imageFileLocation + imageFileName
-        cell.galleryImageView.layer.borderColor = UIColor.grayColor().CGColor
-        cell.galleryImageView.layer.borderWidth = 1.0
-        cell.galleryImageView.frame = CGRectMake(10, 23, 50, 50)
-        let url = NSURL(string: imageGalleryImage)
-        let data = NSData(contentsOfURL: url!)
-        cell.galleryImageView.image = UIImage(data: data!)
-        cell.addSubview(cell.galleryImageView)
         
         cell.processImageBtn.setTitle("Show Image", forState: UIControlState.Normal)
         cell.processImageBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         cell.processImageBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.processImageBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.processImageBtn.showsTouchWhenHighlighted = true
-        cell.processImageBtn.frame = CGRectMake(80, 53, 80, 20)
+        cell.processImageBtn.frame = CGRectMake(80, 35, 80, 25)
         cell.processImageBtn.addTarget(self, action: "processImage:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.processImageBtn)
         
@@ -92,7 +92,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.moreInfoBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.moreInfoBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.moreInfoBtn.showsTouchWhenHighlighted = true
-        cell.moreInfoBtn.frame = CGRectMake(180, 53, 70, 20)
+        cell.moreInfoBtn.frame = CGRectMake(180, 35, 70, 25)
         cell.moreInfoBtn.addTarget(self, action: "moreInfo:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.moreInfoBtn)
     
@@ -125,16 +125,16 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         
         var imageProfilerModel = imageProfilerModels[row]
         var imageFileDecription = imageProfilerModel.getImageDescription()
-        var imageSongTitle = imageProfilerModel.getImageName()
+        var imageName = imageProfilerModel.getImageName()
         var imageFileName = imageProfilerModel.getFileName()
         
-//        var profilerImageMoreInfo = ProfilerImageMoreInfo()
-//        
-//        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-//        closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.moreInfoViewDialog = profilerImageMoreInfo.moreInfoDialog(moreInfoView, imageFileDecription: imageFileDecription,
-//            imageSongTitle: imageSongTitle, imageFileName: imageFileName, closeBtn: closeBtn)
-//        imageTableView.addSubview(self.moreInfoViewDialog)
+        var profilerImageMoreInfo = ProfilerImageMoreInfo()
+        
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        self.moreInfoViewDialog = profilerImageMoreInfo.moreInfoDialog(moreInfoView, imageFileDecription: imageFileDecription,
+                                            imageName: imageName, imageFileName: imageFileName, closeBtn: closeBtn)
+        profilerImageView.addSubview(self.moreInfoViewDialog)
     }
     func closeMoreInfoDialog() {
         self.moreInfoViewDialog.removeFromSuperview()
