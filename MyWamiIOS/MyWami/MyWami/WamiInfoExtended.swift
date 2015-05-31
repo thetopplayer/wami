@@ -61,6 +61,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     @IBOutlet var uiView: UIView!
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var viewTop: UIView!
     
     var identityProfileId: String!
     var userIdentityProfileId: String!
@@ -170,6 +171,10 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.profileImageView.image = profileHeaderImage
         
         self.groupsText.text = self.groups
+        
+        viewTop.frame = CGRectMake(0, 0, 310, 140);        
+        uiView.addSubview(scrollView)
+        uiView.addSubview(viewTop)
      }
     
     override func viewDidAppear(animated: Bool) {
@@ -177,8 +182,9 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     }
  
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         scrollView.scrollEnabled = true
-        scrollView.contentSize = CGSizeMake(300, 1100)
+        scrollView.contentSize = CGSizeMake(300, 1500)
     }
     
     override func didReceiveMemoryWarning() {
