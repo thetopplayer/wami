@@ -83,7 +83,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.processImageBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.processImageBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.processImageBtn.showsTouchWhenHighlighted = true
-        cell.processImageBtn.frame = CGRectMake(80, 35, 80, 25)
+        cell.processImageBtn.frame = CGRectMake(80, 40, 75, 20)
         cell.processImageBtn.addTarget(self, action: "processImage:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.processImageBtn)
         
@@ -92,7 +92,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.moreInfoBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         cell.moreInfoBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         cell.moreInfoBtn.showsTouchWhenHighlighted = true
-        cell.moreInfoBtn.frame = CGRectMake(180, 35, 70, 25)
+        cell.moreInfoBtn.frame = CGRectMake(165, 40, 65, 20)
         cell.moreInfoBtn.addTarget(self, action: "moreInfo:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(cell.moreInfoBtn)
     
