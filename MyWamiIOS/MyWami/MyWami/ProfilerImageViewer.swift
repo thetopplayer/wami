@@ -64,7 +64,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         cell.galleryImageView.frame = CGRectMake(10, 10, 50, 50)
         let url = NSURL(string: imageGalleryImage)
         let data = NSData(contentsOfURL: url!)
-        cell.galleryImageView.image = UIImage(data: data!)
+        cell.galleryImageView.image = UIImage(data: data!)        
         cell.addSubview(cell.galleryImageView)
         
         if self.imageProfilerModels[indexPath.row].getImageName() == "" {
@@ -99,16 +99,28 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
+    func tableView(imageTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        imageTableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.selectedRow = indexPath.row
+        processImageView(self.selectedRow)
+    }
+    
     let UTILITIES = Utilities()
     var selectedRow = 0
-    var sender = UIButton()
     func processImage(sender: UIButton) {
-        self.sender = sender
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.imageTableView)
         var indexPath: NSIndexPath = self.imageTableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
         self.selectedRow = row
         
+        var imageFileLocation = self.imageProfilerModels[selectedRow].getFileLocation()
+        var imageFileLocationNoThumb = imageFileLocation.substringWithRange(Range<String.Index>(start: advance(imageFileLocation.startIndex, 0), end: advance(imageFileLocation.endIndex, -7) ))
+        var imageFileName = self.imageProfilerModels[selectedRow].getFileName()
+        var imageFile = UTILITIES.ASSETS_IP + imageFileLocationNoThumb + imageFileName
+        showInWebViewer(imageFile)
+    }
+    
+    func processImageView(row: Int) {
         var imageFileLocation = self.imageProfilerModels[selectedRow].getFileLocation()
         var imageFileLocationNoThumb = imageFileLocation.substringWithRange(Range<String.Index>(start: advance(imageFileLocation.startIndex, 0), end: advance(imageFileLocation.endIndex, -7) ))
         var imageFileName = self.imageProfilerModels[selectedRow].getFileName()
@@ -168,11 +180,6 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
     }
     func closeMoreInfoDialog() {
         self.moreInfoViewDialog.removeFromSuperview()
-    }
-    
-    func tableView(imageTableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        imageTableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.selectedRow = indexPath.row
     }
     
     override func viewDidLoad() {
