@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="g3I-ha-7vq">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login-->
@@ -16,38 +17,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wami Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kss-DZ-Cxk">
-                                <rect key="frame" x="16" y="110" width="127" height="21"/>
+                            <label clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wami Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kss-DZ-Cxk">
+                                <rect key="frame" x="16" y="115" width="288" height="16"/>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AXc-d4-Peb">
-                                <rect key="frame" x="17" y="199" width="74" height="20"/>
+                            <label clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AXc-d4-Peb">
+                                <rect key="frame" x="16" y="199" width="60" height="16"/>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="8Mq-nm-IyW"/>
+                                    <constraint firstAttribute="height" constant="16" id="kxa-SR-WQT"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField clearsContextBeforeDrawing="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mhq-hz-PeO" userLabel="usernameText">
+                            <textField clearsContextBeforeDrawing="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mhq-hz-PeO" userLabel="usernameText">
                                 <rect key="frame" x="16" y="131" width="288" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QIX-AV-0ue"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField clearsContextBeforeDrawing="NO" tag="1" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UDA-Aj-xNf" userLabel="passwordText">
-                                <rect key="frame" x="16" y="218" width="288" height="30"/>
+                            <textField clearsContextBeforeDrawing="NO" tag="1" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UDA-Aj-xNf" userLabel="passwordText">
+                                <rect key="frame" x="16" y="219" width="288" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="AJ2-zh-r9I"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-9x-I3V">
-                                <rect key="frame" x="49" y="412" width="222" height="156"/>
+                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-9x-I3V">
+                                <rect key="frame" x="65" y="435" width="190" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="Mof-cv-WQv"/>
+                                </constraints>
                             </imageView>
-                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
-                                <rect key="frame" x="120" y="309" width="81" height="30"/>
+                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
+                                <rect key="frame" x="133" y="310" width="54" height="29"/>
                                 <color key="backgroundColor" red="0.31763377409999999" green="0.71612610480000005" blue="0.67621705830000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="54" id="1Lp-Mg-dqS"/>
+                                    <constraint firstAttribute="height" constant="29" id="gWB-4N-DmH"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,9 +76,12 @@
                                     <segue destination="8BU-M7-bNb" kind="push" identifier="showProfileCollection" id="cul-Be-lku"/>
                                 </connections>
                             </button>
-                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqW-5b-GeO">
-                                <rect key="frame" x="71" y="374" width="178" height="30"/>
+                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqW-5b-GeO">
+                                <rect key="frame" x="77" y="374" width="167" height="29"/>
                                 <color key="backgroundColor" red="0.318" green="0.71799999999999997" blue="0.67500000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="poL-LR-r4o"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                 <state key="normal" title="Create Wami Account">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,6 +93,28 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="UDA-Aj-xNf" secondAttribute="centerX" id="06D-QA-NtH"/>
+                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="10Q-bH-LnC"/>
+                            <constraint firstItem="UDA-Aj-xNf" firstAttribute="top" secondItem="AXc-d4-Peb" secondAttribute="bottom" constant="4" id="4vM-uS-rtJ"/>
+                            <constraint firstItem="cqW-5b-GeO" firstAttribute="top" secondItem="WuP-lh-eGP" secondAttribute="bottom" constant="35" id="7MI-oB-N9O"/>
+                            <constraint firstItem="y8g-8c-bhj" firstAttribute="top" secondItem="Tum-9x-I3V" secondAttribute="bottom" constant="71" id="INE-p3-Imd"/>
+                            <constraint firstAttribute="centerX" secondItem="Mhq-hz-PeO" secondAttribute="centerX" id="IfX-0D-iM6"/>
+                            <constraint firstItem="WuP-lh-eGP" firstAttribute="top" relation="lessThanOrEqual" secondItem="UDA-Aj-xNf" secondAttribute="bottom" constant="61" id="LI5-xU-ySu"/>
+                            <constraint firstAttribute="centerX" secondItem="Kss-DZ-Cxk" secondAttribute="centerX" id="MCm-P1-vIk"/>
+                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="leading" secondItem="UDA-Aj-xNf" secondAttribute="leading" id="McR-1X-fFm"/>
+                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="leading" secondItem="Kss-DZ-Cxk" secondAttribute="leading" id="Seo-qg-9PG"/>
+                            <constraint firstItem="cqW-5b-GeO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="61" id="XgP-Px-7R2"/>
+                            <constraint firstItem="Tum-9x-I3V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="49" id="cDA-Tw-Wsg"/>
+                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="top" secondItem="Kss-DZ-Cxk" secondAttribute="bottom" id="eId-7m-48O"/>
+                            <constraint firstAttribute="centerX" secondItem="WuP-lh-eGP" secondAttribute="centerX" id="i9O-Ql-CWY"/>
+                            <constraint firstItem="AXc-d4-Peb" firstAttribute="top" secondItem="Mhq-hz-PeO" secondAttribute="bottom" constant="38" id="lwL-wF-1ou"/>
+                            <constraint firstItem="Tum-9x-I3V" firstAttribute="top" secondItem="cqW-5b-GeO" secondAttribute="bottom" constant="32" id="pW8-z8-VTM"/>
+                            <constraint firstItem="UDA-Aj-xNf" firstAttribute="leading" secondItem="AXc-d4-Peb" secondAttribute="leading" id="qF6-2M-OGZ"/>
+                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="131" id="qQh-oR-KZq"/>
+                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="centerX" secondItem="Tum-9x-I3V" secondAttribute="centerX" id="vef-py-bab"/>
+                            <constraint firstAttribute="centerX" secondItem="cqW-5b-GeO" secondAttribute="centerX" id="zbv-jd-l9R"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tTN-gO-c7J" colorLabel="IBBuiltInLabel-Red"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
