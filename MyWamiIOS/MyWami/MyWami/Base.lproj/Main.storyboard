@@ -148,7 +148,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCY-ps-ldD">
-                                            <rect key="frame" x="123" y="38" width="57" height="22"/>
+                                            <rect key="frame" x="127" y="41" width="57" height="20"/>
                                             <color key="backgroundColor" red="0.3254304542" green="0.73370422980000005" blue="0.69281557059999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                             <state key="normal" title="Transmit">
@@ -160,7 +160,7 @@
                                             </connections>
                                         </button>
                                         <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iz-l9-mkw">
-                                            <rect key="frame" x="185" y="38" width="88" height="22"/>
+                                            <rect key="frame" x="194" y="41" width="88" height="20"/>
                                             <color key="backgroundColor" red="0.31763377409999999" green="0.71612610480000005" blue="0.67621705830000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                             <state key="normal" title="Add To Contacts">
@@ -171,38 +171,46 @@
                                                 <action selector="addToContactsButtonPressed:" destination="8BU-M7-bNb" eventType="touchUpInside" id="RNR-Cs-jul"/>
                                             </connections>
                                         </button>
-                                        <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ETI-pj-BSK">
+                                        <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ETI-pj-BSK">
                                             <rect key="frame" x="35" y="5" width="81" height="68"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="81" id="H4U-Pm-2tB"/>
+                                                <constraint firstAttribute="height" constant="68" id="f14-S6-MDe"/>
+                                            </constraints>
                                         </imageView>
                                         <textField clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9qo-Ws-kLQ">
-                                            <rect key="frame" x="171" y="6" width="109" height="15"/>
+                                            <rect key="frame" x="175" y="6" width="109" height="15"/>
                                             <color key="textColor" red="0.2023435089" green="0.4601108954" blue="0.43489436930000003" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="11"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <textField clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vak-mk-xGj">
-                                            <rect key="frame" x="171" y="20" width="103" height="15"/>
+                                            <rect key="frame" x="175" y="20" width="103" height="15"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <label clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRf-m5-iwj">
-                                            <rect key="frame" x="123" y="7" width="38" height="14"/>
+                                            <rect key="frame" x="127" y="7" width="38" height="14"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Contact:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQF-Py-6MB">
-                                            <rect key="frame" x="123" y="19" width="46" height="19"/>
+                                            <rect key="frame" x="127" y="19" width="46" height="19"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NE-XV-7Mg" customClass="WamiCheckBox" customModule="MyWami" customModuleProvider="target">
-                                            <rect key="frame" x="11" y="27" width="17" height="21.5"/>
+                                        <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NE-XV-7Mg" customClass="WamiCheckBox" customModule="MyWami" customModuleProvider="target">
+                                            <rect key="frame" x="11" y="27" width="17" height="22"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="17" id="6Bt-9U-Mlw"/>
+                                                <constraint firstAttribute="height" constant="21.5" id="qe3-li-oxL"/>
+                                            </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <state key="normal" title="Button" image="checkboxUnchecked">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -212,8 +220,12 @@
                                                 <action selector="checkBoxPressed:" destination="8BU-M7-bNb" eventType="touchUpInside" id="lM6-8b-2mS"/>
                                             </connections>
                                         </button>
-                                        <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Icy-bc-HMs">
-                                            <rect key="frame" x="274" y="17" width="41" height="41"/>
+                                        <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Icy-bc-HMs">
+                                            <rect key="frame" x="279" y="17" width="35" height="37"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="37" id="0Av-JX-XQJ"/>
+                                                <constraint firstAttribute="width" constant="35" id="YNm-pW-LbJ"/>
+                                            </constraints>
                                             <state key="normal" image="next_item_right">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -223,6 +235,14 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0NE-XV-7Mg" firstAttribute="leading" secondItem="OzR-Vs-dsu" secondAttribute="leadingMargin" constant="-4" id="27B-Vk-hRM"/>
+                                        <constraint firstItem="ETI-pj-BSK" firstAttribute="leading" secondItem="0NE-XV-7Mg" secondAttribute="trailing" constant="7" id="aYY-2f-COd"/>
+                                        <constraint firstItem="0NE-XV-7Mg" firstAttribute="centerY" secondItem="OzR-Vs-dsu" secondAttribute="centerY" id="f9p-F6-fYZ"/>
+                                        <constraint firstItem="ETI-pj-BSK" firstAttribute="top" secondItem="OzR-Vs-dsu" secondAttribute="topMargin" constant="-3" id="fYr-HU-pbi"/>
+                                        <constraint firstItem="Icy-bc-HMs" firstAttribute="top" secondItem="OzR-Vs-dsu" secondAttribute="topMargin" constant="9" id="ji5-ym-nc9"/>
+                                        <constraint firstAttribute="trailing" secondItem="Icy-bc-HMs" secondAttribute="trailing" constant="6" id="lo7-GN-N5T"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
