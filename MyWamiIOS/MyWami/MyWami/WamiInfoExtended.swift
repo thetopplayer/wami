@@ -41,7 +41,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         UIApplication.sharedApplication().openURL(url)
     }
     
-    @IBOutlet var profileNameText: UITextField!
+    var profileNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var descriptionText: UITextView!
     @IBOutlet var contactNameText: UITextField!
@@ -128,7 +128,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         
         self.profileNameHdrTxt.text = self.profileName
         self.contactNameHdrTxt.text = self.contactName
-        self.profileNameText.text = self.profileName
+//        self.profileNameText.text = self.profileName
         self.descriptionText.text = self.descript
         self.contactNameText.text = self.contactName
         
@@ -166,14 +166,36 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         else {
             self.activeIndText.text = "Inactive"
         }
-        
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
-        
         self.groupsText.text = self.groups
         
-        viewTop.frame = CGRectMake(0, 0, 310, 140);        
-        uiView.addSubview(scrollView)
+        profileNameText = UITextField()
+        profileNameText.backgroundColor = UIColor(red: 0xe0/255, green: 0xe0/255, blue: 0xe0/255, alpha: 1.0)
+        profileNameText.textColor = UIColor.blackColor()
+        profileNameText.font = UIFont.systemFontOfSize(13)
+        profileNameText.text = self.profileName
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            profileNameText.frame = CGRectMake(278, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            profileNameText.frame = CGRectMake(12, 30, 300, 23)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            profileNameText.frame = CGRectMake(12, 30, 355, 23)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            profileNameText.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPAD {
+            profileNameText.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else {
+            profileNameText.frame = CGRectMake(282, 108, 30, 30)
+        }
+        scrollView.addSubview(profileNameText)
+        
+        viewTop.frame = CGRectMake(0, 0, 310, 140);
         uiView.addSubview(viewTop)
      }
     

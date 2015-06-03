@@ -15,6 +15,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     @IBOutlet var profileNameText: UITextField!
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profilerTableView: UITableView!
+    @IBOutlet var headerView: UIView!
     
     // Process categories
     var mediaType = ""
@@ -142,6 +143,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     let menuView = UIView()
     var menuLine = UILabel()
     var segue = UIStoryboardSegue()
+    var showFlashBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -272,6 +274,42 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         profilerTableView.dataSource = self
         profilerTableView.delegate = self
         self.profilerTableView.rowHeight = 44
+        
+        var nextItem  = UIImage(named: "next_item_right")
+        showFlashBtn.setImage(nextItem, forState: .Normal)
+        showFlashBtn.showsTouchWhenHighlighted = true
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            showFlashBtn.frame = CGRectMake(278, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            showFlashBtn.frame = CGRectMake(282, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            showFlashBtn.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            showFlashBtn.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPAD {
+            showFlashBtn.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else {
+            showFlashBtn.frame = CGRectMake(282, 108, 30, 30)
+        }
+        showFlashBtn.addTarget(self, action: "showFlash", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(showFlashBtn)
+    }
+    
+    func showFlash() {
+        menuView.hidden = true
+        performSegueWithIdentifier("showFlashHidden", sender: nil)
+        var svc = segue.destinationViewController as! Flash;
+        svc.identityProfileId = self.identityProfileId
+        svc.userIdentityProfileId = self.userIdentityProfileId
+        svc.imageUrl = self.imageUrl
+        svc.profileName = self.profileName
+        svc.firstName = self.firstName
+        svc.lastName = self.lastName
     }
     
     // create menu
@@ -402,6 +440,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         let cell = profilerTableView.dequeueReusableCellWithIdentifier(textCellIdentifier, forIndexPath: indexPath) as! ProfilerTableViewCell
         var category = self.categories[indexPath.row]
         cell.categoryBtn.setTitle(category, forState: UIControlState.Normal)
+        cell.categoryBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        cell.categoryBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
         
         return cell
     }
@@ -421,7 +461,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         self.segue = segue
-        if (segue.identifier == "showFlash") {
+        if (segue.identifier == "showFlashHidden") {
             menuView.hidden = true
             var svc = segue.destinationViewController as! Flash;
             svc.identityProfileId = self.identityProfileId
