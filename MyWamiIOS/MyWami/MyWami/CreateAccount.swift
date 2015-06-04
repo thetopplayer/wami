@@ -29,10 +29,28 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         let horizontalPlacement = CGFloat(40)
         let verticalPlacement = CGFloat(32)
         
-        self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
         self.createAccountView.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 1.0)
         self.createAccountView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.createAccountView.layer.borderWidth = 1.5
+        
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            self.createAccountView.frame = CGRectMake(60, 85, 250, 480)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            self.createAccountView.frame = CGRectMake(45, 65, 250, 480)
+        }
+        else if DeviceType.IS_IPAD {
+            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+        }
+        else {
+            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+        }
         
         let headingLbl = UILabel()
         headingLbl.backgroundColor = UIColor.grayColor()

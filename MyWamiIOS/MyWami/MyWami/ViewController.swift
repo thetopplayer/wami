@@ -52,26 +52,7 @@ class ViewController: UIViewController {
         loginBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         loginBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         loginBtn.showsTouchWhenHighlighted = true
-        if DeviceType.IS_IPHONE_4_OR_LESS {
-            loginBtn.frame = CGRectMake(350, 310,  57, 30)
-        }
-        else if DeviceType.IS_IPHONE_5 {
-            loginBtn.frame = CGRectMake(133, 310, 57, 30)
-        }
-        else if DeviceType.IS_IPHONE_6 {
-            loginBtn.frame = CGRectMake(160, 310,  57, 30)
-        }
-        else if DeviceType.IS_IPHONE_6P {
-            loginBtn.frame = CGRectMake(350, 310,  57, 30)
-        }
-        else if DeviceType.IS_IPAD {
-            loginBtn.frame = CGRectMake(350, 310,  57, 30)
-        }
-        else {
-            loginBtn.frame = CGRectMake(350, 310,  57, 30)
-        }
         loginBtn.addTarget(self, action: "loginButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(loginBtn)
         
         // Create Account
         self.createAccountBtn.setTitle("Create Wami Account", forState: UIControlState.Normal)
@@ -79,27 +60,46 @@ class ViewController: UIViewController {
         self.createAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.createAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         self.createAccountBtn.showsTouchWhenHighlighted = true
+        self.createAccountBtn.addTarget(self, action: "createAccountAction", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var imageView = UIImageView()
+        var logo  = UIImage(named: "logo")
+        imageView.image = logo
+        
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+            loginBtn.frame = CGRectMake(130, 280,  65, 30)
+            self.createAccountBtn.frame = CGRectMake(77, 340,  167, 30)
+            imageView.frame = CGRectMake(70, 355, 190, 130)
         }
         else if DeviceType.IS_IPHONE_5 {
+            loginBtn.frame = CGRectMake(128, 310, 65, 30)
             self.createAccountBtn.frame = CGRectMake(77, 374, 167, 30)
+            imageView.frame = CGRectMake(65, 390, 190, 130)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.createAccountBtn.frame = CGRectMake(160, 310,  57, 30)
+            loginBtn.frame = CGRectMake(160, 310,  65, 30)
+            self.createAccountBtn.frame = CGRectMake(110, 380,  167, 30)
+            imageView.frame = CGRectMake(95, 420, 190, 130)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+            loginBtn.frame = CGRectMake(175, 310,  65, 30)
+            self.createAccountBtn.frame = CGRectMake(125, 385,  167, 30)
+            imageView.frame = CGRectMake(65, 390, 190, 130)
         }
         else if DeviceType.IS_IPAD {
+            loginBtn.frame = CGRectMake(350, 310,  65, 30)
             self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+            imageView.frame = CGRectMake(65, 390, 190, 130)
         }
         else {
+            loginBtn.frame = CGRectMake(350, 310,  65, 30)
             self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+            imageView.frame = CGRectMake(65, 390, 190, 130)
         }
-        self.createAccountBtn.addTarget(self, action: "createAccountAction", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(self.createAccountBtn)
         
+        view.addSubview(loginBtn)
+        view.addSubview(self.createAccountBtn)
+        view.addSubview(imageView)
     }
 
     func loginButtonPressed() {

@@ -53,9 +53,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-9x-I3V">
-                                <rect key="frame" x="65" y="435" width="190" height="62"/>
-                            </imageView>
                             <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
                                 <rect key="frame" x="270" y="266" width="29" height="21"/>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -821,7 +818,6 @@
     </scenes>
     <resources>
         <image name="checkboxUnchecked" width="13" height="13"/>
-        <image name="logo.png" width="500" height="350"/>
         <image name="next_item_right" width="35" height="48"/>
     </resources>
 </document>
