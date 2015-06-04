@@ -282,7 +282,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     func showProfiler() {
         menuView.hidden = true
-        performSegueWithIdentifier("showProfilerHidden", sender: nil)
+        performSegueWithIdentifier("showProfiler", sender: nil)
         var svc = segue.destinationViewController as! Profiler;
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
@@ -490,7 +490,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         self.segue = segue
-        if (segue.identifier == "showProfilerHidden") {
+        if (segue.identifier == "showProfiler") {
             menuView.hidden = true
             var svc = segue.destinationViewController as! Profiler
             svc.identityProfileId = self.identityProfileId

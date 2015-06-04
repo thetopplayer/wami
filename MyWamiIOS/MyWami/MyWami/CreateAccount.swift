@@ -23,7 +23,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
     var teleNumberTxt = UITextField()
     var textView: UITextView!
     
-    func createAccountDialog(createAccountView: UIView, closeBtn: UIButton, createAccountBtn: UIButton) -> UIView {
+    func createAccountDialog(createAccountView: UIView, closeBtn: UIButton, createNewAccountBtn: UIButton) -> UIView {
         self.createAccountView = createAccountView
         
         let horizontalPlacement = CGFloat(40)
@@ -200,13 +200,13 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         line.backgroundColor = UIColor.blackColor()
         self.createAccountView.addSubview(line)
         
-        createAccountBtn.setTitle("Create", forState: UIControlState.Normal)
-        createAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
-        createAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        createAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
-        createAccountBtn.showsTouchWhenHighlighted = true
-        createAccountBtn.frame = CGRectMake(45, verticalPlacement4 + 180, 60, 23)
-        self.createAccountView.addSubview(createAccountBtn)
+        createNewAccountBtn.setTitle("Create", forState: UIControlState.Normal)
+        createNewAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
+        createNewAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        createNewAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        createNewAccountBtn.showsTouchWhenHighlighted = true
+        createNewAccountBtn.frame = CGRectMake(45, verticalPlacement4 + 180, 60, 23)
+        self.createAccountView.addSubview(createNewAccountBtn)
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
@@ -216,7 +216,6 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         closeBtn.frame = CGRectMake(135, verticalPlacement4 + 180, 60, 23)
         self.createAccountView.addSubview(closeBtn)
         
-        addChildViewController(self)
         return self.createAccountView
     }
     

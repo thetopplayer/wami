@@ -178,7 +178,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
-            return
+//            return
         }
         else {
             if let numCategories: Int! = jsonData["identity_profiler_data"].array?.count {
@@ -302,7 +302,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     func showFlash() {
         menuView.hidden = true
-        performSegueWithIdentifier("showFlashHidden", sender: nil)
+        performSegueWithIdentifier("showFlash", sender: nil)
         var svc = segue.destinationViewController as! Flash;
         svc.identityProfileId = self.identityProfileId
         svc.userIdentityProfileId = self.userIdentityProfileId
@@ -461,7 +461,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         self.segue = segue
-        if (segue.identifier == "showFlashHidden") {
+        if (segue.identifier == "showFlash") {
             menuView.hidden = true
             var svc = segue.destinationViewController as! Flash;
             svc.identityProfileId = self.identityProfileId

@@ -53,42 +53,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-9x-I3V">
+                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tum-9x-I3V">
                                 <rect key="frame" x="65" y="435" width="190" height="62"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="62" id="Mof-cv-WQv"/>
-                                </constraints>
                             </imageView>
-                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
-                                <rect key="frame" x="133" y="310" width="54" height="29"/>
-                                <color key="backgroundColor" red="0.31763377409999999" green="0.71612610480000005" blue="0.67621705830000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="54" id="1Lp-Mg-dqS"/>
-                                    <constraint firstAttribute="height" constant="29" id="gWB-4N-DmH"/>
-                                </constraints>
+                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuP-lh-eGP" userLabel="Login">
+                                <rect key="frame" x="270" y="266" width="29" height="21"/>
+                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                <state key="normal" title="Login">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.2023435089" green="0.4601108954" blue="0.43489436930000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="loginButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="15f-a6-jPk"/>
                                     <segue destination="8BU-M7-bNb" kind="push" identifier="showProfileCollection" id="cul-Be-lku"/>
-                                </connections>
-                            </button>
-                            <button clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cqW-5b-GeO">
-                                <rect key="frame" x="77" y="374" width="167" height="29"/>
-                                <color key="backgroundColor" red="0.318" green="0.71799999999999997" blue="0.67500000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="29" id="poL-LR-r4o"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                <state key="normal" title="Create Wami Account">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="createAccountAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="U0M-mQ-V45"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -97,22 +75,14 @@
                             <constraint firstAttribute="centerX" secondItem="UDA-Aj-xNf" secondAttribute="centerX" id="06D-QA-NtH"/>
                             <constraint firstItem="Mhq-hz-PeO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="10Q-bH-LnC"/>
                             <constraint firstItem="UDA-Aj-xNf" firstAttribute="top" secondItem="AXc-d4-Peb" secondAttribute="bottom" constant="4" id="4vM-uS-rtJ"/>
-                            <constraint firstItem="cqW-5b-GeO" firstAttribute="top" secondItem="WuP-lh-eGP" secondAttribute="bottom" constant="35" id="7MI-oB-N9O"/>
-                            <constraint firstItem="y8g-8c-bhj" firstAttribute="top" secondItem="Tum-9x-I3V" secondAttribute="bottom" constant="71" id="INE-p3-Imd"/>
                             <constraint firstAttribute="centerX" secondItem="Mhq-hz-PeO" secondAttribute="centerX" id="IfX-0D-iM6"/>
                             <constraint firstAttribute="centerX" secondItem="Kss-DZ-Cxk" secondAttribute="centerX" id="MCm-P1-vIk"/>
                             <constraint firstItem="Mhq-hz-PeO" firstAttribute="leading" secondItem="UDA-Aj-xNf" secondAttribute="leading" id="McR-1X-fFm"/>
                             <constraint firstItem="Mhq-hz-PeO" firstAttribute="leading" secondItem="Kss-DZ-Cxk" secondAttribute="leading" id="Seo-qg-9PG"/>
-                            <constraint firstItem="cqW-5b-GeO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="61" id="XgP-Px-7R2"/>
-                            <constraint firstItem="Tum-9x-I3V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="49" id="cDA-Tw-Wsg"/>
                             <constraint firstItem="Mhq-hz-PeO" firstAttribute="top" secondItem="Kss-DZ-Cxk" secondAttribute="bottom" id="eId-7m-48O"/>
-                            <constraint firstAttribute="centerX" secondItem="WuP-lh-eGP" secondAttribute="centerX" id="i9O-Ql-CWY"/>
                             <constraint firstItem="AXc-d4-Peb" firstAttribute="top" secondItem="Mhq-hz-PeO" secondAttribute="bottom" constant="38" id="lwL-wF-1ou"/>
-                            <constraint firstItem="Tum-9x-I3V" firstAttribute="top" secondItem="cqW-5b-GeO" secondAttribute="bottom" constant="32" id="pW8-z8-VTM"/>
                             <constraint firstItem="UDA-Aj-xNf" firstAttribute="leading" secondItem="AXc-d4-Peb" secondAttribute="leading" id="qF6-2M-OGZ"/>
                             <constraint firstItem="Mhq-hz-PeO" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="131" id="qQh-oR-KZq"/>
-                            <constraint firstItem="Mhq-hz-PeO" firstAttribute="centerX" secondItem="Tum-9x-I3V" secondAttribute="centerX" id="vef-py-bab"/>
-                            <constraint firstAttribute="centerX" secondItem="cqW-5b-GeO" secondAttribute="centerX" id="zbv-jd-l9R"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tTN-gO-c7J" colorLabel="IBBuiltInLabel-Red"/>
@@ -120,7 +90,6 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="createAccountBtn" destination="cqW-5b-GeO" id="840-iW-dV3"/>
                         <outlet property="passwordText" destination="UDA-Aj-xNf" id="Kdx-Ty-5FA"/>
                         <outlet property="usernameText" destination="Mhq-hz-PeO" id="g4q-hy-cSl"/>
                     </connections>
@@ -471,7 +440,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="TYq-fB-qf4" kind="show" identifier="showProfilerHidden" id="PUf-rL-qhD"/>
+                                            <segue destination="TYq-fB-qf4" kind="show" identifier="showProfiler" id="PUf-rL-qhD"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -652,7 +621,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="OdJ-tq-V23" kind="show" identifier="showFlashHidden" id="J3F-CV-kWh"/>
+                                            <segue destination="OdJ-tq-V23" kind="show" identifier="showFlash" id="J3F-CV-kWh"/>
                                         </connections>
                                     </button>
                                 </subviews>

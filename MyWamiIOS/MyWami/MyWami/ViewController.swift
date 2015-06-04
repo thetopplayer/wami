@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
-    @IBOutlet var createAccountBtn: UIButton!
     
     let JSON_DATA = JsonGetData()
     let JSON_DATA_SYNCH = JsonGetDataSynchronous()
@@ -23,45 +22,9 @@ class ViewController: UIViewController {
     var userIdentityProfileId: String!
     var userModel = UserModel()
     let sqliteHelper = SQLiteHelper()
+    var segue = UIStoryboardSegue()
+    var createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
 
-    var createAccountViewDialog = UIView()
-    var createAccountView = UIView()
-    var createAccount = CreateAccount()
-    @IBAction func createAccountAction(sender: AnyObject) {
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        closeBtn.addTarget(self, action: "closeCreateAccountDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        let createAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-        createAccountBtn.addTarget(self, action: "createNewAccount", forControlEvents: UIControlEvents.TouchUpInside)
-        createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createAccountBtn: createAccountBtn)
-        view.addSubview(self.createAccountViewDialog)
-    }
-    func closeCreateAccountDialog() {
-        self.createAccountViewDialog.removeFromSuperview()
-    }
-    func createNewAccount() {
-        var retCode = self.createAccount.processAccount()
-        if retCode {
-            self.view.makeToast(message: "Congrats...Account created. Login and start connecting...", duration: HRToastDefaultDuration, position: HRToastPositionDefault)
-            self.usernameText.text = self.createAccount.getUserName()
-            self.passwordText.text = self.createAccount.getPassword()
-            closeCreateAccountDialog()
-        }
-    }
-    
-    @IBAction func loginButtonPressed(sender: AnyObject) {
-        var username = self.usernameText.text
-        var password = self.passwordText.text
-
-        if (username.isEmpty || password.isEmpty) {
-            self.view.makeToast(message: "Please enter a Username and Password", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
-            return
-        }
-
-        let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
-        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_USER_DATA, params: ["param1": username, "param2": password])
-        getUserData(jsonData)
-    }
-    
     override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
         return false
     }
@@ -82,24 +45,119 @@ class ViewController: UIViewController {
             self.usernameText.text = self.userName
             self.passwordText.text = self.userPassword
         }
+        // Login Button
+        let loginBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        loginBtn.setTitle("Login", forState: UIControlState.Normal)
+        loginBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+        loginBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        loginBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        loginBtn.showsTouchWhenHighlighted = true
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            loginBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            loginBtn.frame = CGRectMake(133, 310, 57, 30)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            loginBtn.frame = CGRectMake(160, 310,  57, 30)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            loginBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        else if DeviceType.IS_IPAD {
+            loginBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        else {
+            loginBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        loginBtn.addTarget(self, action: "loginButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(loginBtn)
+        
+        // Create Account
+        self.createAccountBtn.setTitle("Create Wami Account", forState: UIControlState.Normal)
+        self.createAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+        self.createAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.createAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
+        self.createAccountBtn.showsTouchWhenHighlighted = true
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            self.createAccountBtn.frame = CGRectMake(77, 374, 167, 30)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            self.createAccountBtn.frame = CGRectMake(160, 310,  57, 30)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        else if DeviceType.IS_IPAD {
+            self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        else {
+            self.createAccountBtn.frame = CGRectMake(350, 310,  57, 30)
+        }
+        self.createAccountBtn.addTarget(self, action: "createAccountAction", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(self.createAccountBtn)
+        
     }
 
+    func loginButtonPressed() {
+        var username = self.usernameText.text
+        var password = self.passwordText.text
+        
+        if (username.isEmpty || password.isEmpty) {
+            self.view.makeToast(message: "Please enter a Username and Password", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            return
+        }
+        
+        let GET_USER_DATA = UTILITIES.IP + "get_user_data.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_USER_DATA, params: ["param1": username, "param2": password])
+        getUserData(jsonData)
+  
+        performSegueWithIdentifier("showProfileCollection", sender: nil)
+        var svc = segue.destinationViewController as! ProfileCollectionController;
+        svc.userName = self.userName
+        svc.userId = self.userId
+        svc.userIdentityProfileId = self.userIdentityProfileId
+        userModel.setUserId(self.userId.toInt()!)
+        userModel.setUserName(self.userName)
+        userModel.setUserPassword(self.userPassword )
+        sqliteHelper.saveUserInfo(userModel)
+
+    }
+    
+    var createAccountViewDialog = UIView()
+    var createAccount = CreateAccount()
+    func createAccountAction() {
+        var createAccountView = UIView()
+        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        closeBtn.addTarget(self, action: "closeCreateAccountDialog", forControlEvents: UIControlEvents.TouchUpInside)
+        var createNewAccountBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton        
+        createNewAccountBtn.addTarget(self, action: "createNewAccount", forControlEvents: UIControlEvents.TouchUpInside)
+        self.createAccountViewDialog = createAccount.createAccountDialog(createAccountView, closeBtn: closeBtn, createNewAccountBtn: createNewAccountBtn)
+        view.addSubview(self.createAccountViewDialog)
+    }
+    func closeCreateAccountDialog() {
+        self.createAccountViewDialog.removeFromSuperview()
+    }
+    func createNewAccount() {
+        var retCode = self.createAccount.processAccount()
+        if retCode {
+            self.view.makeToast(message: "Congrats...Account created. Login and start connecting...", duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+            self.usernameText.text = self.createAccount.getUserName()
+            self.passwordText.text = self.createAccount.getPassword()
+            closeCreateAccountDialog()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         sqliteHelper.cleanup()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "showProfileCollection") {
-            var svc = segue.destinationViewController as! ProfileCollectionController;
-            svc.userName = self.userName
-            svc.userId = self.userId
-            svc.userIdentityProfileId = self.userIdentityProfileId
-            userModel.setUserId(self.userId.toInt()!)
-            userModel.setUserName(self.userName)
-            userModel.setUserPassword(self.userPassword )
-            sqliteHelper.saveUserInfo(userModel)
-        }
+        self.segue = segue
     }
 
     func getUserData (jsonData: JSON) {
@@ -132,9 +190,6 @@ class ViewController: UIViewController {
         }
         else {
             self.userIdentityProfileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.performSegueWithIdentifier("showProfileCollection", sender: self)
-            }
         }
     }    
 }
