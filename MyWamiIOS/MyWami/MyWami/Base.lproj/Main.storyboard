@@ -264,7 +264,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zib-z3-rgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-392" y="-1491"/>
+            <point key="canvasLocation" x="-404" y="-1826"/>
         </scene>
         <!--Search Results-->
         <scene sceneID="vTC-iR-yA5">
@@ -413,7 +413,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7E-Kk-Zix" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-404" y="-732"/>
+            <point key="canvasLocation" x="-404" y="-1084"/>
         </scene>
         <!--Wami Info Extended-->
         <scene sceneID="PiI-RA-J65">
@@ -440,7 +440,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JP7-OA-BFi">
-                                        <rect key="frame" x="135" y="135" width="94" height="22"/>
+                                        <rect key="frame" x="138" y="135" width="94" height="22"/>
                                         <color key="backgroundColor" red="0.33480222129999998" green="0.75483349119999998" blue="0.71276731780000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                         <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -487,22 +487,6 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cic-qN-EV7">
-                                        <rect key="frame" x="12" y="75" width="355" height="23"/>
-                                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MDr-q7-2Xu">
-                                        <rect key="frame" x="12" y="161" width="355" height="23"/>
-                                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="textColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="telephoneAction:" destination="h4P-q6-wcP" eventType="editingDidBegin" id="5rR-3R-4y1"/>
-                                        </connections>
-                                    </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aGm-Qg-Xwk">
                                         <rect key="frame" x="12" y="204" width="355" height="23"/>
                                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
@@ -560,7 +544,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MzZ-g3-xak">
-                                        <rect key="frame" x="12" y="99" width="93" height="20"/>
+                                        <rect key="frame" x="12" y="101" width="93" height="20"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -680,16 +664,6 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DiI-5t-EEA">
-                                        <rect key="frame" x="12" y="122" width="355" height="23"/>
-                                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="textColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="13"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="emailAction:" destination="h4P-q6-wcP" eventType="editingDidBegin" id="BZp-Fb-AXQ"/>
-                                        </connections>
-                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                             </scrollView>
@@ -705,11 +679,9 @@
                         <outlet property="activeIndText" destination="1D7-Tx-J04" id="GKw-Kd-Ra9"/>
                         <outlet property="cityText" destination="g1H-vg-CcZ" id="i9i-Lg-97I"/>
                         <outlet property="contactNameHdrTxt" destination="84a-H4-7DW" id="d7F-m0-HCl"/>
-                        <outlet property="contactNameText" destination="Cic-qN-EV7" id="PvZ-tI-p58"/>
                         <outlet property="countryText" destination="ECE-Th-Pz9" id="z2c-0B-mCI"/>
                         <outlet property="createDateText" destination="Ugj-54-7mV" id="7Q7-ld-HAD"/>
                         <outlet property="descriptionText" destination="KIZ-q5-fqv" id="wPY-bh-Is7"/>
-                        <outlet property="emailText" destination="DiI-5t-EEA" id="qXv-LD-yPo"/>
                         <outlet property="groupsText" destination="Y9T-0o-1gd" id="9BX-MS-GMf"/>
                         <outlet property="profileImageView" destination="Q6v-hV-uiZ" id="xYe-dd-VKh"/>
                         <outlet property="profileNameHdrTxt" destination="bec-9h-3K6" id="FNg-WI-4Y2"/>
@@ -719,7 +691,6 @@
                         <outlet property="stateText" destination="ntF-rq-WQS" id="fS5-8x-sFI"/>
                         <outlet property="streetAddressText" destination="a2w-Nh-EfR" id="Ptc-qr-caT"/>
                         <outlet property="tagsText" destination="yWZ-S1-uhe" id="eKE-sO-7kz"/>
-                        <outlet property="telephoneText" destination="MDr-q7-2Xu" id="4sz-ha-vFW"/>
                         <outlet property="uiView" destination="eYu-s7-bhA" id="6jJ-mm-WQh"/>
                         <outlet property="viewTop" destination="4Hi-bL-ZJ8" id="47D-iR-ktE"/>
                         <outlet property="zipText" destination="WxC-rR-JCg" id="fsv-6j-VJ4"/>
@@ -727,7 +698,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17h-cd-PaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="49" y="-1562"/>
+            <point key="canvasLocation" x="103" y="-1580"/>
         </scene>
         <!--Profiler-->
         <scene sceneID="dxZ-8X-v5X">
@@ -829,7 +800,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Zw-rI-qOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="423" y="-1406"/>
+            <point key="canvasLocation" x="609" y="-1585"/>
         </scene>
         <!--Flash-->
         <scene sceneID="ydX-vs-iVy">
@@ -943,7 +914,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0L-4a-K6A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848" y="-1610"/>
+            <point key="canvasLocation" x="1026" y="-1617"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CED-Aa-Ujs">

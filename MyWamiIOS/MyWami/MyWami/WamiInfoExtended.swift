@@ -19,34 +19,12 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         addToContactListAction()
     }
     
-    @IBAction func emailAction(sender: AnyObject) {
-        let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
-        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
-        getProfileName(jsonData)
-        
-        var emailTitle = "Message From Wami Profile: " + userProfileName
-        var messageBody = ""
-        var toRecipents = [email]
-        var mc: MFMailComposeViewController = MFMailComposeViewController()
-        mc.mailComposeDelegate = self
-        mc.setSubject(emailTitle)
-        mc.setMessageBody(messageBody, isHTML: false)
-        mc.setToRecipients(toRecipents)
-        
-        self.presentViewController(mc, animated: true, completion: nil)
-    }
-    
-    @IBAction func telephoneAction(sender: AnyObject) {
-        var url:NSURL = NSURL(string: telephone)!
-        UIApplication.sharedApplication().openURL(url)
-    }
-    
     var profileNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var descriptionText: UITextView!
-    @IBOutlet var contactNameText: UITextField!
-    @IBOutlet var emailText: UITextField!
-    @IBOutlet var telephoneText: UITextField!
+    var contactNameText: UITextField!
+    var emailText: UITextField!
+    var telephoneText: UITextField!
     @IBOutlet var profileTypeText: UITextField!
     @IBOutlet var tagsText: UITextField!
     @IBOutlet var streetAddressText: UITextField!
@@ -130,21 +108,21 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.contactNameHdrTxt.text = self.contactName
 //        self.profileNameText.text = self.profileName
         self.descriptionText.text = self.descript
-        self.contactNameText.text = self.contactName
+//        self.contactNameText.text = self.contactName
         
-        self.emailText.text = self.email
-        var fieldWidth = (Float(count(self.email)) * 8)
-        var bottomBorder = CALayer()
-        bottomBorder.frame = CGRectMake(0.0, emailText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
-        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
-        emailText.layer.addSublayer(bottomBorder)
+//        self.emailText.text = self.email
+//        var fieldWidth = (Float(count(self.email)) * 8)
+//        var bottomBorder = CALayer()
+//        bottomBorder.frame = CGRectMake(0.0, emailText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
+//        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
+//        emailText.layer.addSublayer(bottomBorder)
         
-        self.telephoneText.text = self.telephone
-        fieldWidth = (Float(count(self.telephone)) * 8)
-        bottomBorder = CALayer()
-        bottomBorder.frame = CGRectMake(0.0, telephoneText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
-        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
-        telephoneText.layer.addSublayer(bottomBorder)
+//        self.telephoneText.text = self.telephone
+//        fieldWidth = (Float(count(self.telephone)) * 8)
+//        bottomBorder = CALayer()
+//        bottomBorder.frame = CGRectMake(0.0, telephoneText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
+//        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
+//        telephoneText.layer.addSublayer(bottomBorder)
         
         self.profileTypeText.text = self.profileType
         self.tagsText.text = self.tags
@@ -170,19 +148,34 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.profileImageView.image = profileHeaderImage
         self.groupsText.text = self.groups
         
-        profileNameText = UITextField()
-        profileNameText.backgroundColor = UIColor(red: 0xe0/255, green: 0xe0/255, blue: 0xe0/255, alpha: 1.0)
-        profileNameText.textColor = UIColor.blackColor()
-        profileNameText.font = UIFont.systemFontOfSize(13)
-        profileNameText.text = self.profileName
+        // Set extneded info values
+        profileNameText = getTextField(self.profileName)
+        contactNameText = getTextField(self.contactName)
+        
+        emailText = getTextField(self.email)
+        emailText.addTarget(self, action: "emailAction", forControlEvents: UIControlEvents.EditingDidBegin)
+        emailText.enabled = true
+        emailText.textColor = UIColor.blueColor()
+        
+        telephoneText = getTextField(self.telephone)
+        telephoneText.addTarget(self, action: "telephoneAction", forControlEvents: UIControlEvents.EditingDidBegin)
+        telephoneText.enabled = true
+        telephoneText.textColor = UIColor.blueColor()
+
         if DeviceType.IS_IPHONE_4_OR_LESS {
             profileNameText.frame = CGRectMake(278, 108, 30, 30)
         }
         else if DeviceType.IS_IPHONE_5 {
             profileNameText.frame = CGRectMake(12, 30, 300, 23)
+            contactNameText.frame = CGRectMake(12, 75, 300, 23)
+            emailText.frame = CGRectMake(12, 120, 300, 23)
+            telephoneText.frame = CGRectMake(12, 161, 300, 23)
         }
         else if DeviceType.IS_IPHONE_6 {
             profileNameText.frame = CGRectMake(12, 30, 355, 23)
+            contactNameText.frame = CGRectMake(12, 75, 355, 23)
+            emailText.frame = CGRectMake(12, 120, 355, 23)
+            telephoneText.frame = CGRectMake(12, 161, 355, 23)
         }
         else if DeviceType.IS_IPHONE_6P {
             profileNameText.frame = CGRectMake(340, 108, 30, 30)
@@ -194,10 +187,47 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             profileNameText.frame = CGRectMake(282, 108, 30, 30)
         }
         scrollView.addSubview(profileNameText)
+        scrollView.addSubview(contactNameText)
+        scrollView.addSubview(emailText)
+        scrollView.addSubview(telephoneText)
         
         viewTop.frame = CGRectMake(0, 0, 310, 140);
         uiView.addSubview(viewTop)
      }
+    
+    func getTextField(txtVal: String) -> UITextField{
+        var txtFld = UITextField()
+        txtFld.backgroundColor = UIColor(red: 0xe0/255, green: 0xe0/255, blue: 0xe0/255, alpha: 1.0)
+        txtFld.textColor = UIColor.blackColor()
+        txtFld.font = UIFont.systemFontOfSize(13)
+        txtFld.enabled = false
+        txtFld.text = txtVal
+        
+        return txtFld
+    }
+    
+    func telephoneAction() {
+        var url:NSURL = NSURL(string: telephone)!
+        UIApplication.sharedApplication().openURL(url)
+    }
+
+    func emailAction() {
+        let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": userIdentityProfileId])
+        getProfileName(jsonData)
+        
+        var emailTitle = "Message From Wami Profile: " + userProfileName
+        var messageBody = ""
+        var toRecipents = [email]
+        var mc: MFMailComposeViewController = MFMailComposeViewController()
+        mc.mailComposeDelegate = self
+        mc.setSubject(emailTitle)
+        mc.setMessageBody(messageBody, isHTML: false)
+        mc.setToRecipients(toRecipents)
+        
+        self.presentViewController(mc, animated: true, completion: nil)
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
