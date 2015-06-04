@@ -14,28 +14,28 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
    
     @IBOutlet var profileNameHdrTxt: UITextField!
     @IBOutlet var contactNameHdrTxt: UITextField!
+    @IBOutlet var profileImageView: UIImageView!
     
     @IBAction func addToContactsAction(sender: AnyObject) {
         addToContactListAction()
     }
     
     var profileNameText: UITextField!
-    @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var descriptionText: UITextView!
+    var descriptionText: UITextView!
     var contactNameText: UITextField!
     var emailText: UITextField!
     var telephoneText: UITextField!
-    @IBOutlet var profileTypeText: UITextField!
-    @IBOutlet var tagsText: UITextField!
-    @IBOutlet var streetAddressText: UITextField!
-    @IBOutlet var cityText: UITextField!
-    @IBOutlet var stateText: UITextField!
-    @IBOutlet var zipText: UITextField!
-    @IBOutlet var countryText: UITextField!
-    @IBOutlet var createDateText: UITextField!
-    @IBOutlet var searchableText: UITextField!
-    @IBOutlet var activeIndText: UITextField!
-    @IBOutlet var groupsText: UITextField!
+    var profileTypeText: UITextField!
+    var tagsText: UITextField!
+    var streetAddressText: UITextField!
+    var cityText: UITextField!
+    var stateText: UITextField!
+    var zipText: UITextField!
+    var countryText: UITextField!
+    var createDateText: UITextField!
+    var searchableText: UITextField!
+    var activeIndText: UITextField!
+    var groupsText: UITextField!
     
     @IBOutlet var uiView: UIView!
     @IBOutlet var scrollView: UIScrollView!
@@ -75,6 +75,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     let menuView = UIView()
     var menuLine = UILabel()
     var segue = UIStoryboardSegue()
+    var showProfilerBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
     
     var adbk : ABAddressBook?
     var authDone: Bool = false
@@ -106,91 +107,142 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         
         self.profileNameHdrTxt.text = self.profileName
         self.contactNameHdrTxt.text = self.contactName
-//        self.profileNameText.text = self.profileName
-        self.descriptionText.text = self.descript
-//        self.contactNameText.text = self.contactName
-        
-//        self.emailText.text = self.email
-//        var fieldWidth = (Float(count(self.email)) * 8)
-//        var bottomBorder = CALayer()
-//        bottomBorder.frame = CGRectMake(0.0, emailText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
-//        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
-//        emailText.layer.addSublayer(bottomBorder)
-        
-//        self.telephoneText.text = self.telephone
-//        fieldWidth = (Float(count(self.telephone)) * 8)
-//        bottomBorder = CALayer()
-//        bottomBorder.frame = CGRectMake(0.0, telephoneText.frame.size.height - 6, CGFloat(fieldWidth), 1.0);
-//        bottomBorder.backgroundColor = UIColor.blueColor().CGColor
-//        telephoneText.layer.addSublayer(bottomBorder)
-        
-        self.profileTypeText.text = self.profileType
-        self.tagsText.text = self.tags
-        self.streetAddressText.text = self.streetAddress
-        self.cityText.text = self.city
-        self.stateText.text = self.state
-        self.zipText.text = self.zipcode
-        self.countryText.text = self.country
-        self.createDateText.text = self.createDate
-        if (searchable == "1") {
-            self.searchableText.text = "Yes"
-        }
-        else {
-            self.searchableText.text = "No"
-        }
-        if (self.activeInd == "1") {
-            self.activeIndText.text = "Active"
-        }
-        else {
-            self.activeIndText.text = "Inactive"
-        }
         var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
         self.profileImageView.image = profileHeaderImage
-        self.groupsText.text = self.groups
         
-        // Set extneded info values
-        profileNameText = getTextField(self.profileName)
-        contactNameText = getTextField(self.contactName)
-        
-        emailText = getTextField(self.email)
-        emailText.addTarget(self, action: "emailAction", forControlEvents: UIControlEvents.EditingDidBegin)
-        emailText.enabled = true
-        emailText.textColor = UIColor.blueColor()
-        
-        telephoneText = getTextField(self.telephone)
-        telephoneText.addTarget(self, action: "telephoneAction", forControlEvents: UIControlEvents.EditingDidBegin)
-        telephoneText.enabled = true
-        telephoneText.textColor = UIColor.blueColor()
-
+        var nextItem  = UIImage(named: "next_item_right")
+        showProfilerBtn.setImage(nextItem, forState: .Normal)
+        showProfilerBtn.showsTouchWhenHighlighted = true
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            profileNameText.frame = CGRectMake(278, 108, 30, 30)
+            showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
         }
         else if DeviceType.IS_IPHONE_5 {
-            profileNameText.frame = CGRectMake(12, 30, 300, 23)
-            contactNameText.frame = CGRectMake(12, 75, 300, 23)
-            emailText.frame = CGRectMake(12, 120, 300, 23)
-            telephoneText.frame = CGRectMake(12, 161, 300, 23)
+            showProfilerBtn.frame = CGRectMake(280, 110, 30, 30)
         }
         else if DeviceType.IS_IPHONE_6 {
-            profileNameText.frame = CGRectMake(12, 30, 355, 23)
-            contactNameText.frame = CGRectMake(12, 75, 355, 23)
-            emailText.frame = CGRectMake(12, 120, 355, 23)
-            telephoneText.frame = CGRectMake(12, 161, 355, 23)
+            showProfilerBtn.frame = CGRectMake(335, 110, 30, 30)
         }
         else if DeviceType.IS_IPHONE_6P {
-            profileNameText.frame = CGRectMake(340, 108, 30, 30)
+            showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
         }
         else if DeviceType.IS_IPAD {
-            profileNameText.frame = CGRectMake(340, 108, 30, 30)
+            showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
         }
         else {
-            profileNameText.frame = CGRectMake(282, 108, 30, 30)
+            showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
+        }
+        showProfilerBtn.addTarget(self, action: "showProfiler", forControlEvents: UIControlEvents.TouchUpInside)
+        viewTop.addSubview(showProfilerBtn)
+     
+        // Set extneded info values
+        self.profileNameText = getTextField(self.profileName)
+        self.contactNameText = getTextField(self.contactName)
+        self.emailText = getTextField(self.email)
+        self.emailText.addTarget(self, action: "emailAction", forControlEvents: UIControlEvents.EditingDidBegin)
+        self.emailText.enabled = true
+        self.emailText.textColor = UIColor.blueColor()
+        
+        self.telephoneText = getTextField(self.telephone)
+        self.telephoneText.addTarget(self, action: "telephoneAction", forControlEvents: UIControlEvents.EditingDidBegin)
+        self.telephoneText.enabled = true
+        self.telephoneText.textColor = UIColor.blueColor()
+        
+        self.profileTypeText = getTextField(self.profileType)
+        
+        self.descriptionText = UITextView()
+        self.descriptionText.backgroundColor = UIColor(red: 0xe0/255, green: 0xe0/255, blue: 0xe0/255, alpha: 1.0)
+        self.descriptionText.textColor = UIColor.blackColor()
+        self.descriptionText.font = UIFont.systemFontOfSize(13)
+        self.descriptionText.editable = false
+        self.descriptionText.text = self.descript
+        
+        self.tagsText = getTextField(self.tags)
+        self.groupsText = getTextField(self.groups)
+        self.createDateText = getTextField(self.createDate)
+        if (self.searchable == "1") {
+            self.searchableText = getTextField("Yes")
+        }
+        else {
+            self.searchableText = getTextField("No")
+        }
+        if (self.activeInd == "1") {
+            self.activeIndText = getTextField("Active")
+        }
+        else {
+            self.activeIndText = getTextField("Inactive")
+        }
+        self.streetAddressText = getTextField(self.streetAddress)
+        self.cityText = getTextField(self.city)
+        self.stateText = getTextField(self.state)
+        self.zipText = getTextField(self.zipcode)
+        self.countryText = getTextField(self.country)
+    
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            self.profileNameText.frame = CGRectMake(278, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            self.profileNameText.frame = CGRectMake(12, 30, 300, 23)
+            self.contactNameText.frame = CGRectMake(12, 75, 300, 23)
+            self.emailText.frame = CGRectMake(12, 120, 300, 23)
+            self.telephoneText.frame = CGRectMake(12, 161, 300, 23)
+            self.profileTypeText.frame = CGRectMake(12, 204, 300, 23)
+            self.descriptionText.frame = CGRectMake(12, 250, 300, 47)
+            self.tagsText.frame = CGRectMake(12, 318, 300, 23)
+            self.groupsText.frame = CGRectMake(12, 357, 300, 23)
+            self.createDateText.frame = CGRectMake(12, 401, 300, 23)
+            self.searchableText.frame = CGRectMake(12, 445, 300, 23)
+            self.activeIndText.frame = CGRectMake(12, 488, 300, 23)
+            self.streetAddressText.frame = CGRectMake(12, 530, 300, 23)
+            self.cityText.frame = CGRectMake(12, 576, 300, 23)
+            self.stateText.frame = CGRectMake(12, 621, 300, 23)
+            self.zipText.frame = CGRectMake(12, 665, 300, 23)
+            self.countryText.frame = CGRectMake(12, 708, 300, 23)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            self.profileNameText.frame = CGRectMake(12, 30, 355, 23)
+            self.contactNameText.frame = CGRectMake(12, 75, 355, 23)
+            self.emailText.frame = CGRectMake(12, 120, 355, 23)
+            self.telephoneText.frame = CGRectMake(12, 161, 355, 23)
+            self.profileTypeText.frame = CGRectMake(12, 204, 355, 23)
+            self.descriptionText.frame = CGRectMake(12, 250, 355, 47)
+            self.tagsText.frame = CGRectMake(12, 318, 355, 23)
+            self.groupsText.frame = CGRectMake(12, 357, 355, 23)
+            self.createDateText.frame = CGRectMake(12, 401, 355, 23)
+            self.searchableText.frame = CGRectMake(12, 445, 355, 23)
+            self.activeIndText.frame = CGRectMake(12, 488, 355, 23)
+            self.streetAddressText.frame = CGRectMake(12, 530, 355, 23)
+            self.cityText.frame = CGRectMake(12, 576, 355, 23)
+            self.stateText.frame = CGRectMake(12, 621, 355, 23)
+            self.zipText.frame = CGRectMake(12, 665, 355, 23)
+            self.countryText.frame = CGRectMake(12, 708, 355, 23)
+
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            self.profileNameText.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else if DeviceType.IS_IPAD {
+            self.profileNameText.frame = CGRectMake(340, 108, 30, 30)
+        }
+        else {
+            self.profileNameText.frame = CGRectMake(282, 108, 30, 30)
         }
         scrollView.addSubview(profileNameText)
         scrollView.addSubview(contactNameText)
         scrollView.addSubview(emailText)
         scrollView.addSubview(telephoneText)
-        
+        scrollView.addSubview(profileTypeText)
+        scrollView.addSubview(descriptionText)
+        scrollView.addSubview(tagsText)
+        scrollView.addSubview(groupsText)
+        scrollView.addSubview(createDateText)
+        scrollView.addSubview(searchableText)
+        scrollView.addSubview(activeIndText)
+        scrollView.addSubview(streetAddressText)
+        scrollView.addSubview(cityText)
+        scrollView.addSubview(stateText)
+        scrollView.addSubview(zipText)
+        scrollView.addSubview(countryText)
+
         viewTop.frame = CGRectMake(0, 0, 310, 140);
         uiView.addSubview(viewTop)
      }
@@ -228,6 +280,17 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.presentViewController(mc, animated: true, completion: nil)
     }
     
+    func showProfiler() {
+        menuView.hidden = true
+        performSegueWithIdentifier("showProfilerHidden", sender: nil)
+        var svc = segue.destinationViewController as! Profiler;
+        svc.identityProfileId = self.identityProfileId
+        svc.userIdentityProfileId = self.userIdentityProfileId
+        svc.imageUrl = self.imageUrl
+        svc.profileName = self.profileName
+        svc.firstName = self.firstName
+        svc.lastName = self.lastName
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -336,7 +399,6 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         let propertyType: NSNumber = kABMultiStringPropertyType
         return Unmanaged.fromOpaque(ABMultiValueCreateMutable(propertyType.unsignedIntValue).toOpaque()).takeUnretainedValue() as NSObject as ABMultiValueRef
     }
-
     
     // Transmit profile
     var transmitProfileView = UIView()
@@ -428,7 +490,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         self.segue = segue
-        if (segue.identifier == "showProfiler") {
+        if (segue.identifier == "showProfilerHidden") {
             menuView.hidden = true
             var svc = segue.destinationViewController as! Profiler
             svc.identityProfileId = self.identityProfileId
