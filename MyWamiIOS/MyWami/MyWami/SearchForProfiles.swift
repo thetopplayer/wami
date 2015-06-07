@@ -36,7 +36,25 @@ class SearchForProfiles: UIViewController {
         self.searchProfileView = searchProfileView
         self.entireNetwork = false
         
-        searchProfileView.frame = CGRectMake(50, 50, 230, 285)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            searchProfileView.frame = CGRectMake(50, 30, 230, 285)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            searchProfileView.frame = CGRectMake(50, 40, 230, 285)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            searchProfileView.frame = CGRectMake(75, 40, 230, 285)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            searchProfileView.frame = CGRectMake(85, 40, 230, 285)
+        }
+        else if DeviceType.IS_IPAD {
+            searchProfileView.frame = CGRectMake(35, 65, 230, 285)
+        }
+        else {
+            searchProfileView.frame = CGRectMake(35, 65, 230, 285)
+        }
+        
         searchProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         searchProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         searchProfileView.layer.borderWidth = 1.5

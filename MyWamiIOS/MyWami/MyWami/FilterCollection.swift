@@ -37,7 +37,25 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             return nil
         }
         
-        filterCollectionView.frame = CGRectMake(40, 50, 240, 300)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            self.filterCollectionView.frame = CGRectMake(45, 30, 240, 300)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            self.filterCollectionView.frame = CGRectMake(40, 40, 240, 300)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            self.filterCollectionView.frame = CGRectMake(65, 40, 240, 300)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            self.filterCollectionView.frame = CGRectMake(80, 40, 240, 300)
+        }
+        else if DeviceType.IS_IPAD {
+            self.filterCollectionView.frame = CGRectMake(35, 65, 250, 422)
+        }
+        else {
+            self.filterCollectionView.frame = CGRectMake(35, 65, 250, 422)
+        }
+    
         filterCollectionView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         filterCollectionView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         filterCollectionView.layer.borderWidth = 1.5

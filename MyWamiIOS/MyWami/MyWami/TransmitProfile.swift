@@ -25,7 +25,25 @@ class TransmitProfile: UIViewController {
         
         getProfileNames()
         
-        transmitProfileView.frame = CGRectMake(45, 100, 240, 215)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            transmitProfileView.frame = CGRectMake(45, 50, 240, 215)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            transmitProfileView.frame = CGRectMake(45, 50, 240, 215)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            transmitProfileView.frame = CGRectMake(65, 50, 240, 215)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            transmitProfileView.frame = CGRectMake(80, 50, 240, 215)
+        }
+        else if DeviceType.IS_IPAD {
+            transmitProfileView.frame = CGRectMake(35, 65, 250, 422)
+        }
+        else {
+            transmitProfileView.frame = CGRectMake(35, 65, 250, 422)
+        }
+
         transmitProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         transmitProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         transmitProfileView.layer.borderWidth = 1.5
