@@ -77,14 +77,14 @@ class ViewController: UIViewController {
             imageView.frame = CGRectMake(65, 390, 190, 130)
         }
         else if DeviceType.IS_IPHONE_6 {
-            loginBtn.frame = CGRectMake(160, 310,  65, 30)
+            loginBtn.frame = CGRectMake(163, 310,  65, 30)
             self.createAccountBtn.frame = CGRectMake(110, 380,  167, 30)
-            imageView.frame = CGRectMake(95, 420, 190, 130)
+            imageView.frame = CGRectMake(101, 420, 190, 130)
         }
         else if DeviceType.IS_IPHONE_6P {
-            loginBtn.frame = CGRectMake(175, 310,  65, 30)
-            self.createAccountBtn.frame = CGRectMake(125, 385,  167, 30)
-            imageView.frame = CGRectMake(65, 390, 190, 130)
+            loginBtn.frame = CGRectMake(185, 310,  65, 30)
+            self.createAccountBtn.frame = CGRectMake(130, 375,  167, 30)
+            imageView.frame = CGRectMake(125, 390, 190, 130)
         }
         else if DeviceType.IS_IPAD {
             loginBtn.frame = CGRectMake(350, 310,  65, 30)

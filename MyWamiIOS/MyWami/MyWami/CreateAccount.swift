@@ -27,29 +27,29 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         self.createAccountView = createAccountView
         
         let horizontalPlacement = CGFloat(40)
-        let verticalPlacement = CGFloat(32)
+        let verticalPlacement = CGFloat(31)
         
         self.createAccountView.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 1.0)
         self.createAccountView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.createAccountView.layer.borderWidth = 1.5
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+            self.createAccountView.frame = CGRectMake(35, 60, 250, 422)
         }
         else if DeviceType.IS_IPHONE_5 {
-            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+            self.createAccountView.frame = CGRectMake(35, 70, 250, 422)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.createAccountView.frame = CGRectMake(60, 85, 250, 480)
+            self.createAccountView.frame = CGRectMake(60, 85, 250, 422)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.createAccountView.frame = CGRectMake(45, 65, 250, 480)
+            self.createAccountView.frame = CGRectMake(80, 75, 250, 422)
         }
         else if DeviceType.IS_IPAD {
-            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+            self.createAccountView.frame = CGRectMake(35, 65, 250, 422)
         }
         else {
-            self.createAccountView.frame = CGRectMake(35, 65, 250, 480)
+            self.createAccountView.frame = CGRectMake(35, 65, 250, 422)
         }
         
         let headingLbl = UILabel()
@@ -58,7 +58,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         headingLbl.text = "Create Account"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
-        headingLbl.frame = CGRectMake(0, 0, 250, 30)
+        headingLbl.frame = CGRectMake(0, 0, 250, 25)
         self.createAccountView.addSubview(headingLbl)
         
         let descLbl1 = UILabel()
@@ -103,7 +103,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         descLbl6.frame = CGRectMake(horizontalPlacement + 13, verticalPlacement + 60, 250, 15)
         self.createAccountView.addSubview(descLbl6)
         
-        let verticalPlacement2 = CGFloat(22)
+        let verticalPlacement2 = CGFloat(20)
         
         var requiredSymbol1 = getRequiredSymbol()
         requiredSymbol1.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement2 + 83, 20, 20)
@@ -164,17 +164,17 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         
         let requiredBlurbLbL = UILabel()
         requiredBlurbLbL.textColor = UIColor.orangeColor()
-        requiredBlurbLbL.font = UIFont.boldSystemFontOfSize(12)
-        requiredBlurbLbL.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement2 + 200, 110, 25)
+        requiredBlurbLbL.font = UIFont.boldSystemFontOfSize(11)
+        requiredBlurbLbL.frame = CGRectMake(horizontalPlacement - 30, verticalPlacement2 + 200, 110, 22)
         requiredBlurbLbL.text = "* Required Fields"
         self.createAccountView.addSubview(requiredBlurbLbL)
         
-        let verticalPlacement3 = CGFloat(190)
+        let verticalPlacement3 = CGFloat(178)
         
         let optionalLbL = UILabel()
         optionalLbL.textColor = UIColor.grayColor()
-        optionalLbL.font = UIFont.boldSystemFontOfSize(11)
-        optionalLbL.frame = CGRectMake(horizontalPlacement - 25, verticalPlacement3 + 60, 110, 25)
+        optionalLbL.font = UIFont.boldSystemFontOfSize(10)
+        optionalLbL.frame = CGRectMake(horizontalPlacement - 25, verticalPlacement3 + 61, 110, 23)
         optionalLbL.text = "Optional Fields"
         self.createAccountView.addSubview(optionalLbL)
         
@@ -211,19 +211,19 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         textView.delegate = self
         self.createAccountView.addSubview(textView)
         
-        let verticalPlacement4 = CGFloat(250)
+        let verticalPlacement4 = CGFloat(231)
         
-        var line: UILabel = UILabel()
-        line.frame = CGRectMake(10, verticalPlacement4 + 162, 230, 1)
-        line.backgroundColor = UIColor.blackColor()
-        self.createAccountView.addSubview(line)
+//        var line: UILabel = UILabel()
+//        line.frame = CGRectMake(10, verticalPlacement4 + 162, 230, 1)
+//        line.backgroundColor = UIColor.blackColor()
+//        self.createAccountView.addSubview(line)
         
         createNewAccountBtn.setTitle("Create", forState: UIControlState.Normal)
         createNewAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         createNewAccountBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         createNewAccountBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         createNewAccountBtn.showsTouchWhenHighlighted = true
-        createNewAccountBtn.frame = CGRectMake(45, verticalPlacement4 + 180, 60, 23)
+        createNewAccountBtn.frame = CGRectMake(55, verticalPlacement4 + 160, 60, 23)
         self.createAccountView.addSubview(createNewAccountBtn)
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
@@ -231,7 +231,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(135, verticalPlacement4 + 180, 60, 23)
+        closeBtn.frame = CGRectMake(135, verticalPlacement4 + 160, 60, 23)
         self.createAccountView.addSubview(closeBtn)
         
         return self.createAccountView
