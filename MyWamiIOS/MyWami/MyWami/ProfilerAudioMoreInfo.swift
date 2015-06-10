@@ -18,7 +18,26 @@ class ProfilerAudioMoreInfo: UIViewController {
     func moreInfoDialog(moreInfoView: UIView, audioFileDecription: String, audioSongTitle: String, audioFileName: String, closeBtn: UIButton) -> UIView {
         self.moreInfoView = moreInfoView
         
-        self.moreInfoView.frame = CGRectMake(20, 10, 270, 300)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            self.moreInfoView.frame = CGRectMake(50, 20, 270, 300)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            self.moreInfoView.frame = CGRectMake(70, 30, 270, 300)
+        }
+        else if DeviceType.IS_IPAD {
+            self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
+        }
+        else {
+           self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
+        }
+
+//        self.moreInfoView.frame = CGRectMake(20, 10, 270, 300)
         self.moreInfoView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         self.moreInfoView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.moreInfoView.layer.borderWidth = 1.5

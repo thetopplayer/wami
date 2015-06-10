@@ -22,12 +22,41 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         numAudio = audioProfilerModels.count
         self.audioProfilerModels = audioProfilerModels
         
-        self.profilerAudioView.frame = CGRectMake(2, 2, 316, 385)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            self.profilerAudioView.frame = CGRectMake(2, 2, 316, 298)
+            audioTableView.frame = CGRectMake(5, 5, 305, 243)
+            closeBtn.frame = CGRectMake(135, 260, 60, 20)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            self.profilerAudioView.frame = CGRectMake(2, 2, 316, 385)
+            audioTableView.frame = CGRectMake(5, 5, 305, 320)
+            closeBtn.frame = CGRectMake(135, 348, 60, 20)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            self.profilerAudioView.frame = CGRectMake(2, 2, 370, 485)
+            audioTableView.frame = CGRectMake(5, 5, 365, 420)
+            closeBtn.frame = CGRectMake(155, 448, 60, 20)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            self.profilerAudioView.frame = CGRectMake(2, 2, 410, 555)
+            audioTableView.frame = CGRectMake(5, 5, 400, 500)
+            closeBtn.frame = CGRectMake(180, 520, 60, 20)
+        }
+        else if DeviceType.IS_IPAD {
+            self.profilerAudioView.frame = CGRectMake(2, 2, 316, 385)
+            audioTableView.frame = CGRectMake(5, 5, 305, 320)
+            closeBtn.frame = CGRectMake(135, 348, 60, 20)
+        }
+        else {
+            self.profilerAudioView.frame = CGRectMake(2, 2, 316, 385)
+            audioTableView.frame = CGRectMake(5, 5, 305, 320)
+            closeBtn.frame = CGRectMake(135, 348, 60, 20)
+        }
+        
         self.profilerAudioView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         self.profilerAudioView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.profilerAudioView.layer.borderWidth = 1.5
         
-        audioTableView.frame = CGRectMake(5, 5, 305, 320)
         audioTableView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
         audioTableView.layer.borderWidth = 1.0
         audioTableView.delegate = self
@@ -40,7 +69,6 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(135, 348, 60, 20)
         self.profilerAudioView.addSubview(closeBtn)
         
         self.audioTableView.rowHeight = 50.0
