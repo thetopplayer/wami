@@ -11,8 +11,26 @@ import UIKit
 class NavigateTo: UIViewController {
     func navigateTo(navigateToView: UIView, closeBtn: UIButton, profileInfoBtn: UIButton,
                     profilerBtn: UIButton, flashBtn: UIButton, profileCollectionBtn: UIButton) -> UIView {
-                        
-        navigateToView.frame = CGRectMake(45, 200, 240, 230)
+                    
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            navigateToView.frame = CGRectMake(45, 80, 240, 230)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            navigateToView.frame = CGRectMake(45, 80, 240, 230)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            navigateToView.frame = CGRectMake(65, 90, 240, 230)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            navigateToView.frame = CGRectMake(85, 90, 240, 230)
+        }
+        else if DeviceType.IS_IPAD {
+            navigateToView.frame = CGRectMake(35, 65, 240, 230)
+        }
+        else {
+           navigateToView.frame = CGRectMake(35, 65, 240, 230)
+        }
+                
         navigateToView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         navigateToView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         navigateToView.layer.borderWidth = 1.5

@@ -114,7 +114,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         showProfilerBtn.setImage(nextItem, forState: .Normal)
         showProfilerBtn.showsTouchWhenHighlighted = true
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
+            showProfilerBtn.frame = CGRectMake(280, 110, 30, 30)
         }
         else if DeviceType.IS_IPHONE_5 {
             showProfilerBtn.frame = CGRectMake(280, 110, 30, 30)
@@ -123,7 +123,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
             showProfilerBtn.frame = CGRectMake(335, 110, 30, 30)
         }
         else if DeviceType.IS_IPHONE_6P {
-            showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
+            showProfilerBtn.frame = CGRectMake(375, 110, 30, 30)
         }
         else if DeviceType.IS_IPAD {
             showProfilerBtn.frame = CGRectMake(350, 110, 30, 30)
@@ -178,7 +178,22 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.countryText = getTextField(self.country)
     
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.profileNameText.frame = CGRectMake(278, 108, 30, 30)
+            self.profileNameText.frame = CGRectMake(12, 30, 295, 23)
+            self.contactNameText.frame = CGRectMake(12, 75, 295, 23)
+            self.emailText.frame = CGRectMake(12, 120, 295, 23)
+            self.telephoneText.frame = CGRectMake(12, 161, 295, 23)
+            self.profileTypeText.frame = CGRectMake(12, 204, 295, 23)
+            self.descriptionText.frame = CGRectMake(12, 250, 295, 47)
+            self.tagsText.frame = CGRectMake(12, 318, 295, 23)
+            self.groupsText.frame = CGRectMake(12, 357, 295, 23)
+            self.createDateText.frame = CGRectMake(12, 401, 295, 23)
+            self.searchableText.frame = CGRectMake(12, 445, 295, 23)
+            self.activeIndText.frame = CGRectMake(12, 488, 295, 23)
+            self.streetAddressText.frame = CGRectMake(12, 530, 295, 23)
+            self.cityText.frame = CGRectMake(12, 576, 295, 23)
+            self.stateText.frame = CGRectMake(12, 621, 295, 23)
+            self.zipText.frame = CGRectMake(12, 665, 295, 23)
+            self.countryText.frame = CGRectMake(12, 708, 295, 23)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.profileNameText.frame = CGRectMake(12, 30, 300, 23)
@@ -218,7 +233,22 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
 
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.profileNameText.frame = CGRectMake(340, 108, 30, 30)
+            self.profileNameText.frame = CGRectMake(12, 30, 390, 23)
+            self.contactNameText.frame = CGRectMake(12, 75, 390, 23)
+            self.emailText.frame = CGRectMake(12, 120, 390, 23)
+            self.telephoneText.frame = CGRectMake(12, 161, 390, 23)
+            self.profileTypeText.frame = CGRectMake(12, 204, 390, 23)
+            self.descriptionText.frame = CGRectMake(12, 250, 390, 47)
+            self.tagsText.frame = CGRectMake(12, 318, 390, 23)
+            self.groupsText.frame = CGRectMake(12, 357, 390, 23)
+            self.createDateText.frame = CGRectMake(12, 401, 390, 23)
+            self.searchableText.frame = CGRectMake(12, 445, 390, 23)
+            self.activeIndText.frame = CGRectMake(12, 488, 390, 23)
+            self.streetAddressText.frame = CGRectMake(12, 530, 390, 23)
+            self.cityText.frame = CGRectMake(12, 576, 390, 23)
+            self.stateText.frame = CGRectMake(12, 621, 390, 23)
+            self.zipText.frame = CGRectMake(12, 665, 390, 23)
+            self.countryText.frame = CGRectMake(12, 708, 390, 23)
         }
         else if DeviceType.IS_IPAD {
             self.profileNameText.frame = CGRectMake(340, 108, 30, 30)
