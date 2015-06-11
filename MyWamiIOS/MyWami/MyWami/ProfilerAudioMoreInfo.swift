@@ -19,7 +19,7 @@ class ProfilerAudioMoreInfo: UIViewController {
         self.moreInfoView = moreInfoView
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
+            self.moreInfoView.frame = CGRectMake(25, 5, 270, 285)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
@@ -37,7 +37,6 @@ class ProfilerAudioMoreInfo: UIViewController {
            self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
         }
 
-//        self.moreInfoView.frame = CGRectMake(20, 10, 270, 300)
         self.moreInfoView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         self.moreInfoView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         self.moreInfoView.layer.borderWidth = 1.5
@@ -124,7 +123,12 @@ class ProfilerAudioMoreInfo: UIViewController {
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(110, 265, 60, 20)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            closeBtn.frame = CGRectMake(110, 257, 60, 20)
+        }
+        else {
+            closeBtn.frame = CGRectMake(110, 265, 60, 20)
+        }
         self.moreInfoView.addSubview(closeBtn)
         
         return self.moreInfoView
