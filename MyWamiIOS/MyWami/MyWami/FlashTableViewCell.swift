@@ -30,7 +30,7 @@ class FlashTableViewCell: UITableViewCell  {
             self.flashText = UITextField(frame: CGRect(x: 117.00, y: 1, width: 250, height: 20))
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.flashText = UITextField(frame: CGRect(x: 117.00, y: 1, width: 250, height: 20))
+            self.flashText = UITextField(frame: CGRect(x: 117.00, y: 1, width: 280, height: 20))
         }
         else if DeviceType.IS_IPAD {
             self.flashText = UITextField(frame: CGRect(x: 117.00, y: 1, width: 200, height: 20))
@@ -39,7 +39,6 @@ class FlashTableViewCell: UITableViewCell  {
             self.flashText = UITextField(frame: CGRect(x: 117.00, y: 1, width: 200, height: 20))
         }
         
-//        self.flashText = UITextField(frame: CGRect(x: 117.00, y: 1, width: 200, height: 20))
         self.flashText.font = UIFont.systemFontOfSize(11)
         
         self.addSubview(self.createDateText)

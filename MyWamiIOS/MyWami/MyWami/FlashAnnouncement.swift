@@ -17,7 +17,26 @@ class FlashAnnouncement: UIViewController, UITextViewDelegate  {
     func flashDialog(newFlashView: UIView, textView: UITextView, closeBtn: UIButton, createBtn: UIButton) -> UIView {
         self.newFlashView = newFlashView
         
-        newFlashView.frame = CGRectMake(45, 200, 240, 230)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            newFlashView.frame = CGRectMake(45, 100, 240, 230)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            newFlashView.frame = CGRectMake(40, 100, 240, 230)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            newFlashView.frame = CGRectMake(65, 100, 240, 230)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            newFlashView.frame = CGRectMake(80, 100, 240, 230)
+        }
+        else if DeviceType.IS_IPAD {
+            newFlashView.frame = CGRectMake(35, 100, 250, 230)
+        }
+        else {
+            newFlashView.frame = CGRectMake(35, 100, 250, 230)
+        }
+        
+//        newFlashView.frame = CGRectMake(45, 200, 240, 230)
         newFlashView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         newFlashView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         newFlashView.layer.borderWidth = 1.5
