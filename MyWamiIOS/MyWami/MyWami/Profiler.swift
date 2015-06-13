@@ -317,7 +317,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             showFlashBtn.frame = CGRectMake(340, 108, 30, 30)
         }
         else if DeviceType.IS_IPHONE_6P {
-            showFlashBtn.frame = CGRectMake(340, 108, 30, 30)
+            showFlashBtn.frame = CGRectMake(375, 108, 30, 30)
         }
         else if DeviceType.IS_IPAD {
             showFlashBtn.frame = CGRectMake(340, 108, 30, 30)
