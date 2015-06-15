@@ -19,16 +19,16 @@ class SearchMoreInfo: UIViewController {
         self.moreInfoView = moreInfoView
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.moreInfoView.frame = CGRectMake(45, 30, 240, 300)
+            self.moreInfoView.frame = CGRectMake(30, 80, 270, 300)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.moreInfoView.frame = CGRectMake(30, 80, 270, 300)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.moreInfoView.frame = CGRectMake(65, 40, 240, 300)
+            self.moreInfoView.frame = CGRectMake(65, 100, 270, 300)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.moreInfoView.frame = CGRectMake(80, 40, 240, 300)
+            self.moreInfoView.frame = CGRectMake(80, 100, 270, 300)
         }
         else if DeviceType.IS_IPAD {
             self.moreInfoView.frame = CGRectMake(35, 65, 250, 422)
