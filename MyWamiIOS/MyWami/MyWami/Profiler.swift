@@ -304,10 +304,48 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             }
         }
         
-        profilerTableView.dataSource = self
-        profilerTableView.delegate = self
-        self.profilerTableView.rowHeight = 44
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            profilerScrollView.frame = CGRectMake(1, 186, 319, 294)
+            profilerTableView.frame = CGRectMake(2, 4, 315, 287)
+            profilerTableView.rowHeight = 44
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            profilerScrollView.frame = CGRectMake(1, 178, 319, 389)
+            profilerTableView.frame = CGRectMake(2, 2, 315, 384)
+            profilerTableView.rowHeight = 44
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            profilerScrollView.frame = CGRectMake(1, 178, 373, 488)
+            profilerTableView.frame = CGRectMake(2, 2, 369, 485)
+            profilerTableView.rowHeight = 44
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            profilerScrollView.frame = CGRectMake(1, 186, 413, 549)
+            profilerTableView.frame = CGRectMake(2, 4, 409, 546)
+            profilerTableView.rowHeight = 44
+        }
+        else if DeviceType.IS_IPAD {
+            profilerScrollView.frame = CGRectMake(1, 186, 319, 381)
+            profilerTableView.frame = CGRectMake(2, 4, 315, 374)
+        }
+        else {
+            profilerScrollView.frame = CGRectMake(1, 186, 319, 381)
+            profilerTableView.frame = CGRectMake(2, 4, 315, 374)
+        }
         
+        profilerScrollView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        profilerScrollView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        profilerScrollView.layer.borderWidth = 1.5
+        
+        profilerTableView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
+        profilerTableView.layer.borderWidth = 1.0
+        profilerTableView.delegate = self
+        profilerTableView.dataSource = self
+        profilerTableView.registerClass(ProfilerTableViewCell.self, forCellReuseIdentifier: "ProfilerTableViewCell")
+        profilerScrollView.addSubview(profilerTableView)
+        
+        view.addSubview(profilerScrollView)
+
         var nextItem  = UIImage(named: "next_item_right")
         showFlashBtn.setImage(nextItem, forState: .Normal)
         showFlashBtn.showsTouchWhenHighlighted = true
@@ -332,13 +370,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         showFlashBtn.addTarget(self, action: "showFlash", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(showFlashBtn)
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        profilerTableView.registerClass(ProfilerTableViewCell.classForCoder(), forCellReuseIdentifier: "ProfilerTableViewCell")
-    }
-
     
     func showFlash() {
         menuView.hidden = true

@@ -22,22 +22,22 @@ class ProfilerTableViewCell: UITableViewCell  {
         categoryBtn.showsTouchWhenHighlighted = true
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            categoryBtn.frame = CGRectMake(10, 5, 50, 20)
+            categoryBtn.frame = CGRectMake(0, 2, 320, 43)
         }
         else if DeviceType.IS_IPHONE_5 {
             categoryBtn.frame = CGRectMake(0, 2, 320, 43)
         }
         else if DeviceType.IS_IPHONE_6 {
-            categoryBtn.frame = CGRectMake(10, 5, 50, 20)
+            categoryBtn.frame = CGRectMake(0, 2, 370, 43)
         }
         else if DeviceType.IS_IPHONE_6P {
-            categoryBtn.frame = CGRectMake(10, 5, 50, 20)
+            categoryBtn.frame = CGRectMake(0, 2, 320, 43)
         }
         else if DeviceType.IS_IPAD {
-            categoryBtn.frame = CGRectMake(10, 5, 50, 20)
+            categoryBtn.frame = CGRectMake(0, 2, 320, 43)
         }
         else {
-            categoryBtn.frame = CGRectMake(10, 5, 50, 20)
+            categoryBtn.frame = CGRectMake(0, 2, 320, 43)
         }
         
         self.addSubview(self.categoryBtn)

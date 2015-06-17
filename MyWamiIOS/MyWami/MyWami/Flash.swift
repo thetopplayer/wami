@@ -142,12 +142,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         getFlashData()
      }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        flashTableView.registerClass(FlashTableViewCell.classForCoder(), forCellReuseIdentifier: "FlashTableViewCell")
-    }
-    
     // create menu
     let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
