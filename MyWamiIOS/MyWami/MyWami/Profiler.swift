@@ -320,8 +320,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             profilerTableView.rowHeight = 44
         }
         else if DeviceType.IS_IPHONE_6P {
-            profilerScrollView.frame = CGRectMake(1, 186, 413, 549)
-            profilerTableView.frame = CGRectMake(2, 4, 409, 546)
+            profilerScrollView.frame = CGRectMake(1, 178, 413, 557)
+            profilerTableView.frame = CGRectMake(2, 2, 409, 554)
             profilerTableView.rowHeight = 44
         }
         else if DeviceType.IS_IPAD {

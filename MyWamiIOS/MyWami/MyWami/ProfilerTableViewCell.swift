@@ -31,7 +31,7 @@ class ProfilerTableViewCell: UITableViewCell  {
             categoryBtn.frame = CGRectMake(0, 2, 370, 43)
         }
         else if DeviceType.IS_IPHONE_6P {
-            categoryBtn.frame = CGRectMake(0, 2, 320, 43)
+            categoryBtn.frame = CGRectMake(0, 2, 412, 43)
         }
         else if DeviceType.IS_IPAD {
             categoryBtn.frame = CGRectMake(0, 2, 320, 43)
