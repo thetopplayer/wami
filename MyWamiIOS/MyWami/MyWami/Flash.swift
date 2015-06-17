@@ -95,8 +95,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         self.contactNameText.text = self.firstName + " " + self.lastName
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
-            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+            flashScrollView.frame = CGRectMake(1, 186, 319, 294)
+            flashTableView.frame = CGRectMake(2, 4, 315, 287)
+            flashTableView.rowHeight = 25
         }
         else if DeviceType.IS_IPHONE_5 {
             flashScrollView.frame = CGRectMake(1, 186, 319, 381)
@@ -109,8 +110,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
             flashTableView.rowHeight = 25
         }
         else if DeviceType.IS_IPHONE_6P {
-            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
-            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+            flashScrollView.frame = CGRectMake(1, 186, 413, 549)
+            flashTableView.frame = CGRectMake(2, 4, 409, 546)
+            flashTableView.rowHeight = 25
         }
         else if DeviceType.IS_IPAD {
             flashScrollView.frame = CGRectMake(1, 186, 319, 381)
