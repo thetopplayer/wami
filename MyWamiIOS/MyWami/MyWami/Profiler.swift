@@ -207,7 +207,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
-//            return
         }
         else {
             if let numCategories: Int! = jsonData["identity_profiler_data"].array?.count {

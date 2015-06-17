@@ -32,7 +32,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     @IBOutlet var profileNameText: UITextField!
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var flashTableView: UITableView!
+//    @IBOutlet var flashTableView: UITableView!
     @IBOutlet var newFlashButton: UIButton!
     
     @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
@@ -66,7 +66,9 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     func closeNewFlashDialog() {
         newFlashView.removeFromSuperview()
     }
-        
+    
+    var flashTableView: UITableView = UITableView()
+    var flashScrollView = UIScrollView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,9 +94,27 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         self.profileNameText.text = self.profileName
         self.contactNameText.text = self.firstName + " " + self.lastName
         
-        flashTableView.dataSource = self
+        
+        flashScrollView.frame = CGRectMake(1, 186, 319, 381)
+        flashTableView.frame = CGRectMake(2, 4, 315, 374)
+        
+        flashScrollView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        flashScrollView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        flashScrollView.layer.borderWidth = 1.5
+        
+        flashTableView.rowHeight = 25
+        flashTableView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
+        flashTableView.layer.borderWidth = 1.0
         flashTableView.delegate = self
-        self.flashTableView.rowHeight = 25
+        flashTableView.dataSource = self
+        flashTableView.registerClass(FlashTableViewCell.self, forCellReuseIdentifier: "FlashTableViewCell")
+        flashScrollView.addSubview(flashTableView)
+        
+        view.addSubview(flashScrollView)
+        
+//        flashTableView.dataSource = self
+//        flashTableView.delegate = self
+//        self.flashTableView.rowHeight = 25
         
         if userIdentityProfileId != identityProfileId {
             newFlashButton.hidden = true
