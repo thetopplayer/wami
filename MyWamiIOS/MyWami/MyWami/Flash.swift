@@ -94,15 +94,37 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         self.profileNameText.text = self.profileName
         self.contactNameText.text = self.firstName + " " + self.lastName
         
-        
-        flashScrollView.frame = CGRectMake(1, 186, 319, 381)
-        flashTableView.frame = CGRectMake(2, 4, 315, 374)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
+            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
+            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+            flashTableView.rowHeight = 25
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            flashScrollView.frame = CGRectMake(1, 186, 373, 480)
+            flashTableView.frame = CGRectMake(2, 4, 369, 477)
+            flashTableView.rowHeight = 25
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
+            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+        }
+        else if DeviceType.IS_IPAD {
+            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
+            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+        }
+        else {
+            flashScrollView.frame = CGRectMake(1, 186, 319, 381)
+            flashTableView.frame = CGRectMake(2, 4, 315, 374)
+        }
         
         flashScrollView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
         flashScrollView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         flashScrollView.layer.borderWidth = 1.5
         
-        flashTableView.rowHeight = 25
         flashTableView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
         flashTableView.layer.borderWidth = 1.0
         flashTableView.delegate = self
