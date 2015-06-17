@@ -14,7 +14,6 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var profileNameText: UITextField!
     @IBOutlet var contactNameText: UITextField!
-    @IBOutlet var profilerTableView: UITableView!
     @IBOutlet var headerView: UIView!
     
     // Process categories
@@ -23,7 +22,10 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var fileName = ""
     var fileLocation = ""
     var player = AVPlayer()
-    @IBAction func categoryBtnPressed(sender: AnyObject) {
+    
+    var sender = UIButton()
+    func categoryBtnPressed(sender: UIButton) {
+        self.sender = sender
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.profilerTableView)
         var indexPath: NSIndexPath = self.profilerTableView.indexPathForRowAtPoint(btnPos)!
         let row = indexPath.row
@@ -48,6 +50,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             showImageViewer()
         }
     }
+    
     var profilerAudioViewer = ProfilerAudioViewer()
     var profilerAudioViewerDialog = UIView()
     func showAudioViewer () {
@@ -174,6 +177,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var segue = UIStoryboardSegue()
     var showFlashBtn = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
 
+    var profilerTableView: UITableView = UITableView()
+    var profilerScrollView = UIScrollView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -328,6 +333,13 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         view.addSubview(showFlashBtn)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        profilerTableView.registerClass(ProfilerTableViewCell.classForCoder(), forCellReuseIdentifier: "ProfilerTableViewCell")
+    }
+
+    
     func showFlash() {
         menuView.hidden = true
         performSegueWithIdentifier("showFlash", sender: nil)
@@ -470,6 +482,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         cell.categoryBtn.setTitle(category, forState: UIControlState.Normal)
         cell.categoryBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         cell.categoryBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+        cell.categoryBtn.addTarget(self, action: "categoryBtnPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return cell
     }

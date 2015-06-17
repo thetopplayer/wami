@@ -32,7 +32,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     @IBOutlet var profileNameText: UITextField!
     @IBOutlet var contactNameText: UITextField!
     @IBOutlet var profileImageView: UIImageView!
-//    @IBOutlet var flashTableView: UITableView!
     @IBOutlet var newFlashButton: UIButton!
     
     @IBAction func refreshFlashBtnPressed(sender: AnyObject) {
@@ -135,10 +134,6 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         flashScrollView.addSubview(flashTableView)
         
         view.addSubview(flashScrollView)
-        
-//        flashTableView.dataSource = self
-//        flashTableView.delegate = self
-//        self.flashTableView.rowHeight = 25
         
         if userIdentityProfileId != identityProfileId {
             newFlashButton.hidden = true
