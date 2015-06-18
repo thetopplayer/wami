@@ -16,64 +16,64 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
     var numImage = 0
     
     var imageTableView: UITableView = UITableView()
-    var profilerImageView = UIScrollView()
-    func profilerImageViewerDialog(profilerImageView: UIScrollView, imageProfilerModels: [ImageProfilerModel], closeBtn: UIButton) -> UIView {
-        self.profilerImageView = profilerImageView
+    var imageScrollView = UIScrollView()
+    func profilerImageViewerDialog(imageScrollView: UIScrollView, imageProfilerModels: [ImageProfilerModel], closeBtn: UIButton) -> UIView {
+        self.imageScrollView = imageScrollView
         numImage = imageProfilerModels.count
         self.imageProfilerModels = imageProfilerModels
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.profilerImageView.frame = CGRectMake(2, 2, 316, 298)
+            self.imageScrollView.frame = CGRectMake(2, 2, 316, 298)
             imageTableView.frame = CGRectMake(5, 5, 305, 243)
             closeBtn.frame = CGRectMake(135, 260, 60, 20)
         }
         else if DeviceType.IS_IPHONE_5 {
-            self.profilerImageView.frame = CGRectMake(2, 2, 316, 385)
-            imageTableView.frame = CGRectMake(5, 5, 305, 320)
+            self.imageScrollView.frame = CGRectMake(2, 2, 312, 385)
+            imageTableView.frame = CGRectMake(3, 5, 307, 320)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.profilerImageView.frame = CGRectMake(2, 2, 370, 485)
+            self.imageScrollView.frame = CGRectMake(2, 2, 370, 485)
             imageTableView.frame = CGRectMake(5, 5, 365, 420)
             closeBtn.frame = CGRectMake(155, 448, 60, 20)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.profilerImageView.frame = CGRectMake(2, 2, 410, 555)
+            self.imageScrollView.frame = CGRectMake(2, 2, 410, 555)
             imageTableView.frame = CGRectMake(5, 5, 400, 500)
             closeBtn.frame = CGRectMake(180, 520, 60, 20)
         }
         else if DeviceType.IS_IPAD {
-            self.profilerImageView.frame = CGRectMake(2, 2, 316, 385)
+            self.imageScrollView.frame = CGRectMake(2, 2, 316, 385)
             imageTableView.frame = CGRectMake(5, 5, 305, 320)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
         }
         else {
-            self.profilerImageView.frame = CGRectMake(2, 2, 316, 385)
+            self.imageScrollView.frame = CGRectMake(2, 2, 316, 385)
             imageTableView.frame = CGRectMake(5, 5, 305, 320)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
         }
         
-        self.profilerImageView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        self.profilerImageView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        self.profilerImageView.layer.borderWidth = 1.5
+        self.imageScrollView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        self.imageScrollView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        self.imageScrollView.layer.borderWidth = 1.5
         
         imageTableView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(1.0).CGColor
         imageTableView.layer.borderWidth = 1.0
         imageTableView.delegate = self
         imageTableView.dataSource = self
         imageTableView.registerClass(ImageTableViewCell.self, forCellReuseIdentifier: "ImageTableViewCell")
-        self.profilerImageView.addSubview(imageTableView)
+        self.imageScrollView.addSubview(imageTableView)
         
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        self.profilerImageView.addSubview(closeBtn)
+        self.imageScrollView.addSubview(closeBtn)
         
         self.imageTableView.rowHeight = 70.0
         
-        return profilerImageView
+        return self.imageScrollView
     }
     
     func tableView(imageTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,34 +156,34 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         showInWebViewer(imageFile)
     }
     
-    var scrollViewer = UIScrollView()
     var webView = UIWebView()
+    var scrollWebView = UIScrollView()
     func showInWebViewer (inFile: String) {
-        scrollViewer.frame = CGRectMake(2, 2, 316, 385)
-        scrollViewer.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        scrollViewer.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        scrollViewer.layer.borderWidth = 1.5
+        scrollWebView.frame = CGRectMake(2, 2, 312, 385)
+        scrollWebView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
+        scrollWebView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        scrollWebView.layer.borderWidth = 1.5
+
         
-        webView.frame = CGRectMake(5, 0, 306, 332)
+        webView.frame = CGRectMake(2, 3, 308, 320)
         webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
-        webView.delegate = self;
-        scrollViewer.addSubview(webView)
+        webView.delegate = self
+        scrollWebView.addSubview(webView)
         
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        var closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(125, 348, 60, 20)
+        closeBtn.frame = CGRectMake(135, 348, 60, 20)
         closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
-        scrollViewer.addSubview(closeBtn)
+        scrollWebView.addSubview(closeBtn)
         
-        profilerImageView.addSubview(scrollViewer)
+        imageScrollView.addSubview(scrollWebView)
     }
     func closeWebViewer() {
-        self.webView.removeFromSuperview()
-        self.scrollViewer.removeFromSuperview()
+        scrollWebView.removeFromSuperview()
     }
     
     var moreInfoView = UIView()
@@ -204,7 +204,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.addTarget(self, action: "closeMoreInfoDialog", forControlEvents: UIControlEvents.TouchUpInside)
         self.moreInfoViewDialog = profilerImageMoreInfo.moreInfoDialog(moreInfoView, imageFileDecription: imageFileDecription,
                                             imageName: imageName, imageFileName: imageFileName, closeBtn: closeBtn)
-        profilerImageView.addSubview(self.moreInfoViewDialog)
+        imageScrollView.addSubview(self.moreInfoViewDialog)
     }
     func closeMoreInfoDialog() {
         self.moreInfoViewDialog.removeFromSuperview()

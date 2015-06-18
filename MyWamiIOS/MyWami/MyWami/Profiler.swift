@@ -68,15 +68,14 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var profilerImageViewer = ProfilerImageViewer()
     var profilerImageViewerDialog = UIView()
     func showImageViewer() {
-        var profilerImageView = UIScrollView()
-        let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        var imageScrollView = UIScrollView()
+        var closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeProfilerImageViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        self.profilerImageViewerDialog = profilerImageViewer.profilerImageViewerDialog(profilerImageView, imageProfilerModels: imageProfilerModels, closeBtn: closeBtn)
+        profilerImageViewerDialog = profilerImageViewer.profilerImageViewerDialog(imageScrollView, imageProfilerModels: imageProfilerModels, closeBtn: closeBtn)
         profilerTableView.addSubview(self.profilerImageViewerDialog)
-        
     }
     func closeProfilerImageViewerDialog() {
-        self.profilerImageViewerDialog.removeFromSuperview()
+        profilerImageViewerDialog.removeFromSuperview()
     }
     
     var scrollViewer = UIScrollView()
@@ -305,8 +304,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            profilerScrollView.frame = CGRectMake(1, 186, 319, 294)
-            profilerTableView.frame = CGRectMake(2, 4, 315, 287)
+            profilerScrollView.frame = CGRectMake(1, 178, 319, 301)
+            profilerTableView.frame = CGRectMake(2, 2, 315, 295)
             profilerTableView.rowHeight = 44
         }
         else if DeviceType.IS_IPHONE_5 {
