@@ -23,13 +23,13 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         self.imageProfilerModels = imageProfilerModels
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.imageScrollView.frame = CGRectMake(2, 2, 316, 298)
-            imageTableView.frame = CGRectMake(5, 5, 305, 243)
+            self.imageScrollView.frame = CGRectMake(2, 2, 316, 300)
+            imageTableView.frame = CGRectMake(2, 3, 309, 247)
             closeBtn.frame = CGRectMake(135, 260, 60, 20)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.imageScrollView.frame = CGRectMake(2, 2, 312, 385)
-            imageTableView.frame = CGRectMake(3, 5, 307, 320)
+            imageTableView.frame = CGRectMake(3, 3, 307, 320)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
         }
         else if DeviceType.IS_IPHONE_6 {
@@ -39,7 +39,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         }
         else if DeviceType.IS_IPHONE_6P {
             self.imageScrollView.frame = CGRectMake(2, 2, 410, 555)
-            imageTableView.frame = CGRectMake(5, 5, 400, 500)
+            imageTableView.frame = CGRectMake(3, 3, 402, 502)
             closeBtn.frame = CGRectMake(180, 520, 60, 20)
         }
         else if DeviceType.IS_IPAD {
@@ -159,24 +159,50 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
     var webView = UIWebView()
     var scrollWebView = UIScrollView()
     func showInWebViewer (inFile: String) {
-        scrollWebView.frame = CGRectMake(2, 2, 312, 385)
-        scrollWebView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        scrollWebView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        scrollWebView.layer.borderWidth = 1.5
-
+        var closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         
-        webView.frame = CGRectMake(2, 3, 308, 320)
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            scrollWebView.frame = CGRectMake(1, 2, 312, 290)
+            webView.frame = CGRectMake(2, 1, 308, 247)
+            closeBtn.frame = CGRectMake(134, 258, 60, 20)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            scrollWebView.frame = CGRectMake(1, 2, 312, 385)
+            webView.frame = CGRectMake(2, 1, 308, 322)
+            closeBtn.frame = CGRectMake(135, 348, 60, 20)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            scrollWebView.frame = CGRectMake(1, 2, 367, 485)
+            webView.frame = CGRectMake(2, 1, 363, 422)
+            closeBtn.frame = CGRectMake(154, 446, 60, 20)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            scrollWebView.frame = CGRectMake(1, 2, 407, 565)
+            webView.frame = CGRectMake(2, 1, 403, 502)
+            closeBtn.frame = CGRectMake(179, 518, 60, 20)
+        }
+        else if DeviceType.IS_IPAD {
+            scrollWebView.frame = CGRectMake(1, 2, 312, 385)
+            webView.frame = CGRectMake(2, 1, 308, 322)
+            closeBtn.frame = CGRectMake(135, 348, 60, 20)
+        }
+        else {
+            scrollWebView.frame = CGRectMake(1, 2, 312, 385)
+            webView.frame = CGRectMake(2, 1, 308, 322)
+            closeBtn.frame = CGRectMake(135, 348, 60, 20)
+        }
+        
+        webView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        webView.layer.borderWidth = 1.5
         webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
         webView.delegate = self
         scrollWebView.addSubview(webView)
         
-        var closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.setTitle("Close", forState: UIControlState.Normal)
         closeBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        closeBtn.frame = CGRectMake(135, 348, 60, 20)
         closeBtn.addTarget(self, action: "closeWebViewer", forControlEvents: UIControlEvents.TouchUpInside)
         scrollWebView.addSubview(closeBtn)
         

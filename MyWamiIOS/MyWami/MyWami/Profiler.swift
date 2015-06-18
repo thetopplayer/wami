@@ -304,8 +304,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            profilerScrollView.frame = CGRectMake(1, 178, 319, 301)
-            profilerTableView.frame = CGRectMake(2, 2, 315, 295)
+            profilerScrollView.frame = CGRectMake(1, 178, 319, 302)
+            profilerTableView.frame = CGRectMake(2, 2, 315, 296)
             profilerTableView.rowHeight = 44
         }
         else if DeviceType.IS_IPHONE_5 {
