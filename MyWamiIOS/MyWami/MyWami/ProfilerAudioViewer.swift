@@ -24,22 +24,22 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
             self.profilerAudioView.frame = CGRectMake(2, 2, 316, 298)
-            audioTableView.frame = CGRectMake(5, 5, 305, 243)
+            audioTableView.frame = CGRectMake(2, 2, 308, 246)
             closeBtn.frame = CGRectMake(135, 260, 60, 20)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.profilerAudioView.frame = CGRectMake(2, 2, 316, 385)
-            audioTableView.frame = CGRectMake(5, 5, 305, 320)
+            audioTableView.frame = CGRectMake(2, 2, 308, 323)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
         }
         else if DeviceType.IS_IPHONE_6 {
             self.profilerAudioView.frame = CGRectMake(2, 2, 370, 485)
-            audioTableView.frame = CGRectMake(5, 5, 365, 420)
+            audioTableView.frame = CGRectMake(2, 2, 368, 423)
             closeBtn.frame = CGRectMake(155, 448, 60, 20)
         }
         else if DeviceType.IS_IPHONE_6P {
             self.profilerAudioView.frame = CGRectMake(2, 2, 410, 555)
-            audioTableView.frame = CGRectMake(5, 5, 400, 500)
+            audioTableView.frame = CGRectMake(2, 2, 403, 503)
             closeBtn.frame = CGRectMake(180, 520, 60, 20)
         }
         else if DeviceType.IS_IPAD {
