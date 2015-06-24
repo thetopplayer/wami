@@ -157,11 +157,16 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
+        
+        var verticalPos = view.convertRect(view.frame, fromView:menuView)
+
+        
         menuView.frame = CGRectMake(130, 2, 180, 155)
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.0
         view.addSubview(menuView)
+        
         
         menu.toggleMenu(menuView)
         

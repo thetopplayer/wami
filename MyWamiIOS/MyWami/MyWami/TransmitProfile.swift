@@ -154,7 +154,7 @@ class TransmitProfile: UIViewController {
         var transmit_to_profile = profileNameTxt.text
         var transmit_to_email = emailAddressTxt.text
         if transmit_to_profile == "" && transmit_to_email == "" {
-            self.uview.makeToast(message: "Pleas provide a Profile Name and/or Email Address to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.uview.makeToast(message: "Please provide a Profile Name and/or Email Address to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
         if transmit_to_profile != "" {
