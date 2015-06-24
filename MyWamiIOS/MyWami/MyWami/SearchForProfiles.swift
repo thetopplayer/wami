@@ -31,28 +31,36 @@ class SearchForProfiles: UIViewController {
     
     var dropdownView = UIView()
     var searchProfileView = UIView()
+    var verticalOffset = CGFloat()
     
-    func searchProfilesDialog(searchProfileView: UIView, closeBtn: UIButton, searchBtn: UIButton) -> UIView {
+    func searchProfilesDialog(searchProfileView: UIView, closeBtn: UIButton, searchBtn: UIButton, vertcalOffset: CGFloat) -> UIView {
         self.searchProfileView = searchProfileView
         self.entireNetwork = false
+        self.verticalOffset = vertcalOffset
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            searchProfileView.frame = CGRectMake(50, 30, 230, 285)
+            self.verticalOffset = self.verticalOffset + 30
+            searchProfileView.frame = CGRectMake(50, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPHONE_5 {
-            searchProfileView.frame = CGRectMake(50, 40, 230, 285)
+            self.verticalOffset = self.verticalOffset + 40
+            searchProfileView.frame = CGRectMake(50, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPHONE_6 {
-            searchProfileView.frame = CGRectMake(75, 40, 230, 285)
+            self.verticalOffset = self.verticalOffset + 40
+            searchProfileView.frame = CGRectMake(75, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPHONE_6P {
-            searchProfileView.frame = CGRectMake(85, 40, 230, 285)
+            self.verticalOffset = self.verticalOffset + 40
+            searchProfileView.frame = CGRectMake(85, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPAD {
-            searchProfileView.frame = CGRectMake(35, 65, 230, 285)
+            self.verticalOffset = self.verticalOffset + 65
+            searchProfileView.frame = CGRectMake(35, self.verticalOffset, 230, 285)
         }
         else {
-            searchProfileView.frame = CGRectMake(35, 65, 230, 285)
+            self.verticalOffset = self.verticalOffset + 65
+            searchProfileView.frame = CGRectMake(35, self.verticalOffset, 230, 285)
         }
         
         searchProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)

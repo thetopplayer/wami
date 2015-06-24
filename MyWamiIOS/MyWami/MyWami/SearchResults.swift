@@ -129,7 +129,8 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         closeBtn.addTarget(self, action: "closeSearchForProfilesDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let searchBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         searchBtn.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
-        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn)
+        var verticalOffset = CGFloat(50.0)
+        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn, vertcalOffset: verticalOffset)
         view.addSubview(self.searchForProfilesViewDialog)
         menu.toggleMenu(menuView)
     }
