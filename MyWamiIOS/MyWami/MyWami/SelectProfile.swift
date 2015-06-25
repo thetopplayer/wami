@@ -17,8 +17,6 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
     var containerView: UIView!
     var numProfiles = 0
     var profileModels = [ProfileModel?]()
-//    var checkbox: WamiCheckBox!
-//    var checkBoxes = [WamiCheckBox?]()
     var radioBtn: WamiRadioBtn2!
     var radioBtns = [WamiRadioBtn2?]()
     var identityProfileId = 0
@@ -29,29 +27,30 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
         self.radioBtns.removeAll()
     }
     
-    func selectProfileDialog(selectProfileView: UIView, closeBtn: UIButton, selectBtn: UIButton) -> UIView {
+    var verticalPos: CGFloat = 0
+    func selectProfileDialog(selectProfileView: UIView, closeBtn: UIButton, selectBtn: UIButton, verticalPos: CGFloat) -> UIView {
         initSelect()
         getProfileList()
     
         self.selectProfileView = selectProfileView
-        
+        self.verticalPos = verticalPos + 40
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.selectProfileView.frame = CGRectMake(45, 30, 240, 300)
+            self.selectProfileView.frame = CGRectMake(45, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_5 {
-            self.selectProfileView.frame = CGRectMake(40, 40, 240, 300)
+            self.selectProfileView.frame = CGRectMake(40, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.selectProfileView.frame = CGRectMake(65, 40, 240, 300)
+            self.selectProfileView.frame = CGRectMake(65, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.selectProfileView.frame = CGRectMake(80, 40, 240, 300)
+            self.selectProfileView.frame = CGRectMake(80, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPAD {
-            self.selectProfileView.frame = CGRectMake(35, 65, 250, 422)
+            self.selectProfileView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
         else {
-            self.selectProfileView.frame = CGRectMake(35, 65, 250, 422)
+            self.selectProfileView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
         
         selectProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
@@ -112,11 +111,6 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
         
         scrollView.addSubview(containerView)
         selectProfileView.addSubview(scrollView)
-    
-  //      line = UILabel()
-   //     line.frame = CGRectMake(10, 250, 220, 1)
-     //   line.backgroundColor = UIColor.blackColor()
-     //   selectProfileView.addSubview(line)
         
         selectBtn.setTitle("Select", forState: UIControlState.Normal)
         selectBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)

@@ -156,11 +156,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     let menu = Menu()
+    var verticalPos: CGFloat = 0
     func showMenu(sender: UIBarButtonItem) {
         
         let currYpos = tableView.contentOffset.y
-        var verticalPos: CGFloat = currYpos + CGFloat(66)
-              
+        verticalPos = currYpos + CGFloat(66)
+        
         menuView.frame = CGRectMake(130, verticalPos, 180, 155)
         menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
         menuView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(1.0).CGColor
@@ -261,9 +262,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let selectBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         selectBtn.addTarget(self, action: "selectProfileCollection", forControlEvents: UIControlEvents.TouchUpInside)
-    
-        self.selectProfileViewDialog = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn)
-        
+        self.selectProfileViewDialog = selectProfile.selectProfileDialog(selectProfileView, closeBtn: closeBtn, selectBtn: selectBtn, verticalPos: verticalPos)
         view.addSubview(self.selectProfileViewDialog)
         menu.toggleMenu(menuView)
     }
@@ -295,7 +294,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let filterCollectionBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         filterCollectionBtn.addTarget(self, action: "doFilter", forControlEvents: UIControlEvents.TouchUpInside)
         
-        if let filterCollectionViewDialog = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId) {
+        if let filterCollectionViewDialog = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId, verticalPos: verticalPos) {
             self.filterCollectionViewDialog = filterCollectionViewDialog
             view.addSubview(filterCollectionViewDialog)
             menu.toggleMenu(menuView)
@@ -348,7 +347,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let searchBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         searchBtn.addTarget(self, action: "search", forControlEvents: UIControlEvents.TouchUpInside)
         var verticalOffset = CGFloat(0.0)
-        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn, vertcalOffset: verticalOffset)
+        self.searchForProfilesViewDialog = searchForProfiles.searchProfilesDialog(searchForProfilesView, closeBtn: closeBtn, searchBtn: searchBtn, vertcalOffset: verticalOffset, verticalPos: verticalPos)
         view.addSubview(self.searchForProfilesViewDialog)
         menu.toggleMenu(menuView)
     }

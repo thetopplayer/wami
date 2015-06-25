@@ -28,9 +28,12 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         self.radioBtns.removeAll()
     }
     
-    func filterCollectionDialog(filterCollectionView: UIView, closeBtn: UIButton, filterCollectionBtn: UIButton, userIdentityProfileId: String) -> UIView? {
+    var verticalPos: CGFloat = 0
+    func filterCollectionDialog(filterCollectionView: UIView, closeBtn: UIButton, filterCollectionBtn: UIButton, userIdentityProfileId: String, verticalPos: CGFloat) -> UIView? {
         initSelect()
+        
         self.filterCollectionView = filterCollectionView
+        self.verticalPos = verticalPos + 40
         
         var retCode = getGroupList(userIdentityProfileId)
         if retCode == -1 {
@@ -38,22 +41,22 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         }
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.filterCollectionView.frame = CGRectMake(45, 30, 240, 300)
+            self.filterCollectionView.frame = CGRectMake(45, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_5 {
-            self.filterCollectionView.frame = CGRectMake(40, 40, 240, 300)
+            self.filterCollectionView.frame = CGRectMake(40, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.filterCollectionView.frame = CGRectMake(65, 40, 240, 300)
+            self.filterCollectionView.frame = CGRectMake(65, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.filterCollectionView.frame = CGRectMake(80, 40, 240, 300)
+            self.filterCollectionView.frame = CGRectMake(80, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPAD {
-            self.filterCollectionView.frame = CGRectMake(35, 65, 250, 422)
+            self.filterCollectionView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
         else {
-            self.filterCollectionView.frame = CGRectMake(35, 65, 250, 422)
+            self.filterCollectionView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
     
         filterCollectionView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
@@ -114,11 +117,6 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
         
         scrollView.addSubview(containerView)
         filterCollectionView.addSubview(scrollView)
-        
-//        line = UILabel()
-//        line.frame = CGRectMake(10, 165, 220, 1)
-//        line.backgroundColor = UIColor.blackColor()
-//        filterCollectionView.addSubview(line)
         
         filterCollectionBtn.setTitle("Filter", forState: UIControlState.Normal)
         filterCollectionBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)

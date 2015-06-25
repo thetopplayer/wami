@@ -33,10 +33,10 @@ class SearchForProfiles: UIViewController {
     var searchProfileView = UIView()
     var verticalOffset = CGFloat()
     
-    func searchProfilesDialog(searchProfileView: UIView, closeBtn: UIButton, searchBtn: UIButton, vertcalOffset: CGFloat) -> UIView {
+    func searchProfilesDialog(searchProfileView: UIView, closeBtn: UIButton, searchBtn: UIButton, vertcalOffset: CGFloat, verticalPos: CGFloat) -> UIView {
         self.searchProfileView = searchProfileView
         self.entireNetwork = false
-        self.verticalOffset = vertcalOffset
+        self.verticalOffset = vertcalOffset + verticalPos
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
             self.verticalOffset = self.verticalOffset + 30
