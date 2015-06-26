@@ -160,6 +160,15 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     let menu = Menu()
+    var selectCollectionBtn = UIButton()
+    var filterByGroupBtn = UIButton()
+    var searchProfilesBtn = UIButton()
+    var transmitBtn = UIButton()
+    
+    var selectCollectionPressed = false
+    var filterByGroupPressed = false
+    var searchProfilesPressed = false
+    var transmitPressed = false
     func showMenu(sender: UIBarButtonItem) {
         
         let currYpos = tableView.contentOffset.y
@@ -173,31 +182,39 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
         menu.toggleMenu(menuView)
         
-        var selectCollectionBtn = menu.setMenuBtnAttributes("Select a Profile Collection...")
-        selectCollectionBtn.addTarget(self, action: "selectProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
-        selectCollectionBtn.frame = CGRectMake(4, 0, 175, 30)
-        menuView.addSubview(selectCollectionBtn)
+        if selectCollectionPressed == false {
+            selectCollectionBtn = menu.setMenuBtnAttributes("Select a Profile Collection...")
+            selectCollectionBtn.addTarget(self, action: "selectProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
+            selectCollectionBtn.frame = CGRectMake(4, 0, 175, 30)
+            menuView.addSubview(selectCollectionBtn)
+        }
         
-        var filterByGroupBtn = menu.setMenuBtnAttributes("Filter Collection by Group...")
-        filterByGroupBtn.addTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
-        filterByGroupBtn.frame = CGRectMake(4, 25, 175, 30)
-        menuView.addSubview(filterByGroupBtn)
+        if filterByGroupPressed == false {
+            filterByGroupBtn = menu.setMenuBtnAttributes("Filter Collection by Group...")
+            filterByGroupBtn.addTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
+            filterByGroupBtn.frame = CGRectMake(4, 25, 175, 30)
+            menuView.addSubview(filterByGroupBtn)
+        }
         
-        var transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
-        transmitBtn.addTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitBtn.frame = CGRectMake(-20, 50, 175, 30)
-        menuView.addSubview(transmitBtn)
+        if transmitPressed == false {
+            transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
+            transmitBtn.addTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
+            transmitBtn.frame = CGRectMake(-20, 50, 175, 30)
+            menuView.addSubview(transmitBtn)
+        }
         
         var refeshListBtn = menu.setMenuBtnAttributes("Refresh Wami List")
         refeshListBtn.addTarget(self, action: "refeshListAction", forControlEvents: UIControlEvents.TouchUpInside)
         refeshListBtn.frame = CGRectMake(-24, 75, 175, 30)
         menuView.addSubview(refeshListBtn)
         
-        var searchProfilesBtn = menu.setMenuBtnAttributes("Search for Profiles...")
-        searchProfilesBtn.addTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-        searchProfilesBtn.frame = CGRectMake(-18, 100, 175, 30)
-        menuView.addSubview(searchProfilesBtn)
-        
+        if searchProfilesPressed == false {
+            searchProfilesBtn = menu.setMenuBtnAttributes("Search for Profiles...")
+            searchProfilesBtn.addTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
+            searchProfilesBtn.frame = CGRectMake(-18, 100, 175, 30)
+            menuView.addSubview(searchProfilesBtn)
+        }
+            
         var logoutBtn = menu.setMenuBtnAttributes("Logout")
         logoutBtn.addTarget(self, action: "logoutAction", forControlEvents: UIControlEvents.TouchUpInside)
         logoutBtn.frame = CGRectMake(-57, 125, 175, 30)
@@ -240,6 +257,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var transmitProfileViewDialog = UIView()
     let transmitProfile = TransmitProfile()
     func transmitProfileAction () {
+        
+        self.transmitBtn.showsTouchWhenHighlighted = false
+        self.transmitBtn.removeTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
+        self.transmitBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+        transmitPressed = true
+        
         var transmitProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
@@ -251,6 +274,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     func closeTransmitProfileDialog() {
         self.transmitProfileViewDialog.removeFromSuperview()
+        transmitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        transmitPressed = false
     }
     func transmit() {
         transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId, numToTransmit: String(numProfilesToTransmit))
@@ -260,6 +285,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var selectProfile = SelectProfile()
     var selectProfileViewDialog = UIView()
     func selectProfileAction () {
+
+        selectCollectionBtn.showsTouchWhenHighlighted = false
+        selectCollectionBtn.removeTarget(self, action: "selectProfileAction", forControlEvents: UIControlEvents.TouchUpInside)
+        selectCollectionBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+        selectCollectionPressed = true
+      
         var selectProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeSelectProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
@@ -271,6 +302,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     func closeSelectProfileDialog() {
         self.selectProfileViewDialog.removeFromSuperview()
+        selectCollectionBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        selectCollectionPressed = false
     }
     func selectProfileCollection() {
         self.newIdentityProfileId = selectProfile.getNewIdentityProfileId()
@@ -291,6 +324,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var filterCollection = FilterCollection()
     var filterCollectionViewDialog = UIView()
     func filterByGroupAction () {
+        
+        filterByGroupBtn.showsTouchWhenHighlighted = false
+        filterByGroupBtn.removeTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
+        filterByGroupBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+        filterByGroupPressed = true
+        
         var filterCollectionView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeFilterCollectionDialog", forControlEvents: UIControlEvents.TouchUpInside)
@@ -331,6 +370,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     func closeFilterCollectionDialog() {
         self.filterCollectionViewDialog.removeFromSuperview()
+        filterByGroupBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        filterByGroupPressed = false
     }    
     
     func refeshListAction () {
@@ -344,6 +385,12 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var searchForProfiles = SearchForProfiles()
     var searchForProfilesViewDialog = UIView()
     func searchProfilesAction () {
+        
+        searchProfilesBtn.showsTouchWhenHighlighted = false
+        searchProfilesBtn.removeTarget(self, action: "searchProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
+        searchProfilesBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+        searchProfilesPressed = true
+        
         var searchForProfilesView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeSearchForProfilesDialog", forControlEvents: UIControlEvents.TouchUpInside)
@@ -356,6 +403,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     func closeSearchForProfilesDialog() {
         self.searchForProfilesViewDialog.removeFromSuperview()
+        searchProfilesBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        searchProfilesPressed = false
     }
     func search() {
         var searchIn = searchForProfiles.getSearchIn()

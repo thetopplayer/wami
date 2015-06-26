@@ -19,7 +19,7 @@ class Menu {
         menuBtn.showsTouchWhenHighlighted = true
         return menuBtn
     }
-    
+        
     func toggleMenu (menuView: UIView) {
         if menuView.hidden {
             menuView.hidden = false
