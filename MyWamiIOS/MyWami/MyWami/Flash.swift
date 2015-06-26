@@ -185,11 +185,12 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     var transmitProfileView = UIView()
     let transmitProfile = TransmitProfile()
     func transmitThisWamiAction () {
+        var verticalPos: CGFloat = 0
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)
+        transmitProfileView = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn, verticalPos: verticalPos)
         view.addSubview(transmitProfileView)
         menu.toggleMenu(menuView)
     }

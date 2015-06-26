@@ -24,6 +24,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     
     @IBOutlet var tableViewCell: ProfileListTableViewCell!
     
+    var verticalPos: CGFloat = 0
     @IBAction func transmitButtonPressed(sender: AnyObject) {
         menuView.hidden = false
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
@@ -31,6 +32,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let row = indexPath.row
         selectedIdentityProfileId = identityProfileIds[row]
         numProfilesToTransmit = 1
+        
+        let currYpos = tableView.contentOffset.y
+        verticalPos = currYpos + CGFloat(66)
         transmitProfileAction()
     }
 
@@ -156,7 +160,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     let menu = Menu()
-    var verticalPos: CGFloat = 0
     func showMenu(sender: UIBarButtonItem) {
         
         let currYpos = tableView.contentOffset.y
@@ -242,7 +245,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         closeBtn.addTarget(self, action: "closeTransmitProfileDialog", forControlEvents: UIControlEvents.TouchUpInside)
         let transmitBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         transmitBtn.addTarget(self, action: "transmit", forControlEvents: UIControlEvents.TouchUpInside)
-        self.transmitProfileViewDialog = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn)        
+        self.transmitProfileViewDialog = transmitProfile.transmitProfileDialog(transmitProfileView, closeBtn: closeBtn, transmitBtn: transmitBtn, verticalPos: verticalPos)
         view.addSubview(self.transmitProfileViewDialog)
         menu.toggleMenu(menuView)
     }

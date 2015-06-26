@@ -20,28 +20,30 @@ class TransmitProfile: UIViewController {
     
     var profileNameTxt = UITextField()
     var emailAddressTxt = UITextField()
-    func transmitProfileDialog(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton) -> UIView {
+    var verticalPos: CGFloat = 0
+    func transmitProfileDialog(transmitProfileView: UIView, closeBtn: UIButton, transmitBtn: UIButton, verticalPos: CGFloat) -> UIView {
         self.uview = transmitProfileView
+        self.verticalPos = verticalPos + 70
         
         getProfileNames()
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            transmitProfileView.frame = CGRectMake(45, 70, 240, 215)
+            transmitProfileView.frame = CGRectMake(45, self.verticalPos, 240, 215)
         }
         else if DeviceType.IS_IPHONE_5 {
-            transmitProfileView.frame = CGRectMake(45, 70, 240, 215)
+            transmitProfileView.frame = CGRectMake(45, self.verticalPos, 240, 215)
         }
         else if DeviceType.IS_IPHONE_6 {
-            transmitProfileView.frame = CGRectMake(65, 70, 240, 215)
+            transmitProfileView.frame = CGRectMake(65, self.verticalPos, 240, 215)
         }
         else if DeviceType.IS_IPHONE_6P {
-            transmitProfileView.frame = CGRectMake(80, 70, 240, 215)
+            transmitProfileView.frame = CGRectMake(80, self.verticalPos, 240, 215)
         }
         else if DeviceType.IS_IPAD {
-            transmitProfileView.frame = CGRectMake(35, 85, 250, 422)
+            transmitProfileView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
         else {
-            transmitProfileView.frame = CGRectMake(35, 85, 250, 422)
+            transmitProfileView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
 
         transmitProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
