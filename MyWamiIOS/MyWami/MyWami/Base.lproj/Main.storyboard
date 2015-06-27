@@ -217,6 +217,7 @@
                                     <outlet property="profileImage" destination="ETI-pj-BSK" id="kL7-vF-l3d"/>
                                     <outlet property="profileName" destination="cRf-m5-iwj" id="QOV-LE-fYK"/>
                                     <outlet property="profileNameTxt" destination="9qo-Ws-kLQ" id="DI1-9j-r5j"/>
+                                    <outlet property="transmitCellBtn" destination="hCY-ps-ldD" id="3pc-1Z-rER"/>
                                     <outlet property="wamiCheckBox" destination="0NE-XV-7Mg" id="4a8-Qw-PwX"/>
                                 </connections>
                             </tableViewCell>

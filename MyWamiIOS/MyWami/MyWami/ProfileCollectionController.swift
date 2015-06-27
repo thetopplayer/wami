@@ -25,7 +25,11 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     @IBOutlet var tableViewCell: ProfileListTableViewCell!
     
     var verticalPos: CGFloat = 0
+    var transmitCellBtnPressed = false
     @IBAction func transmitButtonPressed(sender: AnyObject) {
+        if transmitCellBtnPressed == true {
+            return
+        }
         menuView.hidden = false
         var btnPos: CGPoint = sender.convertPoint(CGPointZero, toView: self.tableView)
         var indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(btnPos)!
@@ -35,6 +39,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         
         let currYpos = tableView.contentOffset.y
         verticalPos = currYpos + CGFloat(66)
+        
         transmitProfileAction()
     }
 
@@ -203,6 +208,15 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             menuView.addSubview(transmitBtn)
         }
         
+        if transmitCellBtnPressed == true {
+            transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
+            transmitBtn.showsTouchWhenHighlighted = false
+            transmitBtn.removeTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
+            transmitBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+            transmitBtn.frame = CGRectMake(-20, 50, 175, 30)
+            menuView.addSubview(transmitBtn)
+        }
+        
         var refeshListBtn = menu.setMenuBtnAttributes("Refresh Wami List")
         refeshListBtn.addTarget(self, action: "refeshListAction", forControlEvents: UIControlEvents.TouchUpInside)
         refeshListBtn.frame = CGRectMake(-24, 75, 175, 30)
@@ -245,23 +259,24 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                 profilesToTransmit = true
             }
         }
-        if profilesToTransmit == true {
+        if profilesToTransmit == true {            
             numProfilesToTransmit = profileIndex
             selectedIdentityProfileId = selectedIdentityProfileId.substringToIndex(selectedIdentityProfileId.endIndex.predecessor())
             transmitProfileAction()
         }
         else {
-            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionDefault)
         }
     }
     var transmitProfileViewDialog = UIView()
     let transmitProfile = TransmitProfile()
     func transmitProfileAction () {
-        
+    
         self.transmitBtn.showsTouchWhenHighlighted = false
         self.transmitBtn.removeTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
         self.transmitBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
         transmitPressed = true
+        transmitCellBtnPressed = true
         
         var transmitProfileView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
@@ -275,7 +290,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     func closeTransmitProfileDialog() {
         self.transmitProfileViewDialog.removeFromSuperview()
         transmitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.transmitBtn.addTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
         transmitPressed = false
+        transmitCellBtnPressed = false
     }
     func transmit() {
         transmitProfile.transmit(userIdentityProfileId, identityProfileId: selectedIdentityProfileId, numToTransmit: String(numProfilesToTransmit))

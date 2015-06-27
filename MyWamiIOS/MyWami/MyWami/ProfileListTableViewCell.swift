@@ -13,4 +13,5 @@ class ProfileListTableViewCell: UITableViewCell  {
     @IBOutlet var profileImage: UIImageView!
     @IBOutlet var wamiCheckBox: WamiCheckBox!    
     @IBOutlet var infoExtendedButton: UIButton!
+    @IBOutlet var transmitCellBtn: UIButton!
 }
