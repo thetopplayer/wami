@@ -39,27 +39,27 @@ class SearchForProfiles: UIViewController {
         self.verticalOffset = vertcalOffset + verticalPos
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.verticalOffset = self.verticalOffset + 30
+            self.verticalOffset = self.verticalOffset + 20
             searchProfileView.frame = CGRectMake(50, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPHONE_5 {
-            self.verticalOffset = self.verticalOffset + 40
+            self.verticalOffset = self.verticalOffset + 30
             searchProfileView.frame = CGRectMake(50, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.verticalOffset = self.verticalOffset + 40
+            self.verticalOffset = self.verticalOffset + 30
             searchProfileView.frame = CGRectMake(75, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPHONE_6P {
-            self.verticalOffset = self.verticalOffset + 40
+            self.verticalOffset = self.verticalOffset + 30
             searchProfileView.frame = CGRectMake(85, self.verticalOffset, 230, 285)
         }
         else if DeviceType.IS_IPAD {
-            self.verticalOffset = self.verticalOffset + 65
+            self.verticalOffset = self.verticalOffset + 55
             searchProfileView.frame = CGRectMake(35, self.verticalOffset, 230, 285)
         }
         else {
-            self.verticalOffset = self.verticalOffset + 65
+            self.verticalOffset = self.verticalOffset + 55
             searchProfileView.frame = CGRectMake(35, self.verticalOffset, 230, 285)
         }
         

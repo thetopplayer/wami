@@ -146,8 +146,8 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
     let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
         menuView.frame = CGRectMake(157, 70, 150, 105)
-        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
-        menuView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.backgroundColor = UIColor(red: 0x61/255, green: 0x61/255, blue: 0x61/255, alpha: 0.90)
+        menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.0
         view.addSubview(menuView)
         

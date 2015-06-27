@@ -180,9 +180,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         verticalPos = currYpos + CGFloat(66)
         
         menuView.frame = CGRectMake(130, verticalPos, 180, 155)
-        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
-        menuView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.backgroundColor = UIColor(red: 0x61/255, green: 0x61/255, blue: 0x61/255, alpha: 0.90)
+        menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.0
+        
+//        menuView.frame = CGRectMake(130, verticalPos, 180, 155)
+//        menuView.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 0.95)
+//        menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+//        menuView.layer.borderWidth = 1.0
         view.addSubview(menuView)
         
         menu.toggleMenu(menuView)

@@ -211,8 +211,8 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     let menu = Menu()
     func showMenu(sender: UIBarButtonItem) {
         menuView.frame = CGRectMake(220, 65, 90, 55)
-        menuView.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.95)
-        menuView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.backgroundColor = UIColor(red: 0x61/255, green: 0x61/255, blue: 0x61/255, alpha: 0.90)
+        menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.0
         view.addSubview(menuView)
         

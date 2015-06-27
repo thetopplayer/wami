@@ -414,7 +414,7 @@
                                         <rect key="frame" x="10" y="71" width="121" height="102"/>
                                     </imageView>
                                     <textField contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="84a-H4-7DW">
-                                        <rect key="frame" x="137" y="108" width="142" height="15"/>
+                                        <rect key="frame" x="137" y="108" width="162" height="15"/>
                                         <color key="textColor" red="0.33480222129999998" green="0.75483349119999998" blue="0.71276731780000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -440,7 +440,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bec-9h-3K6">
-                                        <rect key="frame" x="137" y="86" width="142" height="15"/>
+                                        <rect key="frame" x="137" y="86" width="162" height="15"/>
                                         <color key="textColor" red="0.33480222129999998" green="0.75483349119999998" blue="0.71276731780000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -452,6 +452,15 @@
                                         </state>
                                         <connections>
                                             <segue destination="TYq-fB-qf4" kind="show" identifier="showProfiler" id="PUf-rL-qhD"/>
+                                        </connections>
+                                    </button>
+                                    <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndI-9A-nqP">
+                                        <rect key="frame" x="353" y="71" width="20" height="18"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="OdJ-tq-V23" kind="show" identifier="show_flash" id="d8g-yi-ep3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -652,7 +661,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Zw-rI-qOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="609" y="-1585"/>
+            <point key="canvasLocation" x="613" y="-1235"/>
         </scene>
         <!--Flash-->
         <scene sceneID="ydX-vs-iVy">
@@ -663,7 +672,7 @@
                         <viewControllerLayoutGuide type="bottom" id="7Rk-VM-HTm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="568" id="lzY-bt-tPb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HJz-n7-YQA">
@@ -756,4 +765,7 @@
         <image name="checkboxUnchecked" width="13" height="13"/>
         <image name="next_item_right" width="35" height="48"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="d8g-yi-ep3"/>
+    </inferredMetricsTieBreakers>
 </document>
