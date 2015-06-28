@@ -342,6 +342,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
     func showMenu(sender: UIBarButtonItem) {
         menuView.backgroundColor = UIColor(red: 0x61/255, green: 0x61/255, blue: 0x61/255, alpha: 0.90)
         menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+        menuView.layer.cornerRadius = 6.0 
         menuView.layer.borderWidth = 1.0
         menuView.frame = CGRectMake(153, 70, 150, 133)
         uiView.addSubview(menuView)
