@@ -11,8 +11,8 @@ import UIKit
 
 class Utilities {
     var IP = "http://localhost/MyWamiIOS/MyWami/MyWami/"
- //   var ASSETS_IP = "http://192.168.15.9:80/Wami/"
-    var ASSETS_IP = "http://192.168.0.100:80/Wami/"
+    var ASSETS_IP = "http://192.168.15.5:80/Wami/"
+//    var ASSETS_IP = "http://192.168.0.100:80/Wami/"
 //    var ASSETS_IP = "http://192.168.254.42:80/Wami/"
     var EMAIL_IP = "http://www.mywami.com/"
     var DB_NAME = "wamilocal.db"
@@ -50,4 +50,13 @@ struct DeviceType {
     static let IS_IPHONE_6          = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
     static let IS_IPHONE_6P         = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
     static let IS_IPAD              = UIDevice.currentDevice().userInterfaceIdiom == .Pad && ScreenSize.SCREEN_MAX_LENGTH == 1024.0
+}
+
+extension UIView {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.CGPath
+        self.layer.mask = mask
+    }
 }

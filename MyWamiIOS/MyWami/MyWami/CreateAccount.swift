@@ -29,9 +29,10 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         let horizontalPlacement = CGFloat(40)
         let verticalPlacement = CGFloat(31)
         
-        self.createAccountView.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 1.0)
-        self.createAccountView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        self.createAccountView.layer.borderWidth = 1.5
+        self.createAccountView.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 0.92)
+        self.createAccountView.layer.cornerRadius = 5.0
+        self.createAccountView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+        self.createAccountView.layer.borderWidth = 1.0
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
             self.createAccountView.frame = CGRectMake(35, 60, 250, 422)
@@ -59,6 +60,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 250, 25)
+        headingLbl.roundCorners(.TopLeft | .TopRight, radius: 5.0)
         self.createAccountView.addSubview(headingLbl)
         
         let descLbl1 = UILabel()
@@ -212,11 +214,6 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
         self.createAccountView.addSubview(textView)
         
         let verticalPlacement4 = CGFloat(231)
-        
-//        var line: UILabel = UILabel()
-//        line.frame = CGRectMake(10, verticalPlacement4 + 162, 230, 1)
-//        line.backgroundColor = UIColor.blackColor()
-//        self.createAccountView.addSubview(line)
         
         createNewAccountBtn.setTitle("Create", forState: UIControlState.Normal)
         createNewAccountBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
@@ -377,9 +374,8 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
     func getPassword() -> String {
         return self.passwordTxt.text
     }
-
-    
 }
+
 
 
 

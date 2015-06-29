@@ -688,7 +688,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXW-m6-elH">
-                                        <rect key="frame" x="145" y="76" width="67" height="24"/>
+                                        <rect key="frame" x="232" y="76" width="67" height="24"/>
                                         <color key="backgroundColor" red="0.33480222129999998" green="0.75483349119999998" blue="0.71276731780000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <state key="normal" title="New Flash">
@@ -700,7 +700,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggN-GR-CXg">
-                                        <rect key="frame" x="229" y="76" width="67" height="24"/>
+                                        <rect key="frame" x="145" y="76" width="67" height="24"/>
                                         <color key="backgroundColor" red="0.33480222129999998" green="0.75483349119999998" blue="0.71276731780000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <state key="normal" title="Refresh">

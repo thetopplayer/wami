@@ -190,10 +190,6 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         menuView.layer.borderWidth = 1.0
         
-//        menuView.frame = CGRectMake(130, verticalPos, 180, 155)
-//        menuView.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 0.95)
-//        menuView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
-//        menuView.layer.borderWidth = 1.0
         view.addSubview(menuView)
         
         menu.toggleMenu(menuView)
@@ -351,7 +347,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     // Filter collection
     var filterCollection = FilterCollection()
     var filterCollectionViewDialog = UIView()
-    func filterByGroupAction () {        
+    func filterByGroupAction () {
         var filterCollectionView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeFilterCollectionDialog", forControlEvents: UIControlEvents.TouchUpInside)

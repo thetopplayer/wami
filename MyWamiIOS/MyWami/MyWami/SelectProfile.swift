@@ -41,7 +41,7 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
             self.selectProfileView.frame = CGRectMake(40, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.selectProfileView.frame = CGRectMake(65, self.verticalPos, 240, 300)
+            self.selectProfileView.frame = CGRectMake(70, self.verticalPos, 240, 300)
         }
         else if DeviceType.IS_IPHONE_6P {
             self.selectProfileView.frame = CGRectMake(80, self.verticalPos, 240, 300)
@@ -53,17 +53,19 @@ class SelectProfile: UIViewController, UIScrollViewDelegate {
             self.selectProfileView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
         
-        selectProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        selectProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        selectProfileView.layer.borderWidth = 1.5
+        selectProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.95)
+        selectProfileView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+        selectProfileView.layer.cornerRadius = 5.0
+        selectProfileView.layer.borderWidth = 1.0
         
         let headingLbl = UILabel()
-        headingLbl.backgroundColor = UIColor.blackColor()
+        headingLbl.backgroundColor = UIColor.grayColor()
         headingLbl.textAlignment = NSTextAlignment.Center
         headingLbl.text = "Select Profile Collection"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 240, 30)
+        headingLbl.roundCorners(.TopLeft | .TopRight, radius: 5.0)
         selectProfileView.addSubview(headingLbl)
         
         self.scrollView = UIScrollView()

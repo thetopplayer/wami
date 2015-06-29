@@ -59,17 +59,19 @@ class FilterCollection: UIViewController, UIScrollViewDelegate {
             self.filterCollectionView.frame = CGRectMake(35, self.verticalPos, 250, 422)
         }
     
-        filterCollectionView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        filterCollectionView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        filterCollectionView.layer.borderWidth = 1.5
+        filterCollectionView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.95)
+        filterCollectionView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+        filterCollectionView.layer.cornerRadius = 5.0
+        filterCollectionView.layer.borderWidth = 1.0
         
         let headingLbl = UILabel()
-        headingLbl.backgroundColor = UIColor.blackColor()
+        headingLbl.backgroundColor = UIColor.grayColor()
         headingLbl.textAlignment = NSTextAlignment.Center
         headingLbl.text = "Filter Collection By Group"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 240, 30)
+        headingLbl.roundCorners(.TopLeft | .TopRight, radius: 5.0)
         filterCollectionView.addSubview(headingLbl)
     
         self.scrollView = UIScrollView()

@@ -564,7 +564,7 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         if retCode == 2 {
             var message = jsonData["group_message"].string
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+                self.view.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
         }
         else {

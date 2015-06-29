@@ -16,10 +16,6 @@ class Menu {
         menuBtn.titleLabel?.font = UIFont.systemFontOfSize(13)
         menuBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         menuBtn.backgroundColor = UIColor(red: 0x33/255, green: 0x33/255, blue: 0x33/255, alpha: 0.0)
-        
-//        menuBtn.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
-//        menuBtn.backgroundColor = UIColor(red: 0xff/255, green: 0xff/255, blue: 0xff/255, alpha: 0.0)
-        
         menuBtn.showsTouchWhenHighlighted = true
         return menuBtn
     }
