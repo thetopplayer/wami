@@ -41,7 +41,7 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
             self.createAccountView.frame = CGRectMake(35, 70, 250, 422)
         }
         else if DeviceType.IS_IPHONE_6 {
-            self.createAccountView.frame = CGRectMake(60, 85, 250, 422)
+            self.createAccountView.frame = CGRectMake(65, 85, 250, 422)
         }
         else if DeviceType.IS_IPHONE_6P {
             self.createAccountView.frame = CGRectMake(80, 75, 250, 422)

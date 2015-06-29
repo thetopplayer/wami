@@ -31,7 +31,7 @@ class NavigateTo: UIViewController {
            navigateToView.frame = CGRectMake(35, 65, 240, 230)
         }
                 
-        navigateToView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.95)
+        navigateToView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.92)
         navigateToView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         navigateToView.layer.cornerRadius = 5.0
         navigateToView.layer.borderWidth = 1.0

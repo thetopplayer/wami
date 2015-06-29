@@ -37,17 +37,19 @@ class FlashAnnouncement: UIViewController, UITextViewDelegate  {
         }
         
 //        newFlashView.frame = CGRectMake(45, 200, 240, 230)
-        newFlashView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        newFlashView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        newFlashView.layer.borderWidth = 1.5
+        newFlashView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.92)
+        newFlashView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+        newFlashView.layer.cornerRadius = 5.0
+        newFlashView.layer.borderWidth = 1.0
             
         let headingLbl = UILabel()
-        headingLbl.backgroundColor = UIColor.blackColor()
+        headingLbl.backgroundColor = UIColor.grayColor()
         headingLbl.textAlignment = NSTextAlignment.Center
         headingLbl.text = "New Flash Anncouncement"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 240, 30)
+        headingLbl.roundCorners(.TopLeft | .TopRight, radius: 5.0)
         newFlashView.addSubview(headingLbl)
             
         textView.font = UIFont.systemFontOfSize(12)

@@ -63,17 +63,19 @@ class SearchForProfiles: UIViewController {
             searchProfileView.frame = CGRectMake(35, self.verticalOffset, 230, 285)
         }
         
-        searchProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 1.0)
-        searchProfileView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
-        searchProfileView.layer.borderWidth = 1.5
+        searchProfileView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.92)
+        searchProfileView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
+        searchProfileView.layer.cornerRadius = 5.0
+        searchProfileView.layer.borderWidth = 1.0
         
         let headingLbl = UILabel()
-        headingLbl.backgroundColor = UIColor.blackColor()
+        headingLbl.backgroundColor = UIColor.grayColor()
         headingLbl.textAlignment = NSTextAlignment.Center
         headingLbl.text = "Search For Profiles"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 230, 30)
+        headingLbl.roundCorners(.TopLeft | .TopRight, radius: 5.0)
         searchProfileView.addSubview(headingLbl)
         
         let searchInLbl = UILabel()
