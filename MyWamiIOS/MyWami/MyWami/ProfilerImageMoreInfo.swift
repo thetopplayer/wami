@@ -37,7 +37,6 @@ class ProfilerImageMoreInfo: UIViewController {
             self.moreInfoView.frame = CGRectMake(25, 10, 270, 300)
         }
         
-//        self.moreInfoView.frame = CGRectMake(20, 10, 270, 300)
         self.moreInfoView.backgroundColor = UIColor(red: 0xE8/255, green: 0xE8/255, blue: 0xE8/255, alpha: 0.92)
         self.moreInfoView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         self.moreInfoView.layer.cornerRadius = 5.0
