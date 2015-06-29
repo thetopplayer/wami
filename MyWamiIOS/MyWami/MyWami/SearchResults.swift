@@ -158,7 +158,7 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     // Home
     @IBAction func homePressed(sender: AnyObject) {
-        homeAction ()
+        homeAction()
     }
     
     

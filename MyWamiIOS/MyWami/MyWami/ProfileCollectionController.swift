@@ -164,6 +164,11 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         navigationItem.rightBarButtonItem = menuButton
     }
     
+    override func viewDidAppear(animated: Bool) {
+        searchProfilesPressed = false
+        super.viewDidAppear(animated)
+    }
+    
     let menu = Menu()
     var selectCollectionBtn = UIButton()
     var filterByGroupBtn = UIButton()
@@ -271,7 +276,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             transmitProfileAction()
         }
         else {
-            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
     var transmitProfileViewDialog = UIView()
@@ -346,13 +351,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     // Filter collection
     var filterCollection = FilterCollection()
     var filterCollectionViewDialog = UIView()
-    func filterByGroupAction () {
-        
-        filterByGroupBtn.showsTouchWhenHighlighted = false
-        filterByGroupBtn.removeTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
-        filterByGroupBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
-        filterByGroupPressed = true
-        
+    func filterByGroupAction () {        
         var filterCollectionView = UIView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         closeBtn.addTarget(self, action: "closeFilterCollectionDialog", forControlEvents: UIControlEvents.TouchUpInside)
@@ -360,6 +359,11 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         filterCollectionBtn.addTarget(self, action: "doFilter", forControlEvents: UIControlEvents.TouchUpInside)
         
         if let filterCollectionViewDialog = filterCollection.filterCollectionDialog(filterCollectionView, closeBtn: closeBtn, filterCollectionBtn: filterCollectionBtn, userIdentityProfileId: userIdentityProfileId, verticalPos: verticalPos) {
+            filterByGroupBtn.showsTouchWhenHighlighted = false
+            filterByGroupBtn.removeTarget(self, action: "filterByGroupAction", forControlEvents: UIControlEvents.TouchUpInside)
+            filterByGroupBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
+            filterByGroupPressed = true
+            
             self.filterCollectionViewDialog = filterCollectionViewDialog
             view.addSubview(filterCollectionViewDialog)
             menu.toggleMenu(menuView)
