@@ -209,18 +209,18 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         }
         
         if transmitPressed == false {
-            transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
+            transmitBtn = menu.setMenuBtnAttributes("Publish Profile(s)...")
             transmitBtn.addTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
-            transmitBtn.frame = CGRectMake(-20, 50, 175, 30)
+            transmitBtn.frame = CGRectMake(-23, 50, 175, 30)
             menuView.addSubview(transmitBtn)
         }
         
         if transmitCellBtnPressed == true {
-            transmitBtn = menu.setMenuBtnAttributes("Transmit Profile(s)...")
+            transmitBtn = menu.setMenuBtnAttributes("Publish Profile(s)...")
             transmitBtn.showsTouchWhenHighlighted = false
             transmitBtn.removeTarget(self, action: "transmitProfilesAction", forControlEvents: UIControlEvents.TouchUpInside)
             transmitBtn.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Normal)
-            transmitBtn.frame = CGRectMake(-20, 50, 175, 30)
+            transmitBtn.frame = CGRectMake(-23, 50, 175, 30)
             menuView.addSubview(transmitBtn)
         }
         
@@ -272,7 +272,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             transmitProfileAction()
         }
         else {
-            self.view.makeToast(message: "No Profiles were chosen to transmit. Please chose Profiles to transmit by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.view.makeToast(message: "No Profiles were chosen to publish. Please chose Profiles to publish by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
     var transmitProfileViewDialog = UIView()

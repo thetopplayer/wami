@@ -349,9 +349,9 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
  
         menu.toggleMenu(menuView)
         
-        var transmitThisWamiBtn = menu.setMenuBtnAttributes("Transmit This Wami...")
+        var transmitThisWamiBtn = menu.setMenuBtnAttributes("Publish This Wami...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
-        transmitThisWamiBtn.frame = CGRectMake(0, 0, 145, 30)
+        transmitThisWamiBtn.frame = CGRectMake(-2, 0, 145, 30)
         menuView.addSubview(transmitThisWamiBtn)
         
         var addToContactListBtn = menu.setMenuBtnAttributes("Add To Contact List...")

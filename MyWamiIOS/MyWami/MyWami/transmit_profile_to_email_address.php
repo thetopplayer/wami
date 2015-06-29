@@ -15,7 +15,7 @@ $message = $data->param1;
 $to = $data->param2;
 $from = $data->param3;
     
-$subject = 'Transmitted Wami Profile';
+$subject = 'Publish Wami Profile';
 $headers = "From: " .$from. "\n";
 $headers .= "Reply-To: " .$from. "\n";
 $headers .= "MIME-Version: 1.0\n";

@@ -22,8 +22,7 @@
     $no_profile_name_found = '';
     $record_exist_in_collection = '';
     $response = array();
-    $response["no_records_found"] = array();
-    $response["record_already_exist"] = array();
+    $response["message"] = array();
     $response["sql"] = array();
     $result = '';
     $num_profile_name_not_exist = 0;
@@ -67,7 +66,7 @@
     if ($row_count < 1) {
         $num_profile_name_not_exist++;
         $no_profile_name_found = "Profile Name does not exist: " .$transmit_to_profile. ". Either send to email address or choose another name.";
-        $response["no_records_found"] = $no_profile_name_found;
+        $response["message"] = $no_profile_name_found;
         $response["no_rec_found_ret_code"] = 1;
         echo json_encode($response);
         exit(-1);
@@ -96,7 +95,7 @@
             $profile_name = $row[1];
             $record_exist_in_collection = "Profile: " .$profile_name. " already exists in the collection for " .$transmit_to_profile;
             $response["rec_exist_ret_code"] = 1;
-            $response["record_already_exist"] = $record_exist_in_collection;
+            $response["message"] = $record_exist_in_collection;
             continue;
         }
         $sql = "INSERT INTO identity_profile_collection (assign_to_identity_profile_id, identity_profile_id, from_identity_profile_id,

@@ -54,7 +54,7 @@ class TransmitProfile: UIViewController {
         let headingLbl = UILabel()
         headingLbl.backgroundColor = UIColor.grayColor()
         headingLbl.textAlignment = NSTextAlignment.Center
-        headingLbl.text = "Transmit Profile(s)"
+        headingLbl.text = "Publish Profile(s)"
         headingLbl.textColor = UIColor.whiteColor()
         headingLbl.font = UIFont.boldSystemFontOfSize(13)
         headingLbl.frame = CGRectMake(0, 0, 240, 30)
@@ -116,7 +116,7 @@ class TransmitProfile: UIViewController {
         line.backgroundColor = UIColor.blackColor()
         transmitProfileView.addSubview(line)
         
-        transmitBtn.setTitle("Transmit", forState: UIControlState.Normal)
+        transmitBtn.setTitle("Publish", forState: UIControlState.Normal)
         transmitBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(11)
         transmitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         transmitBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
@@ -158,7 +158,7 @@ class TransmitProfile: UIViewController {
         var transmit_to_profile = profileNameTxt.text
         var transmit_to_email = emailAddressTxt.text
         if transmit_to_profile == "" && transmit_to_email == "" {
-            self.uview.makeToast(message: "Please provide a Profile Name and/or Email Address to transmit to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.uview.makeToast(message: "Please provide a Profile Name and/or Email Address to publish to!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return
         }
         if transmit_to_profile != "" {
@@ -166,13 +166,17 @@ class TransmitProfile: UIViewController {
             var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE,
                 params: ["param1": numToTransmit, "param2": String(fromProfileId), "param3": identityProfileId, "param4": transmit_to_profile])
             var retCode = insertTransmittedData(jsonData)
-            if retCode != 0 {
+            if retCode == -1 {
                 var message = jsonData["db_error"].string
+                self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            }
+            if retCode == 1 {
+                var message = jsonData["message"].string
                 self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
             if retCode == 0 {
                 var numProfilesTransmitted = jsonData["num_profiles_transmitted"]
-                var message = "Number of profiles transmitted = \(numProfilesTransmitted)"
+                var message = "Number of profiles published = \(numProfilesTransmitted)"
                 var fullMsg = ""
                 if let dupMessage = jsonData["record_already_exist"][0].string {
                     fullMsg = message + ".\n" + dupMessage
