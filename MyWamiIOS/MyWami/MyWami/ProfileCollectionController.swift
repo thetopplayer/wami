@@ -153,17 +153,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
-
-//        var backButtonImage : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-//        let backButton = UIBarButtonItem(image: backButtonImage, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
-//        navigationItem.leftBarButtonItem = backButton
         
         menuView.hidden = true
         var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
         
-        var customView = UIView(frame: CGRectMake(0, 10, 100, 44))
+        var customView = UIView(frame: CGRectMake(0, 10, 120, 44))
         
         var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
@@ -171,23 +167,62 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
         customView.addSubview(backButtonImage)
 
-        var label = UILabel(frame: CGRectMake(35, 0, 80, 44))
-        label.text = "RobbieRedux - "
-        label.font = UIFont.boldSystemFontOfSize(13)
-        label.textColor = UIColor.lightGrayColor()
-        label.textAlignment = NSTextAlignment.Right
-        label.backgroundColor = UIColor.blackColor()
-        customView.addSubview(label)
+        var profileIdSource = "default"
+        var profileNameLbl = getProfileNameLbl(profileIdSource)
+        customView.addSubview(profileNameLbl)
         
         customView.addSubview(backButtonImage)
-        var leftButton = UIBarButtonItem(customView: customView)
-        self.navigationItem.leftBarButtonItem = leftButton
+        var leftBar = UIBarButtonItem(customView: customView)
+        self.navigationItem.leftBarButtonItem = leftBar
         
     }
     
     override func viewDidAppear(animated: Bool) {
         searchProfilesPressed = false
         super.viewDidAppear(animated)
+    }
+    
+    func getProfileNameLbl(profileIdSource: String) -> UILabel {
+        var label = UILabel(frame: CGRectMake(35, 0, 100, 44))
+        
+        var profileId = ""
+        if profileIdSource == "default" {
+            let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
+            var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
+            profileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
+        }
+        else {
+            profileId = self.newIdentityProfileId
+        }
+        
+        let GET_PROFILE_NAME = UTILITIES.IP + "get_profile_name.php"
+        var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": profileId])
+        var profileName = jsonData["profile_name"].string!
+        
+        label.text = profileName + " - "
+        label.font = UIFont.boldSystemFontOfSize(12)
+        label.textColor = UIColor(red: 0xda/255, green: 0xa5/255, blue: 0x20/255, alpha: 1.0)  
+        label.textAlignment = NSTextAlignment.Right
+        label.backgroundColor = UIColor.blackColor()
+        
+        return label
+    }
+    
+    func setLeftBar() {
+        var customView = UIView(frame: CGRectMake(0, 10, 120, 44))
+        
+        var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
+        backButtonImage.frame = CGRectMake(-10, 5, 45, 25)
+        backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
+        customView.addSubview(backButtonImage)
+
+        var profileIdSource = ""
+        var profileNameLbl = getProfileNameLbl(profileIdSource)
+        customView.addSubview(profileNameLbl)
+        
+        var leftBar = UIBarButtonItem(customView: customView)
+        self.navigationItem.leftBarButtonItem = leftBar
     }
     
     let menu = Menu()
@@ -359,6 +394,8 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             getProfileCollection(jsonData)
             closeSelectProfileDialog()
             tableView.reloadData()
+            
+            setLeftBar()
         }
         else {
             self.view.makeToast(message: "Please select a Profile Collection or hit Close", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
