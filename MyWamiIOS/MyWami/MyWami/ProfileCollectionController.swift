@@ -149,19 +149,40 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
 
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
-
-        let titleBar = UIImage(named: "actionbar_wami_list.png")
+        
+        let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
 
-        var backButtonImage : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let backButton = UIBarButtonItem(image: backButtonImage, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
-        navigationItem.leftBarButtonItem = backButton
+//        var backButtonImage : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+//        let backButton = UIBarButtonItem(image: backButtonImage, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
+//        navigationItem.leftBarButtonItem = backButton
         
         menuView.hidden = true
         var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
+        
+        var customView = UIView(frame: CGRectMake(0, 10, 100, 44))
+        
+        var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
+        backButtonImage.frame = CGRectMake(-10, 5, 45, 25)
+        backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
+        customView.addSubview(backButtonImage)
+
+        var label = UILabel(frame: CGRectMake(35, 0, 80, 44))
+        label.text = "RobbieRedux - "
+        label.font = UIFont.boldSystemFontOfSize(13)
+        label.textColor = UIColor.lightGrayColor()
+        label.textAlignment = NSTextAlignment.Right
+        label.backgroundColor = UIColor.blackColor()
+        customView.addSubview(label)
+        
+        customView.addSubview(backButtonImage)
+        var leftButton = UIBarButtonItem(customView: customView)
+        self.navigationItem.leftBarButtonItem = leftButton
+        
     }
     
     override func viewDidAppear(animated: Bool) {
