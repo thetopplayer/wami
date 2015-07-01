@@ -155,24 +155,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
         
-        var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
-        backButtonImage.frame = CGRectMake(-5, 15, 45, 25)
-        backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
-        customHeadingView.addSubview(backButtonImage)
-        
-        var profileIdSource = "default"
-        var profileNameLbl = getProfileNameLbl(profileIdSource)
-        customHeadingView.addSubview(profileNameLbl)
-        
-        let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
-        let imageView2 = UIImageView(image:titleBar)
-        imageView2.frame = CGRectMake(80, 25, 130, 25)
-        customHeadingView.addSubview(imageView2)
-        
-        var mainHeading = UIBarButtonItem(customView: customHeadingView)
-        self.navigationItem.leftBarButtonItem = mainHeading
-        
+        setHeading(true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -180,11 +163,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         super.viewDidAppear(animated)
     }
     
-    func getProfileNameLbl(profileIdSource: String) -> UILabel {
-        var label = UILabel(frame: CGRectMake(70, 10, 160, 25))
-        
+    func getProfileName(defaultInd: Bool) -> String {
         var profileId = ""
-        if profileIdSource == "default" {
+        if defaultInd {
             let GET_DEFAULT_IDENTITY_PROFILE_ID = UTILITIES.IP + "get_default_identity_profile_id.php"
             var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_DEFAULT_IDENTITY_PROFILE_ID, params: ["param1": userId])
             profileId = jsonData["default_identity_profile_id"][0]["identity_profile_id"].string!
@@ -197,16 +178,10 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": profileId])
         var profileName = jsonData["profile_name"].string!
         
-        label.text = profileName
-        label.font = UIFont.boldSystemFontOfSize(12)
-        label.textColor = UIColor(red: 0xda/255, green: 0xa5/255, blue: 0x20/255, alpha: 1.0)  
-        label.textAlignment = NSTextAlignment.Center
-        label.backgroundColor = UIColor.blackColor()
-        
-        return label
+        return profileName
     }
     
-    func setHeading() {
+    func setHeading(defaultInd: Bool) {
         customHeadingView = UIView(frame: CGRectMake(0, 10, 170, 60))
         
         var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
@@ -215,8 +190,13 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
         customHeadingView.addSubview(backButtonImage)
 
-        var profileIdSource = ""
-        var profileNameLbl = getProfileNameLbl(profileIdSource)
+        var profileName = getProfileName(defaultInd)
+        var profileNameLbl = UILabel(frame: CGRectMake(70, 7, 160, 25))
+        profileNameLbl.text = profileName
+        profileNameLbl.font = UIFont.boldSystemFontOfSize(12)
+        profileNameLbl.textColor = UIColor(red: 0xda/255, green: 0xa5/255, blue: 0x20/255, alpha: 1.0)
+        profileNameLbl.textAlignment = NSTextAlignment.Center
+        profileNameLbl.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.0)
         customHeadingView.addSubview(profileNameLbl)
         
         let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
@@ -398,7 +378,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             closeSelectProfileDialog()
             tableView.reloadData()
             
-            setHeading()
+            setHeading(false)
         }
         else {
             self.view.makeToast(message: "Please select a Profile Collection or hit Close", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
