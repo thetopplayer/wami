@@ -165,12 +165,15 @@ class TransmitProfile: UIViewController {
             let INSERT_TRANSMITTED_PROFILE = UTILITIES.IP + "insert_transmitted_profile.php"
             var jsonData = JSON_DATA_SYNCH.jsonGetData(INSERT_TRANSMITTED_PROFILE,
                 params: ["param1": numToTransmit, "param2": String(fromProfileId), "param3": identityProfileId, "param4": transmit_to_profile])
-            var retCode = insertTransmittedData(jsonData)
+            
+            var retCode = jsonData["ret_code"]
+            var noRecExistRetCode = jsonData["no_rec_found_ret_code"]
+            var recExistRetCode = jsonData["rec_exist_ret_code"]
             if retCode == -1 {
                 var message = jsonData["db_error"].string
                 self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
-            if retCode == 1 {
+            if noRecExistRetCode == 1 || recExistRetCode == 1 {
                 var message = jsonData["message"].string
                 self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             }
@@ -307,23 +310,7 @@ class TransmitProfile: UIViewController {
             }
         }
     }
-    
-    func insertTransmittedData(jsonData: JSON) -> Int {
-        var retCode = jsonData["ret_code"]
-        var noRecExistRetCode = jsonData["no_rec_found_ret_code"]
-        var recExistRetCode = jsonData["rec_exist_ret_code"]
-        if retCode == -1 {
-            return retCode.int!
-        }
-        if noRecExistRetCode == 1 {
-            return noRecExistRetCode.int!
-        }
-        if recExistRetCode == 1 {
-            return recExistRetCode.int!
-        }
-        return retCode.int!
-    }
-    
+ 
     func getProfileNames () {
         let GET_PROFILE_NAMES = UTILITIES.IP + "get_profile_names.php"
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAMES, params: ["param1": " "])
