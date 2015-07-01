@@ -196,9 +196,14 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
         
-        var image : UIImage = UIImage(named:"wami1.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let backButton = UIBarButtonItem(image: image, style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
-        navigationItem.leftBarButtonItem = backButton
+        var backButtonView = UIView(frame: CGRectMake(0, 10, 55, 60))
+        var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
+        backButtonImage.frame = CGRectMake(-5, 15, 45, 25)
+        backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
+        backButtonView.addSubview(backButtonImage)
+        var backButtonHeading = UIBarButtonItem(customView: backButtonView)
+        navigationItem.leftBarButtonItem = backButtonHeading
         
         menuView.hidden = true
         var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)

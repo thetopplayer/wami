@@ -139,7 +139,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     var newGroupId: Int!
     
     var segue = UIStoryboardSegue()
-
+    var customHeadingView = UIView(frame: CGRectMake(0, 10, 170, 60))
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -150,30 +150,28 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
         
-        let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
-        let imageView2 = UIImageView(image:titleBar)
-        self.navigationItem.titleView = imageView2
-        
         menuView.hidden = true
         var menuIcon : UIImage = UIImage(named:"menuIcon.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
         
-        var customView = UIView(frame: CGRectMake(0, 10, 120, 44))
-        
         var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
-        backButtonImage.frame = CGRectMake(-10, 5, 45, 25)
+        backButtonImage.frame = CGRectMake(-5, 15, 45, 25)
         backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
-        customView.addSubview(backButtonImage)
-
+        customHeadingView.addSubview(backButtonImage)
+        
         var profileIdSource = "default"
         var profileNameLbl = getProfileNameLbl(profileIdSource)
-        customView.addSubview(profileNameLbl)
+        customHeadingView.addSubview(profileNameLbl)
         
-        customView.addSubview(backButtonImage)
-        var leftBar = UIBarButtonItem(customView: customView)
-        self.navigationItem.leftBarButtonItem = leftBar
+        let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
+        let imageView2 = UIImageView(image:titleBar)
+        imageView2.frame = CGRectMake(80, 25, 130, 25)
+        customHeadingView.addSubview(imageView2)
+        
+        var mainHeading = UIBarButtonItem(customView: customHeadingView)
+        self.navigationItem.leftBarButtonItem = mainHeading
         
     }
     
@@ -183,7 +181,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func getProfileNameLbl(profileIdSource: String) -> UILabel {
-        var label = UILabel(frame: CGRectMake(35, 0, 100, 44))
+        var label = UILabel(frame: CGRectMake(70, 10, 160, 25))
         
         var profileId = ""
         if profileIdSource == "default" {
@@ -199,30 +197,35 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         var jsonData = JSON_DATA_SYNCH.jsonGetData(GET_PROFILE_NAME, params: ["param1": profileId])
         var profileName = jsonData["profile_name"].string!
         
-        label.text = profileName + " - "
+        label.text = profileName
         label.font = UIFont.boldSystemFontOfSize(12)
         label.textColor = UIColor(red: 0xda/255, green: 0xa5/255, blue: 0x20/255, alpha: 1.0)  
-        label.textAlignment = NSTextAlignment.Right
+        label.textAlignment = NSTextAlignment.Center
         label.backgroundColor = UIColor.blackColor()
         
         return label
     }
     
-    func setLeftBar() {
-        var customView = UIView(frame: CGRectMake(0, 10, 120, 44))
+    func setHeading() {
+        customHeadingView = UIView(frame: CGRectMake(0, 10, 170, 60))
         
         var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
-        backButtonImage.frame = CGRectMake(-10, 5, 45, 25)
+        backButtonImage.frame = CGRectMake(-10, 15, 45, 25)
         backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
-        customView.addSubview(backButtonImage)
+        customHeadingView.addSubview(backButtonImage)
 
         var profileIdSource = ""
         var profileNameLbl = getProfileNameLbl(profileIdSource)
-        customView.addSubview(profileNameLbl)
+        customHeadingView.addSubview(profileNameLbl)
         
-        var leftBar = UIBarButtonItem(customView: customView)
-        self.navigationItem.leftBarButtonItem = leftBar
+        let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
+        let imageView2 = UIImageView(image:titleBar)
+        imageView2.frame = CGRectMake(80, 25, 130, 25)
+        customHeadingView.addSubview(imageView2)
+        
+        var mainHeading = UIBarButtonItem(customView: customHeadingView)
+        self.navigationItem.leftBarButtonItem = mainHeading
     }
     
     let menu = Menu()
@@ -395,7 +398,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             closeSelectProfileDialog()
             tableView.reloadData()
             
-            setLeftBar()
+            setHeading()
         }
         else {
             self.view.makeToast(message: "Please select a Profile Collection or hit Close", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
