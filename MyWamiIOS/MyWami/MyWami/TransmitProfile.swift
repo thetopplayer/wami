@@ -208,22 +208,88 @@ class TransmitProfile: UIViewController {
                     self.uview.makeToast(message: message!, duration: HRToastDefaultDuration, position: HRToastPositionCenter)
                     return
                 }
-                firstName = jsonData["identity_profile_data"][0]["first_name"].string!
-                lastName = jsonData["identity_profile_data"][0]["last_name"].string!
+                
+                if let testStr = jsonData["identity_profile_data"][0]["first_name"].string {
+                    firstName = jsonData["identity_profile_data"][0]["first_name"].string!
+                }
+                else {
+                    firstName = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["last_name"].string {
+                    lastName = jsonData["identity_profile_data"][0]["last_name"].string!
+                }
+                else {
+                    lastName = ""
+                }
                 profileName = jsonData["identity_profile_data"][0]["profile_name"].string!
-                profileType = jsonData["identity_profile_data"][0]["profile_type"].string!
-                description = jsonData["identity_profile_data"][0]["description"].string!
-                streetAddress = jsonData["identity_profile_data"][0]["street_address"].string!
-                city = jsonData["identity_profile_data"][0]["city"].string!
-                state = jsonData["identity_profile_data"][0]["state"].string!
-                zipcode = jsonData["identity_profile_data"][0]["zipcode"].string!
-                country = jsonData["identity_profile_data"][0]["country"].string!
-                telephone = jsonData["identity_profile_data"][0]["telephone"].string!
+                if let testStr = jsonData["identity_profile_data"][0]["profile_type"].string {
+                    profileType = jsonData["identity_profile_data"][0]["profile_type"].string!
+                }
+                else {
+                    profileType = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["description"].string {
+                    description = jsonData["identity_profile_data"][0]["description"].string!
+                }
+                else {
+                    description = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["street_address"].string {
+                    streetAddress = jsonData["identity_profile_data"][0]["street_address"].string!
+                }
+                else {
+                    streetAddress = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["city"].string {
+                    city = jsonData["identity_profile_data"][0]["city"].string!
+                }
+                else {
+                    city = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["state"].string {
+                    state = jsonData["identity_profile_data"][0]["state"].string!
+                }
+                else {
+                    state = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["zipcode"].string {
+                    zipcode = jsonData["identity_profile_data"][0]["zipcode"].string!
+                }
+                else {
+                    zipcode = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["country"].string {
+                    country = jsonData["identity_profile_data"][0]["country"].string!
+                }
+                else {
+                    country = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["telephone"].string {
+                    telephone = jsonData["identity_profile_data"][0]["telephone"].string!
+                }
+                else {
+                    telephone = ""
+                }
                 email = jsonData["identity_profile_data"][0]["email"].string!
-                tags = jsonData["identity_profile_data"][0]["tags"].string!
+                if let testStr = jsonData["identity_profile_data"][0]["tags"].string {
+                    tags = jsonData["identity_profile_data"][0]["tags"].string!
+                }
+                else {
+                    tags = ""
+                }
                 createDate = jsonData["identity_profile_data"][0]["create_date"].string!
-                fromFirstName = jsonData["identity_profile_data"][0]["from_first_name"].string!
-                fromLastName = jsonData["identity_profile_data"][0]["from_last_name"].string!
+                if let testStr = jsonData["identity_profile_data"][0]["from_first_name"].string {
+                    fromFirstName = jsonData["identity_profile_data"][0]["from_first_name"].string!
+                }
+                else {
+                    fromFirstName = ""
+                }
+                if let testStr = jsonData["identity_profile_data"][0]["from_last_name"].string {
+                    fromLastName = jsonData["identity_profile_data"][0]["from_last_name"].string!
+                }
+                else {
+                    fromLastName = ""
+                }
                 fromProfileName = jsonData["identity_profile_data"][0]["from_profile_name"].string!
                 fromEmail = jsonData["identity_profile_data"][0]["from_email"].string!
             

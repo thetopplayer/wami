@@ -34,19 +34,19 @@
     
     $profiles_to_transmit_array = array();
     $to_transmit_str = $profiles_to_transmit;
-    
     $start_str = $to_transmit_str;
-    $beg_pos = 0;
     for ($i = 0; $i < $num_to_transmit; $i++) {
-        $end_pos = strpos($to_transmit_str, ",");
+        $beg_pos = 0;
+        $end_pos = strpos($start_str, ",");
         if ($end_pos === false) {
-            $profiles_to_transmit_array[$i] = trim(substr($to_transmit_str, 0));
+            $profiles_to_transmit_array[$i] = trim(substr($start_str, 0));
             break;
         }
-        $profiles_to_transmit_array[$i] = trim(substr($to_transmit_str, $beg_pos, $end_pos));
+        $profiles_to_transmit_array[$i] = trim(substr($start_str, $beg_pos, $end_pos));
         $beg_pos = $end_pos + 1;
-        $end_pos = strlen($to_transmit_str);
+        $end_pos = strlen($start_str);
         $to_transmit_str = substr($start_str, $beg_pos, $end_pos);
+        $start_str = $to_transmit_str;
     }
     
     $sql = "SELECT identity_profile_id FROM identity_profile WHERE delete_ind = 0 AND profile_name = '" .$transmit_to_profile."'";
@@ -80,7 +80,7 @@
         $sql = "SELECT identity_profile_collection_id, profile_name FROM identity_profile_collection ipc, identity_profile ip
         WHERE ipc.delete_ind = 0 AND assign_to_identity_profile_id = " .$assign_to_profile_id. " AND ipc.identity_profile_id = " .$profiles_to_transmit_array[$j].
         " AND ipc.identity_profile_id = ip.identity_profile_id";
-        array_push($response["sql"],"*****select for dups_sql=" .$sql);
+        array_push($response["sql"], "*****select for dups_sql=" .$sql);
             
         $result = mysqli_query($con, $sql) or die(mysqli_error($con));
         if (!$result) {
