@@ -182,27 +182,51 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
     }
     
     func setHeading(defaultInd: Bool) {
-        customHeadingView = UIView(frame: CGRectMake(0, 10, 170, 60))
+        customHeadingView = UIView(frame: CGRectMake(0, 10, 200, 60))
         
         var backButtonImage = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
         backButtonImage.frame = CGRectMake(-10, 15, 45, 25)
+        backButtonImage.setBackgroundImage(UIImage(named: "wami1.png"), forState: UIControlState.Normal)
         backButtonImage.addTarget(self, action: "back:", forControlEvents: UIControlEvents.TouchUpInside)
         customHeadingView.addSubview(backButtonImage)
 
         var profileName = getProfileName(defaultInd)
-        var profileNameLbl = UILabel(frame: CGRectMake(70, 7, 160, 25))
+        var profileNameLbl = UILabel()
         profileNameLbl.text = profileName
-        profileNameLbl.font = UIFont.boldSystemFontOfSize(12)
+        profileNameLbl.font = UIFont.boldSystemFontOfSize(14)
         profileNameLbl.textColor = UIColor(red: 0xda/255, green: 0xa5/255, blue: 0x20/255, alpha: 1.0)
         profileNameLbl.textAlignment = NSTextAlignment.Center
         profileNameLbl.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.0)
         customHeadingView.addSubview(profileNameLbl)
         
-        let titleBar = UIImage(named: "actionbar_wami_subscriptions.png")
+        let titleBar = UIImage(named: "actionbar_wami_connections.png")
         let imageView2 = UIImageView(image:titleBar)
-        imageView2.frame = CGRectMake(80, 25, 130, 25)
         customHeadingView.addSubview(imageView2)
+        
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            profileNameLbl.frame = CGRectMake(70, 7, 160, 25)
+            imageView2.frame = CGRectMake(80, 25, 140, 20)
+        }
+        else if DeviceType.IS_IPHONE_5 {
+            profileNameLbl.frame = CGRectMake(70, 7, 160, 25)
+            imageView2.frame = CGRectMake(80, 25, 140, 20)
+        }
+        else if DeviceType.IS_IPHONE_6 {
+            profileNameLbl.frame = CGRectMake(95, 7, 170, 25)
+            imageView2.frame = CGRectMake(110, 25, 140, 20)
+        }
+        else if DeviceType.IS_IPHONE_6P {
+            profileNameLbl.frame = CGRectMake(70, 7, 160, 25)
+            imageView2.frame = CGRectMake(80, 25, 140, 20)
+        }
+        else if DeviceType.IS_IPAD {
+            profileNameLbl.frame = CGRectMake(70, 7, 160, 25)
+            imageView2.frame = CGRectMake(80, 25, 140, 20)
+        }
+        else {
+            profileNameLbl.frame = CGRectMake(70, 7, 160, 25)
+            imageView2.frame = CGRectMake(80, 25, 140, 20)
+        }
         
         var mainHeading = UIBarButtonItem(customView: customHeadingView)
         self.navigationItem.leftBarButtonItem = mainHeading

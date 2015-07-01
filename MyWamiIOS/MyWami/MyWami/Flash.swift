@@ -159,7 +159,7 @@ class Flash: UIViewController, UITableViewDelegate, UITableViewDataSource, UITex
         
         menu.toggleMenu(menuView)
         
-        var transmitThisWamiBtn = menu.setMenuBtnAttributes("Publish This Wami...")
+        var transmitThisWamiBtn = menu.setMenuBtnAttributes("Publish This Profile...")
         transmitThisWamiBtn.addTarget(self, action: "transmitThisWamiAction", forControlEvents: UIControlEvents.TouchUpInside)
         transmitThisWamiBtn.frame = CGRectMake(-2, 0, 145, 30)
         menuView.addSubview(transmitThisWamiBtn)

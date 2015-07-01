@@ -70,7 +70,7 @@ class CompletionTableView : UITableView, UITableViewDelegate, UITableViewDataSou
     func onRelatedTextFieldEndEditing(sender: UITextField)
     {
         self.hide(true)
-        self.relatedTextField!.text = ""
+//        self.relatedTextField!.text = ""
     }
     
     func tryCompletion(withValue: String, animated: Bool)
