@@ -81,6 +81,7 @@ class TransmitProfile: UIViewController {
         self.profileNamesView.show(false)
 
         profileNameTxt.backgroundColor = UIColor.whiteColor()
+        profileNameTxt.text = ""
         profileNameTxt.textColor = UIColor.blackColor()
         profileNameTxt.font = UIFont.systemFontOfSize(12)
         profileNameTxt.frame = CGRectMake(15, 63, 210, 20)
@@ -103,6 +104,7 @@ class TransmitProfile: UIViewController {
         txtFldBorderLbL2.layer.borderWidth = 1.5
         
         emailAddressTxt.backgroundColor = UIColor.whiteColor()
+        emailAddressTxt.text = ""
         emailAddressTxt.textColor = UIColor.blackColor()
         emailAddressTxt.font = UIFont.systemFontOfSize(13)
         emailAddressTxt.frame = CGRectMake(15, 123, 210, 20)
