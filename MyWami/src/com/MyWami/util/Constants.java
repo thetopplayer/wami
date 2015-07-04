@@ -7,14 +7,14 @@ public final class Constants {
 //	final static public String IP = "http://192.168.15.3/MyWami/";
 //	final static public String ASSETS_IP = "http://192.168.15.3:80/Wami/";
 
-	final static public String IP = "http://192.168.0.2/MyWami/";
-	final static public String ASSETS_IP = "http://192.168.0.2:80/Wami/";
+//	final static public String IP = "http://192.168.0.2/MyWami/";
+//	final static public String ASSETS_IP = "http://192.168.0.2:80/Wami/";
 
 //	final static public String IP = "http://192.168.1.3/MyWami/";
 //	final static public String ASSETS_IP = "http://192.168.1.3:80/Wami/";
 
-//	final static public String IP = "http://192.168.254.42/MyWami/";
-//	final static public String ASSETS_IP = "http://192.168.254.42:80/Wami/";
+	final static public String IP = "http://192.168.0.103/MyWami/";
+	final static public String ASSETS_IP = "http://192.168.0.103:80/Wami/";
 
 	final static public String EMAIL_IP = "http://www.mywami.com/";
 
