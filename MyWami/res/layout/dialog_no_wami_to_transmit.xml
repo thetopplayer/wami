@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="250dp"
-              android:layout_height="150dp"
+              android:layout_height="190dp"
               android:background="@color/white">
 
 	<ImageView
@@ -17,7 +17,7 @@
 			android:id="@+id/dialog_text"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="No Wami(s) chosen to transmit!"
+			android:text="No Profiles were chosen to publish. Please choose Profiles to publish by checking profile checkboxes."
 			android:gravity="center_horizontal"
 			android:layout_marginTop="10dp"
 			android:layout_marginLeft="5dp"

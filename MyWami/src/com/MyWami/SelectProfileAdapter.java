@@ -34,7 +34,7 @@ public class SelectProfileAdapter extends ArrayAdapter<ProfileModel> {
 		profileName.setText(profileModel[position].getProfileName());
 
 		CheckBox cb = (CheckBox) rowView.findViewById(R.id.checkbox1);
-		int id = Resources.getSystem().getIdentifier("btn_check_holo_light", "drawable", "android");
+		int id = Resources.getSystem().getIdentifier("btn_radio_holo_light", "drawable", "android");
 		cb.setButtonDrawable(id);
 		cb.setChecked(checkBoxState[position]);
 		if (profileModel[position].isSelected()) {

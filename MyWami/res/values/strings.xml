@@ -13,21 +13,21 @@
 
 	<!--Menu Strings-->
 	<string name="action_select_profile_collection">Select a Profile Collection…</string>
-	<string name="action_transmit_wamis">Transmit Wami(s)…</string>
+	<string name="action_transmit_wamis">Publish Wami(s)…</string>
 	<string name="action_refresh_wami_list">Refresh Wami List</string>
 	<string name="action_search_for_profiles">Search for Profiles…</string>
 	<string name="action_group_wami">Set Up Wami Groups…</string>
 	<string name="action_logout">Logout</string>
 
 	<string name="action_new_flash">New Flash Announcement…</string>
-	<string name="action_transmit_this_wami">Transmit This Wami…</string>
+	<string name="action_transmit_this_wami">Publish This Wami…</string>
 	<string name="action_add_to_contact_list">Add To Contact List…</string>
 	<string name="action_home">Home</string>
 
 	<string name="action_remove_wami">Remove Wami(s)</string>
 	<string name="action_request_wami">Request a Wami Profile</string>
 	<string name="action_settings">Settings</string>
-	<string name="action_transmit_wami">Transmit My Wami</string>
+	<string name="action_transmit_wami">Publish My Wami</string>
 	<string name="action_create_flash">Create new flash</string>
 	<string name="action_filter">Filter Wami List</string>
 

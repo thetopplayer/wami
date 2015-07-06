@@ -77,7 +77,7 @@ public class TransmitWami {
 					toProfileNames = etWamiProfileName.getText().toString();
 					toEmailAddress = etEmailAddress.getText().toString();
 					if (toEmailAddress.equals("") && toProfileNames.equals("")) {
-						Toast.makeText(context.getApplicationContext(), "Enter Profile Name, Email Address and/or Group", Toast.LENGTH_LONG).show();
+						Toast.makeText(context.getApplicationContext(), "Enter Profile Name and/or Email Address.", Toast.LENGTH_LONG).show();
 						return;
 					}
 

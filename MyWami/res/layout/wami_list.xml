@@ -84,7 +84,7 @@
 				android:textColor="#FFFFFF"
 				android:background="@drawable/button_state"
 				android:layout_marginTop="5dp"
-				android:text="Transmit"
+				android:text="Publish"
 				android:focusable="false"
 				android:layout_below="@+id/list_text_name"/>
 

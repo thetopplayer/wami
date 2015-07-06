@@ -335,7 +335,7 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
             transmitProfileAction()
         }
         else {
-            self.view.makeToast(message: "No Profiles were chosen to publish. Please chose Profiles to publish by checking checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.view.makeToast(message: "No Profiles were chosen to publish. Please choose Profiles to publish by checking profile checkboxes.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
     var transmitProfileViewDialog = UIView()
