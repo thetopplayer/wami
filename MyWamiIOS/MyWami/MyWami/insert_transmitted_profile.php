@@ -54,7 +54,7 @@
         
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
-        $response["db_error"] = "insert_transmitted_profile_data: Problem transmitting WAMI to profile(1): " .$transmit_to_profile. " MySQL Error: " .mysqli_error($con);
+        $response["db_error"] = "insert_transmitted_profile: Problem transmitting WAMI to profile(1): " .$transmit_to_profile. " MySQL Error: " .mysqli_error($con);
         $response["ret_code"] = -1;
         echo json_encode($response);
         exit(-1);
@@ -84,7 +84,7 @@
             
         $result = mysqli_query($con, $sql) or die(mysqli_error($con));
         if (!$result) {
-            $response["db_error"] = "insert_transmitted_profile_data: Problem transmitting WAMI to profile(2): " .$transmit_to_profile. " MySQL Error: " .mysqli_error($con);
+            $response["db_error"] = "insert_transmitted_profile: Problem transmitting WAMI to profile(2): " .$transmit_to_profile. " MySQL Error: " .mysqli_error($con);
             $response["ret_code"] = -1;
             echo json_encode($response);
             exit(-1);
@@ -105,7 +105,7 @@
         
         $result = mysqli_query($con, $sql) or die(mysqli_error($con));
         if (!$result) {
-            $response["db_error"] = "insert_transmitted_profile_data: Problem transmitting WAMI to profile(3): " .$transmit_to_profile. " MySQL Error: " .mysqli_error($con);
+            $response["db_error"] = "insert_transmitted_profile: Problem transmitting WAMI to profile(3): " .$transmit_to_profile. " MySQL Error: " .mysqli_error($con);
             $response["ret_code"] = -1;
             echo json_encode($response);
             exit(-1);
