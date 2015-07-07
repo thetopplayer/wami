@@ -39,8 +39,7 @@ public class TransmitWami {
 	private ArrayList alProfilesToTransmit = new ArrayList();
 	private TransmitModel transmitModel;
 	private String toastMessage = "";
-//	final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile_data.php";
-  final private String INSERT_TRANSMITTED_PROFILE_DATA = Constants.IP + "insert_transmitted_profile.php";
+  final private String INSERT_TRANSMITTED_PROFILE = Constants.IP + "insert_transmitted_profile.php";
 	final private String GET_PROFILE_DATA = Constants.IP + "get_profile_data.php";
 	final private String GET_PROFILE_NAMES = Constants.IP + "get_profile_names.php";
 	final private String TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_profile_to_email_address_mobile.php";
@@ -83,10 +82,6 @@ public class TransmitWami {
 
 					if (!toProfileNames.equals("")) retCode = parseToProfileName(toProfileNames);
 					else retCode = 0;
-//					if (retCode == -1) {
-//						Toast.makeText(context.getApplicationContext(), "Profile names must be six or more characters.", Toast.LENGTH_LONG).show();
-//						return;
-//					}
 					if (retCode == -2) {
 						Toast.makeText(context.getApplicationContext(), "Profile names must only contain letters, numbers, dashes and hyphens.", Toast.LENGTH_LONG).show();
 						return;
@@ -268,33 +263,31 @@ public class TransmitWami {
 
 		@Override
 		protected void onPostExecute(JSONObject resultObject) {
-			JSONObject jsonDbError = resultObject.optJSONObject("db_error");
-//			Log.e("****TransmitWami DBError", String.valueOf(jsonDbError));
+      int retCode = resultObject.optInt("ret_code");
+      int noRecExistRetCode = resultObject.optInt("no_rec_found_ret_code");
+      int recExistRetCode = resultObject.optInt("rec_exist_ret_code");
 
-			JSONArray jsonSQL = resultObject.optJSONArray("sql");
-			for (int i = 0; i < jsonSQL.length(); i++) {
-//				Log.i("****TransmitWami SQL", jsonSQL.optString(i));
-			}
+      if (retCode == -1) {
+        String message = resultObject.optString("db_error");
+        toastMessage = toastMessage + message + "\n\n" ;
+      }
 
-			JSONArray jsonNoRecordsFound = resultObject.optJSONArray("no_records_found");
-			String [] noRecordsFound = new String[jsonNoRecordsFound.length()];
-			for (int i = 0; i < noRecordsFound.length; i++) {
-				noRecordsFound[i] = jsonNoRecordsFound.optString(i);
-				toastMessage = toastMessage + noRecordsFound[i] + "\n\n" ;
-			}
-
-			JSONArray jsonRecordAlreadyExist = resultObject.optJSONArray("record_already_exist");
-			String [] recordAlreadyExist = new String[jsonRecordAlreadyExist.length()];
-			for (int i = 0; i < recordAlreadyExist.length; i++) {
-				recordAlreadyExist[i] = jsonRecordAlreadyExist.optString(i);
-				toastMessage = toastMessage + recordAlreadyExist[i] + "\n\n";
-			}
-
-			String numProfilesTransmitted = String.valueOf(resultObject.optInt("num_profiles_transmitted"));
-			if (numProfilesTransmitted != null) {
-				toastMessage = toastMessage + "\nNumber of profiles transmitted = " + numProfilesTransmitted;
-			}
-
+      if (noRecExistRetCode == 1 || recExistRetCode == 1 ) {
+        String message = resultObject.optString("message");
+        toastMessage = toastMessage + message + "\n\n" ;
+      }
+//
+//			JSONArray jsonNoRecordsFound = resultObject.optJSONArray("no_records_found");
+//			String [] noRecordsFound = new String[jsonNoRecordsFound.length()];
+//			for (int i = 0; i < noRecordsFound.length; i++) {
+//				noRecordsFound[i] = jsonNoRecordsFound.optString(i);
+//				toastMessage = toastMessage + noRecordsFound[i] + "\n\n" ;
+//			}
+//
+      if (retCode == 0) {
+        String numProfilesTransmitted = String.valueOf(resultObject.optInt("num_profiles_transmitted"));
+        toastMessage = toastMessage + "\nNumber of profiles published = " + numProfilesTransmitted;
+      }
 			Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage, Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
@@ -327,7 +320,7 @@ public class TransmitWami {
 				HttpConnectionParams.setSoTimeout(httpParams, 5000);
 				HttpClient client = new DefaultHttpClient(httpParams);
 
-				HttpPost request = new HttpPost(INSERT_TRANSMITTED_PROFILE_DATA);
+				HttpPost request = new HttpPost(INSERT_TRANSMITTED_PROFILE);
 				request.setEntity(new ByteArrayEntity(json.toString().getBytes()));
 				request.setHeader("json", json.toString());
 				HttpResponse response = client.execute(request);

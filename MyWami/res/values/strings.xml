@@ -13,21 +13,22 @@
 
 	<!--Menu Strings-->
 	<string name="action_select_profile_collection">Select a Profile Collection…</string>
-	<string name="action_transmit_wamis">Publish Wami(s)…</string>
+    <string name="action_filter_collection">Filter Collection by Group...</string>
+	<string name="action_transmit_wamis">Publish Profile(s)…</string>
 	<string name="action_refresh_wami_list">Refresh Wami List</string>
 	<string name="action_search_for_profiles">Search for Profiles…</string>
 	<string name="action_group_wami">Set Up Wami Groups…</string>
 	<string name="action_logout">Logout</string>
 
 	<string name="action_new_flash">New Flash Announcement…</string>
-	<string name="action_transmit_this_wami">Publish This Wami…</string>
+	<string name="action_transmit_this_wami">Publish This Profile…</string>
 	<string name="action_add_to_contact_list">Add To Contact List…</string>
 	<string name="action_home">Home</string>
 
 	<string name="action_remove_wami">Remove Wami(s)</string>
 	<string name="action_request_wami">Request a Wami Profile</string>
 	<string name="action_settings">Settings</string>
-	<string name="action_transmit_wami">Publish My Wami</string>
+	<string name="action_transmit_wami">Publish My Profile</string>
 	<string name="action_create_flash">Create new flash</string>
 	<string name="action_filter">Filter Wami List</string>
 
@@ -36,7 +37,6 @@
 	<string name="search_within">Search Within</string>
 	<string name="new_flash">New flash up to 110 characters</string>
 	<string name="action_navigate_to">Navigate To...</string>
-	<string name="action_filter_collection">Filter Collection by Group...</string>
 
 	<string name="account_first_name">First Name</string>
 	<string name="account_last_name">Last Name</string>
