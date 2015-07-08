@@ -69,26 +69,20 @@ public class TransmitWami {
 				@Override
 				public void onClick(View v) {
 					int retCode;
-					String toProfileNames;
+					String toProfileName;
 					String toEmailAddress;
 
 					EditText etEmailAddress = (EditText) dialog.findViewById(R.id.email_address);
-					toProfileNames = etWamiProfileName.getText().toString();
+          toProfileName = etWamiProfileName.getText().toString();
 					toEmailAddress = etEmailAddress.getText().toString();
-					if (toEmailAddress.equals("") && toProfileNames.equals("")) {
-						Toast.makeText(context.getApplicationContext(), "Enter Profile Name and/or Email Address.", Toast.LENGTH_LONG).show();
+					if (toEmailAddress.equals("") && toProfileName.equals("")) {
+						Toast.makeText(context.getApplicationContext(), "Please provide a Profile Name and/or Email Address to publish to!", Toast.LENGTH_LONG).show();
 						return;
 					}
 
-					if (!toProfileNames.equals("")) retCode = parseToProfileName(toProfileNames);
-					else retCode = 0;
-					if (retCode == -2) {
-						Toast.makeText(context.getApplicationContext(), "Profile names must only contain letters, numbers, dashes and hyphens.", Toast.LENGTH_LONG).show();
-						return;
-					}
-
-					if (retCode == 1) {
+					if (!toProfileName.equals("")) {
 						TransmitWamiData task = new TransmitWamiData();
+            alTransmitToProfiles.add(toProfileName);
 						task.execute(alTransmitToProfiles);
 					}
 
@@ -100,9 +94,9 @@ public class TransmitWami {
 					}
 
 					if (retCode == 1) sendEmail(alTransmitToEmailAddress);
-					if (toProfileNames.equals("")) {
+					if (toProfileName.equals("")) {
 						Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage, Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.BOTTOM, 0, 0);
+						toast.setGravity(Gravity.CENTER, 0, 10);
 						toast.show();
 					}
 				}
@@ -139,13 +133,13 @@ public class TransmitWami {
 			transmitModel = (TransmitModel) alWamiTransmitModel.get(i);
 			String identityProfileId = String.valueOf(transmitModel.getWamiToTransmitId());
 			fromProfileId = transmitModel.getFromIdentityProfileId();
-			body = getEmailBody(identityProfileId, emails, fromProfileId) + body;
+			setUpEmailBody(identityProfileId, emails, fromProfileId);
 		}
 
 		toastMessage = toastMessage + "\n\nNumber of profiles emailed = " + alEmailList.size();
 	}
 
-	private String getEmailBody(String identityProfileId, String emails[], int fromProfileId) {
+	private void setUpEmailBody(String identityProfileId, String emails[], int fromProfileId) {
 		String firstName;
 		String lastName;
 		String profileName;
@@ -165,7 +159,6 @@ public class TransmitWami {
 		String fromProfileName;
 		String fromEmail;
 
-		String body;
 		String[] postData = { identityProfileId, String.valueOf(fromProfileId), "NA"};
 		JsonGetData jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(context, GET_PROFILE_DATA, postData);
@@ -176,11 +169,11 @@ public class TransmitWami {
 			if (ret_code == 1) {
 				String message = jsonResponse.optString("message");
 				Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-				return "";
+				return;
 			}
 			if (ret_code == -1) {
 //				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
-				return "";
+				return;
 			}
 
 			JSONArray jsonNode = jsonResponse.optJSONArray("identity_profile_data");
@@ -206,32 +199,15 @@ public class TransmitWami {
 
 		}
 		catch (JSONException e) {
-//			Log.e("****TransmitWami Error", e.toString(), e);
 			e.printStackTrace();
-			return "";
+			return;
 		}
 
-		body = "\n" +
-						"Profile Name: " + profileName + "\n"  +
-						"Contact Name: " + firstName + " " + lastName + "\n"  +
-						"Email Address: " + email + "\n"        +
-						"Profile Type: " + profileType + "\n" +
-						"Description: " + description + "\n"  +
-						"Street Address: " + streetAddress + "\n" +
-						"City: " + city + "\n"         +
-						"State: " + state + "\n"        +
-						"Zipcode: " + zipcode + "\n"      +
-						"Country: " + country + "\n"      +
-						"Telephone Number: " + telephone + "\n"    +
-						"Tags: " + tags + "\n"         +
-						"Profile Create Date: " + createDate + "\n\n" +
-						"For extended profiler info download the Wami app from the Apple App Store or Google Play! \n" +
-						"-----------------------------------------------------------------------------\n";
 		String toEmailAddress = emails[0];
 		sendEmail(profileName, firstName, lastName, email, profileType, description, streetAddress,
 							city, state, zipcode, country, telephone, tags, createDate, toEmailAddress,
 							fromFirstName, fromLastName, fromProfileName, fromEmail);
-		return(body);
+		return;
 	}
 
 	private void sendEmail (String profileName, String firstName, String lastName, String email, String profileType,
@@ -249,8 +225,6 @@ public class TransmitWami {
 		String jsonResult = jsonGetData.getJsonResult();
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
-			boolean ret_code = jsonResponse.optBoolean("ret_code");
-
 			String message = jsonResponse.optString("message");
 			Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 		}
@@ -276,14 +250,7 @@ public class TransmitWami {
         String message = resultObject.optString("message");
         toastMessage = toastMessage + message + "\n\n" ;
       }
-//
-//			JSONArray jsonNoRecordsFound = resultObject.optJSONArray("no_records_found");
-//			String [] noRecordsFound = new String[jsonNoRecordsFound.length()];
-//			for (int i = 0; i < noRecordsFound.length; i++) {
-//				noRecordsFound[i] = jsonNoRecordsFound.optString(i);
-//				toastMessage = toastMessage + noRecordsFound[i] + "\n\n" ;
-//			}
-//
+
       if (retCode == 0) {
         String numProfilesTransmitted = String.valueOf(resultObject.optInt("num_profiles_transmitted"));
         toastMessage = toastMessage + "\nNumber of profiles published = " + numProfilesTransmitted;
@@ -379,7 +346,7 @@ public class TransmitWami {
 		int endPos;
 
 		list = toEmailAddressList.replaceAll("\\s+","");
-		endPos = list.indexOf(";");
+		endPos = list.indexOf(",");
 		if (endPos == -1) {
 			toEmailAddress = list.substring(begPos, list.length());
 			if (!toEmailAddress.contains("@")) return -1;
@@ -391,47 +358,13 @@ public class TransmitWami {
 			if (!toEmailAddress.contains("@")) return -1;
 			alTransmitToEmailAddress.add(toEmailAddress);
 			begPos = endPos;
-			if (list.indexOf(";", begPos + 1) == -1) {
+			if (list.indexOf(",", begPos + 1) == -1) {
 				toEmailAddress = list.substring(begPos + 1, list.length());
 				if (!toEmailAddress.contains("@")) return -1;
 				alTransmitToEmailAddress.add(toEmailAddress);
 				break;
 			}
-			endPos = list.indexOf(";", begPos + 1);
-		}
-
-		return 1;
-	}
-
-	private int parseToProfileName(String toProfileNameList) {
-		String list;
-		String toProfileName;
-		int begPos = 0;
-		int endPos;
-
-		list = toProfileNameList.replaceAll("\\s+","");
-		endPos = list.indexOf(";");
-		if (endPos == -1) {
-			toProfileName = list.substring(begPos, list.length());
-//			if (toProfileName.length() < 7) return -1;
-			if (!toProfileName.matches("^[a-zA-Z0-9-_]*$")) return -2;
-			alTransmitToProfiles.add(toProfileName);
-			return 1;
-		}
-		while (true) {
-			toProfileName = list.substring(begPos, endPos);
-//			if (toProfileName.length() < 7) return -1;
-			if (!toProfileName.matches("^[a-zA-Z0-9-_]*$")) return -2;
-			alTransmitToProfiles.add(toProfileName);
-			begPos = endPos;
-			if (list.indexOf(";", begPos + 1) == -1) {
-				toProfileName = list.substring(begPos + 1, list.length());
-//				if (toProfileName.length() < 7) return -1;
-				if (!toProfileName.matches("^[a-zA-Z0-9-_]*$")) return -2;
-				alTransmitToProfiles.add(toProfileName);
-				break;
-			}
-			endPos = list.indexOf(";", begPos + 1);
+			endPos = list.indexOf(",", begPos + 1);
 		}
 
 		return 1;

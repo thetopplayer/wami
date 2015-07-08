@@ -4,8 +4,8 @@
 	<string name="app_name">Wami</string>
 	<string name="activity_name">My Wami</string>
 
-	<string name="email_address">Enter Email Address</string>
-	<string name="profile_name">Enter Profile Name</string>
+	<string name="email_address">Enter destination Email Address</string>
+	<string name="profile_name">Enter destination Profile Name</string>
 	<string name="wami_group">Enter Group name</string>
 	<string name="dialog_transmit_wami_text">Transmit Wami By</string>
 	<string name="transmit">Transmit</string>
