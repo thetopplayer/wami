@@ -35,7 +35,6 @@ public class TransmitWami {
 	private Context context;
 	private ArrayList alWamiTransmitModel = new ArrayList();
 	private ArrayList<String> alTransmitToProfiles = new ArrayList();
-	private ArrayList<String> alTransmitToEmailAddress = new ArrayList();
 	private ArrayList alProfilesToTransmit = new ArrayList();
 	private TransmitModel transmitModel;
 	private String toastMessage = "";
@@ -61,6 +60,9 @@ public class TransmitWami {
 			Button transmitWamiButton = (Button) dialog.findViewById(R.id.dialogButtonTransmitWami);
 
 			profileNames = getProfileNames(context);
+      if (profileNames == null) {
+        return;
+      }
 			final ArrayAdapter<String> adapter = new ArrayAdapter<String> (context, R.layout.autocomplete_dropdown, profileNames);
 			etWamiProfileName = (AutoCompleteTextView) dialog.findViewById(R.id.profile_name);
 			etWamiProfileName.setAdapter(adapter);
@@ -68,15 +70,19 @@ public class TransmitWami {
 			transmitWamiButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					int retCode;
+					int retCode = 0;
 					String toProfileName;
 					String toEmailAddress;
+          toastMessage = "";
 
 					EditText etEmailAddress = (EditText) dialog.findViewById(R.id.email_address);
           toProfileName = etWamiProfileName.getText().toString();
-					toEmailAddress = etEmailAddress.getText().toString();
+          toEmailAddress = (etEmailAddress.getText().toString()).replaceAll("\\s+", "");
+
 					if (toEmailAddress.equals("") && toProfileName.equals("")) {
-						Toast.makeText(context.getApplicationContext(), "Please provide a Profile Name and/or Email Address to publish to!", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(context.getApplicationContext(), "Please provide a Profile Name and/or Email Address to publish to!" + "\n", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
 						return;
 					}
 
@@ -86,19 +92,18 @@ public class TransmitWami {
 						task.execute(alTransmitToProfiles);
 					}
 
-					if (!toEmailAddress.equals("")) retCode = parseToEmailAddress(toEmailAddress);
-					else retCode = 0;
-					if (retCode == -1) {
-						Toast.makeText(context.getApplicationContext(), "Invalid Email address. Must be in the form of user@host.", Toast.LENGTH_LONG).show();
-						return;
-					}
-
-					if (retCode == 1) sendEmail(alTransmitToEmailAddress);
-					if (toProfileName.equals("")) {
-						Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage, Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.CENTER, 0, 10);
-						toast.show();
-					}
+					if (!toEmailAddress.equals("")) {
+            retCode = emailAddressValidate(toEmailAddress);
+            if (retCode == -1) {
+              Toast toast = Toast.makeText(context.getApplicationContext(), "Invalid Email address. Must be in the form of user@host." + "\n", Toast.LENGTH_LONG);
+              toast.setGravity(Gravity.CENTER, 0, 0);
+              toast.show();
+              return;
+            }
+            else {
+              sendEmail(toEmailAddress);
+            }
+          }
 				}
 			});
 
@@ -123,23 +128,23 @@ public class TransmitWami {
 		dialog.show();
 	}
 
-	private void sendEmail(ArrayList<String> alEmailList) {
-		String body = "";
-		String[] emails = new String[alEmailList.size()];
-		alEmailList.toArray(emails);
+  private void sendEmail(String toEmailAddress) {
 		int fromProfileId = 0;
 
 		for (int i = 0; i < alWamiTransmitModel.size(); i++) {
 			transmitModel = (TransmitModel) alWamiTransmitModel.get(i);
 			String identityProfileId = String.valueOf(transmitModel.getWamiToTransmitId());
 			fromProfileId = transmitModel.getFromIdentityProfileId();
-			setUpEmailBody(identityProfileId, emails, fromProfileId);
+      setUpEmailBody(identityProfileId, toEmailAddress, fromProfileId);
+
+      Toast toast = Toast.makeText(context.getApplicationContext(), toastMessage, Toast.LENGTH_LONG);
+      toast.setGravity(Gravity.CENTER, 0, 0);
+      toast.show();
+      toastMessage = "";
 		}
+  }
 
-		toastMessage = toastMessage + "\n\nNumber of profiles emailed = " + alEmailList.size();
-	}
-
-	private void setUpEmailBody(String identityProfileId, String emails[], int fromProfileId) {
+  private void setUpEmailBody(String identityProfileId, String toEmailAddress, int fromProfileId) {
 		String firstName;
 		String lastName;
 		String profileName;
@@ -165,14 +170,10 @@ public class TransmitWami {
 		String jsonResult = jsonGetData.getJsonResult();
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
-			int ret_code = jsonResponse.optInt("ret_code");
-			if (ret_code == 1) {
+			int retCode = jsonResponse.optInt("ret_code");
+			if (retCode == 1 || retCode == -1) {
 				String message = jsonResponse.optString("message");
-				Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-				return;
-			}
-			if (ret_code == -1) {
-//				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
+        toastMessage = toastMessage + message + "\n" ;
 				return;
 			}
 
@@ -200,41 +201,35 @@ public class TransmitWami {
 		}
 		catch (JSONException e) {
 			e.printStackTrace();
+      toastMessage = toastMessage + "Problem sending email. Email not delivered." + "\n" ;
 			return;
 		}
 
-		String toEmailAddress = emails[0];
-		sendEmail(profileName, firstName, lastName, email, profileType, description, streetAddress,
-							city, state, zipcode, country, telephone, tags, createDate, toEmailAddress,
-							fromFirstName, fromLastName, fromProfileName, fromEmail);
-		return;
-	}
-
-	private void sendEmail (String profileName, String firstName, String lastName, String email, String profileType,
-													String description, String streetAddress, String city, String state, String zipcode, String country, String telephone,
-													String tags, String createDate, String toEmailAddress, String fromFirstName, String fromLastName, String fromProfileName,
-													String fromEmail) {
-
 		String contactName = firstName + ' ' + lastName;
-
-		String[] postData = { toEmailAddress, "rob@roblanter.com", profileName,  fromFirstName, fromLastName, fromProfileName, contactName,
+		postData = new String[] { toEmailAddress, "rob@roblanter.com", profileName,  fromFirstName, fromLastName, fromProfileName, contactName,
 		email, profileType, description, streetAddress, city, state, zipcode, country, telephone, tags, createDate };
 
-		JsonGetData jsonGetData = new JsonGetData();
+		jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(context, TRANSMIT_PROFILE_TO_EMAIL_ADDRESS_MOBILE, postData);
-		String jsonResult = jsonGetData.getJsonResult();
+		jsonResult = jsonGetData.getJsonResult();
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
-			String message = jsonResponse.optString("message");
-			Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+      int retCode = jsonResponse.optInt("retCode");
+      if (retCode == 1) {
+        toastMessage = toastMessage + "Problem sending email. Email not delivered." + "\n" ;
+      }
+      else {
+        String message = profileName + " profile info emailed to " + toEmailAddress;
+        toastMessage = toastMessage + message + "\n" ;
+      }
 		}
 		catch (JSONException e) {
 			e.printStackTrace();
+      toastMessage = toastMessage + "Problem sending email. Email not delivered." + "\n" ;
 		}
-	}
+  }
 
 	public class TransmitWamiData extends AsyncTask<ArrayList, Void, JSONObject> {
-
 		@Override
 		protected void onPostExecute(JSONObject resultObject) {
       int retCode = resultObject.optInt("ret_code");
@@ -243,12 +238,12 @@ public class TransmitWami {
 
       if (retCode == -1) {
         String message = resultObject.optString("db_error");
-        toastMessage = toastMessage + message + "\n\n" ;
+        toastMessage = toastMessage + message + "\n" ;
       }
 
       if (noRecExistRetCode == 1 || recExistRetCode == 1 ) {
         String message = resultObject.optString("message");
-        toastMessage = toastMessage + message + "\n\n" ;
+        toastMessage = toastMessage + message + "\n" ;
       }
 
       if (retCode == 0) {
@@ -308,12 +303,10 @@ public class TransmitWami {
 				}
 			}
 			catch (IOException e) {
-//				Log.e("****TransmitWami Error", e.toString(), e);
 				e.printStackTrace();
 				return null;
 			}
 			catch (JSONException e) {
-//				Log.e("****TransmitWami Error", e.toString(), e);
 				e.printStackTrace();
 				return null;
 			}
@@ -334,41 +327,16 @@ public class TransmitWami {
 
 		catch (IOException e) {
 			e.printStackTrace();
-//			Log.e("****TransmitWami Error", e.toString(), e);
 		}
 		return answer;
 	}
 
-	private int parseToEmailAddress(String toEmailAddressList) {
-		String list;
-		String toEmailAddress;
-		int begPos = 0;
-		int endPos;
+  private int emailAddressValidate(String toEmailAddressList) {
+    String tmpEmailAddress = toEmailAddressList.replaceAll("\\s+","");
 
-		list = toEmailAddressList.replaceAll("\\s+","");
-		endPos = list.indexOf(",");
-		if (endPos == -1) {
-			toEmailAddress = list.substring(begPos, list.length());
-			if (!toEmailAddress.contains("@")) return -1;
-			alTransmitToEmailAddress.add(toEmailAddress);
-			return 1;
-		}
-		while (true) {
-			toEmailAddress = list.substring(begPos, endPos);
-			if (!toEmailAddress.contains("@")) return -1;
-			alTransmitToEmailAddress.add(toEmailAddress);
-			begPos = endPos;
-			if (list.indexOf(",", begPos + 1) == -1) {
-				toEmailAddress = list.substring(begPos + 1, list.length());
-				if (!toEmailAddress.contains("@")) return -1;
-				alTransmitToEmailAddress.add(toEmailAddress);
-				break;
-			}
-			endPos = list.indexOf(",", begPos + 1);
-		}
-
-		return 1;
-	}
+    if (!tmpEmailAddress.contains("@")) return -1;
+    else return 0;
+  }
 
 	private String[] getProfileNames(Context context) {
 		String profileNames[] = null;
@@ -388,19 +356,17 @@ public class TransmitWami {
 				return null;
 			}
 			if (ret_code == -1) {
-//				Log.e("**** Get Profile Names list DBError", jsonResponse.optString("db_error"));
 				return null;
 			}
 			JSONArray jsonNode = jsonResponse.optJSONArray("profile_names");
 			profileNames = new String[jsonNode.length()];
 			for (int i = 0; i < jsonNode.length(); i++) {
-//				JSONObject jsonChildNode = jsonNode.getJSONObject(i);
 				profileNames[i] = jsonNode.optString(i);
 			}
 		}
 		catch (JSONException e) {
-//			Log.e("****TransmitWami Error", e.toString(), e);
 			e.printStackTrace();
+      Toast.makeText(context, "Problem publishing profile.", Toast.LENGTH_LONG).show();
 			return null;
 		}
 

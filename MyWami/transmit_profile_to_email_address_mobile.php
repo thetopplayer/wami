@@ -42,7 +42,7 @@ $message =
 
     "<div style='margin-left: 10px; margin-right: 10px'>" .
         "<h4> Wami Profile For: <span style='color: #f87c08'>"  .$profile_name. "</span></h4>" .
-        "<h4> From: <span style='color: #f87c08'>"  .$from_first_name. " "  .$from_last_name.  "</span>   Wami Profile: <span style='color: #f87c08'>" .$from_profile_name. "</span> </h4>" .
+        "<h4> From: <span style='color: #f87c08'>"  .$from_first_name. "   "  .$from_last_name.  "</span>   Wami Profile: <span style='color: #f87c08'>" .$from_profile_name. "</span> </h4>" .
         "<hr>" .
         "<div style='margin-left: 20px; line-height: 10px'>" .
             "<h5> Contact Name: <span style='color: #f87c08'>" .$contact_name. "</span></h5>" .
@@ -86,9 +86,11 @@ $retCode = mail($to, $subject, $message, $headers);
 $response["ret_code"] = $retCode;
 if ($retCode) {
     $response["message"] = "Profile has been emailed.";
+    $response["ret_code"] = 0;
 }
 else {
     $response["message"] =  "Problem with emailing profile.";
+    $response["ret_code"] = 1;
 }
 echo json_encode($response);
 ?>
