@@ -74,11 +74,14 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         self.row = row
         
         self.processAddressBook = ProcessAddressBook()
-        processAddressBook.initialize()
         var auth = processAddressBook.getAuthorization()
         if auth {
+            processAddressBook.initialize()
             var exist = processAddressBook.checkForExist(firstNames[self.row], lastName: lastNames[self.row])
-            if exist {
+            if exist == 2 {
+                return
+            }
+            if exist == 0 {
                 var alertController = UIAlertController(title: "Alert!", message: "Contact Already Exists In Address Book", preferredStyle: .Alert)
                 alertController.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: addContactAction))
                 alertController.addAction(UIAlertAction(title: "Replace", style: UIAlertActionStyle.Default, handler: replaceContactAction))
@@ -92,6 +95,9 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
                     self.view.makeToast(message: "Contact added to Address Book", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
                 }
             }
+        }
+        else {
+            self.view.makeToast(message: "Access to Contact List not authorized!", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
         }
     }
     func createMultiStringRef() -> ABMutableMultiValueRef {

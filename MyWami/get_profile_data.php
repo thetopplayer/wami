@@ -8,7 +8,6 @@
  *
  * Gets identity profile data keyed by identity_profile_id.
  */
-$response = array();
 $identity_profile_id = $_POST["param1"];
 $from_identity_profile_id = $_POST["param2"];
 $user_identity_profile_id = $_POST["param3"];
@@ -17,6 +16,7 @@ require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
 $con = $db->connect();
 
+$response = array();
 $sql = "SELECT first_name, last_name, profile_name, image_url, email, profile_type, street_address, city, state, zipcode, country, telephone,
         create_date, tags, searchable, active_ind, description, rating
         FROM identity_profile WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;

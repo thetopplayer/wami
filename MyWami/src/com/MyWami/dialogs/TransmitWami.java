@@ -17,6 +17,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -25,10 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class TransmitWami {
@@ -165,10 +163,11 @@ public class TransmitWami {
 		String fromEmail;
 
 		String[] postData = { identityProfileId, String.valueOf(fromProfileId), "NA"};
+
 		JsonGetData jsonGetData = new JsonGetData();
 		jsonGetData.jsonGetData(context, GET_PROFILE_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
-		try {
+    try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			int retCode = jsonResponse.optInt("ret_code");
 			if (retCode == 1 || retCode == -1) {
@@ -229,7 +228,7 @@ public class TransmitWami {
 		}
   }
 
-	public class TransmitWamiData extends AsyncTask<ArrayList, Void, JSONObject> {
+	private class TransmitWamiData extends AsyncTask<ArrayList, Void, JSONObject> {
 		@Override
 		protected void onPostExecute(JSONObject resultObject) {
       int retCode = resultObject.optInt("ret_code");

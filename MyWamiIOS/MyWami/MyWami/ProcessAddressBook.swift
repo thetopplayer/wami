@@ -38,12 +38,12 @@ class ProcessAddressBook: UIViewController {
             
             switch status {
             case .Denied, .Restricted:
-                println("no access")
+                return false
             case .Authorized, .NotDetermined:
                 var err : Unmanaged<CFError>? = nil
                 var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
                 if adbk == nil {
-                    println(err)
+                    return false
                 }
                 ABAddressBookRequestAccessWithCompletion(adbk) {
                     (granted:Bool, err:CFError!) in
@@ -51,20 +51,48 @@ class ProcessAddressBook: UIViewController {
                         self.adbk = adbk
                     }
                     else {
-                        println(err)
+                        
                     }
                 }
+                return true
             }
         }
-        return self.authDone
+        return true
     }
     
-    func checkForExist(firstName: String, lastName: String) -> Bool {
+    func checkForExist(firstName: String, lastName: String) -> Int {
         self.firstName = firstName
         self.lastName = lastName
         
         var targetContact = ((self.firstName + " " + self.lastName).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
+ 
+        let addressBook: ABAddressBook? = adbk
+        if addressBook == nil {
+            return 2
+        }
+        let allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook)
+        if allPeople == nil {
+            return 2
+        }
+        if let allPeopleArray = allPeople.takeRetainedValue() as NSArray? {
+            let people = allPeopleArray as [ABRecord]
+            
+            for person in people {
+                if let a = ABRecordCopyCompositeName(person) {
+                    let b = a.takeRetainedValue()
+                    var name = ((String(ABRecordCopyCompositeName(person).takeRetainedValue())).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                    if name == targetContact {
+                        self.person = person
+                        return 0
+                    }
+                }
+            }
+        }
+
+        return 1
+        
+//        let people = ABAddressBookCopyArrayOfAllPeople(adbk).takeRetainedValue() as NSArray as [ABRecord]
+        
         //****
 //        for person in people {
 //            if let a = ABRecordCopyCompositeName(person) {
@@ -78,17 +106,6 @@ class ProcessAddressBook: UIViewController {
 //            }
 //        }
         //***
-        for person in people {
-            if let a = ABRecordCopyCompositeName(person) {
-                let b = a.takeRetainedValue()
-                var name = ((String(ABRecordCopyCompositeName(person).takeRetainedValue())).uppercaseString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                if name == targetContact {
-                    self.person = person
-                    return true
-                }
-            }
-        }
-        return false
     }
     
     func addToContactListAction(firstName: String, lastName: String, telephone: String, email: String,
