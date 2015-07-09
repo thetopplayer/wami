@@ -17,8 +17,8 @@
 			android:paddingRight="5dp">
 		<ImageView
 				android:id="@+id/wami_heading_image"
-				android:layout_width="180dp"
-				android:layout_height="165dp"
+				android:layout_width="150dp"
+				android:layout_height="135dp"
 				android:paddingRight="5dp"
 				android:paddingBottom="5dp">
 		</ImageView>
@@ -27,7 +27,7 @@
 				android:id="@+id/wami_heading_text_user_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textSize="14sp"
+				android:textSize="16sp"
 				android:textStyle="bold"
 				android:paddingLeft="5dp"
 				android:paddingTop="60dp"
@@ -40,7 +40,7 @@
 				android:id="@+id/wami_heading_text_entity"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textSize="14sp"
+				android:textSize="16sp"
 				android:textStyle="bold|italic"
 				android:textColor="@color/text_color"
 				android:paddingLeft="5dp"

@@ -17,10 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.MyWami.dialogs.ActionList;
 import com.MyWami.dialogs.TransmitWami;
 import com.MyWami.model.TransmitModel;
@@ -35,7 +32,7 @@ public class WamiInfoExtended extends Activity {
 	final private String GET_PROFILE_DATA = Constants.IP + "get_profile_data.php";
 	final private String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
 	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
-	JsonGetData jsonGetData;
+	private JsonGetData jsonGetData;
 	private String userIdentityProfileId;
 	private boolean useDefault;
 	private ArrayList alWamiTransmitModel = new ArrayList();
@@ -81,8 +78,22 @@ public class WamiInfoExtended extends Activity {
 		userIdentityProfileId = extras.getString("user_identity_profile_id");
 		useDefault = extras.getBoolean("use_default");
 
-		String jsonResult = getJsonData(identityProfileId, userIdentityProfileId);
-		boolean result = assignData(jsonResult);
+    String jsonResult = getJsonData(identityProfileId, userIdentityProfileId);
+    boolean result = assignData(jsonResult);
+
+    TextView textView = (TextView) findViewById(R.id.wami_heading_text_entity);
+    textView.setText(profileName);
+    textView = (TextView) findViewById(R.id.wami_heading_text_user_name);
+    textView.setText(firstName + " " + lastName);
+
+    Button btnAddToContacts = (Button) findViewById(R.id.wami_extended_info_add_to_contacts);
+    btnAddToContacts.setOnClickListener(new  Button.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+      }
+    });
+
 		if (result) {
 
 			TextView tvProfileName = (TextView) findViewById(R.id.profile_name);
