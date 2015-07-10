@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +56,6 @@ public class WamiInfoExtended extends Activity {
 	private String groups = "";
 	private String searchable;
 	private String activeInd;
-	private String rating;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +129,6 @@ public class WamiInfoExtended extends Activity {
 					}
 					catch (JSONException e) {
 						Toast.makeText(getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_LONG).show();
-//					Log.e("****Request Profile Error", e.toString(), e);
 						e.printStackTrace();
 					}
 
@@ -224,7 +221,6 @@ public class WamiInfoExtended extends Activity {
 				}
 				catch (JSONException e) {
 					e.printStackTrace();
-//					Log.e("**** Profiler: json error: ", e.toString(), e);
 				}
 				int ret_code = jsonResponse.optInt("ret_code");
 				int no_categories_ret_code = jsonResponse.optInt("no_categories_ret_code");
@@ -239,7 +235,6 @@ public class WamiInfoExtended extends Activity {
 					return;
 				}
 				if (ret_code == -1) {
-//					Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
 					return;
 				}
 
@@ -351,7 +346,6 @@ public class WamiInfoExtended extends Activity {
 				return false;
 			}
 			if (ret_code == -1) {
-//				Log.e("**** Get Identity Profile data DBError", jsonResponse.optString("db_error"));
 				return false;
 			}
 
@@ -378,7 +372,6 @@ public class WamiInfoExtended extends Activity {
 			country = jsonChildNode.optString("country");
 			telephone = jsonChildNode.optString("telephone");
 			imageUrl = jsonChildNode.optString("image_url");
-			rating = jsonChildNode.optString("rating");
 			createDate = (jsonChildNode.optString("create_date")).substring(0, 10);
 			String searchableStr = jsonChildNode.optString("searchable");
 			if (searchableStr.equals("1")) {

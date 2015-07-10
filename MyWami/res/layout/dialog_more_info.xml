@@ -1,46 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:background="@color/white">
 
-	<ImageView
-			android:id="@+id/dialog_header"
-			android:src="@drawable/dialog_header_more_info"
-			android:layout_width="match_parent"
-			android:layout_height="34dp"
-			android:scaleType="center"
-			android:background="#000000"/>
+    <ImageView
+        android:id="@+id/dialog_header"
+        android:src="@drawable/dialog_header_more_info"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:scaleType="center"
+        android:background="#666666"/>
 
-	<TextView
-			android:id="@+id/dialog_text"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center_horizontal"
-			android:layout_marginTop="10dp"
-			android:layout_marginLeft="5dp"
-			android:layout_marginRight="5dp"
-			android:layout_marginBottom="25dp"
-			android:singleLine="false"
-			android:textSize="14sp"
-			android:textColor="#000000"
-			android:layout_below="@+id/dialog_header"/>
+    <TextView
+        android:id="@+id/profile_name_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_header"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="Profile Name"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-	<Button
-			android:id="@+id/close_more_info"
-			android:layout_width="70dp"
-			android:layout_height="27dp"
-			android:layout_centerHorizontal="true"
-			android:text=" Close "
-			android:textColor="#FFFFFF"
-			android:textSize="13sp"
-			android:background="@drawable/button_state"
-			android:layout_below="@+id/dialog_text"/>
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_below="@+id/profile_name_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_background"
+        android:singleLine="true"/>
 
-	<TextView
-			android:layout_width="10dp"
-			android:layout_height="15dp"
-			android:layout_below="@+id/close_more_info"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tags_title"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/profile_name"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:text="Tags"-->
+        <!--android:textColor="#000000"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textStyle="bold" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tags"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/tags_title"-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:background="@drawable/textfield_background"-->
+        <!--android:padding="5dp"-->
+        <!--android:textColor="#ff5c5c5c"-->
+        <!--android:textSize="17sp" />-->
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="25dp"
+        android:singleLine="false"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/profile_name"/>
+
+    <Button
+        android:id="@+id/close_more_info"
+        android:layout_width="70dp"
+        android:layout_height="27dp"
+        android:layout_centerHorizontal="true"
+        android:text=" Close "
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:background="@drawable/button_state"
+        android:layout_below="@+id/description"/>
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/close_more_info"/>
 
 </RelativeLayout>

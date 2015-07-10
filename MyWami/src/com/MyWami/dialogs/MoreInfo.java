@@ -14,14 +14,20 @@ import com.MyWami.R;
 public class MoreInfo {
 	public MoreInfo() {}
 
-	public void moreInfo(final Context context, final String description) {
+	public void moreInfo(final Context context, final String description, String profileName) {
 		final Dialog dialog = new Dialog(context);
 		dialog.getWindow();
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_more_info);
 
-		final TextView moreInfo = (TextView) dialog.findViewById(R.id.dialog_text);
-		moreInfo.setText(description);
+    TextView tvProfileName = (TextView) dialog.findViewById(R.id.profile_name);
+    tvProfileName.setText(profileName);
+
+//    final TextView tags = (TextView) dialog.findViewById(R.id.tags);
+//    moreInfo.setText(tags);
+
+    final TextView tvDescription = (TextView) dialog.findViewById(R.id.description);
+    tvDescription.setText(description);
 
 		Button closeMoreInfo = (Button) dialog.findViewById(R.id.close_more_info);
 		closeMoreInfo.setOnClickListener(new View.OnClickListener() {

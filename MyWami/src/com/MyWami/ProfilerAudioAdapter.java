@@ -35,9 +35,9 @@ public class ProfilerAudioAdapter extends ArrayAdapter<String> {
 		listButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String description = audioDescription[position];
-				MoreInfo moreInfo = new MoreInfo();
-				moreInfo.moreInfo(context, description);
+//				String description = audioDescription[position];
+//				MoreInfo moreInfo = new MoreInfo();
+//				moreInfo.moreInfo(context, description);
 			}
 		});
 

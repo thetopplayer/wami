@@ -116,9 +116,9 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 		viewHolder.listButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String description = imageDescription[position];
-				MoreInfo moreInfo = new MoreInfo();
-				moreInfo.moreInfo(context, description);
+//				String description = imageDescription[position];
+//				MoreInfo moreInfo = new MoreInfo();
+//				moreInfo.moreInfo(context, description);
 			}
 		});
 
