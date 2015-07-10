@@ -28,7 +28,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingLeft="5dp"
-            android:paddingTop="60dp"
+            android:paddingTop="20dp"
             android:lineSpacingExtra="-2dp"
             android:textColor="@color/text_color"
             android:layout_toRightOf="@id/wami_heading_image">
@@ -42,6 +42,7 @@
             android:textStyle="bold|italic"
             android:textColor="@color/text_color"
             android:paddingLeft="5dp"
+            android:paddingTop="3dp"
             android:layout_toRightOf="@id/wami_heading_image"
             android:layout_below="@+id/wami_heading_text_user_name">
         </TextView>
@@ -55,10 +56,11 @@
             android:textSize="11sp"
             android:textColor="#FFFFFF"
             android:background="@drawable/button_state"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
             android:text="Add To Contacts"
             android:focusable="false"
+            android:layout_toRightOf="@id/wami_heading_image"
             android:layout_below="@+id/wami_heading_text_entity"/>
 
         <ImageView
