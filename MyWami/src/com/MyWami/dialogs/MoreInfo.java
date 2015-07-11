@@ -14,7 +14,7 @@ import com.MyWami.R;
 public class MoreInfo {
 	public MoreInfo() {}
 
-	public void moreInfo(final Context context, final String description, String profileName) {
+	public void moreInfo(final Context context, final String description, String tags, String profileName) {
 		final Dialog dialog = new Dialog(context);
 		dialog.getWindow();
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -23,8 +23,8 @@ public class MoreInfo {
     TextView tvProfileName = (TextView) dialog.findViewById(R.id.profile_name);
     tvProfileName.setText(profileName);
 
-//    final TextView tags = (TextView) dialog.findViewById(R.id.tags);
-//    moreInfo.setText(tags);
+    TextView tvTags = (TextView) dialog.findViewById(R.id.tags);
+    tvTags.setText(tags);
 
     final TextView tvDescription = (TextView) dialog.findViewById(R.id.description);
     tvDescription.setText(description);

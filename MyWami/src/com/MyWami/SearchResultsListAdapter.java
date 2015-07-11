@@ -80,6 +80,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 			public void onClick(View v) {
 				String profileName = searchListModel[position].getProfileName();
 				String description = searchListModel[position].getDescriptiom();
+        String tags = searchListModel[position].getTags();
 //				if ((description.equals("")) || (description.equals("null"))) {
 //					content = profileName + ": " + "No more info exists";
 //				}
@@ -87,7 +88,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 //					content = profileName + ": \n" + description;
 //				}
 				MoreInfo moreInfo = new MoreInfo();
-				moreInfo.moreInfo(context, description, profileName);
+				moreInfo.moreInfo(context, description, tags, profileName);
 			}
 		});
 
