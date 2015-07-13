@@ -6,20 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.MyWami.dialogs.MoreInfo;
+import com.MyWami.dialogs.MoreInfoAudio;
 
 /**
  * Created by robertlanter on 3/9/14.
  */
 public class ProfilerAudioAdapter extends ArrayAdapter<String> {
 	private final Context context;
-	private final String[] audioFileName;
+	private final String[] songTitle;
+  private final String[] fileName;
 	private final String[] audioDescription;
 
-	public ProfilerAudioAdapter(Context context, String[] audioFileName, String[] audioDescription) {
-		super(context, R.layout.profiler_audio, audioFileName);
+	public ProfilerAudioAdapter(Context context, String[] songTitle, String[] fileName, String[] audioDescription) {
+		super(context, R.layout.profiler_audio, songTitle);
 		this.context = context;
-		this.audioFileName = audioFileName;
+		this.songTitle = songTitle;
+    this.fileName = fileName;
 		this.audioDescription = audioDescription;
 	}
 
@@ -30,14 +32,16 @@ public class ProfilerAudioAdapter extends ArrayAdapter<String> {
 		View rowView = inflater.inflate(R.layout.profiler_audio, parent, false);
 		TextView listText = (TextView) rowView.findViewById(R.id.audio_file_name);
 		Button listButton = (Button) rowView.findViewById(R.id.audio_description);
-		listText.setText(audioFileName[position]);
+		listText.setText(songTitle[position]);
 
 		listButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				String description = audioDescription[position];
-//				MoreInfo moreInfo = new MoreInfo();
-//				moreInfo.moreInfo(context, description);
+				String audioDescription1 = audioDescription[position];
+        String fileName1 = fileName[position];
+        String songTitle1 = songTitle[position];
+				MoreInfoAudio moreInfo = new MoreInfoAudio();
+				moreInfo.moreInfo(context, audioDescription1, songTitle1, fileName1);
 			}
 		});
 

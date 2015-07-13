@@ -11,14 +11,14 @@ import com.MyWami.R;
 /**
  * Created by robertlanter on 7/22/14.
  */
-public class MoreInfo {
-	public MoreInfo() {}
+public class MoreInfoProfile {
+	public MoreInfoProfile() {}
 
 	public void moreInfo(final Context context, final String description, String tags, String profileName) {
 		final Dialog dialog = new Dialog(context);
 		dialog.getWindow();
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.dialog_more_info);
+		dialog.setContentView(R.layout.dialog_more_info_profile);
 
     TextView tvProfileName = (TextView) dialog.findViewById(R.id.profile_name);
     tvProfileName.setText(profileName);

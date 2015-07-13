@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.MyWami.dialogs.MoreInfo;
+import com.MyWami.dialogs.MoreInfoImage;
 import com.MyWami.util.Constants;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -116,9 +116,11 @@ public class ProfilerImageAdapter extends ArrayAdapter<String> {
 		viewHolder.listButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				String description = imageDescription[position];
-//				MoreInfo moreInfo = new MoreInfo();
-//				moreInfo.moreInfo(context, description);
+        String imageDescription1 = imageDescription[position];
+        String fileName1 = fileName[position];
+        String imageName1 = imageName[position];
+        MoreInfoImage moreInfo = new MoreInfoImage();
+        moreInfo.moreInfo(context, imageDescription1, imageName1, fileName1);
 			}
 		});
 

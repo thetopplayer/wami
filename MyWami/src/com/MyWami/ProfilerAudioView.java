@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class ProfilerAudioView extends ListActivity {
 	private String[] fileName;
+  private String[] audioFileName;
 	private String[] fileLocation;
 	private String[] audioDescription;
 
@@ -71,12 +72,12 @@ public class ProfilerAudioView extends ListActivity {
 		}
 
 		Bundle extras = getIntent().getExtras();
-		String[] audioFileName = extras.getStringArray("audio_file_name");
+		audioFileName = extras.getStringArray("audio_file_name");
 		fileName = extras.getStringArray("file_name");
 	  fileLocation = extras.getStringArray("file_location");
 		audioDescription = extras.getStringArray("audio_description");
 
-		setListAdapter(new ProfilerAudioAdapter(this, audioFileName, audioDescription));
+		setListAdapter(new ProfilerAudioAdapter(this, audioFileName, fileName, audioDescription));
 	}
 
 	protected void onListItemClick(ListView l, View v, int position, long id) {

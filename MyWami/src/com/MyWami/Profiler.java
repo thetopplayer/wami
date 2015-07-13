@@ -160,10 +160,8 @@ public class Profiler extends ListActivity {
 			if (ret_code == 1) {
 				String message = jsonResponse.optString("message");
 				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-				//return null;
 			}
 			if (ret_code == -1) {
-//				Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
 				return null;
 			}
 			if (no_categories_ret_code == 1) {
@@ -244,7 +242,6 @@ public class Profiler extends ListActivity {
 		}
 		catch (JSONException e) {
 			e.printStackTrace();
-//			Log.e("**** Profiler: json error: ", e.toString(), e);
 			return null;
 		}
 

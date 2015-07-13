@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.MyWami.dialogs.MoreInfo;
+import com.MyWami.dialogs.MoreInfoProfile;
+import com.MyWami.dialogs.MoreInfoProfile;
 import com.MyWami.model.SearchListModel;
 
 import java.util.ArrayList;
@@ -81,13 +82,7 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 				String profileName = searchListModel[position].getProfileName();
 				String description = searchListModel[position].getDescriptiom();
         String tags = searchListModel[position].getTags();
-//				if ((description.equals("")) || (description.equals("null"))) {
-//					content = profileName + ": " + "No more info exists";
-//				}
-//				else {
-//					content = profileName + ": \n" + description;
-//				}
-				MoreInfo moreInfo = new MoreInfo();
+				MoreInfoProfile moreInfo = new MoreInfoProfile();
 				moreInfo.moreInfo(context, description, tags, profileName);
 			}
 		});
