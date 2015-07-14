@@ -24,7 +24,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by robertlanter on 3/4/14.
@@ -80,12 +79,19 @@ public class ProfilerAudioView extends ListActivity {
 		setListAdapter(new ProfilerAudioAdapter(this, audioFileName, fileName, audioDescription));
 	}
 
+  public void onResume() {
+    super.onResume();
+    if (pd != null)	{
+      pd.dismiss();
+    }
+  }
+
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		ProfilerAudioAdapter profileAudioAdapter = (ProfilerAudioAdapter) getListAdapter();
 		String selectedValue = profileAudioAdapter.getItem(position);
 		Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
 
-		GetFile task = new GetFile();
+    GetFile task = new GetFile();
 		String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
 		File folder = new File(extStorageDirectory, "Audio");
 		folder.mkdir();
@@ -156,10 +162,11 @@ public class ProfilerAudioView extends ListActivity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pd = new ProgressDialog(that);
+      pd.setProgressStyle(pd.STYLE_SPINNER);
 			pd.setTitle("Getting File...");
 			pd.setMessage("Please wait.");
 			pd.setCancelable(true);
-			pd.setCanceledOnTouchOutside(true);
+      pd.setCanceledOnTouchOutside(true);
 			pd.setIndeterminate(true);
 			pd.show();
 		}
@@ -171,6 +178,14 @@ public class ProfilerAudioView extends ListActivity {
 				pd.dismiss();
 			}
 		}
+
+    @Override
+    protected void onCancelled() {
+      super.onCancelled();
+      if (pd != null)	{
+        pd.dismiss();
+      }
+    }
 
 			@Override
 		protected Void doInBackground(ArrayList... params) {
