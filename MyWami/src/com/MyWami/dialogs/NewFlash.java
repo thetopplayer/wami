@@ -109,7 +109,7 @@ public class NewFlash {
 		layout.addView(tv);
 		Toast toast = new Toast(context);
 		toast.setView(layout);
-		toast.setGravity(Gravity.TOP, 0, 120);
+		toast.setGravity(Gravity.CENTER, 0, 120);
 		toast.setDuration(Toast.LENGTH_LONG);
 		toast.show();
 	}

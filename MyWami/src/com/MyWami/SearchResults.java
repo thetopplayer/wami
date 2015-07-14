@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.MyWami.dialogs.RequestProfileConfirm;
 import com.MyWami.dialogs.SearchForProfiles;
 import com.MyWami.model.SearchListModel;
 import com.MyWami.util.Constants;
@@ -29,8 +30,6 @@ import java.util.ArrayList;
  */
 public class SearchResults extends ListActivity {
 	final private String GET_SEARCH_PROFILE_DATA = Constants.IP + "get_search_profile_data.php";
-	final private String GET_PROFILE_NAME = Constants.IP + "get_profile_name.php";
-	final private String TRANSMIT_REQUEST_TO_EMAIL_ADDRESS_MOBILE = Constants.EMAIL_IP + "transmit_request_to_email_address_mobile.php";
 	private JsonGetData jsonGetData;
 	private SearchListModel[] listModel;
 	private String selectedItem;
@@ -94,45 +93,10 @@ public class SearchResults extends ListActivity {
 					Toast.makeText(getApplicationContext(), "No Profiles were chosen to be requested.", Toast.LENGTH_LONG).show();
 					return;
 				}
-				jsonGetData = new JsonGetData();
-				String[] postData = {userIdentityProfileId};
-				jsonGetData.jsonGetData(getApplicationContext(), GET_PROFILE_NAME, postData);
-				String jsonResult = jsonGetData.getJsonResult();
-				String fromProfileName = null;
-				String fromEmail = null;
-				try {
-					JSONObject jsonResponse = new JSONObject(jsonResult);
-					fromProfileName = jsonResponse.getString("profile_name");
-					fromEmail = jsonResponse.getString("email");
-				}
-				catch (JSONException e) {
-					Toast.makeText(getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_LONG).show();
-					e.printStackTrace();
-				}
 
-				String emails = null;
-				for (int i = 0; i < emailTo.size(); i++) {
-					emails = emails + "," + emailTo.get(i);
-				}
-
-				assert emails != null;
-				emails = emails.substring(5);
-				postData = new String[]{fromEmail, emails, fromEmail, fromProfileName};
-
-				JsonGetData jsonGetData = new JsonGetData();
-				jsonGetData.jsonGetData(getApplicationContext(), TRANSMIT_REQUEST_TO_EMAIL_ADDRESS_MOBILE, postData);
-				jsonResult = jsonGetData.getJsonResult();
-				try {
-					JSONObject jsonResponse = new JSONObject(jsonResult);
-					boolean ret_code = jsonResponse.optBoolean("ret_code");
-
-					String message = jsonResponse.optString("message");
-					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
+        RequestProfileConfirm requestProfileConfirm = new RequestProfileConfirm();
+        requestProfileConfirm.requestProfileConfirm(that, userIdentityProfileId, emailTo);
+      }
 		});
 
 		Button home = (Button) this.findViewById(R.id.home);
@@ -145,17 +109,6 @@ public class SearchResults extends ListActivity {
 				startActivity(i);
 			}
 		});
-
-//		ImageView ivHome = (ImageView) findViewById(R.id.actionBarHome);
-//		ivHome.setOnClickListener(new ImageView.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent i = new Intent(SearchResults.this, WamiListActivity.class);
-//				i.putExtra("user_identity_profile_id", userIdentityProfileId);
-//				i.putExtra("use_default", useDefault);
-//				startActivity(i);
-//			}
-//		});
 
 		jsonGetData = new JsonGetData();
 		String[] postData = {selectedItem, searchStr, String.valueOf(searchIndex), userIdentityProfileId};
