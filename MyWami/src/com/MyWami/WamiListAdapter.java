@@ -80,7 +80,7 @@ public WamiListAdapter(Context context, int layoutResourceId, WamiListModel[] wa
     imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
 		viewHolder.listImage.setImageDrawable(imageUrlId);
 
-    String contactName = wamiListModel[position].getFirstName() + wamiListModel[position].getLastName();
+    String contactName = wamiListModel[position].getFirstName() +  " " + wamiListModel[position].getLastName();
     viewHolder.listTextName.setText(contactName);
 
 		viewHolder.listTextProfileName.setText(wamiListModel[position].getProfileName());

@@ -80,6 +80,12 @@ public class WamiInfoExtended extends Activity {
     TextView textView = (TextView) findViewById(R.id.wami_heading_text_entity);
     textView.setText(profileName);
     textView = (TextView) findViewById(R.id.wami_heading_text_user_name);
+    if (firstName.equals("null")) {
+      firstName = "";
+    }
+    if (lastName.equals("null")) {
+      lastName = "";
+    }
     textView.setText(firstName + " " + lastName);
 
     Button btnAddToContacts = (Button) findViewById(R.id.wami_extended_info_add_to_contacts);

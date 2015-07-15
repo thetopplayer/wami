@@ -96,6 +96,12 @@ public class Profiler extends ListActivity {
 		TextView textView = (TextView) findViewById(R.id.wami_heading_text_entity);
 		textView.setText(profileName);
 		textView = (TextView) findViewById(R.id.wami_heading_text_user_name);
+    if (firstName.equals("null")) {
+      firstName = "";
+    }
+    if (lastName.equals("null")) {
+      lastName = "";
+    }
 		textView.setText(firstName + " " + lastName);
 
 		Drawable imageUrlId;
