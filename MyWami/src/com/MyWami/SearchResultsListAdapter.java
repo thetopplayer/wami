@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by robertlanter on 7/18/14.
  */
-public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
+public class SearchResultsListAdapter  extends ArrayAdapter {
 	Context context;
 	int layoutResourceId;
 	boolean[] checkBoxState;

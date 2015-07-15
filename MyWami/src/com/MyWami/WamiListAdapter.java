@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by robertlanter on 1/22/14.
  */
-public class WamiListAdapter extends ArrayAdapter<ListRow> {
+public class WamiListAdapter extends ArrayAdapter {
 	Context context;
 	int layoutResourceId;
 	boolean[] checkBoxState;

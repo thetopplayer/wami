@@ -118,8 +118,6 @@ public class SearchResults extends ListActivity {
 	}
 
 	private void ListData(String jsonResult) {
-		ArrayList<ListRow> alListRow = new ArrayList<ListRow>();
-
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode;
