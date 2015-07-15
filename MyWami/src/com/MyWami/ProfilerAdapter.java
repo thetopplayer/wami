@@ -14,8 +14,8 @@ public class ProfilerAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final String[] categories;
 
-	public ProfilerAdapter(Context context, String[] categories) {
-		super(context, R.layout.profiler, categories);
+	public ProfilerAdapter(Context context, int layoutResourceId, String[] categories) {
+		super(context, layoutResourceId, categories);
 		this.context = context;
 		this.categories = categories;
 	}
@@ -25,6 +25,11 @@ public class ProfilerAdapter extends ArrayAdapter<String> {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		View rowView = inflater.inflate(R.layout.profiler, parent, false);
+
+    if (categories[position].equals("empty")) {
+      return null;
+    }
+
 		TextView listText = (TextView) rowView.findViewById(R.id.profile_text);
 		listText.setText(categories[position]);
 

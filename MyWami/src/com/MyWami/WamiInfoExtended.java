@@ -3,16 +3,13 @@ package com.MyWami;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,11 +98,13 @@ public class WamiInfoExtended extends Activity {
     });
 
 		if (result) {
-
 			TextView tvProfileName = (TextView) findViewById(R.id.profile_name);
 			tvProfileName.setText(profileName);
 
 			TextView tvDescription = (TextView) findViewById(R.id.description);
+      if (description.equals("null")) {
+        description = "";
+      }
 			tvDescription.setText(description);
 
 			TextView tvContactName = (TextView) findViewById(R.id.contact_name);
@@ -148,17 +147,22 @@ public class WamiInfoExtended extends Activity {
 			});
 
 			TextView tvTelephone = (TextView) findViewById(R.id.telephone);
+      if (telephone.equals("null")) {
+        telephone = "";
+      }
+      else  {
+        tvTelephone.setPaintFlags(tvTelephone.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tvTelephone.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + telephone));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+              startActivity(intent);
+            }
+          }
+        });
+      }
 			tvTelephone.setText(telephone);
-			tvTelephone.setPaintFlags(tvTelephone.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-			tvTelephone.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					Intent intent = new Intent(Intent.ACTION_DIAL);
-					intent.setData(Uri.parse("tel:" + telephone));
-					if (intent.resolveActivity(getPackageManager()) != null) {
-						startActivity(intent);
-					}
-				}
-			});
 
 			TextView tvProfileType = (TextView) findViewById(R.id.profile_type);
 			if (profileType.equals("null")) {
@@ -219,33 +223,6 @@ public class WamiInfoExtended extends Activity {
 		RelativeLayout rlWamiInfoExtended = (RelativeLayout) findViewById(R.id.wami_info_extended);
 		rlWamiInfoExtended.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String[] postData = { identityProfileId };
-				JsonGetData jsonGetData = new JsonGetData();
-				jsonGetData.jsonGetData(getApplicationContext(), GET_PROFILER_DATA, postData);
-				String jsonResult = jsonGetData.getJsonResult();
-				JSONObject jsonResponse = null;
-				try {
-					jsonResponse = new JSONObject(jsonResult);
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
-				}
-				int ret_code = jsonResponse.optInt("ret_code");
-				int no_categories_ret_code = jsonResponse.optInt("no_categories_ret_code");
-				if (ret_code == 1) {
-					String message = jsonResponse.optString("message");
-					Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-				}
-				if (no_categories_ret_code == 1) {
-					String message = jsonResponse.optString("message");
-					String toastMessage = message.substring(2, message.length() - 2);
-					Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_LONG).show();
-					return;
-				}
-				if (ret_code == -1) {
-					return;
-				}
-
 				Intent i = new Intent(WamiInfoExtended.this, Profiler.class);
 				i.putExtra("identity_profile_id", identityProfileId);
 				i.putExtra("image_url", imageUrl);
@@ -294,42 +271,6 @@ public class WamiInfoExtended extends Activity {
       String mEmailAddress = (String) tvEmailAddress.getText();
       String mContactName = (String) tvContactName.getText();
       addToContacts.addToContacts(that, mPhoneNumber, mEmailAddress, mContactName);
-
-
-
-
-//			Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-//			intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-//			TextView mPhoneNumber = (TextView) findViewById(R.id.telephone);
-//			TextView mEmailAddress = (TextView) findViewById(R.id.email);
-//			TextView mContactName = (TextView) findViewById(R.id.profile_name);
-//
-//			intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress.getText());
-//			intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
-//			intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber.getText());
-//			intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
-//			intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName.getText());
-//			intent.putExtra("finishActivityOnSaveCompleted", true);
-//
-//			String targetName = (String) mContactName.getText();
-//			boolean bExists = false;
-//			ContentResolver cr = getContentResolver();
-//			Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-//			if (cur.getCount() > 0) {
-//				while (cur.moveToNext()) {
-//					String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-//
-//					if (name.equals(targetName)) {
-//						Toast.makeText(getApplicationContext(), "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
-//						bExists = true;
-//						break;
-//					}
-//				}
-//			}
-//			cur.close();
-//			if (!bExists) {
-//				startActivity(intent);
-//			}
 		}
 
 // Navigate to action

@@ -39,7 +39,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_image_gallery_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["no_images_ret_code"] = 1;
-                array_push($response["message"], "INFO ALERT: No Profiler Images found for this profile!");
+                array_push($response["message"], "No Profiler Images found for this profile");
             }
         }
 
@@ -47,7 +47,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_text_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["no_text_ret_code"] = 1;
-                array_push($response["message"], "INFO ALERT: No Profiler Text File uploaded for this profile!");
+                array_push($response["message"], "No Profiler Text File uploaded for this profile");
             }
         }
 
@@ -55,7 +55,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_PDF_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["no_pdf_ret_code"] = 1;
-                array_push($response["message"], "INFO ALERT: No Profiler PDF File uploaded for this profile!");
+                array_push($response["message"], "No Profiler PDF File uploaded for this profile");
             }
         }
 
@@ -63,7 +63,7 @@ if (mysqli_num_rows($result) > 0) {
             $profiler["file"] = get_audio_data($row["identity_profile_id"], $row["category"], $con);
             if ($profiler["file"] === -1) {
                 $response["no_audio_ret_code"] = 1;
-                array_push($response["message"], "INFO ALERT: No Profiler Audio Files found for this profile!");
+                array_push($response["message"], "No Profiler Audio Files found for this profile");
             }
         }
         array_push($response["identity_profiler_data"], $profiler);
@@ -71,17 +71,11 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     $response["no_categories_ret_code"] = 1;
-    array_push($response["message"], "INFO ALERT: No Profiler Categories found for this profile!");
+    array_push($response["message"], "No Profiler Categories found for this profile");
 }
 $response["ret_code"] = 0;
 mysqli_free_result($result);
 echo json_encode($response);
-//if ($response["ret_code"] > 0) echo json_encode($response);
-//else {
-//    $response["ret_code"] = 0;
-//    mysqli_free_result($result);
-//    echo json_encode($response);
-//}
 return;
 
 // get text files

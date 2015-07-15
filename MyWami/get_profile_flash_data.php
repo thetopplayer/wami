@@ -33,7 +33,7 @@ if (mysqli_num_rows($result) > 0) {
     echo json_encode($response);
 } else {
     $response["ret_code"] = 1;
-    $response["message"] = "No profile flash data found";
+    $response["message"] = "No profile flash data found for this profile";
     echo json_encode($response);
 }
 ?>

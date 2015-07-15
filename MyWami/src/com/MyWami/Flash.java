@@ -138,6 +138,11 @@ public class Flash extends ListActivity {
 		try {
 			JSONObject jsonResponse = new JSONObject(jsonResult);
 			JSONArray jsonMainNode = jsonResponse.optJSONArray("profile_flash_data");
+      int ret_code = jsonResponse.optInt("ret_code");
+      if (ret_code == 1) {
+        String message = jsonResponse.optString("message");
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+      }
 
 			if (jsonMainNode == null) {
 				flashModel = new FlashModel[1];

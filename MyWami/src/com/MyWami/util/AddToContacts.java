@@ -25,9 +25,7 @@ public class AddToContacts {
     boolean bExists = false;
     ContentResolver cr = context.getContentResolver();
     Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-    if(cur.getCount()>0)
-
-    {
+    if(cur.getCount() > 0) {
       while (cur.moveToNext()) {
         String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
         if (name.equals(profileName)) {
@@ -37,11 +35,8 @@ public class AddToContacts {
         }
       }
     }
-
     cur.close();
-    if(!bExists)
-
-    {
+    if(!bExists) {
       context.startActivity(intent);
     }
   }

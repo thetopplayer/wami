@@ -3,7 +3,6 @@ package com.MyWami.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -62,37 +61,6 @@ public class ActionList {
 		openProfiler.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				String[] postData = { identityProfileId };
-				JsonGetData jsonGetData = new JsonGetData();
-				jsonGetData.jsonGetData(context, GET_PROFILER_DATA, postData);
-				String jsonResult = jsonGetData.getJsonResult();
-				JSONObject jsonResponse = null;
-				try {
-					jsonResponse = new JSONObject(jsonResult);
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
-//					Log.e("**** Profiler: json error: ", e.toString(), e);
-				}
-				assert jsonResponse != null;
-				int ret_code = jsonResponse.optInt("ret_code");
-				if (ret_code == 1) {
-					String message = jsonResponse.optString("message");
-					Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-					return;
-				}
-				if (ret_code == -1) {
-//					Log.e("**** Get Identity Profiler DBError", jsonResponse.optString("db_error"));
-					return;
-				}
-				int no_categories_ret_code = jsonResponse.optInt("no_categories_ret_code");
-				if (no_categories_ret_code == 1) {
-					String message = jsonResponse.optString("message");
-					String toastMessage = message.substring(2, message.length() - 2);
-					Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
-					return;
-				}
 				startActivity(Profiler.class);
 				dialog.dismiss();
 			}

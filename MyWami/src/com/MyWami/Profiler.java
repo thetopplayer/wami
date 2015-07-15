@@ -67,8 +67,6 @@ public class Profiler extends ListActivity {
 
 	final private String GET_PROFILER_DATA = Constants.IP + "get_profiler_data.php";
 
-
-//	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -124,16 +122,17 @@ public class Profiler extends ListActivity {
 		jsonGetData.jsonGetData(this, GET_PROFILER_DATA, postData);
 		String jsonResult = jsonGetData.getJsonResult();
 		profilerModel = assignData(jsonResult);
+    String[] profileList = null;
 		if (profilerModel == null) {
-			return;
+      profileList = new String[] {"empty"};
 		}
-
-		String[] profileList = new String[profilerModel.length];
-		for (int j = 0; j < (profilerModel.length); j++) {
-			profileList[j] = profilerModel[j].getCategory();
-		}
-
-		setListAdapter(new ProfilerAdapter(this, profileList));
+    else {
+      profileList = new String[profilerModel.length];
+      for (int j = 0; j < (profilerModel.length); j++) {
+        profileList[j] = profilerModel[j].getCategory();
+      }
+    }
+		setListAdapter(new ProfilerAdapter(this, R.layout.profiler, profileList));
 	}
 
 	@Override
@@ -166,6 +165,9 @@ public class Profiler extends ListActivity {
 			}
 			if (no_categories_ret_code == 1) {
 				String message = jsonResponse.optString("message");
+        message = message.replace("[", "");
+        message = message.replace("]", "");
+        message = message.replace("\"", "");
 				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 				return null;
 			}
@@ -181,7 +183,6 @@ public class Profiler extends ListActivity {
 				profilerModel[i] = new ProfilerModel();
 				String fileLocation;
 				String fileName;
-				String textDoc;
 
 				if ((mediaType.equals("Text")) && (no_text_ret_code != 1)) {
 					JSONObject fileObj = jsonChildNode.getJSONObject("file");
