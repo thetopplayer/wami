@@ -24,22 +24,26 @@ import java.util.ArrayList;
 public class WamiListAdapter extends ArrayAdapter<ListRow> {
 	Context context;
 	int layoutResourceId;
-	ArrayList<ListRow> listRows = null;
-
 	boolean[] checkBoxState;
 	WamiListModel[] wamiListModel;
 
-	public WamiListAdapter(Context context, int layoutResourceId, ArrayList<ListRow> listRows, WamiListModel[] wamiListModel) {
-		super(context, layoutResourceId, listRows);
+
+public WamiListAdapter(Context context, int layoutResourceId, WamiListModel[] wamiListModel) {
+		super(context, layoutResourceId);
+
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
-		this.listRows = listRows;
 		this.wamiListModel = wamiListModel;
 
-		checkBoxState = new boolean[listRows.size()];
+    checkBoxState = new boolean[wamiListModel.length];
 	}
 
-	private class ViewHolder {
+  @Override
+  public int getCount() {
+    return wamiListModel.length;
+  }
+
+  private class ViewHolder {
 		CheckBox listCheckBox;
 		ImageView listImage;
 		TextView listTextName;
@@ -74,10 +78,14 @@ public class WamiListAdapter extends ArrayAdapter<ListRow> {
 			viewHolder = (ViewHolder) row.getTag();
 		}
 
-		ListRow listRow = listRows.get(position);
-		Drawable imageUrlId = getDrawableImage(listRow);
+    String imageUrl = wamiListModel[position].getImageUrl();
+    Drawable imageUrlId;
+    imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
 		viewHolder.listImage.setImageDrawable(imageUrlId);
-		viewHolder.listTextName.setText(listRow.listText);
+
+    String contactName = wamiListModel[position].getFirstName() + wamiListModel[position].getLastName();
+    viewHolder.listTextName.setText(contactName);
+
 		viewHolder.listTextProfileName.setText(wamiListModel[position].getProfileName());
 		viewHolder.listCheckBox.setChecked(checkBoxState[position]);
 
@@ -148,13 +156,4 @@ public class WamiListAdapter extends ArrayAdapter<ListRow> {
 
 		return row;
 	}
-
-	private Drawable getDrawableImage(ListRow listRow) {
-		String imageUrl = listRow.listImageURL;
-		Drawable imageUrlId;
-
-		imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
-		return imageUrlId;
-	}
-
 }

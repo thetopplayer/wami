@@ -20,19 +20,16 @@ import java.util.ArrayList;
 public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 	Context context;
 	int layoutResourceId;
-	ArrayList<ListRow> listRows = null;
-
 	boolean[] checkBoxState;
 	SearchListModel[] searchListModel;
 
-	public SearchResultsListAdapter(Context context, int layoutResourceId, ArrayList<ListRow> listRows, SearchListModel[] searchListModel) {
-		super(context, layoutResourceId, listRows);
+public SearchResultsListAdapter(Context context, int layoutResourceId, SearchListModel[] searchListModel) {
+  super(context, layoutResourceId);
 
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
-		this.listRows = listRows;
 		this.searchListModel = searchListModel;
-		checkBoxState = new boolean[listRows.size()];
+    checkBoxState = new boolean[searchListModel.length];
 	}
 
 	private class ViewHolder {
@@ -43,6 +40,11 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 		TextView listTextEmailName;
 		Button listButton;
 	}
+
+  @Override
+  public int getCount() {
+    return searchListModel.length;
+  }
 
 	@Override
 	public View getView(final int position, View row, ViewGroup parent) {
@@ -68,10 +70,14 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 			viewHolder = (ViewHolder) row.getTag();
 		}
 
-		ListRow listRow = listRows.get(position);
-		Drawable imageUrlId = getDrawableImage(listRow);
+    String imageUrl = searchListModel[position].getImageUrl();
+    Drawable imageUrlId;
+    imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
 		viewHolder.listImage.setImageDrawable(imageUrlId);
-		viewHolder.listTextName.setText(listRow.listText);
+
+    String contactName = searchListModel[position].getFirstName() + searchListModel[position].getLastName();
+    viewHolder.listTextName.setText(contactName);
+
 		viewHolder.listTextProfileName.setText(searchListModel[position].getProfileName());
 		viewHolder.listTextEmailName.setText(searchListModel[position].getEmail());
 		viewHolder.listCheckBox.setChecked(checkBoxState[position]);
@@ -101,13 +107,5 @@ public class SearchResultsListAdapter  extends ArrayAdapter<ListRow> {
 		});
 
 		return row;
-	}
-
-	private Drawable getDrawableImage(ListRow listRow) {
-		String imageUrl = listRow.listImageURL;
-		Drawable imageUrlId;
-
-		imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
-		return imageUrlId;
 	}
 }

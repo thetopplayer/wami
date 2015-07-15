@@ -135,12 +135,8 @@ public class SearchResults extends ListActivity {
 				String imageURL = jsonChildNode.optString("image_url");
 				String description = jsonChildNode.optString("description");
 				String email = jsonChildNode.optString("email");
-//				String rating = jsonChildNode.optString("rating");
 				int identityProfileId = jsonChildNode.optInt("identity_profile_id");
-				String contactName = firstName + " " + lastName;
-				ListRow listRow = new ListRow(imageURL, contactName);
 
-				alListRow.add(listRow);
 				listModel[i] = new SearchListModel();
 				listModel[i].setFirstName(firstName);
 				listModel[i].setLastName(lastName);
@@ -157,7 +153,7 @@ public class SearchResults extends ListActivity {
 			e.printStackTrace();
 		}
 
-		setListAdapter(new SearchResultsListAdapter(that, R.layout.search_results, alListRow, listModel));
+		setListAdapter(new SearchResultsListAdapter(that, R.layout.search_results, listModel));
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

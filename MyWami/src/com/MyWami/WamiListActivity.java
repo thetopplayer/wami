@@ -186,9 +186,6 @@ public class WamiListActivity extends ListActivity {
 				String email = jsonChildNode.optString("email");
 				String telephone = jsonChildNode.optString("telephone");
 
-				String listName = firstName + " " + lastName;
-				ListRow listRow = new ListRow(imageURL, listName);
-				alListRow.add(listRow);
 				listModel[i] = new WamiListModel();
 				listModel[i].setFirstName(firstName);
 				listModel[i].setLastName(lastName);
@@ -206,7 +203,7 @@ public class WamiListActivity extends ListActivity {
 			e.printStackTrace();
 		}
 
-		setListAdapter(new WamiListAdapter(that, R.layout.wami_list, alListRow, listModel));
+    setListAdapter(new WamiListAdapter(that, R.layout.wami_list, listModel));
 	}
 
 	private String getProfileName() {
