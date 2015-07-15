@@ -20,6 +20,7 @@ import android.widget.*;
 import com.MyWami.dialogs.ActionList;
 import com.MyWami.dialogs.TransmitWami;
 import com.MyWami.model.TransmitModel;
+import com.MyWami.util.AddToContacts;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
 import org.json.JSONArray;
@@ -88,7 +89,14 @@ public class WamiInfoExtended extends Activity {
     btnAddToContacts.setOnClickListener(new  Button.OnClickListener() {
       @Override
       public void onClick(View v) {
-
+        TextView tvPhoneNumber = (TextView) findViewById(R.id.telephone);
+        TextView tvEmailAddress = (TextView) findViewById(R.id.email);
+        TextView tvContactName = (TextView) findViewById(R.id.profile_name);
+        AddToContacts addToContacts = new AddToContacts();
+        String mPhoneNumber = (String) tvPhoneNumber.getText();
+        String mEmailAddress = (String) tvEmailAddress.getText();
+        String mContactName = (String) tvContactName.getText();
+        addToContacts.addToContacts(that, mPhoneNumber, mEmailAddress, mContactName);
       }
     });
 
@@ -278,38 +286,50 @@ public class WamiInfoExtended extends Activity {
 
 // Export to contacts
 		if (id == R.id.action_add_to_contact_list) {
-			Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-			intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-			TextView mPhoneNumber = (TextView) findViewById(R.id.telephone);
-			TextView mEmailAddress = (TextView) findViewById(R.id.email);
-			TextView mContactName = (TextView) findViewById(R.id.profile_name);
+      TextView tvPhoneNumber = (TextView) findViewById(R.id.telephone);
+      TextView tvEmailAddress = (TextView) findViewById(R.id.email);
+      TextView tvContactName = (TextView) findViewById(R.id.profile_name);
+      AddToContacts addToContacts = new AddToContacts();
+      String mPhoneNumber = (String) tvPhoneNumber.getText();
+      String mEmailAddress = (String) tvEmailAddress.getText();
+      String mContactName = (String) tvContactName.getText();
+      addToContacts.addToContacts(that, mPhoneNumber, mEmailAddress, mContactName);
 
-			intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress.getText());
-			intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
-			intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber.getText());
-			intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
-			intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName.getText());
-			intent.putExtra("finishActivityOnSaveCompleted", true);
 
-			String targetName = (String) mContactName.getText();
-			boolean bExists = false;
-			ContentResolver cr = getContentResolver();
-			Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-			if (cur.getCount() > 0) {
-				while (cur.moveToNext()) {
-					String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
-					if (name.equals(targetName)) {
-						Toast.makeText(getApplicationContext(), "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
-						bExists = true;
-						break;
-					}
-				}
-			}
-			cur.close();
-			if (!bExists) {
-				startActivity(intent);
-			}
+
+//			Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+//			intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+//			TextView mPhoneNumber = (TextView) findViewById(R.id.telephone);
+//			TextView mEmailAddress = (TextView) findViewById(R.id.email);
+//			TextView mContactName = (TextView) findViewById(R.id.profile_name);
+//
+//			intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress.getText());
+//			intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
+//			intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber.getText());
+//			intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
+//			intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName.getText());
+//			intent.putExtra("finishActivityOnSaveCompleted", true);
+//
+//			String targetName = (String) mContactName.getText();
+//			boolean bExists = false;
+//			ContentResolver cr = getContentResolver();
+//			Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+//			if (cur.getCount() > 0) {
+//				while (cur.moveToNext()) {
+//					String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+//
+//					if (name.equals(targetName)) {
+//						Toast.makeText(getApplicationContext(), "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
+//						bExists = true;
+//						break;
+//					}
+//				}
+//			}
+//			cur.close();
+//			if (!bExists) {
+//				startActivity(intent);
+//			}
 		}
 
 // Navigate to action

@@ -15,6 +15,7 @@ import android.widget.*;
 import com.MyWami.model.TransmitModel;
 import com.MyWami.model.WamiListModel;
 import com.MyWami.dialogs.TransmitWami;
+import com.MyWami.util.AddToContacts;
 
 import java.util.ArrayList;
 
@@ -105,38 +106,44 @@ public WamiListAdapter(Context context, int layoutResourceId, WamiListModel[] wa
 		viewHolder.listButtonAddToContacts.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-				intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+        String mContactName = wamiListModel[position].getProfileName();
+        String mPhoneNumber = wamiListModel[position].getTelephone();
+        String mEmailAddress = wamiListModel[position].getEmail();
+        AddToContacts addToContacts = new AddToContacts();
+        addToContacts.addToContacts(context, mPhoneNumber, mEmailAddress, mContactName);
 
-				String mContactName = wamiListModel[position].getProfileName();
-				String mPhoneNumber = wamiListModel[position].getTelephone();
-				String mEmailAddress = wamiListModel[position].getEmail();
-
-				intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress);
-				intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
-				intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber);
-				intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
-				intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName);
-				intent.putExtra("finishActivityOnSaveCompleted", true);
-
-				String targetName = (String) mContactName;
-				boolean bExists = false;
-				ContentResolver cr = context.getContentResolver();
-				Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-				if (cur.getCount() > 0) {
-					while (cur.moveToNext()) {
-						String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-						if (name.equals(targetName)) {
-							Toast.makeText(context, "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
-							bExists = true;
-							break;
-						}
-					}
-				}
-				cur.close();
-				if (!bExists) {
-					context.startActivity(intent);
-				}
+//				Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+//				intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+//
+//				String mContactName = wamiListModel[position].getProfileName();
+//				String mPhoneNumber = wamiListModel[position].getTelephone();
+//				String mEmailAddress = wamiListModel[position].getEmail();
+//
+//				intent.putExtra(ContactsContract.Intents.Insert.EMAIL, mEmailAddress);
+//				intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
+//				intent.putExtra(ContactsContract.Intents.Insert.PHONE, mPhoneNumber);
+//				intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MAIN);
+//				intent.putExtra(ContactsContract.Intents.Insert.NAME, mContactName);
+//				intent.putExtra("finishActivityOnSaveCompleted", true);
+//
+//				String targetName = (String) mContactName;
+//				boolean bExists = false;
+//				ContentResolver cr = context.getContentResolver();
+//				Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+//				if (cur.getCount() > 0) {
+//					while (cur.moveToNext()) {
+//						String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+//						if (name.equals(targetName)) {
+//							Toast.makeText(context, "Contact: " + name + " already exists.", Toast.LENGTH_LONG).show();
+//							bExists = true;
+//							break;
+//						}
+//					}
+//				}
+//				cur.close();
+//				if (!bExists) {
+//					context.startActivity(intent);
+//				}
 
 			}
 		});
