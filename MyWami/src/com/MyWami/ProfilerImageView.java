@@ -173,9 +173,6 @@ public class ProfilerImageView extends ListActivity {
 				String folder = String.valueOf(params[0].get(2));
 
 				String path = Constants.ASSETS_IP + fileLocation + fileName;
-//				String ipNoSlash = Constants.IP.substring(0, Constants.IP.length() - 1);
-//				String path = ipNoSlash + ":80/" + fileLocation + fileName;
-
 				URL u = new URL(path);
 
 				HttpParams httpParameters = new BasicHttpParams();

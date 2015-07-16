@@ -60,8 +60,8 @@
 							<label for="identityProfileDropDown">Select a Profile Collection</label>
 							<div class="input" id="identityProfileDropDown"></div>
 						</div>
-						<p style="margin-bottom: 3px; margin-top: 20px"><strong> Transmit chosen Wami Profile(s) </strong></p>
-						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Transmit</button>
+						<p style="margin-bottom: 3px; margin-top: 20px"><strong> Publish chosen Wami Profile(s) </strong></p>
+						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Publish</button>
 					</div>
 					<div class="col-md-1" style="width: 260px; margin-left: 30px; padding-top: 15px">
 						<div class="clearfix">
@@ -87,23 +87,20 @@
 					<div class="modal-content">
 						<div class="modal-header" style="background-color: #d9d9d9">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Transmit Profile(s)</h4>
+							<h4 class="modal-title">Publish Profile(s)</h4>
 						</div>
 						<div class="modal-body">
-							<h5>The following Profile(s) will be transmitted:</h5>
+							<h5>The following Profile(s) will be transmitted for publishing:</h5>
 							<input readonly class='input-wami form-control' id="transmit_list" name="transmit_list" size="77" type="text" style="background-color: #D3D3D3">
 							<h5>To Profile Name</h5>
-							<input class='input-wami form-control' list="profile_name_list" id="transmit_to_profile_name" placeholder="Enter Profile name to transmit to." name="transmit_to_profile_name" size="77" type="text">
+							<input class='input-wami form-control' list="profile_name_list" id="transmit_to_profile_name" placeholder="Enter Profile name to Publish to." name="transmit_to_profile_name" size="77" type="text">
 							<datalist id="profile_name_list"></datalist>
 							<h5>Email Address</h5>
 							<input class='input-wami form-control' autocomplete="on" id="transmit_to_email_address" placeholder="Enter email address to transmit to." name="transmit_to_email_address" size="77" type="text">
-							<!--<h5>Profile Group Name</h5>-->
-							<!--<input class='input-wami form-control' list="group_name_list" id="transmit_to_group_name" placeholder="Enter Profile group name to transmit to." name="transmit_to_group_name" size="77" type="text">-->
-							<!--<datalist id="group_name_list"></datalist>-->
 						</div>
 						<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
 								<span class="pull-left">
-									<button type="button" class="btn btn-primary" onclick="transmitProfiles()">Transmit</button>
+									<button type="button" class="btn btn-primary" onclick="transmitProfiles()">Publish</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal" onclick="clean_up_transmit()">Close</button>
 								</span>
 							<img src="assets/wami-logo-footer.jpg" class="pull-right" >

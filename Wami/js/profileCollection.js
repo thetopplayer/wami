@@ -60,28 +60,6 @@ function loadData(identity_profile_id) {
 	localStorage.setItem("current_identity_profile_id", identity_profile_id);
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 
-	//Load group_name_list for datalist used in Transmit Profile dialog
-	//processData("identity_profile_id=" + identity_profile_id, "get_profile_group_data.php", "profile_group", false);
-	//try {
-	//	var profile_group_data = localStorage.getItem("profile_group");
-	//	var profile_group_obj = JSON.parse(profile_group_data);
-	//} catch (err) {
-	//	console.log(err.message)
-	//	my_profile_collection_alert("get_profile_group_data: Problem getting profile group names = " + err.message, "alert-danger", "Severe Error!  ", "side_list_placement");
-	//	return;
-	//}
-	//var ret_code = profile_group_obj.ret_code;
-	//if (ret_code === 1) {
-	//	var message = profile_group_obj.message;
-	//	my_profile_collection_alert (message, "alert-danger", "Alert! ", "side_list_placement");
-	//}
-	//var num_groups = profile_group_obj.profile_group_data.length;
-	//var profile_groups = [];
-	//for (var i = 0; i < num_groups; i++) {
-	//	profile_groups[i] = '<option value="' + profile_group_obj.profile_group_data[i].group + '">';
-	//}
-	//document.getElementById("group_name_list").innerHTML = profile_groups;
-
 	var group_filter = localStorage.getItem("group_filter");
 	if ((group_filter === 'undefined') || (group_filter === "All") || (group_filter === null) || (group_filter === "")) {
 		processData("identity_profile_id=" + identity_profile_id, "get_profile_collection.php", "profile_collection", false);
@@ -166,7 +144,7 @@ function loadData(identity_profile_id) {
 					'<div style="vertical-align: top">' +
 						'<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="show_extended_info(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
 						'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Manage Groups</button>' +
-						'<button type="button" class="btn btn-sm btn-primary btn-block" id="transmit_profile' + i + '" style="width: 120px; margin-bottom: 10px" onclick="transmit_profile_dialog(this.value)" value="' + list_identity_profile_id + '">Transmit</button>' +
+						'<button type="button" class="btn btn-sm btn-primary btn-block" id="transmit_profile' + i + '" style="width: 120px; margin-bottom: 10px" onclick="transmit_profile_dialog(this.value)" value="' + list_identity_profile_id + '">Publish</button>' +
 					'</div>' +
 				'</div></div><hr>';
 	}
@@ -567,10 +545,6 @@ function transmitProfiles() {
 		for (var i = 0; i < num_transmit_to_profile; i++) {
 			end_pos = pos[i];
 			transmit_str = transmit_to_profile_name.slice(start_pos, end_pos);
-			//if (transmit_str.length < 7) {
-			//	my_profile_collection_alert("Profile names must be seven or more characters: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
-			//	return;
-			//}
 			var result = transmit_str.match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, dash
 			if (result !== null) {
 				my_profile_collection_alert("Profile names must only contain letters, numbers, dashes and hyphens: <strong>" + transmit_str + "</strong>", "alert-danger", "Alert! ", "transmit");
@@ -654,7 +628,7 @@ function transmitProfiles() {
 	}
 
 	if ((transmit_to_profile_name === '') && (transmit_to_email_address === '')) {
-		my_profile_collection_alert("Please enter either a Profile Name or Email Address to transmit to.", "alert-warning", "Info Alert! ", "transmit");
+		my_profile_collection_alert("Please enter either a Profile Name or Email Address to publish to.", "alert-warning", "Info Alert! ", "transmit");
 	}
 }
 
