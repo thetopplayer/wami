@@ -152,11 +152,7 @@ function requestProfiles() {
 		var login_url  = "http://www.mywami.com";
 
 		send_serverside_request(requester_profile_name, email_str);
-
-	//	window.location.href = 'mailto:?bcc=' + email_str + '&subject=Request For WAMI Profile&body=' +
-	//	encodeURI('Wami user: ' + requester_profile_name + ' has requested your WAMI profile. Log into Wami ' + login_url + ' to transmit your profile.');
-
-	}
+    }
 }
 
 function send_serverside_request(requester_profile_name, email_str) {

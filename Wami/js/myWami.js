@@ -480,10 +480,7 @@ function new_profile(profile_name, email) {
 		my_wami_alert ("Missing profile name. Please create a profile name.", "alert-danger", "Alert! ", "new_profile");
 		return false;
 	}
-	//if (profile_name.length < 7) {
-	//	my_wami_alert ("Profile name must be at lest seven characters.", "alert-danger", "Alert! ", "new_profile");
-	//	return false;
-	//}
+
 	var result = (profile_name).match(/[^a-zA-Z0-9-_]/g);    //only allow alphanumeric, hyphen, underscore
 	if (result !== null) {
 		my_wami_alert("Profile names must only contain letters, numbers, underscore, hyphens, and no spaces", "alert-danger", "Alert! ", "new_profile");
