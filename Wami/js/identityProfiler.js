@@ -1036,6 +1036,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profiler processing
 //
+var max_categories = 20;
 function add_category() {
 	$('#new_category_dialog').modal();
 	processData("params=''", "get_profiler_template.php", "templates", false);
@@ -1066,6 +1067,7 @@ function add_category() {
 
 // Add Category:
 var category_pool = [];
+var profiler_categories = "";
 function loadCategory(template) {
 	processData("template=" + template, "get_profiler_template_category.php", "category", false);
 	try {
@@ -1083,7 +1085,6 @@ function loadCategory(template) {
 		category_name[i] = category_obj.category[i].category;
 		media_type[i] = category_obj.category[i].media_type;
 	}
-	var category_info = '';
 	var checkbox_list = ''
 	for (var i = 0; i < category_name.length; i++) {
 		checkbox_list = checkbox_list +  '<input checked type="checkbox" id="checkbox' + i + '">' + '<br><hr>';
@@ -1103,11 +1104,11 @@ function loadCategory(template) {
 	document.getElementById("mediaTypeList").innerHTML = media_type_list;
 	localStorage.setItem("row_num", 0);
 
-	for (var i = 0; i < 20; i++) {
-		category_pool[i] = 'free'
-		var new_category = "newUserDefinedCategory" + i;
-		document.getElementById(new_category).innerHTML = '';
+	for (var i = 0; i < max_categories; i++) {
+		category_pool[i] = 'free';
 	}
+    document.getElementById("newUserDefinedCategories").innerHTML = "";
+    profiler_categories = "";
 
 	my_identity_profiler_alert('', '', '', "categories");
 }
@@ -1138,34 +1139,35 @@ function add_user_defined_category() {
 	my_identity_profiler_alert("", "", "", "categories");
 	var row_num = get_free_category();
 	if (row_num === 999) {
-		my_identity_profiler_alert("You've reached the maximum number of User Defined Categories...sorry", "alert-info", "Info!  ", "categories");
+        var msg = "You have reached the maximum number of User Defined Categories: " + max_categories;
+		my_identity_profiler_alert(msg, "alert-info", "Info!  ", "categories");
 		return
 	}
 
-	var media_types_list_option = localStorage.getItem("media_types_list_option");
-	var new_row =
-			'<div class="row" style="width: 800px">'  +
-				'<div class="col-md-1" style="width: 150px">'  +
-					'<h5></h5>' +
-				'</div>' +
-				'<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">' +
-					'<div style="font-size: 15px; padding-top: 10px">' +
-						'<input type="checkbox" id="removeCheckbox' + row_num + '">' +
-					'</div>' +
-				'</div>' +
-				'<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">' +
-					'<div style="font-size: 15px; padding-top: 10px">' +
-						'<input type="text" class="input-wami" placeholder="Enter Category Name" name="userDefinedCategory' + row_num + '" id="userDefinedCategory' + row_num + '" style="width: 200px; height: 23px">' +
-					'</div>' +
-				'</div>' +
-				'<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px; padding-top: 10px">' +
-					'<select name="mediaTypesList' + row_num + '" id="mediaTypesList' + row_num + '" class="dropdown-wami1">' + media_types_list_option +  '</select>' +
-				'</div>' +
-			'</div>'
+    var media_types_list_option = localStorage.getItem("media_types_list_option");
+    var new_row =
+        '<div class="row" style="width: 800px">'  +
+            '<div class="col-md-1" style="width: 150px">'  +
+                '<h5></h5>' +
+            '</div>' +
+            '<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">' +
+                '<div style="font-size: 15px; padding-top: 10px">' +
+                    '<input type="checkbox" id="removeCheckbox' + row_num + '">' +
+                '</div>' +
+            '</div>' +
+            '<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">' +
+                '<div style="font-size: 15px; padding-top: 10px">' +
+                    '<input type="text" class="input-wami" placeholder="Enter Category Name" name="userDefinedCategory' + row_num + '" id="userDefinedCategory' + row_num + '" style="width: 200px; height: 23px">' +
+                '</div>' +
+            '</div>' +
+            '<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px; padding-top: 10px">' +
+                '<select name="mediaTypesList' + row_num + '" id="mediaTypesList' + row_num + '" class="dropdown-wami1">' + media_types_list_option +  '</select>' +
+            '</div>' +
+        '</div>'
 
-	var new_category = "newUserDefinedCategory" + row_num;
-	document.getElementById(new_category).innerHTML = new_row;
-	category_pool_maintenance(row_num, "taken");
+    category_pool_maintenance(row_num, "taken");
+    profiler_categories = profiler_categories + new_row;
+    document.getElementById("newUserDefinedCategories").innerHTML = profiler_categories;
 }
 
 // Add Category:
@@ -1173,7 +1175,7 @@ function remove_user_defined_category() {
 	my_identity_profiler_alert("", "", "", "categories");
 	var categories_to_remove =[];
 	var index = 0;
-	for (var i = 0; i < 20; i++) {
+	for (var i = 0; i < max_categories; i++) {
 		var checkbox = "removeCheckbox" + i;
 		var element = document.getElementById(checkbox);
 		if (element === null || element.value == '') {
@@ -1203,7 +1205,7 @@ function category_pool_maintenance (row_num, action) {
 
 // Add Category:
 function get_free_category () {
-	for (var i = 0; i < 20; i++) {
+	for (var i = 0; i < max_categories; i++) {
 		if (category_pool[i] === "free") return i;
 	}
 	return 999;
@@ -1216,7 +1218,7 @@ function save_categories() {
 	var media_type = '';
 	var num_categories = 0;
 	var param_str = "identity_profile_id=" + identity_profile_id  + "&";
-	for (var i = 0; i < 20; i++) {
+	for (var i = 0; i < max_categories; i++) {
 		if (category_pool[i] === "taken") {
 			category_name = document.getElementById('userDefinedCategory' + i).value;
 			if (category_name === '' || category_name === null) {
