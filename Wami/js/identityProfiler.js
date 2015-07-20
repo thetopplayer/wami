@@ -1036,7 +1036,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profiler processing
 //
-var max_categories = 20;
+var max_categories = 100;
 function add_category() {
 	$('#new_category_dialog').modal();
 	processData("params=''", "get_profiler_template.php", "templates", false);
@@ -1139,7 +1139,7 @@ function add_user_defined_category() {
 	my_identity_profiler_alert("", "", "", "categories");
 	var row_num = get_free_category();
 	if (row_num === 999) {
-        var msg = "You have reached the maximum number of User Defined Categories: " + max_categories;
+        var msg = "You have reached the maximum number of allowed Categories: " + max_categories;
 		my_identity_profiler_alert(msg, "alert-info", "Info!  ", "categories");
 		return
 	}
