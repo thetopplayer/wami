@@ -1036,7 +1036,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 
 // -----------------------------------------------
-// Add Category to Profiler processing
+// Add Category to Profile Media Info section
 //
 var max_categories = 7;
 function add_category() {
@@ -1044,6 +1044,11 @@ function add_category() {
 
 	loadMediaTypesDropDown();
     var category_count = parseInt(localStorage.getItem("displayed_category_count"));
+    if (category_count === max_categories) {
+        my_identity_profiler_alert("You have reached the maximum number of Media Categories allowed: " + max_categories, "alert-info", "Alert!  ", "categories");
+        return;
+    }
+
     localStorage.setItem("category_count", category_count);
     document.getElementById("category_name").value = "";
     my_identity_profiler_alert('', '', '', "categories");
@@ -1067,104 +1072,21 @@ function loadMediaTypesDropDown() {
 		media_types_list_option = media_types_list_option + '<option value=' + '"' + media_types_name + '">' + media_types_name + '</option>';
 	}
 
-    var mediaTypesList = '<select name="mediaTypesList  id="mediaTypesList" class="dropdown-wami1">' + media_types_list_option +  '</select>';
+    var mediaTypesList = '<select name="mediaTypesList"  id="mediaTypesList" class="dropdown-wami1">' + media_types_list_option +  '</select>';
     document.getElementById("media_types_list").innerHTML = mediaTypesList;
 }
 
 // Add Category:
-//function add_user_defined_category() {
-    //my_identity_profiler_alert("", "", "", "categories");
-    //var category_count = parseInt(localStorage.getItem("category_count"));
-    //var row_num = get_free_category(category_count);
-    //if (row_num === 999) {
-    //    var msg = "You have reached the maximum number of allowed Categories: " + max_categories;
-		//my_identity_profiler_alert(msg, "alert-info", "Info!  ", "categories");
-		//return
-    //}
-    //
-    //var media_types_list_option = localStorage.getItem("media_types_list_option");
-    //var new_row =
-    //    '<div class="row" style="width: 800px">'  +
-    //        '<div class="col-md-1" style="width: 150px">'  +
-    //            '<h5></h5>' +
-    //        '</div>' +
-    //        '<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">' +
-    //            '<div style="font-size: 15px; padding-top: 10px">' +
-    //                '<input type="checkbox" id="removeCheckbox' + row_num + '">' +
-    //            '</div>' +
-    //        '</div>' +
-    //        '<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">' +
-    //            '<div style="font-size: 15px; padding-top: 10px">' +
-    //                '<input type="text" class="input-wami" placeholder="Enter Category Name" name="userDefinedCategory' + row_num + '" id="userDefinedCategory' + row_num + '" style="width: 200px; height: 23px">' +
-    //            '</div>' +
-    //        '</div>' +
-    //        '<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px; padding-top: 10px">' +
-    //            '<select name="mediaTypesList' + row_num + '" id="mediaTypesList' + row_num + '" class="dropdown-wami1">' + media_types_list_option +  '</select>' +
-    //        '</div>' +
-    //    '</div>'
-    //
-    //category_pool_maintenance(row_num, "taken");
-    //profiler_categories = profiler_categories + new_row;
-    //document.getElementById("newUserDefinedCategories").innerHTML = profiler_categories;
-//}
-
-// Add Category:
-//function remove_user_defined_category() {
-//	my_identity_profiler_alert("", "", "", "categories");
-//	var categories_to_remove =[];
-//	var index = 0;
-//	for (var i = 0; i < max_categories; i++) {
-//		var checkbox = "removeCheckbox" + i;
-//		var element = document.getElementById(checkbox);
-//		if (element === null || element.value == '') {
-//			continue;
-//		}
-//		if (element.checked) {
-//			categories_to_remove[index] = "newUserDefinedCategory" + i;
-//            var category_count = localStorage.getItem("category_count") - 1;
-//            localStorage.setItem("category_count", category_count);
-//			category_pool_maintenance(i, "free");
-//			index++;
-//		}
-//	}
-//	if (categories_to_remove.length === 0) {
-//		my_identity_profiler_alert("Nothing to remove. No Categories were checked!", "alert-info", "Info!  ", "categories");
-//		return;
-//	}
-//
-//	for (var i = 0; i < index; i++) {
-//		var category = categories_to_remove[i];
-//		document.getElementById(category).innerHTML = '';
-//	}
-//}
-
-// Add Category:
-//function category_pool_maintenance (row_num, action) {
-//	category_pool[row_num] = action;
-//}
-
-// Add Category:
-//function get_free_category (category_count) {
-//	for (var i = 0; i < max_categories; i++) {
-//		if (category_pool[i] === "free") {
-//            category_count++;
-//            localStorage.setItem("category_count", category_count);
-//            if (category_count > max_categories) {
-//                category_count--;
-//                localStorage.setItem("category_count", category_count);
-//                return 999;
-//            }
-//            return i;
-//        }
-//	}
-//	return 999;
-//}
-
-// Add Category:
 function save_categories() {
     my_identity_profiler_alert('', '', '', "categories");
+
+    var category_count = parseInt(localStorage.getItem("displayed_category_count"));
+    if (category_count === max_categories) {
+        my_identity_profiler_alert("You have reached the maximum number of Media Categories allowed: " + max_categories, "alert-info", "Alert!  ", "categories");
+        return;
+    }
+
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
-	var num_categories = 1;
 	var param_str = "identity_profile_id=" + identity_profile_id  + "&";
 
     var category_name = document.getElementById('category_name').value;
@@ -1174,22 +1096,22 @@ function save_categories() {
     }
 
     var option = document.getElementById('mediaTypesList');
-    var media_type =  option.options[option.selectedIndex].value;
+    var media_type = option.options[option.selectedIndex].value;
 
-    param_str = param_str + "category_names" + i + "=" + category_name + "&" + "media_types" + i + "=" + media_type + "&";
+    param_str = param_str + "category_name=" + category_name + "&" + "media_type=" + media_type + "&";
 
 	var profile_name = localStorage.getItem("current_profile_name");
 	param_str = param_str +  "max_categories=" + max_categories  + "&";
 
-	param_str = "profile_name=" + profile_name  + "&" + "num_categories=" + num_categories + "&" + param_str;
+	param_str = "profile_name=" + profile_name  + "&" + param_str;
 	param_str = param_str.slice(0, param_str.length - 1);
-	processData(param_str, "insert_profiler_categories.php", "messages", false);
+	processData(param_str, "insert_profile_category.php", "messages", false);
 	try {
 		var messages_data = localStorage.getItem("messages");
 		var messages_obj = JSON.parse(messages_data);
 	} catch (err) {
 		console.log(err.message)
-		my_identity_profiler_alert("insert_profiler_categories: Problem inserting new categories = " + err.message, "alert-danger", "Error!  ", "categories");
+		my_identity_profiler_alert("insert_profile_category: Problem inserting new categories = " + err.message, "alert-danger", "Error!  ", "categories");
 		return;
 	}
 
@@ -1199,10 +1121,16 @@ function save_categories() {
 		my_identity_profiler_alert(message, "alert-danger", "Alert! ", "categories");
 	}
 	else {
-        var category_count = parseInt(localStorage.getItem("displayed_category_count")) + 1;
+        category_count = parseInt(localStorage.getItem("displayed_category_count")) + 1;
         localStorage.setItem("displayed_category_count", category_count);
 		loadData(identity_profile_id);
-		my_identity_profiler_alert(message, "alert-success", "Success!  ", "categories");
+
+        if (category_count === max_categories) {
+            my_identity_profiler_alert(message + "  But, you have reached the maximum number of Media Categories allowed: " + max_categories + ". You will not be able to create anymore.", "alert-warning", "Warning!!    ", "categories");
+        }
+        else {
+            my_identity_profiler_alert(message, "alert-success", "Success!  ", "categories");
+        }
 	}
 }
 //
