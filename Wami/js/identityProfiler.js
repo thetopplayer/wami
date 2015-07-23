@@ -1043,14 +1043,14 @@ function add_category() {
 	$('#new_category_dialog').modal();
 
 	loadMediaTypesDropDown();
+    var category_count = parseInt(localStorage.getItem("displayed_category_count"));
+    localStorage.setItem("category_count", category_count);
     for (var i = 0; i < max_categories; i++) {
         category_pool[i] = 'free';
     }
     document.getElementById("newUserDefinedCategories").innerHTML = "";
     profiler_categories = "";
     my_identity_profiler_alert('', '', '', "categories");
-    var category_count = parseInt(localStorage.getItem("displayed_category_count"));
-    localStorage.setItem("category_count", category_count);
 }
 
 // Add Category:
