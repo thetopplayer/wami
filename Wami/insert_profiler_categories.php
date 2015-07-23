@@ -13,7 +13,7 @@ require_once __DIR__ . '/db_connect.php';
 
 $identity_profile_id = $_POST["identity_profile_id"];
 $num_categories = $_POST["num_categories"];
-$template = $_POST["template"];
+$max_categories = $_POST["max_categories"];
 $profile_name = $_POST["profile_name"];
 $delete_ind = 0;
 $url = '';
@@ -26,7 +26,7 @@ $con = $db->connect();
 $con->autocommit(FALSE);
 
 $index = 0;
-for ($i = 0; $i < 20; $i++) {
+for ($i = 0; $i < $max_categories; $i++) {
     if (isset($_POST["category_names" .$i])) {
         $categories[$index] = $_POST["category_names" .$i];
         $media_types[$index] = $_POST["media_types" .$i];
@@ -34,27 +34,6 @@ for ($i = 0; $i < 20; $i++) {
     }
 }
 
-$category_index = 0;
-if ($template != '') {
-    $sql = "SELECT category, media_type FROM profiler_template_category WHERE delete_ind = 0 AND template = '" .$template."'";
-    $result = mysqli_query($con, $sql)  or  die(mysql_error($con));
-    if (mysqli_num_rows($result) > 0) {
-        $category_index = count($categories);   // number of user_defined categories
-        while ($row = mysqli_fetch_array($result)) {
-            $categories[$category_index] = $row["category"];
-            $media_types[$category_index] = $row["media_type"];
-            $category_index++;
-        }
-    } else {
-        $response["ret_code"] = -1;
-        $response["message"] = "insert_profiler_categories.php: No templated category data found for template: " .$template;
-        $con->autocommit(TRUE);
-        echo json_encode($response);
-        return;
-    }
-}
-
-if ($category_index > 0) $num_categories = $category_index;
 for ($i = 0; $i < $num_categories; $i++) {
     try {
         $sql = "INSERT INTO identity_profiler (identity_profile_id, category, media_type, delete_ind, create_date, modified_date)

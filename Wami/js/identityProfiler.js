@@ -75,7 +75,7 @@ function load_profiler_categories (identity_profile_id) {
 					'</div>';
 		}
 		document.getElementById("profiler_id").innerHTML = header_section;
-        localStorage.setItem("category_count", num_categories);
+        localStorage.setItem("displayed_category_count", num_categories);
 
 // Get content to fill sections
 		for (var i = 0; i < identity_profiler_obj.identity_profiler_data.length; i++) {
@@ -987,8 +987,8 @@ function checkForChosenCategories() {
 		}
 	}
 	if (remove_index > 0) {
-        var category_count = localStorage.getItem("category_count") - remove_index;
-        localStorage.setItem("category_count", category_count);
+        var displayed_category_count = localStorage.getItem("displayed_category_count") - remove_index;
+        localStorage.setItem("displayed_category_count", displayed_category_count);
 		localStorage.setItem("profiler_ids_to_remove", profiler_ids_to_remove);
 		return true;
 	}
@@ -1049,6 +1049,8 @@ function add_category() {
     document.getElementById("newUserDefinedCategories").innerHTML = "";
     profiler_categories = "";
     my_identity_profiler_alert('', '', '', "categories");
+    var category_count = parseInt(localStorage.getItem("displayed_category_count"));
+    localStorage.setItem("category_count", category_count);
 }
 
 // Add Category:
@@ -1077,7 +1079,8 @@ function loadMediaTypesDropDown() {
 // Add Category:
 function add_user_defined_category() {
 	my_identity_profiler_alert("", "", "", "categories");
-	var row_num = get_free_category();
+    var category_count = parseInt(localStorage.getItem("category_count"));
+	var row_num = get_free_category(category_count);
 	if (row_num === 999) {
         var msg = "You have reached the maximum number of allowed Categories: " + max_categories;
 		my_identity_profiler_alert(msg, "alert-info", "Info!  ", "categories");
@@ -1146,19 +1149,25 @@ function category_pool_maintenance (row_num, action) {
 }
 
 // Add Category:
-function get_free_category () {
-    var category_count = localStorage.getItem("category_count");
+function get_free_category (category_count) {
 	for (var i = 0; i < max_categories; i++) {
-        if ((category_count + 1) > max_categories) {
-            return 999;
+		if (category_pool[i] === "free") {
+            category_count++;
+            localStorage.setItem("category_count", category_count);
+            if (category_count > max_categories) {
+                category_count--;
+                localStorage.setItem("category_count", category_count);
+                return 999;
+            }
+            return i;
         }
-		if (category_pool[i] === "free") return i;
 	}
 	return 999;
 }
 
 // Add Category:
 function save_categories() {
+    my_identity_profiler_alert('', '', '', "categories");
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var category_name = '';
 	var media_type = '';
@@ -1168,7 +1177,8 @@ function save_categories() {
 		if (category_pool[i] === "taken") {
 			category_name = document.getElementById('userDefinedCategory' + i).value;
 			if (category_name === '' || category_name === null) {
-				continue;
+                my_identity_profiler_alert("Category name cannot be blank. Please make sure all categories have a name.", "alert-info", "Alert! ", "categories");
+                return;
 			}
 
 			var option = document.getElementById('mediaTypesList' + i);
@@ -1179,16 +1189,14 @@ function save_categories() {
 		}
 	}
 
-	var template_option = document.getElementById('templateList');
-	var template =  template_option.options[template_option.selectedIndex].value;
-	if (num_categories === 0 && template === "") {
-		my_identity_profiler_alert("No new categories were chosen to add to Profiler.", "alert-warning", "Warning!  ", "categories");
+	if (num_categories === 0) {
+		my_identity_profiler_alert("No new categories were created to add to Profile.", "alert-info", "Alert!!  ", "categories");
 		return;
 	}
 	var profile_name = localStorage.getItem("current_profile_name");
-	param_str = param_str +  "template=" + template  + "&";
+	param_str = param_str +  "max_categories=" + max_categories  + "&";
 
-	param_str =  "profile_name=" + profile_name  + "&" + "num_categories=" + num_categories + "&" + param_str;
+	param_str = "profile_name=" + profile_name  + "&" + "num_categories=" + num_categories + "&" + param_str;
 	param_str = param_str.slice(0, param_str.length - 1);
 	processData(param_str, "insert_profiler_categories.php", "messages", false);
 	try {
@@ -1206,6 +1214,8 @@ function save_categories() {
 		my_identity_profiler_alert(message, "alert-danger", "Alert! ", "categories");
 	}
 	else {
+        var category_count = parseInt(localStorage.getItem("displayed_category_count")) + num_categories;
+        localStorage.setItem("displayed_category_count", category_count);
 		loadData(identity_profile_id);
 		my_identity_profiler_alert(message, "alert-success", "Success!  ", "categories");
 	}
