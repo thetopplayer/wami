@@ -1038,7 +1038,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profiler processing
 //
-var max_categories = 6;
+var max_categories = 8;
 function add_category() {
 	$('#new_category_dialog').modal();
 
@@ -1114,34 +1114,34 @@ function add_user_defined_category() {
 }
 
 // Add Category:
-function remove_user_defined_category() {
-	my_identity_profiler_alert("", "", "", "categories");
-	var categories_to_remove =[];
-	var index = 0;
-	for (var i = 0; i < max_categories; i++) {
-		var checkbox = "removeCheckbox" + i;
-		var element = document.getElementById(checkbox);
-		if (element === null || element.value == '') {
-			continue;
-		}
-		if (element.checked) {
-			categories_to_remove[index] = "newUserDefinedCategory" + i;
-            var category_count = localStorage.getItem("category_count") - 1;
-            localStorage.setItem("category_count", category_count);
-			category_pool_maintenance(i, "free");
-			index++;
-		}
-	}
-	if (categories_to_remove.length === 0) {
-		my_identity_profiler_alert("Nothing to remove. No Categories were checked!", "alert-info", "Info!  ", "categories");
-		return;
-	}
-
-	for (var i = 0; i < index; i++) {
-		var category = categories_to_remove[i];
-		document.getElementById(category).innerHTML = '';
-	}
-}
+//function remove_user_defined_category() {
+//	my_identity_profiler_alert("", "", "", "categories");
+//	var categories_to_remove =[];
+//	var index = 0;
+//	for (var i = 0; i < max_categories; i++) {
+//		var checkbox = "removeCheckbox" + i;
+//		var element = document.getElementById(checkbox);
+//		if (element === null || element.value == '') {
+//			continue;
+//		}
+//		if (element.checked) {
+//			categories_to_remove[index] = "newUserDefinedCategory" + i;
+//            var category_count = localStorage.getItem("category_count") - 1;
+//            localStorage.setItem("category_count", category_count);
+//			category_pool_maintenance(i, "free");
+//			index++;
+//		}
+//	}
+//	if (categories_to_remove.length === 0) {
+//		my_identity_profiler_alert("Nothing to remove. No Categories were checked!", "alert-info", "Info!  ", "categories");
+//		return;
+//	}
+//
+//	for (var i = 0; i < index; i++) {
+//		var category = categories_to_remove[i];
+//		document.getElementById(category).innerHTML = '';
+//	}
+//}
 
 // Add Category:
 function category_pool_maintenance (row_num, action) {
