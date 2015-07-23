@@ -215,7 +215,7 @@
 		<div class="panel panel-primary" style="border-color: #4c4c4c">
 			<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
 				<h3 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordionMyProfile" href="#collapseMyProfile">Profile Category Info
+					<a data-toggle="collapse" data-parent="#accordionMyProfile" href="#collapseMyProfile">Profile Media Info
 						<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
 					</a>
 				</h3>
@@ -224,7 +224,7 @@
 				<div class="panel-body" style="background-color: #f8f8f8">
 					<div id="profiler_id"></div>
 					<div style="padding-bottom: 10px; padding-top: 10px"><hr></div>
-					<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="return add_category()">Add New Category</button>
+					<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="return add_category()">Add New Media Category</button>
 					<button type="button" class="btn btn-sm btn-danger" style="margin-left: 25px"onclick="return remove_category()">Remove Checked Category</button>
 					<div class="text-left" id="profiler_category_alerts" style="margin-top: 20px; width: 750px"></div>
 				</div>
@@ -525,54 +525,55 @@
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #d9d9d9">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title"><strong>Add New Categories</strong></h4>
+					<h4 class="modal-title"><strong>Add New Media Category</strong></h4>
 				</div>
 				<div class="modal-body" style="padding-top: 0px">
 					<div class="row" style="width: 800px; margin-left: 20px">
 						<span style="color: #808080">
 							<h6 style="margin: 4px">Directions:</h6>
-							<h6 style="margin: 4px">1. Create categories by using Templated Categories and/or Create Your Own Categories.</h6>
-							<h6 style="margin: 4px">2. Hit the Save button.</h6>
-							<h6 style="margin: 4px">3. Go to My Identity Profiler to upload files.</h6>
+							<h6 style="margin: 4px">1. Create categories by clicking Add Category button.</h6>
+                            <h6 style="margin: 4px">2. Give the category a name and choose a media type.</h6>
+							<h6 style="margin: 4px">3. Hit the Save button.</h6>
+							<h6 style="margin: 4px">4. Go to Profile Media Info to upload media files such as text, PDF, image, and audio files.</h6>
 						</span>
 					</div>
 					<hr class="hr1">
 
 					<!--Templated categories-->
-					<div class="row" style="width: 350px">
-						<div class="col-md-1" style="width: 350px">
-							<h4 style="margin-top: 5px; margin-bottom: 5px">Pre-Formatted Templated Categories:</h4>
-						</div>
-					</div>
-					<div class="row" style="width: 800px">
-						<div class="col-md-1" style="width: 150px">
-							<h5>Templates</h5>
-							<div id="templateListDropDown"></div>
-						</div>
-						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
-							<h5>Include</h5>
-							<hr>
-							<div id="checkboxList" style="font-size: 15px"></div>
-						</div>
-						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
-							<h5>Category Name</h5>
-							<hr>
-							<div id="categoryList" style="font-size: 15px"></div>
-						</div>
-						<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
-							<h5>Media Type</h5>
-							<hr>
-							<div id="mediaTypeList" style="font-size: 15px"></div>
-						</div>
-					</div>
-					<br><hr class="hr1">
+					<!--<div class="row" style="width: 350px">-->
+						<!--<div class="col-md-1" style="width: 350px">-->
+							<!--<h4 style="margin-top: 5px; margin-bottom: 5px">Pre-Formatted Templated Categories:</h4>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="row" style="width: 800px">-->
+						<!--<div class="col-md-1" style="width: 150px">-->
+							<!--<h5>Templates</h5>-->
+							<!--<div id="templateListDropDown"></div>-->
+						<!--</div>-->
+						<!--<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">-->
+							<!--<h5>Include</h5>-->
+							<!--<hr>-->
+							<!--<div id="checkboxList" style="font-size: 15px"></div>-->
+						<!--</div>-->
+						<!--<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">-->
+							<!--<h5>Category Name</h5>-->
+							<!--<hr>-->
+							<!--<div id="categoryList" style="font-size: 15px"></div>-->
+						<!--</div>-->
+						<!--<div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">-->
+							<!--<h5>Media Type</h5>-->
+							<!--<hr>-->
+							<!--<div id="mediaTypeList" style="font-size: 15px"></div>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<br><hr class="hr1">-->
 
 					<!--User defined categories-->
-					<div class="row" style="width: 300px">
-						<div class="col-md-1" style="width: 300px">
-							<h4>Create Your Own Categories:</h4>
-						</div>
-					</div>
+					<!--<div class="row" style="width: 300px">-->
+						<!--<div class="col-md-1" style="width: 300px">-->
+							<!--<h4>Create Media Categories:</h4>-->
+						<!--</div>-->
+					<!--</div>-->
 					<div class="row" style="width: 800px">
 						<div class="col-md-1" style="width: 150px">
 							<h5></h5>

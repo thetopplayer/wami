@@ -227,6 +227,9 @@ function validateAccount(account_status) {
 	//At least 8 chars, at least 1 upper and lower case letter, at least 1 number, at least one special char.
 	result = ((password_val.value).trim()).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/g);
 	if (result === null) {
+        my_account_alert("Wami requires a strong password as explained below. Even though this might seem like a burden, having this kind of security will " +
+            "help keep Wami info safe from hackers.", "alert-info", "Alert! ", "account_alert_info");
+
 		my_account_alert("Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
 		" and at least 1 of the following characters: # ? ! @ $ % ^ & * - _", "alert-danger", "Alert! ", "account_alert");
 		return false;
@@ -283,10 +286,6 @@ function saveAccountData() {
 	var country = (document.getElementById("country").value).trim();
 	var zipcode = (document.getElementById("zipcode").value).trim();
 	var telephone = (document.getElementById("telephone").value).trim();
-	//var active_ind = document.getElementById("active");
-	//if (active_ind.checked) {
-	//	active_ind = 1;
-	//} else active_ind = 0;
 	var active_ind = 1;
 
 	var data = localStorage.getItem("user_info");
@@ -335,8 +334,11 @@ function my_account_alert (message, message_type_class, message_type_string, mes
 	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
+
+    if (message_type === "account_alert_info") document.getElementById("account_alert_info").innerHTML = alert_str;
 	if (message_type === "account_alert") document.getElementById("account_alert").innerHTML = alert_str;
 	if (message === '') {
 		document.getElementById("account_alert").innerHTML = message;
+        document.getElementById("account_alert_info").innerHTML = message;
 	}
 }

@@ -75,6 +75,7 @@ function load_profiler_categories (identity_profile_id) {
 					'</div>';
 		}
 		document.getElementById("profiler_id").innerHTML = header_section;
+        localStorage.setItem("category_count", num_categories);
 
 // Get content to fill sections
 		for (var i = 0; i < identity_profiler_obj.identity_profiler_data.length; i++) {
@@ -981,12 +982,13 @@ function checkForChosenCategories() {
 	for (var i = 0; i < num_categories; i++) {
 		var checkbox = "category_checkbox" + i;
 		if (document.getElementById(checkbox).checked) {
-			//profiler_ids_to_remove[remove_index] = identity_profiler_id[i];
 			profiler_ids_to_remove[remove_index] = document.getElementById(checkbox).value;
 			remove_index++;
 		}
 	}
 	if (remove_index > 0) {
+        var category_count = localStorage.getItem("category_count") - remove_index;
+        localStorage.setItem("category_count", category_count);
 		localStorage.setItem("profiler_ids_to_remove", profiler_ids_to_remove);
 		return true;
 	}
@@ -1036,84 +1038,22 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profiler processing
 //
-var max_categories = 100;
+var max_categories = 6;
 function add_category() {
 	$('#new_category_dialog').modal();
-	processData("params=''", "get_profiler_template.php", "templates", false);
-	try {
-		var template_data = localStorage.getItem("templates");
-		var template_obj = JSON.parse(template_data);
-	} catch (err) {
-		console.log(err.message)
-		my_identity_profiler_alert("get_profiler_template: Error adding new category = " + err.message, "alert-danger", "Error!  ", "category");
-		return;
-	}
-
-	var template_list_dropdown = '<select name="templateList" id="templateList" class="dropdown-wami" onchange="loadCategory(this.value)" >';
-	var template_list_option = '';
-	for (var i = 0; i < template_obj.template.length; i++) {
-		var template_name = template_obj.template[i];
-		template_list_option = template_list_option + '<option value=' + '"' + template_name + '">' + template_name + '</option>';
-	}
-
-	template_list_dropdown = template_list_dropdown + template_list_option + '</select>';
-	document.getElementById("templateListDropDown").innerHTML = template_list_dropdown;
-
-	localStorage.setItem("new_row", '');
-	loadCategory(template_obj.template[0]);
 
 	loadMediaTypesDropDown();
+    for (var i = 0; i < max_categories; i++) {
+        category_pool[i] = 'free';
+    }
+    document.getElementById("newUserDefinedCategories").innerHTML = "";
+    profiler_categories = "";
+    my_identity_profiler_alert('', '', '', "categories");
 }
 
 // Add Category:
 var category_pool = [];
 var profiler_categories = "";
-function loadCategory(template) {
-	processData("template=" + template, "get_profiler_template_category.php", "category", false);
-	try {
-		var category_data = localStorage.getItem("category");
-		var category_obj = JSON.parse(category_data);
-	} catch (err) {
-		console.log(err.message)
-		my_identity_profiler_alert("get_profiler_template_category: Error loading new category = " + err.message, "alert-danger", "Error!  ", "category");
-		return;
-	}
-
-	var category_name = [];
-	var media_type = [];
-	for (var i = 0; i < category_obj.category.length; i++) {
-		category_name[i] = category_obj.category[i].category;
-		media_type[i] = category_obj.category[i].media_type;
-	}
-	var checkbox_list = ''
-	for (var i = 0; i < category_name.length; i++) {
-		checkbox_list = checkbox_list +  '<input checked type="checkbox" id="checkbox' + i + '">' + '<br><hr>';
-	}
-	document.getElementById("checkboxList").innerHTML = checkbox_list;
-
-	var category_list = ''
-	for (var i = 0; i < category_name.length; i++) {
-		category_list = category_list +  category_name[i] + '<br><hr>';
-	}
-	document.getElementById("categoryList").innerHTML = category_list;
-
-	var media_type_list = ''
-	for (var i = 0; i < category_name.length; i++) {
-		media_type_list = media_type_list +  media_type[i] + '<br><hr>';
-	}
-	document.getElementById("mediaTypeList").innerHTML = media_type_list;
-	localStorage.setItem("row_num", 0);
-
-	for (var i = 0; i < max_categories; i++) {
-		category_pool[i] = 'free';
-	}
-    document.getElementById("newUserDefinedCategories").innerHTML = "";
-    profiler_categories = "";
-
-	my_identity_profiler_alert('', '', '', "categories");
-}
-
-// Add Category:
 function loadMediaTypesDropDown() {
 	processData("params=''", "get_media_types.php", "media_type", false);
 	try {
@@ -1183,6 +1123,8 @@ function remove_user_defined_category() {
 		}
 		if (element.checked) {
 			categories_to_remove[index] = "newUserDefinedCategory" + i;
+            var category_count = localStorage.getItem("category_count") - 1;
+            localStorage.setItem("category_count", category_count);
 			category_pool_maintenance(i, "free");
 			index++;
 		}
@@ -1205,7 +1147,11 @@ function category_pool_maintenance (row_num, action) {
 
 // Add Category:
 function get_free_category () {
+    var category_count = localStorage.getItem("category_count");
 	for (var i = 0; i < max_categories; i++) {
+        if ((category_count + 1) > max_categories) {
+            return 999;
+        }
 		if (category_pool[i] === "free") return i;
 	}
 	return 999;
