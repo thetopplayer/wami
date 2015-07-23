@@ -531,10 +531,9 @@
 					<div class="row" style="width: 800px; margin-left: 20px">
 						<span style="color: #808080">
 							<h6 style="margin: 4px">Directions:</h6>
-							<h6 style="margin: 4px">1. Create media category by clicking Add Category button.</h6>
-                            <h6 style="margin: 4px">2. Give the category a name and choose a media type.</h6>
-							<h6 style="margin: 4px">3. Hit the Save button.</h6>
-							<h6 style="margin: 4px">4. Go to Profile Media Info to upload media files such as text, PDF, image, and audio files.</h6>
+                            <h6 style="margin: 4px">1. Give the category a name and choose a media type.</h6>
+							<h6 style="margin: 4px">2. Hit the Create Media Category button.</h6>
+							<h6 style="margin: 4px">3. When finished adding categories, go to Profile Media Info section to upload media files such as text, PDF, image, and audio files.</h6>
 						</span>
 					</div>
 					<hr class="hr1">
@@ -560,23 +559,13 @@
                             <input type="text" class="input-wami" placeholder="Enter Category Name" name="category_name" id="category_name" style="width: 300px">
                         </div>
                         <div class="col-md-1" style="width: 200px; text-align: center; padding-left: 0px; padding-right: 0px">
-                            <input type="text" class="input-wami" placeholder="Enter Category Name" name="category_name" id="category_name2" style="width: 100px">
+                            <div id="media_types_list"></div>
                         </div>
                     </div>
 
-
-                    <div id="newUserDefinedCategories"></div>
-
-					<div class="row" style="width: 1100px; padding-bottom: 10px; padding-top: 15px">
-						<div class="col-md-1" style="width: 150px">
-							<h5></h5>
-						</div>
-						<!--<hr style="width: 600px; margin:0px">-->
-						<!--<div class="col-md-1" style="width: 270px; padding-top: 10px; margin-left: 20px; padding-right: 0px">-->
-							<!--<button style="margin-right: 10px" type="button" class="btn btn-primary btn-sm" onclick="add_user_defined_category()">Add Category</button>-->
-						<!--</div>-->
-						<div class="col-md-1" style="width: 430px; padding-top: 10px; padding-left: 0px">
-							<div id="new_category_alerts" style="width: 430px; height: 10px; "></div>
+					<div class="row" style="width: 1100px; padding-bottom: 10px">
+						<div class="col-md-1" style="width: 380px; padding-top: 20px; padding-left: 140px">
+							<div id="new_category_alerts" style="width: 630px; height: 10px; "></div>
 						</div>
 					</div>
 				</div>
@@ -584,7 +573,7 @@
 				<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 15px">
 					<span class="pull-left">
 						<button type="button" class="btn btn-primary" onclick="save_categories()">Create Media Category</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" style="margin-left: 20px" data-dismiss="modal">Close</button>
 					</span>
 					<img src="assets/wami-logo-footer.jpg" class="pull-right" >
 				</div>
