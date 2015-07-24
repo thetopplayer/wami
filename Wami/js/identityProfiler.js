@@ -945,13 +945,14 @@ function cleanup_pdf_file_dialog () {
 
 // Remove Category from Profiler
 function remove_category() {
+    my_identity_profiler_alert('', '', '', "profiler_category");
 	var remove_ind = checkForChosenCategories();
 	if (remove_ind === true) {
-		my_identity_profiler_alert("", "", "", "profiler_category");
+		my_identity_profiler_alert('', '', '', "profiler_category");
 		$('#remove_profiler_category').modal();
 	}
 	if (remove_ind === false) {
-		my_identity_profiler_alert("No Profiler Categories were chosen to remove.", "alert-warning", "Warning! ", "profiler_category");
+		my_identity_profiler_alert("No Profiler Category(s) were chosen to remove.", "alert-warning", "Warning! ", "profiler_category");
 	}
 }
 
@@ -968,7 +969,7 @@ function checkForChosenCategories() {
 		var identity_profiler_id_data = localStorage.getItem("result");
 		var identity_profiler_id_obj = JSON.parse(identity_profiler_id_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_profiler_id: Error getting identity profiler ids = " + err.message, "alert-danger", "Error!  ", "profiler_category");
 		return false;
 	}
@@ -1016,7 +1017,7 @@ function update_for_delete_profiler_category() {
 	}
 	else {
 		refresh_profiler_categories();
-		my_identity_profiler_alert("Profiler Categories succsessfuly removed. ", "alert-success", "Success!  ", "remove_profiler_category");
+		my_identity_profiler_alert("Profiler Category(s) successfully removed. ", "alert-success", "Success!  ", "remove_profiler_category");
 	}
 	return false;
 }
@@ -1038,14 +1039,15 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profile Media Info section
 //
-var max_categories = 7;
+var max_categories = 8;
 function add_category() {
+    my_identity_profiler_alert('', '', '', "profiler_category");
 	$('#new_category_dialog').modal();
 
 	loadMediaTypesDropDown();
     var category_count = parseInt(localStorage.getItem("displayed_category_count"));
     if (category_count === max_categories) {
-        my_identity_profiler_alert("You have reached the maximum number of Media Categories allowed: " + max_categories, "alert-info", "Alert!  ", "categories");
+        my_identity_profiler_alert("You have reached the maximum number of Media Categories allowed: " + max_categories + ".   You will not be allowed to create anymore categories unless you delete an existing one. ","alert-warning", "Warning!  ", "categories");
         return;
     }
 
@@ -1126,10 +1128,10 @@ function save_categories() {
 		loadData(identity_profile_id);
 
         if (category_count === max_categories) {
-            my_identity_profiler_alert(message + "  But, you have reached the maximum number of Media Categories allowed: " + max_categories + ". You will not be able to create anymore.", "alert-warning", "Warning!!    ", "categories");
+            my_identity_profiler_alert("   " + message + "  You have reached the maximum number of Media Categories allowed: " + max_categories + ".   You will not be allowed to create anymore categories unless you delete an existing one. ", "alert-warning", "Warning!    ", "categories");
         }
         else {
-            my_identity_profiler_alert(message, "alert-success", "Success!  ", "categories");
+            my_identity_profiler_alert(message + category_name, "alert-success", "Success!  ", "categories");
         }
 	}
 }

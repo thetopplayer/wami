@@ -109,7 +109,7 @@ try {
 $con->commit();
 $con->autocommit(TRUE);
 $response["ret_code"] = 0;
-$response["message"] = "Profile category created. ";
+$response["message"] = "Profile category created:  ";
 echo json_encode($response);
 ?>
 
