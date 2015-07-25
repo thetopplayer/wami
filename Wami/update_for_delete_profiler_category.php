@@ -28,7 +28,7 @@ for ($i = 0; $i < $num_elements; $i++) {
         $response["ret_code"] = -1;
         $con->rollback();
         $con->autocommit(TRUE);
-        $response["message"] = "update_for_delete_profiler_category.php: Problem updating identity_profiler table for soft delete. MySQL Error: " .mysqli_error($con);
+        $response["message"] = "update_for_delete_profiler_category: Problem updating identity_profiler table for soft delete. MySQL Error: " .mysqli_error($con);
         echo json_encode($response);
         exit(-1);
     }
@@ -46,7 +46,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
-                    $response["message"] = "update_for_delete_profiler_category.php: Problem updating image gallery data. MySQL Error: " .mysqli_error($con);
+                    $response["message"] = "update_for_delete_profiler_category: Problem updating image gallery data. MySQL Error: " .mysqli_error($con);
                     $con->rollback();
                     $con->autocommit(TRUE);
                     echo json_encode($response);
@@ -58,7 +58,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
-                    $response["message"] = "update_for_delete_profiler_category.php: Problem updating audio file data. MySQL Error: " .mysqli_error($con);
+                    $response["message"] = "update_for_delete_profiler_category: Problem updating audio file data. MySQL Error: " .mysqli_error($con);
                     $con->rollback();
                     $con->autocommit(TRUE);
                     echo json_encode($response);
@@ -70,7 +70,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
-                    $response["message"] = "update_for_delete_profiler_category.php: Problem updating text file data. MySQL Error: " .mysqli_error($con);
+                    $response["message"] = "update_for_delete_profiler_category: Problem updating text file data. MySQL Error: " .mysqli_error($con);
                     $con->rollback();
                     $con->autocommit(TRUE);
                     echo json_encode($response);
@@ -82,7 +82,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
-                    $response["message"] = "update_for_delete_profiler_category.php: Problem updating pdf file data. MySQL Error: " .mysqli_error($con);
+                    $response["message"] = "update_for_delete_profiler_category: Problem updating pdf file data. MySQL Error: " .mysqli_error($con);
                     $con->rollback();
                     $con->autocommit(TRUE);
                     echo json_encode($response);
@@ -92,7 +92,7 @@ for ($i = 0; $i < $num_elements; $i++) {
             }
             catch (Exception $e) {
                 $response["ret_code"] = -1;
-                $response["message"] = "update_for_delete_profiler_category.php: Transaction failed: " . $e->getMessage();
+                $response["message"] = "update_for_delete_profiler_category: Transaction failed: " . $e->getMessage();
                 $con->rollback();
                 $con->autocommit(TRUE);
                 echo json_encode($response);

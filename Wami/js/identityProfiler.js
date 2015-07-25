@@ -1005,21 +1005,21 @@ function update_for_delete_profiler_category() {
 	try {
 		var profiler_data = localStorage.getItem("result");
 		var profiler_obj = JSON.parse(profiler_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
-		my_identity_profiler_alert("update_for_delete_profiler_category: Error deleting profiler category data = " + err.message, "alert-danger", "Error!  ", "remove_profiler_category");
-		return false;
+		my_identity_profiler_alert("update_for_delete_profiler_category: Error deleting profiler category data = " + err.message, "alert-danger", "Error!  ", "profiler_category");
+        return;
 	}
 
 	var ret_code = profiler_obj.ret_code;
 	if (ret_code === -1) {
-		my_identity_profiler_alert(profiler_obj[0].message, "alert-danger", "Alert! ", "remove_flash");
+		my_identity_profiler_alert(profiler_obj[0].message, "alert-danger", "Alert! ", "profiler_category");
 	}
 	else {
 		refresh_profiler_categories();
-		my_identity_profiler_alert("Profiler Category(s) successfully removed. ", "alert-success", "Success!  ", "remove_profiler_category");
+		my_identity_profiler_alert("Profiler Category(s) successfully removed. ", "alert-success", "Success!  ", "profiler_category");
 	}
-	return false;
 }
 
 // Remove Category:
@@ -1039,7 +1039,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profile Media Info section
 //
-var max_categories = 8;
+var max_categories = 100;
 function add_category() {
     my_identity_profiler_alert('', '', '', "profiler_category");
 	$('#new_category_dialog').modal();
