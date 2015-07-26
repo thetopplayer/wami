@@ -620,8 +620,11 @@ function refresh_image_gallery(identity_profile_id, category) {
 function show_full_size_image(location, image_title, image_description) {
 	$('#show_full_size_image').modal();
 	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >';
-	document.getElementById("image_description").innerHTML = image_description;
     document.getElementById("full_size_image").innerHTML = full_size_image;
+
+    var full_image_description = "<textarea readonly style='resize: none; border: none; font-size: 16px; width: 570px; height: 80px' type='text' id='image_description'>" + image_description + "</textarea>";
+    document.getElementById("full_image_description").innerHTML = full_image_description;
+    localStorage.setItem("image_description", image_description);
 
     var full_image_title = "<h3 class='modal-title'>" + image_title + "</h3>";
     document.getElementById("full_image_title").innerHTML = full_image_title;
@@ -630,6 +633,11 @@ function show_full_size_image(location, image_title, image_description) {
 
 // Image Gallery: Edit text on full size images
 function editImageText() {
+    var image_description = localStorage.getItem("image_description");
+    var full_image_description = "<textarea style='resize: none; border: solid; border-width: 2px; font-size: 16px; width: 570px; height: 80px' type='text' id='image_description'></h3>";
+    document.getElementById("full_image_description").innerHTML = full_image_description;
+    document.getElementById("image_description").value = image_description;
+
     var image_title = localStorage.getItem("image_title");
     var full_image_title = "<h3 class='modal-title'><input type='text' name='image_title' id='image_title' style='background-color: #fafafa'></h3>";
     document.getElementById("full_image_title").innerHTML = full_image_title;
@@ -638,6 +646,11 @@ function editImageText() {
 
 // Image Gallery: cancel edit text on full size images
 function cancelEditImageText() {
+    var image_description = localStorage.getItem("image_description");
+    var full_image_description = "<textarea readonly style='resize: none; border: none; font-size: 16px; width: 570px; height: 80px' type='text' id='image_description'>" + image_description + "</textarea>";
+    document.getElementById("full_image_description").innerHTML = full_image_description;
+    localStorage.setItem("image_description", image_description);
+
     var image_title = localStorage.getItem("image_title");
     var full_image_title = "<h3 class='modal-title'>" + image_title + "</h3>";
     document.getElementById("full_image_title").innerHTML = full_image_title;
