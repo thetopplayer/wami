@@ -618,7 +618,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 }
 
 
-// Image Gallery: Show emlarged image with detail
+// Image Gallery: Show enlarged image with detail
 function show_full_size_image(location, image_title, image_description, chosen_image_id) {
 	$('#show_full_size_image').modal();
 	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >';
@@ -634,6 +634,7 @@ function show_full_size_image(location, image_title, image_description, chosen_i
     localStorage.setItem("image_title", image_title);
     localStorage.setItem("image_description", image_description);
     localStorage.setItem("chosen_image_id", chosen_image_id);
+    my_identity_profiler_alert("", "", "", "show_full_size_image");
 }
 
 // Image Gallery: Edit text on full size images
@@ -647,6 +648,7 @@ function editImageText() {
     var full_image_title = "<h3 class='modal-title'><input type='text' name='image_title' id='image_title' style='background-color: #fafafa'></h3>";
     document.getElementById("full_image_title").innerHTML = full_image_title;
     document.getElementById("image_title").value = image_title;
+    my_identity_profiler_alert("", "", "", "show_full_size_image");
 }
 
 // Image Gallery: cancel edit text on full size images
@@ -660,6 +662,7 @@ function cancelEditImageText() {
     var full_image_title = "<h3 class='modal-title'>" + image_title + "</h3>";
     document.getElementById("full_image_title").innerHTML = full_image_title;
     localStorage.setItem("image_title", image_title);
+    my_identity_profiler_alert("", "", "", "show_full_size_image");
 }
 
 // Image Gallery: save edit text on full size images
@@ -669,25 +672,30 @@ function saveEditImageText() {
     var edited_description = document.getElementById("image_description").value;
 
     var params = "image_id=" + image_id + "&image_title=" + edited_title + "&image_description=" + edited_description;
-    processData(params, "update_profiler_image_date.php", "result", false);
+    processData(params, "update_profiler_image_data.php", "result", false);
     try {
         var image_gallery_data = localStorage.getItem("result");
         var image_gallery_obj = JSON.parse(image_gallery_data);
     }
     catch (err) {
         console.log(err.message)
-        my_identity_profiler_alert("update_profiler_image_date: Error updating gallery image: status = " + err.message, "alert-danger", "Error!  ", "show_full_size_image_alert");
+        my_identity_profiler_alert("update_profiler_image_date: Error updating gallery image: status = " + err.message, "alert-danger", "Error!  ", "show_full_size_image");
         return false;
     }
 
     var ret_code = image_gallery_obj.ret_code;
     if (ret_code === -1) {
-        my_identity_profiler_alert(image_gallery_obj[0].message, "alert-danger", "Alert! ", "show_full_size_image_alert");
+        my_identity_profiler_alert(image_gallery_obj[0].message, "alert-danger", "Alert! ", "show_full_size_image");
     }
     else {
-        my_identity_profiler_alert("Gallery Imagessuccsessfuly updated. ", "alert-success", "Success!  ", "show_full_size_image_alert");
+        my_identity_profiler_alert("Gallery Image succsessfuly updated. ", "alert-success", "Success!  ", "show_full_size_image");
+        localStorage.setItem("image_title", edited_title);
+        localStorage.setItem("image_description", edited_description);
+
+        var identity_profile_id = localStorage.getItem("identity_profile_id");
+        var category = localStorage.getItem("category");
+        refresh_image_gallery(identity_profile_id, category);
     }
-    return;
 }
 
 // Image Gallery: Remove checked gallery images dialog
@@ -1106,7 +1114,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profile Media Info section
 //
-var max_categories = 100;
+var max_categories = 7;
 function add_category() {
     my_identity_profiler_alert('', '', '', "profiler_category");
 	$('#new_category_dialog').modal();
@@ -1270,6 +1278,12 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
 			return;
 		}
 	}
+    if (message_type === "show_full_size_image")  {
+        if (message === '') {
+            document.getElementById("show_full_size_image_alert").innerHTML = message;
+            return;
+        }
+    }
 	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
@@ -1286,4 +1300,5 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
 	if (message_type === "profiler_category") document.getElementById("profiler_category_alerts").innerHTML = alert_str;
 	if (message_type === "remove_profiler_category") document.getElementById("remove_profiler_category_alert").innerHTML = alert_str;
 	if (message_type === "pdf_file_upload") document.getElementById("pdf_file_dialog_alerts").innerHTML = alert_str;
+    if (message_type === "show_full_size_image") document.getElementById("show_full_size_image_alert").innerHTML = alert_str;
 }

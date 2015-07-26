@@ -1,6 +1,6 @@
 <?php
 /**
- * update_profiler_image_date.php
+ * update_profiler_image_data.php
  *
  * Created Rob Lanter
  * Date: 5/9/14
