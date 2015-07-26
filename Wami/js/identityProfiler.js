@@ -619,10 +619,34 @@ function refresh_image_gallery(identity_profile_id, category) {
 // Image Gallery: Show emlarged image with detail
 function show_full_size_image(location, image_title, image_description) {
 	$('#show_full_size_image').modal();
-	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >'
+	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >';
 	document.getElementById("image_description").innerHTML = image_description;
-	document.getElementById("image_title").innerHTML = image_title;
-	document.getElementById("full_size_image").innerHTML = full_size_image;
+    document.getElementById("full_size_image").innerHTML = full_size_image;
+
+    var full_image_title = "<h3 class='modal-title'>" + image_title + "</h3>";
+    document.getElementById("full_image_title").innerHTML = full_image_title;
+    localStorage.setItem("image_title", image_title);
+}
+
+// Image Gallery: Edit text on full size images
+function editImageText() {
+    var image_title = localStorage.getItem("image_title");
+    var full_image_title = "<h3 class='modal-title'><input type='text' name='image_title' id='image_title' style='background-color: #fafafa'></h3>";
+    document.getElementById("full_image_title").innerHTML = full_image_title;
+    document.getElementById("image_title").value = image_title;
+}
+
+// Image Gallery: cancel edit text on full size images
+function cancelEditImageText() {
+    var image_title = localStorage.getItem("image_title");
+    var full_image_title = "<h3 class='modal-title'>" + image_title + "</h3>";
+    document.getElementById("full_image_title").innerHTML = full_image_title;
+    localStorage.setItem("image_title", image_title);
+}
+
+// Image Gallery: save edit text on full size images
+function saveEditImageText() {
+
 }
 
 // Image Gallery: Remove checked gallery images dialog
