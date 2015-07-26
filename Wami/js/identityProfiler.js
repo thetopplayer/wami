@@ -116,7 +116,7 @@ function load_profiler_categories (identity_profile_id) {
 
 						data_section =
 									'<div class="col-md-2">' +
-										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' )">' +
+										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
 													'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 										'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
@@ -602,7 +602,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 			}
 			data_section =
 					'<div class="col-md-2">' +
-						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' )">' +
+						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
 						'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 						'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
@@ -621,6 +621,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 // Image Gallery: Show enlarged image with detail
 function show_full_size_image(location, image_title, image_description, chosen_image_id) {
 	$('#show_full_size_image').modal();
+
 	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >';
     document.getElementById("full_size_image").innerHTML = full_size_image;
 
@@ -693,9 +694,32 @@ function saveEditImageText() {
         localStorage.setItem("image_description", edited_description);
 
         var identity_profile_id = localStorage.getItem("identity_profile_id");
-        var category = localStorage.getItem("category");
+        var category = getImageCategory(image_id);
         refresh_image_gallery(identity_profile_id, category);
     }
+}
+
+// Image Gallery: Get associated category from image id
+function getImageCategory(image_id) {
+    var params = "image_id=" + image_id;
+    processData(params, "get_image_category.php", "result", false);
+    try {
+        var image_gallery_data = localStorage.getItem("result");
+        var image_gallery_obj = JSON.parse(image_gallery_data);
+    }
+    catch (err) {
+        console.log(err.message)
+        my_identity_profiler_alert("getImageCategory: Error getting image category = " + err.message, "alert-danger", "Error!  ", "show_full_size_image");
+        return false;
+    }
+
+    var ret_code = image_gallery_obj.ret_code;
+    if (ret_code === -1) {
+        my_identity_profiler_alert(image_gallery_obj[0].message, "alert-danger", "Alert! ", "show_full_size_image");
+    }
+    var category = image_gallery_obj.category;
+
+    return category;
 }
 
 // Image Gallery: Remove checked gallery images dialog
