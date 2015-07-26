@@ -104,6 +104,7 @@ function load_profiler_categories (identity_profile_id) {
 				else {
 					for (var j = 0; j < images.length; j++) {
 						profiler_image_gallery_id[num_gallery_images] = images[j].profiler_image_gallery_id;
+                        var chosen_image_id = images[j].profiler_image_gallery_id;
 						var file_location = images[j].file_location;
 						var location_thumb = images[j].file_location + images[j].file_name;
 						var location = file_location.substring(0, file_location.length - 7)  + images[j].file_name;
@@ -115,7 +116,7 @@ function load_profiler_categories (identity_profile_id) {
 
 						data_section =
 									'<div class="col-md-2">' +
-										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
+										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' )">' +
 													'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 										'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
@@ -590,6 +591,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 	else {
 		for (var i = 0; i < gallery_images.length; i++) {
 			profiler_image_gallery_id[num_gallery_images] = image_gallery_obj.images[i].profiler_image_gallery_id;
+            var chosen_image_id = gallery_images[i].profiler_image_gallery_id;
 			var file_location = gallery_images[i].file_location;
 			var location_thumb = gallery_images[i].file_location + gallery_images[i].file_name;
 			var location = file_location.substring(0, file_location.length - 7) + gallery_images[i].file_name;
@@ -600,7 +602,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 			}
 			data_section =
 					'<div class="col-md-2">' +
-						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
+						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' )">' +
 						'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 						'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
@@ -617,7 +619,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 
 
 // Image Gallery: Show emlarged image with detail
-function show_full_size_image(location, image_title, image_description) {
+function show_full_size_image(location, image_title, image_description, chosen_image_id) {
 	$('#show_full_size_image').modal();
 	var full_size_image = '<img src="' + location + '" width="100%" height="100%" >';
     document.getElementById("full_size_image").innerHTML = full_size_image;
@@ -628,7 +630,10 @@ function show_full_size_image(location, image_title, image_description) {
 
     var full_image_title = "<h3 class='modal-title'>" + image_title + "</h3>";
     document.getElementById("full_image_title").innerHTML = full_image_title;
+
     localStorage.setItem("image_title", image_title);
+    localStorage.setItem("image_description", image_description);
+    localStorage.setItem("chosen_image_id", chosen_image_id);
 }
 
 // Image Gallery: Edit text on full size images
@@ -659,7 +664,30 @@ function cancelEditImageText() {
 
 // Image Gallery: save edit text on full size images
 function saveEditImageText() {
+    var image_id = localStorage.getItem("chosen_image_id");
+    var edited_title = document.getElementById("image_title").value;
+    var edited_description = document.getElementById("image_description").value;
 
+    var params = "image_id=" + image_id + "&image_title=" + edited_title + "&image_description=" + edited_description;
+    processData(params, "update_profiler_image_date.php", "result", false);
+    try {
+        var image_gallery_data = localStorage.getItem("result");
+        var image_gallery_obj = JSON.parse(image_gallery_data);
+    }
+    catch (err) {
+        console.log(err.message)
+        my_identity_profiler_alert("update_profiler_image_date: Error updating gallery image: status = " + err.message, "alert-danger", "Error!  ", "show_full_size_image_alert");
+        return false;
+    }
+
+    var ret_code = image_gallery_obj.ret_code;
+    if (ret_code === -1) {
+        my_identity_profiler_alert(image_gallery_obj[0].message, "alert-danger", "Alert! ", "show_full_size_image_alert");
+    }
+    else {
+        my_identity_profiler_alert("Gallery Imagessuccsessfuly updated. ", "alert-success", "Success!  ", "show_full_size_image_alert");
+    }
+    return;
 }
 
 // Image Gallery: Remove checked gallery images dialog
@@ -680,7 +708,8 @@ function check_for_chosen_gallery_images(category) {
 	try {
 		var image_gallery_data = localStorage.getItem("image_gallery_data");
 		var image_gallery_obj = JSON.parse(image_gallery_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
 		my_identity_profiler_alert("get_image_gallery_data: Error getting data for image gallery: status = " + err.message, "alert-danger", "Error!  ", "remove_gallery_image");
 		return false;
@@ -721,7 +750,8 @@ function update_for_delete_gallery_images() {
 	try {
 		var image_gallery_data = localStorage.getItem("result");
 		var image_gallery_obj = JSON.parse(image_gallery_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
 		my_identity_profiler_alert("update_for_delete_gallery_images: Error deleting gallery image: status = " + err.message, "alert-danger", "Error!  ", "remove_gallery_image");
 		return false;
