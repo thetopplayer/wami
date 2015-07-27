@@ -269,7 +269,7 @@ function load_profiler_categories (identity_profile_id) {
 // Image Gallery: Show emlarged image with detail
 function show_full_size_image(location, image_title, image_description) {
 	$('#show_full_size_image').modal();
-	var full_size_image = '<img src="' + location + '" width="100%">'
+	var full_size_image = '<img src="' + location + '" width="100%" >';
 	document.getElementById("image_description").innerHTML = image_description;
 	document.getElementById("image_title").innerHTML = image_title;
 	document.getElementById("full_size_image").innerHTML = full_size_image;
