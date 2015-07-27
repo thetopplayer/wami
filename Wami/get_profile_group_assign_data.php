@@ -14,6 +14,18 @@ $selected_profile_id = $_POST["selected_profile_id"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 
+//Determine if any groups have been created for specified profile id.
+$sql = "SELECT identity_profile_id FROM profile_group
+         WHERE delete_ind = 0 AND identity_profile_id = " .$identity_profile_id;
+
+$result = mysqli_query($con, $sql)  or  die(mysqli_error($con));
+if (mysqli_num_rows($result) == 0) {
+    $response["ret_code"] = 2;
+    $response["message"] = "No profile groups have been created for selected profile.";
+    echo json_encode($response);
+    return;
+}
+
 $sql = "SELECT group_name, pga.profile_group_id FROM profile_group pg, profile_group_assign pga
         WHERE pg.profile_group_id = pga.profile_group_id AND pga.delete_ind = 0 AND pga.assign_to_identity_profile_id = " .$identity_profile_id.
         " AND pga.identity_profile_id = " .$selected_profile_id;

@@ -192,7 +192,7 @@ function load_profiler_categories (identity_profile_id) {
 						}
 						data_section =
 							'<div class="col-md-2">' +
-								'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\')">' +
+								'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\');return false;">' +
 									'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 								'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 							'</div>' + data_section;

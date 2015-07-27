@@ -22,11 +22,6 @@ $sql = "SELECT first_name, last_name, image_url, profile_name, tags, ip.identity
         AND pga.identity_profile_id = ip.identity_profile_id AND pga.delete_ind = 0 AND active_ind = 1
         ORDER BY profile_name";
 
-// Get profile collection data
-//$sql = "SELECT first_name, last_name, image_url, profile_name, tags, ipc.identity_profile_id, assign_to_identity_profile_id, rating, default_profile_ind
-//        FROM identity_profile_collection ipc, identity_profile ip
-//        WHERE ipc.identity_profile_id = ip.identity_profile_id AND ipc.delete_ind = 0 AND assign_to_identity_profile_id = " .$identityProfileId;
-
 $result = mysqli_query($con, $sql) or  die(mysqli_error($con));
 $response["profile_collection"] = array();
 if (mysqli_num_rows($result) > 0) {
@@ -53,6 +48,19 @@ if (mysqli_num_rows($result) > 0) {
     return;
 }
 
+//Determine if any groups have been created for specified profile id.
+$response["profile_group_assign_data"] = array();
+$sql = "SELECT identity_profile_id FROM profile_group
+         WHERE delete_ind = 0 AND identity_profile_id = " .$identityProfileId;
+
+$result = mysqli_query($con, $sql)  or  die(mysqli_error($con));
+if (mysqli_num_rows($result) == 0) {
+    $response["group_ret_code"] = 1;
+    $response["message"] = "No profile groups have been created for selected profile.";
+    echo json_encode($response);
+    return;
+}
+
 //Get group data
 $sql = "SELECT pg.group_name, pga.identity_profile_id FROM profile_group_assign pga, profile_group pg
          WHERE pg.profile_group_id = pga.profile_group_id
@@ -60,7 +68,6 @@ $sql = "SELECT pg.group_name, pga.identity_profile_id FROM profile_group_assign 
          ORDER BY identity_profile_id ASC, pga.profile_group_id ASC";
 
 $result = mysqli_query($con, $sql)  or  die(mysqli_error($con));
-$response["profile_group_assign_data"] = array();
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_array($result)) {
         $group = array();

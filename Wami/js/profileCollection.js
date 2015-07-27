@@ -115,7 +115,7 @@ function loadData(identity_profile_id) {
 		if (tags === null) tags = '';
 
 		var groups = '';
-		num_groups = wami_obj.profile_group_assign_data.length;
+		var num_groups = wami_obj.profile_group_assign_data.length;
 		for (var j = 0; j < num_groups; j++) {
 			var profile_group_id = wami_obj.profile_group_assign_data[j].identity_profile_id;
 			if (profile_group_id == list_identity_profile_id) {
@@ -208,39 +208,43 @@ function filter_profile_collection(selected_value) {
 //
 // Manage groups processing
 //
-function manage_groups(manage_state) {
-	var selected_profile_id = localStorage.getItem("selected_profile_id");
-	var assign_to_identity_profile_id = localStorage.getItem("current_identity_profile_id");
-	var selected_group_id_list = get_checked_groups();
-	if (selected_group_id_list === null) {
-		my_profile_collection_alert("No Groups selected. Please select groups(s) to assign/remove.", "alert-warning", "Info Alert! ", "assign_group_dialog");
-		return;
-	}
+//function manage_groups(manage_state) {
+//	var selected_profile_id = localStorage.getItem("selected_profile_id");
+//	var assign_to_identity_profile_id = localStorage.getItem("current_identity_profile_id");
+//	var selected_group_id_list = get_checked_groups();
+//	if (selected_group_id_list === null) {
+//		my_profile_collection_alert("No Groups selected. Please select groups(s) to assign/remove.", "alert-warning", "Info Alert! ", "assign_group_dialog");
+//		return;
+//	}
+//
+//	selected_group_id_list.join(',');
+//	var params = "selected_profile_id=" + selected_profile_id + "&assign_to_identity_profile_id=" + assign_to_identity_profile_id + "&selected_group_id_list=" + selected_group_id_list + "&manage_state=" + manage_state;
+//	var url = "manage_groups.php";
+//	processData(params, url, "result", false);
+//	try {
+//		var manage_assign_group_data = localStorage.getItem("result");
+//		var manage_assign_group_obj = JSON.parse(manage_assign_group_data);
+//	} catch (err) {
+//		console.log(err.message)
+//		my_profile_collection_alert("manage_assign_group: Error assigning/removing group data = " + err.message, "alert-danger", "Error!  ", "assign_group_dialog");
+//		return;
+//	}
+//	var ret_code = manage_assign_group_obj.ret_code;
+//	if (ret_code === -1) {
+//		my_profile_collection_alert(manage_assign_group_obj.message, "alert-danger", "Alert! ", "assign_group_dialog");
+//		return;
+//	}
+//	if (ret_code === 1) {
+//		my_profile_collection_alert(manage_assign_group_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
+//		return;
+//	}
+//	var current_profile_id = localStorage.getItem("current_identity_profile_id");
+//	loadData(current_profile_id);
+//	my_profile_collection_alert(manage_assign_group_obj.message, "alert-success","Success! ", "assign_group_dialog");
+//}
 
-	selected_group_id_list.join(',');
-	var params = "selected_profile_id=" + selected_profile_id + "&assign_to_identity_profile_id=" + assign_to_identity_profile_id + "&selected_group_id_list=" + selected_group_id_list + "&manage_state=" + manage_state;
-	var url = "manage_groups.php";
-	processData(params, url, "result", false);
-	try {
-		var manage_assign_group_data = localStorage.getItem("result");
-		var manage_assign_group_obj = JSON.parse(manage_assign_group_data);
-	} catch (err) {
-		console.log(err.message)
-		my_profile_collection_alert("manage_assign_group: Error assigning/removing group data = " + err.message, "alert-danger", "Error!  ", "assign_group_dialog");
-		return;
-	}
-	var ret_code = manage_assign_group_obj.ret_code;
-	if (ret_code === -1) {
-		my_profile_collection_alert(manage_assign_group_obj.message, "alert-danger", "Alert! ", "assign_group_dialog");
-		return;
-	}
-	if (ret_code === 1) {
-		my_profile_collection_alert(manage_assign_group_obj.message, "alert-info", "Alert! ", "assign_group_dialog");
-		return;
-	}
-	var current_profile_id = localStorage.getItem("current_identity_profile_id");
-	loadData(current_profile_id);
-	my_profile_collection_alert(manage_assign_group_obj.message, "alert-success","Success! ", "assign_group_dialog");
+function manage_groups() {
+
 }
 
 //
@@ -277,36 +281,37 @@ function show_group_assign_dialog(selected_profile_id) {
 	} catch (err) {
 		console.log(err.message)
 		my_profile_collection_alert("get_selected_profile_name: Error getting Profile Name = " + err.message, "alert-danger", "Error!  ", "group_assign_dialog");
-		return;
+		return false;
 	}
 	var ret_code = profile_name_obj.ret_code;
 	if (ret_code === -1) {
 		my_profile_collection_alert(profile_name_obj[0].message, "alert-danger", "Alert! ", "group_assign_dialog");
-		return;
+		return false;
 	}
 	if (ret_code === 1) {
 		my_profile_collection_alert(profile_name_obj[0].message, "alert-info", "Alert! ", "group_assign_dialog");
-		return;
+		return false;
 	}
 	var selected_profile_name = profile_name_obj.profile_name;
 
-	ret_code = get_group_list(selected_profile_id);
+	ret_code = setup_group_list(selected_profile_id);
 	if (ret_code === null) {
-		return;
+		return false;
 	}
-	var profile_name = localStorage.getItem("current_profile_name");
-	var assign_group_title = '<h4 class="modal-title">Assign/Remove ' +
-		'<span style="color: #f87c08">' + profile_name + '</span>' + ' groups to/from ' +
-		'<span style="color: #f87c08">' + selected_profile_name + '</span></h4>' ;
+
+    var assign_group_title = '<h4 class="modal-title">Check the  group(s) you want profile ' +
+    	'<span style="color: #f87c08">' + selected_profile_name + '</span>' + ' to be a member of then hit the Update button:' + '</h4>';
+
 	document.getElementById("assign_group_title").innerHTML = assign_group_title;
 	localStorage.setItem("selected_profile_id", selected_profile_id);
 	$('#assign_group').modal();
+    return false;
 }
 
 //
 // Get groups assigned
 //
-function get_group_list(selected_profile_id) {
+function setup_group_list(selected_profile_id) {
 	my_profile_collection_alert("", "", "", "assign_group_dialog");
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var params = "identity_profile_id=" + identity_profile_id + "&selected_profile_id=" + selected_profile_id;
@@ -315,7 +320,8 @@ function get_group_list(selected_profile_id) {
 	try {
 		var group_assign_data = localStorage.getItem("result");
 		var group_assign_obj = JSON.parse(group_assign_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
 		my_profile_collection_alert("get_profile_group_assign_data: Error getting group data = " + err.message, "alert-danger", "Error!  ", "group_dialog");
 		return null;
@@ -325,10 +331,10 @@ function get_group_list(selected_profile_id) {
 		my_profile_collection_alert(group_assign_obj.message, "alert-danger", "Alert! ", "group_dialog");
 		return null;
 	}
-	if (ret_code === 1) {
-		my_profile_collection_alert(group_assign_obj.message, "alert-info", "Info! ", "group_dialog");
-		//return null;
-	}
+    if (ret_code === 2) {
+        my_profile_collection_alert(group_assign_obj.message, "alert-info", "Info! ", "group_dialog");
+        return null;
+    }
 
 	var selected_group_ids = [];
 	var num_selected_groups = group_assign_obj.profile_group_assign_data.length;

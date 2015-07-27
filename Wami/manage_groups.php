@@ -37,7 +37,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
 
     if ($manage_state === "remove") {
         try {
-            $sql = "UPDATE profile_group_assign SET delete_ind = 1 WHERE profile_group_id = " .$selected_group_id.
+            $sql = "UPDATE profile_group_assign SET delete_ind = 1, modified_date = NOW() WHERE profile_group_id = " .$selected_group_id.
                 " AND identity_profile_id = " .$selected_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
@@ -61,7 +61,7 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
     if ($manage_state === "assign") {
         if ($exists) {
             try {
-                $sql = "UPDATE profile_group_assign SET delete_ind = 0 WHERE profile_group_id = " .$selected_group_id.
+                $sql = "UPDATE profile_group_assign SET delete_ind = 0, modified_date = NOW() WHERE profile_group_id = " .$selected_group_id.
                     " AND identity_profile_id = " .$selected_profile_id;
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
