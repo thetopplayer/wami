@@ -7,7 +7,7 @@
  */
 $(document).ready(function() {
 	var current_profile_name = localStorage.getItem("current_profile_name");
-	var search_heading = "<h3 class='panel-title'>Search Wami Network For Profiles: " +
+	var search_heading = "<h3 class='panel-title'>Search Wami Network for Profiles to Connect or Subscribe to: " +
 		"<b><span style='color: #f87c08'>"  + current_profile_name + "</span></b> </h3>";
 	document.getElementById('search_heading').innerHTML = search_heading;
 	var selected_item = '';
