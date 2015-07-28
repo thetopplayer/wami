@@ -148,8 +148,8 @@ function load_profiler_categories (identity_profile_id) {
 											'<input class="input-wami" type="text" readonly style="background-color: #d1d1d1" value="' + media_type + '">' +
 										'</div>' +
 									'</div>' +
-									'<span class="span-scroll-profile" style="height: 555px; width: 1063px; margin-left: 10px">' +
-										'<div style="height: 553px; width: 1050px" id="section_id' + category + '"></div>' +
+									'<span class="span-scroll-profile" style="height: 555px; width: 965px; margin-left: 10px">' +
+										'<div style="height: 553px; width: 965px" id="section_id' + category + '"></div>' +
 									'</span>' +
 								'</div>' +
 							'</div>' +
@@ -231,7 +231,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 25px; height: 550px; background-color: #d1d1d1" >';
+						'<div class="row" style="padding: 10px; height: 550px; background-color: #d1d1d1" >';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;

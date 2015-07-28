@@ -200,7 +200,6 @@ function load_profiler_categories (identity_profile_id) {
 				var data_section_audio = '';
 				var decorator_section_audio =
 						'<div class="row" style="padding: 10px; height: 550px; background-color: #d1d1d1">';
-								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;

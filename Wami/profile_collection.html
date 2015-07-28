@@ -48,130 +48,179 @@
 </head>
 <body class="wami-background">
 	<div id="includedNavbar"></div>
-		<div id="list_alert_message" style="width: 500px"></div>
-		<div class="row" style="padding-left: 50px; width: 985px">
-			<div class="panel panel-primary" style="border-color: #4c4c4c">
-				<div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
-					<h3 class="panel-title">My Profiles</h3>
-				</div>
-				<div class="row" style="height: 160px">
-					<div class="col-md-2" style="width: 260px; margin-left: 30px; padding-top: 15px">
-						<div class="clearfix">
-							<label for="identityProfileDropDown">Select a Profile Collection</label>
-							<div class="input" id="identityProfileDropDown"></div>
-						</div>
-						<p style="margin-bottom: 3px; margin-top: 20px"><strong> Publish chosen Profile(s) </strong></p>
-						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Publish</button>
-					</div>
-					<div class="col-md-1" style="width: 260px; margin-left: 30px; padding-top: 15px">
-						<div class="clearfix">
-							<label for="groupDropDown">Filter Profile Collection By Group</label>
-							<div class="input" id="groupDropDown"></div>
-						</div>
-						<p style="margin-bottom: 3px; margin-top: 20px"><strong>  Remove chosen Profile(s)</strong></p>
-						<button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('remove')">Remove</button>
-					</div>
-					<div class="col-md-1" style="width: 240px; margin-left: 30px; margin-top: 82px">
-						<p style="margin-bottom: 5px"><strong>  Refresh Profile Collection </strong></p>
-						<button type="button" style="margin-bottom: 5px" class="btn btn-sm btn-primary btn-block" onclick="refreshCollection()">Refresh List</button>
-					</div>
-				</div>
-			</div>
-			<div class="text-left" id="profile_collection_alert" style="margin-top: 10px;"></div>
+	<div id="list_alert_message" style="width: 500px"></div>
 
-			<div id="list_id"></div>
 
-			<!--Modal Transmit-->
-			<div class="modal fade" id="transmit_wami" role="dialog">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header" style="background-color: #d9d9d9">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Publish Profile(s)</h4>
-						</div>
-						<div class="modal-body">
-							<h5>The following Profile(s) will be transmitted for publishing:</h5>
-							<input readonly class='input-wami form-control' id="transmit_list" name="transmit_list" size="77" type="text" style="background-color: #D3D3D3">
-							<h5>To Profile Name</h5>
-							<input class='input-wami form-control' list="profile_name_list" id="transmit_to_profile_name" placeholder="Enter Profile name to Publish to." name="transmit_to_profile_name" size="77" type="text">
-							<datalist id="profile_name_list"></datalist>
-							<h5>Email Address</h5>
-							<input class='input-wami form-control' autocomplete="on" id="transmit_to_email_address" placeholder="Enter email address to transmit to." name="transmit_to_email_address" size="77" type="text">
-						</div>
-						<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+    <div class="panel-group" style="padding-left: 35px; width: 970px" id="accordionProfileCollectionHelp">
+        <div class="panel panel-primary" style="border-color: #4c4c4c">
+            <div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+                <h3 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordionProfileCollectionHelp" href="#collapseProfileCollectionHelp">Web Page Description and Help
+                        <i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+                    </a>
+                </h3>
+            </div>
+            <div id="collapseProfileCollectionHelp" class="panel-collapse collapse out">
+                <div class="panel-body"  style="padding-left: 25px; background-color: #f3f3f3">
+                    <div class="row"  style="height: 380px">
+                        <div class="col-md-2" style="width: 900px">
+                            <h5>Each of your created profiles can have a collection of profiles associated with it. This collection are profiles that have been
+                                published by other WAMI users, and you have chosen to subscribe to.</h5>
+                            <h5> Whenever the published profile changes, that change is immediately seen by every profile that has subscribed to that published profile.</h5>
+                            <h5>Use this web page to manage that collection of subscribed to profiles associated with your selected profile.</h5>
+                            <h5>On this page you can:</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item">Choose a profile collection to manage.</li>
+                                <li class="list-group-item">Filter the collection by groups that have been created on the "My Profiles" page.</li>
+                                <li class="list-group-item">Any number of collected profiles can be selected to publish or transmit to another WAMI user.</li>
+                                <li class="list-group-item">Any number of collected profiles can be selected to be removed.</li>
+                                <li class="list-group-item">Extended information about each profile can be viewed by clicking the "More Info" link. This extended information
+                                includes all media information made up of image files, audio files, PDF files, and text files. Also Flash announcements can be viewed.</li>
+                                <li class="list-group-item">Any collected profile can be assigned to a group or groups to help you manage and organize the collection.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-left: 50px; width: 985px">
+        <div class="panel panel-primary" style="border-color: #4c4c4c">
+            <div class="panel-heading" style="background-color: #c2c2c2; color: #3D3D3D">
+                <h3 class="panel-title">My Profiles</h3>
+            </div>
+            <div class="row" style="height: 160px">
+                <div class="col-md-2" style="width: 260px; margin-left: 30px; padding-top: 15px">
+                    <div class="clearfix">
+                        <label for="identityProfileDropDown">Select a Profile Collection</label>
+                        <div class="input" id="identityProfileDropDown"></div>
+                    </div>
+                    <p style="margin-bottom: 3px; margin-top: 20px"><strong> Publish selected Profile(s) </strong></p>
+                    <button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('transmit')">Publish</button>
+                </div>
+                <div class="col-md-1" style="width: 260px; margin-left: 30px; padding-top: 15px">
+                    <div class="clearfix">
+                        <label for="groupDropDown">Filter Profile Collection By Group</label>
+                        <div class="input" id="groupDropDown"></div>
+                    </div>
+                    <p style="margin-bottom: 3px; margin-top: 20px"><strong>  Remove selected Profile(s)</strong></p>
+                    <button type="button" class="btn btn-sm btn-primary btn-block" data-toggle='modal' onclick="return checkForChosenProfiles('remove')">Remove</button>
+                </div>
+                <div class="col-md-1" style="width: 240px; margin-left: 30px; margin-top: 82px">
+                    <p style="margin-bottom: 5px"><strong>  Refresh Profile Collection </strong></p>
+                    <button type="button" style="margin-bottom: 5px" class="btn btn-sm btn-primary btn-block" onclick="refreshCollection()">Refresh List</button>
+                </div>
+            </div>
+        </div>
+        <div class="text-left" id="profile_collection_alert" style="margin-top: 10px;"></div>
+
+        <div id="list_id"></div>
+
+        <!--Modal Transmit-->
+        <div class="modal fade" id="transmit_wami" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #d9d9d9">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Publish Profile(s)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>The following Profile(s) will be transmitted for publishing:</h5>
+                        <input readonly class='input-wami form-control' id="transmit_list" name="transmit_list" size="77" type="text" style="background-color: #D3D3D3">
+                        <h5>To Profile Name</h5>
+                        <input class='input-wami form-control' list="profile_name_list" id="transmit_to_profile_name" placeholder="Enter Profile name to Publish to." name="transmit_to_profile_name" size="77" type="text">
+                        <datalist id="profile_name_list"></datalist>
+                        <h5>Email Address</h5>
+                        <input class='input-wami form-control' autocomplete="on" id="transmit_to_email_address" placeholder="Enter email address to transmit to." name="transmit_to_email_address" size="77" type="text">
+                    </div>
+                    <div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
 								<span class="pull-left">
 									<button type="button" class="btn btn-primary" onclick="transmitProfiles()">Publish</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal" onclick="clean_up_transmit()">Close</button>
 								</span>
-							<img src="assets/wami-logo-footer.jpg" class="pull-right" >
-							<div class="text-left" id="transmit_alert_message" style="margin-top: 50px;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+                        <img src="assets/wami-logo-footer.jpg" class="pull-right" >
+                        <div class="text-left" id="transmit_alert_message" style="margin-top: 50px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-			<!--Modal Remove Profiles-->
-			<div class="modal fade" id="remove_profiles" role="dialog">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header" style="background-color: #d9d9d9">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title"><strong> <span style="color: #e00004">Remove Profile(s)</span></strong></h4>
-						</div>
-						<div class="modal-body">
-							<h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen profile(s) from your collection.</h5>
-							<h5>Are you sure?</h5>
-						</div>
-						<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+        <!--Modal Remove Profiles-->
+        <div class="modal fade" id="remove_profiles" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #d9d9d9">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><strong> <span style="color: #e00004">Remove Profile(s)</span></strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>You are about to <strong> <span style="color: #e00004">REMOVE</span></strong> the chosen profile(s) from your collection.</h5>
+                        <h5>Are you sure?</h5>
+                    </div>
+                    <div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
 								<span class="pull-left">
 									<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="removeProfiles()">Remove</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 								</span>
-							<img src="assets/wami-logo-footer.jpg" class="pull-right" >
-							<div class="text-left" id="remove_alert_message" style="margin-top: 50px;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+                        <img src="assets/wami-logo-footer.jpg" class="pull-right" >
+                        <div class="text-left" id="remove_alert_message" style="margin-top: 50px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-			<!--Modal Manage groups-->
-			<div class="modal fade" style="padding-top: 150px" id="assign_group" role="dialog">
-				<div class="modal-dialog">
-					<div class="modal-content"  style="width: 700px; ">
-						<div class="modal-header" style="background-color: #d9d9d9">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Manage Group(s)</h4>
-						</div>
-						<div class="modal-body">
-							<div style="padding-top: 0px; padding-bottom: 20px" id="assign_group_title"></div>
-							<div id="profile_group_list"></div>
-						</div>
-						<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+        <!--Modal Manage groups-->
+        <div class="modal fade" style="padding-top: 150px" id="assign_group" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content"  style="width: 700px; ">
+                    <div class="modal-header" style="background-color: #d9d9d9">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Manage Group(s)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div style="padding-top: 0px; padding-bottom: 20px" id="assign_group_title"></div>
+                        <div id="profile_group_list"></div>
+                    </div>
+                    <div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
 								<span class="pull-left">
                                     <button type="button" class="btn btn-sm btn-primary" onclick="manage_groups()">Update</button>
 									<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
                                     <button type="button" style="margin-left: 130px" class="btn btn-xs btn-primary" onclick="select_all()">Select All</button>
                                     <button type="button" class="btn btn-xs btn-primary" onclick="deselect_all()">Deselect All</button>
 								</span>
-							<img src="assets/wami-logo-footer.jpg" class="pull-right" >
-							<div class="text-left" id="assign_group_alert_message" style="margin-top: 50px;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                        <img src="assets/wami-logo-footer.jpg" class="pull-right" >
+                        <div class="text-left" id="assign_group_alert_message" style="margin-top: 50px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		<br>
-		<div class="row" style="padding-left: 10px; width: 965px">
-			<div class="col-md-2" style="width: 965px; margin-left: 30px; padding-top: 15px">
-				<footer>
-					<hr>
-					<div id="includedFooter"></div>
-				</footer>
-			</div>
-		</div>
-		<br><br>
+    <br>
+    <div class="row" style="padding-left: 10px; width: 965px">
+        <div class="col-md-2" style="width: 965px; margin-left: 30px; padding-top: 15px">
+            <footer>
+                <hr>
+                <div id="includedFooter"></div>
+            </footer>
+        </div>
+    </div>
+    <br><br>
 
-	<script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function toggleChevron(e) {
+            $(e.target)
+                    .prev('.panel-heading')
+                    .find("i.indicator")
+                    .toggleClass('glyphicon-plus-sign glyphicon-minus-sign');
+        }
+        $('#accordionProfileCollectionHelp').on('hidden.bs.collapse', toggleChevron);
+        $('#accordionProfileCollectionHelp').on('shown.bs.collapse', toggleChevron);
+    </script>
+
+
 </body>
 </html>

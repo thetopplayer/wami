@@ -145,7 +145,7 @@ function loadData(identity_profile_id) {
 					    '<div style="vertical-align: top">' +
 						    '<button type="button" class="btn-link" style="margin-bottom: 5px" id="extended_info' + i + '" onclick="show_extended_info(this.value)" value="' + list_identity_profile_id + '"><strong>More Info >></strong></button>' +
 					    	'<button type="button" class="btn btn-sm btn-primary btn-block" id="group_assign' + i + '" style="width: 120px; margin-bottom: 10px" onclick="show_group_assign_dialog(this.value)" value="' + list_identity_profile_id + '">Manage Groups</button>' +
-					    	'<button type="button" class="btn btn-sm btn-primary btn-block" id="transmit_profile' + i + '" style="width: 120px; margin-bottom: 10px" onclick="transmit_profile_dialog(this.value)" value="' + list_identity_profile_id + '">Publish</button>' +
+					    	'<button type="button" class="btn btn-sm btn-primary btn-block" id="transmit_profile' + i + '" style="width: 120px; margin-bottom: 10px" onclick="transmit_profile_dialog(this.value)" value="' + list_identity_profile_id + '">Publish/Transmit</button>' +
 					    '</div>' +
 				    '</div>' +
                     //'<div id="list_item' + list_identity_profile_id + '"></div>' +
