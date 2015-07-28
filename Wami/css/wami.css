@@ -122,27 +122,27 @@ hr {
 .span-scroll {
 	display:block;
 	max-height: 190px;
-	overflow-y:scroll;
+	overflow-y:auto;
 }
 .span-scroll-groups {
 	display:block;
 	max-height: 150px;
-	overflow-y:scroll;
+	overflow-y:auto;
 }
 .span-scroll-flash {
 	display:block;
 	max-height: 250px;
-	overflow-y:scroll;
+	overflow-y:auto;
 }
 .span-scroll-wami-list {
-	display:block;
+	display: block;
 	max-height: 600px;
-	overflow-y:scroll;
+	overflow-y:auto;
 }
 .span-scroll-profile {
 	display:block;
 	/*height: 330px;*/
-	overflow-y:scroll;
+	overflow-y:auto;
 	border: 1px solid #888;
 	border-radius:3px;
 }
