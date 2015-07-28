@@ -11,12 +11,42 @@
 require_once __DIR__ . '/db_connect.php';
 $selected_profile_id = $_POST["selected_profile_id"];
 $assign_to_identity_profile_id = $_POST["assign_to_identity_profile_id"];
-$selected_group_id_list = explode(',', $_POST["selected_group_id_list"]);
-$manage_state = $_POST["manage_state"];
+
 $db = new DB_CONNECT();
 $con = $db->connect();
 $con->autocommit(FALSE);
 
+try {
+    $sql = "UPDATE profile_group_assign SET delete_ind = 1 WHERE assign_to_identity_profile_id = " .$assign_to_identity_profile_id.
+        " AND identity_profile_id = " .$selected_profile_id;
+    $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+    if (!$result) {
+        $response["message"] = "manage_groups.php: Problem updating Group Assign. MySQL Error: " .mysqli_error($con);
+        $response["ret_code"] = -1;
+        $con->rollback();
+        $con->autocommit(TRUE);
+        echo json_encode($response);
+        exit(-1);
+    }
+} catch (Exception $e) {
+    $response["ret_code"] = -1;
+    $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
+    $con->rollback();
+    $con->autocommit(TRUE);
+    echo json_encode($response);
+    return;
+}
+
+if ($_POST["selected_group_id_list"] === "") {
+    $con->commit();
+    $con->autocommit(TRUE);
+    $response["ret_code"] = 0;
+    $response["message"] = "Groups managed successfully. ";
+    echo json_encode($response);
+    return;
+}
+
+$selected_group_id_list = explode(',', $_POST["selected_group_id_list"]);
 $selected_group_id = null;
 $num_selected_groups = count($selected_group_id_list);
 for ($i = 0; $i < $num_selected_groups; $i++) {
@@ -35,9 +65,9 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
     }
     mysqli_free_result($result);
 
-    if ($manage_state === "remove") {
+    if ($exists) {
         try {
-            $sql = "UPDATE profile_group_assign SET delete_ind = 1, modified_date = NOW() WHERE profile_group_id = " .$selected_group_id.
+            $sql = "UPDATE profile_group_assign SET delete_ind = 0, modified_date = NOW() WHERE profile_group_id = " .$selected_group_id.
                 " AND identity_profile_id = " .$selected_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
@@ -57,59 +87,35 @@ for ($i = 0; $i < $num_selected_groups; $i++) {
             return;
         }
     }
-
-    if ($manage_state === "assign") {
-        if ($exists) {
-            try {
-                $sql = "UPDATE profile_group_assign SET delete_ind = 0, modified_date = NOW() WHERE profile_group_id = " .$selected_group_id.
-                    " AND identity_profile_id = " .$selected_profile_id;
-                $result = mysqli_query($con, $sql) or die(mysqli_error($con));
-                if (!$result) {
-                    $response["message"] = "manage_groups.php: Problem updating Group Assign. MySQL Error: " .mysqli_error($con);
-                    $response["ret_code"] = -1;
-                    $con->rollback();
-                    $con->autocommit(TRUE);
-                    echo json_encode($response);
-                    exit(-1);
-                }
-            } catch (Exception $e) {
-                $response["ret_code"] = -1;
-                $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
-                $con->rollback();
-                $con->autocommit(TRUE);
-                echo json_encode($response);
-                return;
-            }
-        }
-        else {
-            $delete_ind = 0;
-            try {
-                $sql = "INSERT INTO profile_group_assign (assign_to_identity_profile_id, identity_profile_id, profile_group_id, delete_ind, create_date, modified_date)
+    else {
+        $delete_ind = 0;
+        try {
+            $sql = "INSERT INTO profile_group_assign (assign_to_identity_profile_id, identity_profile_id, profile_group_id, delete_ind, create_date, modified_date)
                     VALUES ( ".$assign_to_identity_profile_id. ","  .$selected_profile_id. ", " .$selected_group_id. ", " . $delete_ind. ", NOW(), NOW())";
-                $result = mysqli_query($con, $sql) or die(mysqli_error($con));
-                if (!$result) {
-                    $response["message"] = "manage_groups.php: Problem inserting Group Assign. MySQL Error: " .mysqli_error($con);
-                    $response["ret_code"] = -1;
-                    $con->rollback();
-                    $con->autocommit(TRUE);
-                    echo json_encode($response);
-                    exit(-1);
-                }
-            } catch (Exception $e) {
+            $result = mysqli_query($con, $sql) or die(mysqli_error($con));
+            if (!$result) {
+                $response["message"] = "manage_groups.php: Problem inserting Group Assign. MySQL Error: " .mysqli_error($con);
                 $response["ret_code"] = -1;
-                $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
                 $con->rollback();
                 $con->autocommit(TRUE);
                 echo json_encode($response);
-                return;
+                exit(-1);
             }
+        } catch (Exception $e) {
+            $response["ret_code"] = -1;
+            $response["message"] = "manage_groups.php: Transaction failed: " . $e->getMessage();
+            $con->rollback();
+            $con->autocommit(TRUE);
+            echo json_encode($response);
+            return;
         }
     }
+
 }
 $con->commit();
 $con->autocommit(TRUE);
 $response["ret_code"] = 0;
-$response["message"] = "Groups assigned/removed successfully. ";
+$response["message"] = "Groups managed successfully. ";
 echo json_encode($response);
 
 ?>
