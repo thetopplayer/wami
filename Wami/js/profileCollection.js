@@ -148,7 +148,6 @@ function loadData(identity_profile_id) {
 					    	'<button type="button" class="btn btn-sm btn-primary btn-block" id="transmit_profile' + i + '" style="width: 120px; margin-bottom: 10px" onclick="transmit_profile_dialog(this.value)" value="' + list_identity_profile_id + '">Publish/Transmit</button>' +
 					    '</div>' +
 				    '</div>' +
-                    //'<div id="list_item' + list_identity_profile_id + '"></div>' +
                 '</div><hr>';
 	}
 	list += "</span></div></div>";
@@ -243,8 +242,6 @@ function manage_groups() {
 	var current_profile_id = localStorage.getItem("current_identity_profile_id");
 	loadData(current_profile_id);
 	my_profile_collection_alert(manage_assign_group_obj.message, "alert-success","Success! ", "assign_group_dialog");
-    location.href = "#";
-    location.href = "#list_item" + selected_profile_id;
 }
 
 //
@@ -321,6 +318,9 @@ function show_group_assign_dialog(selected_profile_id) {
 	document.getElementById("assign_group_title").innerHTML = assign_group_title;
 	localStorage.setItem("selected_profile_id", selected_profile_id);
 	$('#assign_group').modal();
+
+    location.href = "#";
+    location.href = "#list_item" + selected_profile_id;
 }
 
 //
