@@ -167,8 +167,8 @@ function send_serverside_request(requester_profile_name, email_str) {
 		'</div>' +
 
 		'<div style="margin-left: 10px; margin-right: 10px">' +
-			'<h4> Wami user: <span style="color: #f87c08">' + requester_profile_name + '</span> has requested your WAMI profile. Log into Wami ' +
-				'<a href="http://www.mywami.com"> http://www.mywami.com </a> to transmit your Profile if you want.' +
+			'<h4> Wami user: <span style="color: #f87c08">' + requester_profile_name + '</span> has requested to connect/subscribe to your WAMI profile. Log into Wami ' +
+				'<a href="http://www.mywami.com"> http://www.mywami.com </a> to transmit/publish your Profile if you want to be connected.' +
 			'</h4><br>' +
 			'<hr>' +
 		'<div><br>' +

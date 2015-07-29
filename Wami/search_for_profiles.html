@@ -53,6 +53,39 @@
 <body class="wami-background">
 	<div id="includedNavbar"></div>
 	<div class="col-md-12" style="width: 1100px; padding-left: 40px">
+
+        <div class="panel-group" id="accordionSearchHelp">
+            <div class="panel panel-primary" style="border-color: #4c4c4c">
+                <div class="panel-heading" style="background-color: #c2c2c2; color: #626262">
+                    <h3 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordionSearchHelp" href="#collapseSearchHelp">Web Page Description and Help
+                            <i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+                        </a>
+                    </h3>
+                </div>
+                <div id="collapseSearchHelp" class="panel-collapse collapse out">
+                    <div class="panel-body"  style="padding-left: 25px; background-color: #f3f3f3">
+                        <div class="row"  style="height: 280px">
+                            <div class="col-md-2" style="width: 1000px">
+                                <h5>Use this web page to search for new profiles to subscribe or connect to.</h5>
+                                <h5>By entering the search criteria you can send a request to the profile(s) to connect/subscribe, or send an email message
+                                to the selected profile.</h5>
+                                <h5>On this page you can:</h5>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Enter search criteria to find profile(s) of interest.</li>
+                                    <li class="list-group-item">Search either the whole WAMI network or just your profile collections.</li>
+                                    <li class="list-group-item">Send an email directly to the profile.</li>
+                                    <li class="list-group-item">Send an system generated request to connect/subscribe to the selected profile(s).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 		<div class="panel panel-primary" style="border-color: #4c4c4c">
 			<div class="panel-heading" style="background-color: #c2c2c2; color: #626262">
 				<div id="search_heading"></div>
@@ -179,5 +212,17 @@
 	</div>
 
 	<script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function toggleChevron(e) {
+            $(e.target)
+                    .prev('.panel-heading')
+                    .find("i.indicator")
+                    .toggleClass('glyphicon-plus-sign glyphicon-minus-sign');
+        }
+        $('#accordionSearchHelp').on('hidden.bs.collapse', toggleChevron);
+        $('#accordionSearchHelp').on('shown.bs.collapse', toggleChevron);
+    </script>
+
 </body>
 </html>
