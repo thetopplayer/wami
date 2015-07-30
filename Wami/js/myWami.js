@@ -555,40 +555,71 @@ function upload_new_profile_image() {
 	var file = document.getElementById('new_profile_image').files[0];
 	var imageType = /image.*/;
 	if (!file.type.match(imageType)) {
-		my_wami_alert("File must be either a .jpg or .png image type.", "alert-danger", "Error!  ", "image_upload");
+		my_wami_alert("File must be either a .jpg, .png, or ,gif image type.", "alert-danger", "Error!  ", "image_upload");
 		return;
 	}
 
-	//display file
 	var preview = new Image();
+    var profile_image = new Image();
 	var reader  = new FileReader();
 	var byte_reader = new FileReader();
 	var image_id = document.getElementById("image");
+
 	if (file) {
 		reader.readAsDataURL(file);
 		byte_reader.readAsDataURL(file);
 	} else {
 		preview.src = "";
 	}
-	reader.onload =
+
+    //display image on web page. First reduce in size
+    reader.onload =
 		function () {
 			image_id.innerHTML = "";
 			preview.src = reader.result;
+            var orig_height = preview.height;
+            var orig_width = preview.width;
+            var ratio = Math.min(130 / orig_width, 130 / orig_height);
+            preview.height = orig_height * ratio;
+            preview.width = orig_width * ratio;
 			image_id.appendChild(preview);
 		};
 
-	//save to file system and database
+    //save to file system and database
 	byte_reader.onload =
 		function () {
-			var image_src = byte_reader.result;
-			var identity_profile_id = localStorage.getItem("identity_profile_id");
+            profile_image.src = byte_reader.result;
+
+            //reduce size to thumbnail and save.
+            var canvas = document.createElement('canvas');
+            var orig_height = profile_image.height;
+            var orig_width = profile_image.width;
+            var ratio = Math.min(130 / orig_width, 130 / orig_height);
+            if (orig_height > 130) {
+                canvas.height = orig_height * ratio;
+            }
+            else {
+                canvas.height = orig_height;
+            }
+            if (orig_width > 130) {
+                canvas.width = orig_width * ratio;
+            }
+            else {
+                canvas.width = orig_width;
+            }
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(profile_image, 0, 0, canvas.width, canvas.height);
+            var dataurl = canvas.toDataURL();
+
+            var identity_profile_id = localStorage.getItem("identity_profile_id");
 			//change file type to .png if its a jpg or gif. Keeps it compatible with android
 			var file_name = file.name;
 			var file_name_type_check = file_name.slice(file_name.lastIndexOf('.'));
 			if (file_name_type_check !== '.png') {
 				file_name = file_name.slice(0, file_name.indexOf('.')) + ".png";
 			}
-			var params = "file_name=" + file_name + "&image_src=" + image_src + "&identity_profile_id=" + identity_profile_id;
+
+			var params = "file_name=" + file_name + "&image_src=" + dataurl + "&identity_profile_id=" + identity_profile_id;
 			var url = "update_new_profile_image_data.php";
 			processData(params, url, "result", false);
 			try {
@@ -603,7 +634,6 @@ function upload_new_profile_image() {
 			var ret_code = result_obj.ret_code;
 			if (ret_code === -1) {
 				my_wami_alert(result_obj.message, "alert-danger", "Error!  ", "image_upload");
-				return;
 			}
 		}
 }

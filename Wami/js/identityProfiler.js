@@ -507,12 +507,21 @@ function get_gallery_image() {
 
 // Image Gallery:
 function upload_gallery_image() {
+    my_identity_profiler_alert("", "", "image_gallery_upload");
 	var file = document.getElementById('new_gallery_image').files[0];
 	if ((file === undefined) || (file === '')) {
 		my_identity_profiler_alert("No file chosen to upload", "alert-warning", "Warning!  ", "image_gallery_upload");
 		return;
 	}
-	my_identity_profiler_alert("", "", "image_gallery_upload");
+
+    var imageType = /image.*/;
+    if (!file.type.match(imageType)) {
+        my_identity_profiler_alert("File must be either a .jpg, .png, or ,gif image type.", "alert-danger", "Error!  ", "image_gallery_upload");
+        return;
+    }
+
+
+    my_identity_profiler_alert("", "", "image_gallery_upload");
 	var category = document.getElementById('category_id_image').value;
 	var file_name = file.name;
 	var profile_name = localStorage.getItem("current_profile_name");
