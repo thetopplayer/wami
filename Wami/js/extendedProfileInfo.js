@@ -206,9 +206,9 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Text') {
 				var file = identity_profiler_obj.identity_profiler_data[i].file.file[0].contents;
 				var decorator_section_text =
-						'<div class="row" style="padding: 25px; background-repeat: repeat; background-color: #d1d1d1" >';
+                    '<div class="row" style="padding: 25px; width: 980px; background-color: #fcfcfc">';
 				var data_section_text =
-						'<textarea readonly cols="145" rows="25" wrap="hard" style="display: block; margin-right: auto; margin-left: auto">' + file + '</textarea>';
+                    '<textarea readonly cols="125" rows="25" wrap="hard" style="display: block; margin-left: 25px">' + file + '</textarea>';
 
 				section_id = "section_id" + category;
 				document.getElementById(section_id).innerHTML = decorator_section_text + data_section_text  + '</div>';
@@ -217,11 +217,11 @@ function load_profiler_categories (identity_profile_id) {
 // PDF file categories
 			if (media_type === 'PDF') {
 				var decorator_section_pdf =
-						'<div class="row" style="padding: 25px; background-repeat: repeat; background-color: #d1d1d1" >';
+                    '<div class="row" style="width: 1000px; background-color: #fcfcfc">';
 				var file_name =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_name;
 				var file_location =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_location;
 				var data_section_pdf =
-						'<object type="application/pdf" width="100%" height="500px" data="' + file_location + file_name + '"> ';
+                    '<object type="application/pdf" width="100%" height="570px" data="' + file_location + file_name + '"> ';
 
 				section_id = "section_id" + category;
 				document.getElementById(section_id).innerHTML = decorator_section_pdf + data_section_pdf  + '</div>';

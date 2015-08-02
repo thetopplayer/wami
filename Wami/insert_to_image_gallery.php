@@ -105,9 +105,6 @@ if (preg_match('/png|PNG/', $file_type[1])) {
     imagesavealpha($tmp_img, false);
     imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width_orig, $height_orig);
     imagepng($tmp_img, $location, 0);
-
-    $response["location"] = $location;
-
     imagedestroy($img);
 }
 if (preg_match('/gif|GIF/', $file_type[1])) {

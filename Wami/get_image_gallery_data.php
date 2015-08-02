@@ -16,7 +16,7 @@ $con = $db->connect();
 
 $sql = "SELECT profiler_image_gallery_id, file_location, file_name, image_name, image_description FROM profiler_image_gallery " .
     " WHERE delete_ind = 0 AND category = '" .$category. "' AND identity_profile_id = " .$identity_profile_id.
-    " ORDER BY create_date ASC";
+    " ORDER BY image_name ASC";
 
 $result = mysqli_query($con, $sql)  or  die(mysql_error($con));
 if (mysqli_num_rows($result) > 0) {
