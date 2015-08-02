@@ -50,7 +50,7 @@ function load_profiler_categories (identity_profile_id) {
 			header_section = header_section +
 					'<div class="panel-group" id="accordionSection' +  i + '"> ' +
 						'<div class="panel panel-primary" style="border-color: #969696">' +
-							'<div class="panel-heading" style="background-color: #e9e9e9; color: #616161; padding-bottom: 5px">'+
+							'<div class="panel-heading" style="background-color: #f5f5f5; color: #616161; padding-bottom: 5px">'+
 								'<h3 class="panel-title"><input type="checkbox" value="' + identity_profiler_id[i] + '" id="category_checkbox' + i + '" style="margin-right: 10px; margin-bottom: 7px">' +
 									'<a style="color: #323232" data-toggle="collapse" data-parent="#accordionSection' + i + '" href="#collapseSection' +  i + '">' +  category +
 										'<i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>' +
@@ -66,7 +66,7 @@ function load_profiler_categories (identity_profile_id) {
 										'</div>' +
 									'</div>' +
 									'<span class="span-scroll-profile" style="height: 555px; width: 965px; margin-left: 10px">' +
-										'<div style="height: 553px; width: 965px" id="section_id' + category + '"></div>' +
+										'<div style="height: 553px; width: 940px" id="section_id' + category + '"></div>' +
 									'</span>' +
 									'<div id="actions_id' + category + '"></div>' +
 								'</div>' +
@@ -89,7 +89,7 @@ function load_profiler_categories (identity_profile_id) {
 
 // Image gallery category
 			if (media_type === 'Image') {
-				decorator_section = '<div class="row" style="padding: 10px; height: 600px;  background-color: #d1d1d1">';
+				decorator_section = '<div class="row" style="padding: 10px; height: 550px;  background-color: #ffffff">';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -115,9 +115,9 @@ function load_profiler_categories (identity_profile_id) {
 						}
 
 						data_section =
-									'<div class="col-md-2">' +
+									'<div class="col-md-2" style="height: 250px">' +
 										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
-													'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
+													'<img src="' + location_thumb + '" width="100%" height="100%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 										'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 									'</div>' + data_section;
@@ -127,7 +127,7 @@ function load_profiler_categories (identity_profile_id) {
 				}
 
 				var image_actions =
-						'<div class="row" style="padding-left: 10px; width: 1000px">'  +
+						'<div class="row" style="padding-left: 10px; width: 900px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_image_gallery_dialog(\'' + category + '\')">Upload New Image </button>' +
 								'<button type="button" class="btn btn-sm btn-danger" style="margin-left: 20px" onclick="remove_gallery_images(\'' + category + '\')">Remove Checked Images </button>' +
@@ -590,7 +590,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 
 	var profiler_image_gallery_id = [];
 	var decorator_section =
-			'<div class="row" style="padding: 20px; height: 600px; background-color: #d1d1d1">';
+			'<div class="row" style="padding: 20px; height: 600px; background-color: #ffffff">';
 
 	var gallery_images = image_gallery_obj.images;
 	var data_section = '';
@@ -614,9 +614,9 @@ function refresh_image_gallery(identity_profile_id, category) {
 				image_name = gallery_images[i].file_name;
 			}
 			data_section =
-					'<div class="col-md-2">' +
+					'<div class="col-md-2" style="height: 250px">' +
 						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
-						'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
+						'<img src="' + location_thumb + '" width="100%" height="100%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 						'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
 					'</div>' + data_section;

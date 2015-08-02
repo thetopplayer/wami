@@ -149,7 +149,7 @@ function load_profiler_categories (identity_profile_id) {
 										'</div>' +
 									'</div>' +
 									'<span class="span-scroll-profile" style="height: 555px; width: 965px; margin-left: 10px">' +
-										'<div style="height: 553px; width: 965px" id="section_id' + category + '"></div>' +
+										'<div style="height: 553px; width: 940px" id="section_id' + category + '"></div>' +
 									'</span>' +
 								'</div>' +
 							'</div>' +
@@ -170,7 +170,7 @@ function load_profiler_categories (identity_profile_id) {
 // Image gallery category
 			if (media_type === 'Image') {
 				decorator_section =
-						'<div class="row" style="padding: 10px; height: 600px; background-color: #d1d1d1" >';
+						'<div class="row" style="padding: 10px; height: 600px; background-color: #ffffff" >';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -191,7 +191,7 @@ function load_profiler_categories (identity_profile_id) {
 							image_name = images[j].file_name;
 						}
 						data_section =
-							'<div class="col-md-2">' +
+							'<div class="col-md-2" style="height: 250px">' +
 								'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\');return false;">' +
 									'<img src="' + location_thumb + '" width="200%" height="200%"   ></a>' +
 								'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +

@@ -80,7 +80,7 @@ return;
 function get_image_gallery_data($identity_profile_id, $category, $con) {
     $sql_image = "SELECT profiler_image_gallery_id, file_location, file_name, image_name, image_description FROM profiler_image_gallery " .
         " WHERE delete_ind = 0 AND category = '" .$category. "' AND identity_profile_id = " .$identity_profile_id.
-        " ORDER BY create_date ASC";
+        " ORDER BY image_name DESC";
 
     $response_images["images"] = array();
     $result_image = mysqli_query($con, $sql_image)  or  die(mysqli_error($con));
@@ -156,7 +156,7 @@ function get_PDF_data($identity_profile_id, $category, $con) {
 function get_audio_data ($identity_profile_id, $category, $con) {
     $sql_audio = "SELECT profiler_audio_jukebox_id, file_location, file_name, audio_file_name, audio_file_description FROM profiler_audio_jukebox " .
         " WHERE delete_ind = 0 AND category = '" .$category. "' AND identity_profile_id = " .$identity_profile_id.
-        " ORDER BY create_date ASC";
+        " ORDER BY audio_file_name DESC";
 
     $response_audio["audio"] = array();
     $result_audio = mysqli_query($con, $sql_audio)  or  die(mysqli_error($con));

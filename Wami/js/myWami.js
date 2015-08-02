@@ -559,6 +559,12 @@ function upload_new_profile_image() {
 		return;
 	}
 
+    var file_size = file.size;
+    if (file_size > 500000000) {
+        my_wami_alert("File not uploaded. There is a 500MB limit on the size of image files.", "alert-danger", "Error!  ", "image_upload");
+        return;
+    }
+
 	var preview = new Image();
     var profile_image = new Image();
 	var reader  = new FileReader();
