@@ -149,10 +149,9 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Text') {
 				var file = identity_profiler_obj.identity_profiler_data[i].file.file[0].contents;
 				var decorator_section_text =
-						'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
-								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="padding: 25px; width: 980px; background-color: #fcfcfc">';
 				var data_section_text =
-						'<textarea readonly cols="145" rows="25" wrap="hard" style="display: block; margin-right: auto; margin-left: auto">' + file + '</textarea>';
+						'<textarea readonly cols="125" rows="25" wrap="hard" style="display: block; margin-left: 25px">' + file + '</textarea>';
 				var text_actions =
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
@@ -172,17 +171,15 @@ function load_profiler_categories (identity_profile_id) {
 // PDF file categories
 			if (media_type === 'PDF') {
 				var decorator_section_pdf =
-						'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
-								//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+						'<div class="row" style="width: 1000px; background-color: #fcfcfc">';
 				var file_name =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_name;
 				var file_location =  identity_profiler_obj.identity_profiler_data[i].file.file[0].file_location;
 				var data_section_pdf =
-						'<object type="application/pdf" width="100%" height="500px" data="' + file_location + file_name + '"> ';
+						'<object type="application/pdf" width="100%" height="570px" data="' + file_location + file_name + '"> ';
 				var pdf_actions =
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_pdf_file_dialog(\'' + category + '\')">Upload New File </button>' +
-//								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="download_file_dialog()">Download File </button>' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 700px; vertical-align: top; margin-top: 8px; padding-left: 0px">' +
 								'<div class="text-left" id="pdf_file_alert" style="width: 700px"></div>' +
@@ -916,10 +913,9 @@ function refresh_text_file(identity_profile_id, category)  {
 
 	var file = text_file_obj.file[0].contents;
 	var decorator_section_text =
-			'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
-					//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+			'<div class="row" style="padding: 25px; width: 980px; background-color: #fcfcfc">';
 	var data_section_text =
-			'<textarea readonly cols="145" rows="25" wrap="hard" style="display: block; margin-right: auto; margin-left: auto">' + file + '</textarea>';
+			'<textarea readonly cols="125" rows="25" wrap="hard" style="display: block; margin-left: 25px">' + file + '</textarea>';
 
 	var section_id = "section_id" + category;
 	document.getElementById(section_id).innerHTML = decorator_section_text + data_section_text  + '</div>';
@@ -1031,10 +1027,9 @@ function refresh_pdf_file(identity_profile_id, category)  {
 	var file_location = pdf_file_obj.file[0].file_location;
 	var file_name = pdf_file_obj.file[0].file_name;
 	var decorator_section_pdf =
-			'<div class="row" style="padding: 25px;  background-color: #d1d1d1">';
-					//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+			'<div class="row" style="width: 1000px; background-color: #fcfcfc">';
 	var data_section_pdf =
-			'<object type="application/pdf" width="100%" height="500px" data="' + file_location + file_name + '"> ';
+			'<object type="application/pdf" width="100%" height="570px" data="' + file_location + file_name + '"> ';
 
 	var section_id = "section_id" + category;
 	document.getElementById(section_id).innerHTML = decorator_section_pdf + data_section_pdf  + '</div>';
