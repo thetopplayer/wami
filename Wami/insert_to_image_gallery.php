@@ -53,7 +53,27 @@ if ($byte_cnt < 1) {
 $file_type = explode('.', $file_name);
 $location = $file_location_thumb .$file_name;
 list($width_orig, $height_orig) = getimagesize($location);
-if (preg_match('/jpg|jpeg/', $file_type[1])) {
+
+$ratio = min(130 / $width_orig, 130 / $height_orig);
+if ($height_orig > 130) {
+    $new_height = $height_orig * $ratio;
+}
+else {
+    $new_height = $height_orig;
+}
+if ($width_orig > 130) {
+    $new_width = $width_orig * $ratio;
+}
+else {
+    $new_width = $width_orig;
+}
+
+$response["ratio"] = $ratio;
+$response["new_width"] = $new_width;
+$response["new_height"] = $new_height;
+
+ini_set('memory_limit', '1028M');
+if (preg_match('/jpg|jpeg|JPG|JPEG/', $file_type[1])) {
     $img = imagecreatefromjpeg($location);
     if ($img === false) {
         $response["ret_code"] = -9;
@@ -63,12 +83,13 @@ if (preg_match('/jpg|jpeg/', $file_type[1])) {
         echo json_encode($response);
         exit(-1);
     }
-    $tmp_img = imagecreatetruecolor(100, 100);
-    imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, 100, 100, $width_orig, $height_orig);
+    header('Content-Type: image/jpeg');
+    $tmp_img = imagecreatetruecolor($new_width, $new_height);
+    imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width_orig, $height_orig);
     imagejpeg($tmp_img, $location, 100);
     imagedestroy($img);
 }
-if (preg_match('/png/', $file_type[1])) {
+if (preg_match('/png|PNG/', $file_type[1])) {
     $img = imagecreatefrompng($location);
     if ($img ===  false) {
         $response["ret_code"] = -9;
@@ -78,14 +99,18 @@ if (preg_match('/png/', $file_type[1])) {
         echo json_encode($response);
         exit(-1);
     }
-    $tmp_img = imagecreatetruecolor(100, 100);
+    header('Content-Type: image/png');
+    $tmp_img = imagecreatetruecolor($new_width, $new_height);
     imagealphablending($tmp_img, false);
     imagesavealpha($tmp_img, false);
-    imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, 100, 100, $width_orig, $height_orig);
+    imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width_orig, $height_orig);
     imagepng($tmp_img, $location, 0);
+
+    $response["location"] = $location;
+
     imagedestroy($img);
 }
-if (preg_match('/gif/', $file_type[1])) {
+if (preg_match('/gif|GIF/', $file_type[1])) {
     $img = imagecreatefromgif($location);
     if ($img ===  false) {
         $response["ret_code"] = -9;
@@ -95,8 +120,8 @@ if (preg_match('/gif/', $file_type[1])) {
         echo json_encode($response);
         exit(-1);
     }
-    $tmp_img = imagecreatetruecolor(100, 100);
-    imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, 100, 100, $width_orig, $height_orig);
+    $tmp_img = imagecreatetruecolor($new_width, $new_height);
+    imagecopyresampled($tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width_orig, $height_orig);
     imagegif($tmp_img, $location, 100);
     imagedestroy($img);
 }

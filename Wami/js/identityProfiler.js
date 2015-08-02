@@ -520,6 +520,11 @@ function upload_gallery_image() {
         return;
     }
 
+    var file_size = file.size;
+    if (file_size > 500000000) {
+        my_identity_profiler_alert("File not uploaded. There is a 500MB limit on the size of image files.", "alert-danger", "Error!  ", "image_gallery_upload");
+        return;
+    }
 
     my_identity_profiler_alert("", "", "image_gallery_upload");
 	var category = document.getElementById('category_id_image').value;

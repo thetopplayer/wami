@@ -21,7 +21,7 @@ $num_elements = count($group_id);
 $identity_profile_id = '';
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profile_group SET delete_ind = 1 WHERE profile_group_id = " .$group_id[$i];
+    $sql =  "UPDATE profile_group SET delete_ind = 1, modified_date = NOW() WHERE profile_group_id = " .$group_id[$i];
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["ret_code"] = -1;
@@ -55,7 +55,7 @@ for ($i = 0; $i < $num_elements; $i++) {
     }
     mysqli_free_result($result);
 
-    $sql =  "UPDATE profile_group_assign SET delete_ind = 1 WHERE profile_group_id = " .$group_id[$i]. " AND assign_to_identity_profile_id = " .$identity_profile_id;
+    $sql =  "UPDATE profile_group_assign SET delete_ind = 1, modified_date = NOW() WHERE profile_group_id = " .$group_id[$i]. " AND assign_to_identity_profile_id = " .$identity_profile_id;
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["ret_code"] = -1;
