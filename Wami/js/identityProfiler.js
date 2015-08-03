@@ -89,7 +89,7 @@ function load_profiler_categories (identity_profile_id) {
 
 // Image gallery category
 			if (media_type === 'Image') {
-				decorator_section = '<div class="row" style="padding: 10px; height: 550px;  background-color: #ffffff">';
+				decorator_section = '<div class="row" style="padding: 10px; height: 600px;  background-color: #ffffff">';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -105,7 +105,7 @@ function load_profiler_categories (identity_profile_id) {
 					for (var j = 0; j < images.length; j++) {
 						profiler_image_gallery_id[num_gallery_images] = images[j].profiler_image_gallery_id;
                         var chosen_image_id = images[j].profiler_image_gallery_id;
-						var file_location = images[j].file_location;
+						file_location = images[j].file_location;
 						var location_thumb = images[j].file_location + images[j].file_name;
 						var location = file_location.substring(0, file_location.length - 7)  + images[j].file_name;
 						var image_name = images[j].image_name;
@@ -114,13 +114,13 @@ function load_profiler_categories (identity_profile_id) {
 							image_name = images[j].file_name;
 						}
 
-						data_section =
-									'<div class="col-md-2" style="height: 250px">' +
+						data_section = data_section +
+									'<div class="col-md-2">' +
 										'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
 													'<img src="' + location_thumb + '" width="100%" height="100%"   ></a>' +
 										'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 										'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
-									'</div>' + data_section;
+									'</div>';
 
 						num_gallery_images++;
 					}
@@ -211,13 +211,13 @@ function load_profiler_categories (identity_profile_id) {
 				else {
 					for (var j = 0; j < audio_files.length; j++) {
 						profiler_audio_jukebox_id[num_audio_files] = audio_files[j].profiler_audio_jukebox_id;
-						var file_location = audio_files[j].file_location + audio_files[j].file_name;
+						file_location = audio_files[j].file_location + audio_files[j].file_name;
 						var audio_file_name = audio_files[j].audio_file_name;
 						var audio_description = audio_files[j].audio_file_description;
 						if ((audio_file_name === '') || (audio_file_name === undefined) || (audio_file_name === null)) {
 							audio_file_name = audio_files[j].file_name;
 						}
-						data_section_audio =
+						data_section_audio = data_section_audio +
 								'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
@@ -225,7 +225,7 @@ function load_profiler_categories (identity_profile_id) {
 									'<div style="padding-left: 17px;">' +
 								'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
-								'</div>' + data_section_audio;
+								'</div>';
 						num_audio_files++;
 					}
 				}
@@ -356,8 +356,7 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 
 	var profiler_audio_jukebox_id = [];
 	var decorator_section_audio =
-			'<div class="row" style="padding: 25px; height: 550px;  background-color: #d1d1d1">';
-					//'background-image: url(assets/seamlesstexture1_1200.jpg);" >';
+        '<div class="row" style="padding: 15px; height: 550px; background-color: #f7f7f7">';
 
 	var audio_files = audio_file_obj.audio;
 	var data_section_audio = '';
@@ -378,15 +377,15 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 				audio_file_name = audio_files[j].file_name;
 			}
 
-			data_section_audio =
-					'<div class="col-md-2" style="width: 320px; padding-bottom: 15px">' +
+			data_section_audio = data_section_audio +
+					'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 						'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 						'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
 						'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
 						'<div style="padding-left: 17px;">' +
-							'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+							'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 						'</div>' +
-					'</div>' + data_section_audio;
+					'</div>';
 			num_audio_files++;
 		}
 	}
@@ -587,7 +586,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 
 	var profiler_image_gallery_id = [];
 	var decorator_section =
-			'<div class="row" style="padding: 20px; height: 600px; background-color: #ffffff">';
+			'<div class="row" style="padding: 10px; height: 600px; background-color: #ffffff">';
 
 	var gallery_images = image_gallery_obj.images;
 	var data_section = '';
@@ -610,13 +609,13 @@ function refresh_image_gallery(identity_profile_id, category) {
 			if ((image_name === '') || (image_name === undefined) || (image_name === null)) {
 				image_name = gallery_images[i].file_name;
 			}
-			data_section =
-					'<div class="col-md-2" style="padding-bottom: 10px">' +
+			data_section = data_section +
+					'<div class="col-md-2">' +
 						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
 						'<img src="' + location_thumb + '" width="100%" height="100%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +
 						'<label style="padding-left: 5px; padding-bottom: 5px">' + image_name + '</label>' +
-					'</div>' + data_section;
+					'</div>';
 			num_gallery_images++;
 		}
 	}
