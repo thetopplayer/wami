@@ -221,9 +221,10 @@ function load_profiler_categories (identity_profile_id) {
 								'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
-									'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
+                                    '<input type="text" id="audio_file_name" value="' + audio_file_name +
+                                        '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; border-style: inset; background-color: #f7f7f7" > '  +
 									'<div style="padding-left: 17px;">' +
-								'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+								        '<textarea style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
 								'</div>';
 						num_audio_files++;
@@ -231,9 +232,10 @@ function load_profiler_categories (identity_profile_id) {
 				}
 				var audio_actions =
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
-							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
+							'<div class="col-md-2" style="width: 500px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_audio_jukebox_dialog(\'' + category + '\')">Upload New File </button>' +
-								'<button type="button" class="btn btn-sm btn-danger" style="margin-left: 20px" onclick="remove_audio_files(\'' + category + '\')">Remove Checked Files </button>' +
+								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="save_audio_text(\'' + category + '\')">Save Audio Text </button>' +
+                                '<button type="button" class="btn btn-sm btn-danger" style="margin-left: 40px" onclick="remove_audio_files(\'' + category + '\')">Remove Checked Files </button>' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 700px; vertical-align: top; margin-top: 8px; padding-left: 0px">' +
 								'<div class="text-left" id="audio_file_alert' + category + '" style="width: 700px"></div>' +
@@ -259,8 +261,8 @@ function load_profiler_categories (identity_profile_id) {
 //
 // Audio: Remove checked audio files dialog
 function remove_audio_files(category) {
-	var remove_ind = check_for_chosen_audio_files(category);
-	if (remove_ind === true) {
+	var checked_ind = check_for_chosen_audio_files(category);
+	if (checked_ind === true) {
 		my_identity_profiler_alert("", "", "", "audio_jukebox", category);
 		$('#remove_audio_files').modal();
 		document.getElementById("category_id_audio_remove").value = category;
@@ -269,6 +271,7 @@ function remove_audio_files(category) {
 
 // Audio: Check for checked checkbox
 function check_for_chosen_audio_files(category) {
+    my_identity_profiler_alert("", "", "", "audio_jukebox", category);
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var params = "identity_profile_id=" + identity_profile_id + "&category=" + category;
 	processData(params, "get_audio_jukebox_data.php", "audio_jukebox_data", false);
@@ -291,27 +294,27 @@ function check_for_chosen_audio_files(category) {
 
 	var audio_file_id = audio_jukebox_obj.audio;
 	var num_audio_files = audio_file_id.length;
-	var audio_file_ids_to_remove = [];
-	var remove_index = 0;
+	var audio_file_ids_checked = [];
+	var checked_index = 0;
 	for (var i = 0; i < num_audio_files; i++) {
 		var checkbox = "audio_checkbox" + category + i;
 		if (document.getElementById(checkbox).checked) {
-			audio_file_ids_to_remove[remove_index] =  audio_file_id[i].profiler_audio_jukebox_id;
-			remove_index++;
+			audio_file_ids_checked[checked_index] =  audio_file_id[i].profiler_audio_jukebox_id;
+			checked_index++;
 		}
 	}
-	if (remove_index > 0) {
-		localStorage.setItem("audio_file_ids_to_remove", audio_file_ids_to_remove);
+	if (checked_index > 0) {
+		localStorage.setItem("audio_file_ids_checked", audio_file_ids_checked);
 		return true;
 	}
-	my_identity_profiler_alert("No Audio Files were chosen to remove. Please click check box to remove audio files.", "alert-warning", "Warning! ", "audio_jukebox", category);
+	my_identity_profiler_alert("No Audio Files were chosen. Please click check box to remove or edit audio files.", "alert-warning", "Warning! ", "audio_jukebox", category);
 	return false;
 }
 
 // Audio: Soft delete checked of audio files
 function update_for_delete_audio_files() {
-	var audio_file_ids_to_remove = localStorage.getItem("audio_file_ids_to_remove");
-	var params = "ids_to_remove=" + audio_file_ids_to_remove;
+	var audio_file_ids_checked = localStorage.getItem("audio_file_ids_checked");
+	var params = "ids_to_remove=" + audio_file_ids_checked;
 	processData(params, "update_for_delete_audio_files.php", "result", false);
 	try {
 		var audio_file_data = localStorage.getItem("result");
@@ -399,6 +402,7 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 
 // Audio: Upload audio file processing
 function upload_to_audio_jukebox_dialog(category) {
+    my_identity_profiler_alert("", "", "", "audio_jukebox", category);
 	$('#new_audio_file_dialog').modal();
 	document.getElementById("category_id_audio_new").value = category;
 }
