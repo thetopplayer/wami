@@ -22,7 +22,13 @@ $image = strstr($image_src, ',');
 $image = substr($image, 1);
 $image = str_replace(' ', '+', $image);
 $data = base64_decode($image);
-file_put_contents("assets/main_image/" .$file_name, $data);
+$byte_cnt = file_put_contents("assets/main_image/" .$file_name, $data);
+if ($byte_cnt < 1) {
+    $response["ret_code"] = -1;
+    $response["message"] = "update_new_profile_image_data: Problem writing image thumbnail file to file system";
+    echo json_encode($response);
+    exit(-1);
+}
 
 //get rid of file type extension. File name is saved without the .png.
 $file_name = substr($file_name, 0, -4);

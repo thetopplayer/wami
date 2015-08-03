@@ -611,7 +611,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 				image_name = gallery_images[i].file_name;
 			}
 			data_section =
-					'<div class="col-md-2" style="height: 250px">' +
+					'<div class="col-md-2" style="padding-bottom: 10px">' +
 						'<a class="thumbnail" title="' + image_name + '" href="#" onclick="show_full_size_image(\'' + location + '\', \'' + image_name + '\', \'' + image_description + '\', +  \'' + chosen_image_id + '\' );return false;">' +
 						'<img src="' + location_thumb + '" width="100%" height="100%"   ></a>' +
 						'<input type="checkbox" id="image_checkbox' + category + num_gallery_images + '">' +

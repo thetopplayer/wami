@@ -71,7 +71,8 @@ function loadData(identity_profile_id) {
 	window.mywami_obj = mywami_obj;
 
 	var image_url = "assets/main_image/" + mywami_obj.identity_profile_data[0].image_url + ".png";
-	document.getElementById("image").innerHTML =  "<img class='wami-margin-t4' src=" + image_url + ">";
+    var timeInMs = Date.now();
+	document.getElementById("image").innerHTML =  "<img class='wami-margin-t4' src=" + image_url + "?dummy=" + timeInMs + ">";
 
 	var profile_name = mywami_obj.identity_profile_data[0].profile_name;
 	localStorage.setItem("current_profile_name", profile_name);
@@ -586,8 +587,18 @@ function upload_new_profile_image() {
             var orig_height = preview.height;
             var orig_width = preview.width;
             var ratio = Math.min(130 / orig_width, 130 / orig_height);
-            preview.height = orig_height * ratio;
-            preview.width = orig_width * ratio;
+            if (orig_height > 130) {
+                preview.height = orig_height * ratio;
+            }
+            else {
+                preview.height = orig_height;
+            }
+            if (orig_width > 130) {
+                preview.width = orig_width * ratio;
+            }
+            else {
+                preview.width = orig_width;
+            }
 			image_id.appendChild(preview);
 		};
 
