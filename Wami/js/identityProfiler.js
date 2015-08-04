@@ -277,7 +277,7 @@ function save_audio_text(category) {
         audio_names[i] = document.getElementById(file_title).value;
     }
 
-    var params = "audio_descriptions=" + audio_descriptions + "&audio_names=" + audio_names + "&audio_jukebox_ids=" + audio_jukebox_ids;
+    var params = "audio_descriptions=" + audio_descriptions + "&audio_names=" + audio_names + "&audio_ids=" + audio_jukebox_ids;
     processData(params, "update_edited_audio_text.php", "result", false);
     try {
         var audio_text_data = localStorage.getItem("result");
@@ -285,16 +285,16 @@ function save_audio_text(category) {
     }
     catch (err) {
         console.log(err.message)
-        my_identity_profiler_alert("update_edited_audio_text: Error updating edited audio text data: status = " + err.message, "alert-danger", "Error!  ", category);
+        my_identity_profiler_alert("update_edited_audio_text: Error updating edited audio text data: status = " + err.message, "alert-danger", "Error!  ", "audio_jukebox", category);
         return false;
     }
 
     var ret_code = audio_text_obj.ret_code;
     if (ret_code === -1) {
-        my_identity_profiler_alert(audio_text_obj[0].message, "alert-danger", "Alert! ", category);
+        my_identity_profiler_alert(audio_text_obj[0].message, "alert-danger", "Alert! ", "audio_jukebox", category);
     }
     else {
-        my_identity_profiler_alert("Audio text updated succsessfuly. ", "alert-success", "Success!  ", category);
+        my_identity_profiler_alert("Audio text updated succsessfuly. ", "alert-success", "Success!  ", "audio_jukebox", category);
     }
 
 

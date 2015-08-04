@@ -12,7 +12,7 @@
 require_once __DIR__ . '/db_connect.php';
 $audio_ids = $_POST["audio_ids"];
 $audio_descriptions = $_POST["audio_descriptions"];
-$audio_titles = $_POST["audio_titles"];
+$audio_titles = $_POST["audio_names"];
 $db = new DB_CONNECT();
 $con = $db->connect();
 $con->autocommit(FALSE);
@@ -23,10 +23,10 @@ $descriptions = array();
 $descriptions = explode(",", $audio_descriptions);
 $titles = array();
 $titles = explode(",", $audio_titles);
-$num_elements = count($id);
+$num_elements = count($ids);
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profiler_audio_jukebox SET audio_file_name = " .$titles[$i]. ", audio_file_description =  " .$descriptions[$i]. " WHERE profiler_audio_jukebox_id = " .$ids[$i];
+    $sql =  "UPDATE profiler_audio_jukebox SET audio_file_name = '" .$titles[$i]. "', audio_file_description =  '" .$descriptions[$i]. "' WHERE profiler_audio_jukebox_id = " .$ids[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
