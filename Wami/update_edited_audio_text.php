@@ -19,18 +19,21 @@ $con->autocommit(FALSE);
 
 $ids = array();
 $ids = explode(",", $audio_ids);
-
+$descriptions = array();
+$descriptions = explode(",", $audio_descriptions);
+$titles = array();
+$titles = explode(",", $audio_titles);
 $num_elements = count($id);
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1 WHERE profiler_audio_jukebox_id = " .$id[$i];
+    $sql =  "UPDATE profiler_audio_jukebox SET audio_file_name = " .$titles[$i]. ", audio_file_description =  " .$descriptions[$i]. " WHERE profiler_audio_jukebox_id = " .$ids[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["ret_code"] = -1;
         $con->rollback();
         $con->autocommit(TRUE);
-        $response["message"] = "update_for_delete_audio_files.php: Problem updating profiler_audio_jukebox_id table for soft delete. MySQL Error: " .mysqli_error($con);
+        $response["message"] = "update_edited_audio_text.php: Problem updating profiler_audio_jukebox_id table for edited auddio text. MySQL Error: " .mysqli_error($con);
         echo json_encode($response);
         exit(-1);
     }

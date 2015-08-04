@@ -221,11 +221,13 @@ function load_profiler_categories (identity_profile_id) {
 								'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
-                                    '<input type="text" id="audio_file_name" value="' + audio_file_name +
-                                        '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; ' +
-                        '                   border-style: inset; background-color: #f7f7f7" > '  +
+                                    '<input type="text" id="audio_file_name' + category + num_audio_files + '" value="' + audio_file_name +
+                                            '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; ' +
+                                            'border-style: inset; background-color: #f7f7f7" > '  +
 									'<div style="padding-left: 17px;">' +
-								        '<textarea style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+                                        '<textarea id="audio_description' + category + num_audio_files + '" ' +
+                                                'style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; ' +
+                                                'background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
 								'</div>';
 						num_audio_files++;
@@ -261,15 +263,41 @@ function load_profiler_categories (identity_profile_id) {
 // Audio File Processing for Profiler
 //
 // Audio: Save edited text
-function save_audio_text() {
+function save_audio_text(category) {
     var num_audio_files = localStorage.getItem("num_audio_files");
     var profiler_audio_jukebox_id = localStorage.getItem("profiler_audio_jukebox_id");
+    var audio_jukebox_ids = profiler_audio_jukebox_id.split(",");
     var audio_descriptions = [];
     var audio_names = [];
     for (var i = 0; i < num_audio_files; i++) {
-        //var description =
-        //audio_descriptions[i] = document.getElementById(description).value;
+        var description = "audio_description" + category + i;
+        audio_descriptions[i] = document.getElementById(description).value;
+
+        var file_title = "audio_file_name" + category + i;
+        audio_names[i] = document.getElementById(file_title).value;
     }
+
+    var params = "audio_descriptions=" + audio_descriptions + "&audio_names=" + audio_names + "&audio_jukebox_ids=" + audio_jukebox_ids;
+    processData(params, "update_edited_audio_text.php", "result", false);
+    try {
+        var audio_text_data = localStorage.getItem("result");
+        var audio_text_obj = JSON.parse(audio_text_data);
+    }
+    catch (err) {
+        console.log(err.message)
+        my_identity_profiler_alert("update_edited_audio_text: Error updating edited audio text data: status = " + err.message, "alert-danger", "Error!  ", category);
+        return false;
+    }
+
+    var ret_code = audio_text_obj.ret_code;
+    if (ret_code === -1) {
+        my_identity_profiler_alert(audio_text_obj[0].message, "alert-danger", "Alert! ", category);
+    }
+    else {
+        my_identity_profiler_alert("Audio text updated succsessfuly. ", "alert-success", "Success!  ", category);
+    }
+
+
     return;
 }
 
@@ -292,7 +320,8 @@ function check_for_chosen_audio_files(category) {
 	try {
 		var audio_jukebox_data = localStorage.getItem("audio_jukebox_data");
 		var audio_jukebox_obj = JSON.parse(audio_jukebox_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
 		my_identity_profiler_alert("get_audio_jukebox_data: Error getting data for audio files: status = " + err.message, "alert-danger", "Error!  ", "remove_audio_jukebox");
 		return false;
@@ -366,9 +395,10 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 	try {
 		var audio_file_data = localStorage.getItem("audio_file_data");
 		var audio_file_obj = JSON.parse(audio_file_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
-		my_identity_profiler_alert("get_audio_files_data: Error getting data for audio files: status = " + err.message, "alert-danger", "Error!  ", "remove_audio_files");
+		my_identity_profiler_alert("get_audio_files_data: Error getting data for audio files: status = " + err.message, "alert-danger", "Error!  ", category);
 		return;
 	}
 
@@ -399,11 +429,13 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 					'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 						'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 						'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
-                        '<input type="text" id="audio_file_name" value="' + audio_file_name +
+                        '<input type="text" id="audio_file_name' + category + num_audio_files + '" value="' + audio_file_name +
                             '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; ' +
                                 'border-style: inset; background-color: #f7f7f7" > '  +
 						'<div style="padding-left: 17px;">' +
-							'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+							'<textarea id="audio_description' + category + num_audio_files + '" ' +
+                                    'style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; ' +
+                                    'background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 						'</div>' +
 					'</div>';
 			num_audio_files++;
