@@ -45,18 +45,6 @@ function loadData() {
 	var telephone = account_profile_obj.account_profile[0].telephone;
 	var create_date = account_profile_obj.account_profile[0].create_date,
 			create_date_formatted = create_date.substr(0, 10);
-	//var active_ind = account_profile_obj.account_profile[0].active_ind;
-	//var radio = '';
-	//if (active_ind == 1) {
-	//	radio = $('#active');
-	//	radio[0].checked = true;
-	//	radio.button("refresh");
-	//}
-	//else {
-	//	radio = $('#inactive');
-	//	radio[0].checked = true;
-	//	radio.button("refresh");
-	//}
 
 	$("#first_name").val(first_name);
 	$("#last_name").val(last_name);
@@ -224,14 +212,14 @@ function validateAccount(account_status) {
 		my_account_alert ("Missing Password. Please fill in all required fields.", "alert-danger", "Alert! ", "account_alert") ;
 		return false;
 	}
-	//At least 8 chars, at least 1 upper and lower case letter, at least 1 number, at least one special char.
-	result = ((password_val.value).trim()).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{8,}$/g);
+        //At least 8 chars, at least 1 upper and lower case letter, at least 1 number, at least one special char.
+	result = ((password_val.value).trim()).match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#!@$%^&]).{8,}$/g);
 	if (result === null) {
         my_account_alert("Wami requires a strong password as explained below. Even though this might seem like a burden, having this kind of security will " +
-            "help keep Wami info safe from hackers.", "alert-info", "Alert! ", "account_alert_info");
+            "help keep Wami info safe from hackers.", "alert-info", "Alert! ", "account_alert");
 
 		my_account_alert("Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number," +
-		" and at least 1 of the following characters: # ? ! @ $ % ^ & * - _", "alert-danger", "Alert! ", "account_alert");
+		" and at least 1 of the following characters: # ! @ $ % ^ & ", "alert-danger", "Alert! ", "account_alert");
 		return false;
 	}
 	if ((retype_password.value).trim() == '') {
@@ -335,10 +323,8 @@ function my_account_alert (message, message_type_class, message_type_string, mes
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 
-    if (message_type === "account_alert_info") document.getElementById("account_alert_info").innerHTML = alert_str;
 	if (message_type === "account_alert") document.getElementById("account_alert").innerHTML = alert_str;
 	if (message === '') {
 		document.getElementById("account_alert").innerHTML = message;
-        document.getElementById("account_alert_info").innerHTML = message;
 	}
 }
