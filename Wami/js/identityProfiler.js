@@ -196,7 +196,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 15px; height: 550px; background-color: #f7f7f7">';
+						'<div class="row" style="padding: 15px; height: 1500px; width: 980px; background-color: #f7f7f7">';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;

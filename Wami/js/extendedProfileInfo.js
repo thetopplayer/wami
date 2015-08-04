@@ -85,19 +85,18 @@ function loadData(selected_profile_id) {
 			var media_tag = '';
 			if (media_url != null) {
 				media_url = 'assets/' + media_url +  '.png';
-				media_tag = '<div class="col-md-1" style="min-width: 75px"><img src="' + media_url + '"style="margin-top: 3px; margin-bottom: 10px"></div>';
-				flash_tag = '<div class="col-md-1" style="min-width: 766px">' + flash + '</div>';
+                media_tag = '<div class="col-md-2" style="width: 140px"><img src="' + media_url + '"style="margin-top: 3px; margin-bottom: 10px"></div>';
+                flash_tag = '<div class="col-md-2" style="width: 630px;">' + flash + '</div>';
 			} else {
-				flash_tag = '<div class="col-md-1" style="min-width: 870px">' + flash + '</h5></div>';
+                flash_tag = '<div class="col-md-1" style="min-width: 750px; padding-left: 0px">' + flash + '</div>';
 			}
 			flash_announcements = flash_announcements +
-					'<a href="#" class="list-group-item" style="padding-top: 3px; padding-bottom: 3px; float: left">' +
-					'<div class="col-md-1" style="width: 170px">' +
-					'<h5 style="margin-top: 3px; margin-bottom: 3px">' + date + '</h5>' +
-					'</div>' +
-					media_tag +
-					flash_tag +
-					'</div></a>';
+                '<a href="#" class="list-group-item" style="width: 1010px; padding-top: 3px; padding-bottom: 3px; float: left; background-color: #f3f3f3">' +
+                    '<div class="col-md-1" style="width: 165px; padding-right: 0px">' +
+                        '<h5 style="margin-top: 3px; margin-bottom: 3px">' + date + '</h5>' +
+                    '</div>' +
+                    media_tag + flash_tag +
+            '   </a>';
 		}
 	}
 	document.getElementById("flash_id").innerHTML = flash_announcements;
@@ -231,7 +230,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 15px; height: 550px; background-color: #f7f7f7" >';
+						'<div class="row" style="padding: 15px; height: 1500px; width: 980px; background-color: #f7f7f7" >';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;
