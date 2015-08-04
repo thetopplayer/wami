@@ -231,7 +231,7 @@ function load_profiler_categories (identity_profile_id) {
 			if (media_type === 'Audio') {
 				var data_section_audio = '';
 				var decorator_section_audio =
-						'<div class="row" style="padding: 10px; height: 550px; background-color: #d1d1d1" >';
+						'<div class="row" style="padding: 15px; height: 550px; background-color: #f7f7f7" >';
 
 				var audio_files = [];
 				audio_files = identity_profiler_obj.identity_profiler_data[i].file.audio;
@@ -250,11 +250,11 @@ function load_profiler_categories (identity_profile_id) {
 							audio_file_name = audio_files[j].file_name;
 						}
 						data_section_audio =
-								'<div class="col-md-2" style="width: 320px; padding-bottom: 15px">' +
+								'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<label style="padding-left: 5px; padding-bottom: 0px">' + audio_file_name + '</label>' +
 									'<div style="padding-left: 5px;">' +
-										'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #d1d1d1; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+										'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #e8e8e8; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
 								'</div>' + data_section_audio;
 					}

@@ -222,7 +222,8 @@ function load_profiler_categories (identity_profile_id) {
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
                                     '<input type="text" id="audio_file_name" value="' + audio_file_name +
-                                        '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; border-style: inset; background-color: #f7f7f7" > '  +
+                                        '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; ' +
+                        '                   border-style: inset; background-color: #f7f7f7" > '  +
 									'<div style="padding-left: 17px;">' +
 								        '<textarea style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
@@ -234,7 +235,7 @@ function load_profiler_categories (identity_profile_id) {
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
 							'<div class="col-md-2" style="width: 500px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_audio_jukebox_dialog(\'' + category + '\')">Upload New File </button>' +
-								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="save_audio_text(\'' + category + '\')">Save Audio Text </button>' +
+								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="save_audio_text(\'' + category + '\')">Save Edited Text </button>' +
                                 '<button type="button" class="btn btn-sm btn-danger" style="margin-left: 40px" onclick="remove_audio_files(\'' + category + '\')">Remove Checked Files </button>' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 700px; vertical-align: top; margin-top: 8px; padding-left: 0px">' +
@@ -259,6 +260,19 @@ function load_profiler_categories (identity_profile_id) {
 // -----------------------------------------
 // Audio File Processing for Profiler
 //
+// Audio: Save edited text
+function save_audio_text() {
+    var num_audio_files = localStorage.getItem("num_audio_files");
+    var profiler_audio_jukebox_id = localStorage.getItem("profiler_audio_jukebox_id");
+    var audio_descriptions = [];
+    var audio_names = [];
+    for (var i = 0; i < num_audio_files; i++) {
+        //var description =
+        //audio_descriptions[i] = document.getElementById(description).value;
+    }
+    return;
+}
+
 // Audio: Remove checked audio files dialog
 function remove_audio_files(category) {
 	var checked_ind = check_for_chosen_audio_files(category);
@@ -319,7 +333,8 @@ function update_for_delete_audio_files() {
 	try {
 		var audio_file_data = localStorage.getItem("result");
 		var audio_file_obj = JSON.parse(audio_file_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message)
 		my_identity_profiler_alert("update_for_delete_audio_files: Error deleting audio files: status = " + err.message, "alert-danger", "Error!  ", "remove_audio_files");
 		return false;
@@ -384,7 +399,9 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 					'<div class="col-md-2" style="width: 310px; padding-bottom: 15px">' +
 						'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 						'<input type="checkbox" id="audio_checkbox' + category + num_audio_files + '">' +
-						'<label style="padding-left: 5px; margin-bottom: 5px">' + audio_file_name + '</label>' +
+                        '<input type="text" id="audio_file_name" value="' + audio_file_name +
+                            '" style="width: 260px; margin-left: 5px; margin-top: 10px; margin-bottom: 10px; font-size: 14px; font-weight: bold; ' +
+                                'border-style: inset; background-color: #f7f7f7" > '  +
 						'<div style="padding-left: 17px;">' +
 							'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #fbfbfb; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 						'</div>' +
