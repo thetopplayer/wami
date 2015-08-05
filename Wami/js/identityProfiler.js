@@ -9,14 +9,16 @@
 // Load Profiler categories
 //
 function load_profiler_categories (identity_profile_id) {
+    my_identity_profiler_alert("", "", "", "header");
 	localStorage.setItem("identity_profile_id", identity_profile_id);
 	var params = "identity_profile_id=" + identity_profile_id;
 	processData(params, "get_profiler_data.php", "identity_profiler_data", false);
 	try {
 		var identity_profiler_data = localStorage.getItem("identity_profiler_data");
 		var identity_profiler_obj = JSON.parse(identity_profiler_data);
-	} catch (err) {
-		console.log(err.message)
+	}
+    catch (err) {
+		console.log(err.message);
 		my_identity_profiler_alert("Error getting data for identity profiler: status = " + err.message, "alert-danger", "Error!  ", "header");
 		return;
 	}
@@ -156,6 +158,7 @@ function load_profiler_categories (identity_profile_id) {
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_text_file_dialog(\'' + category + '\')">Upload New File </button>' +
+                                '<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="more_info_dialog(\'' + category + '\')">More Info </button>' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 700px; vertical-align: top; margin-top: 8px; padding-left: 0px">' +
 								'<div class="text-left" id="text_file_alert" style="width: 700px"></div>' +
@@ -284,7 +287,7 @@ function save_audio_text(category) {
         var audio_text_obj = JSON.parse(audio_text_data);
     }
     catch (err) {
-        console.log(err.message)
+        console.log(err.message);
         my_identity_profiler_alert("update_edited_audio_text: Error updating edited audio text data: status = " + err.message, "alert-danger", "Error!  ", "audio_jukebox", category);
         return false;
     }
@@ -322,7 +325,7 @@ function check_for_chosen_audio_files(category) {
 		var audio_jukebox_obj = JSON.parse(audio_jukebox_data);
 	}
     catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_audio_jukebox_data: Error getting data for audio files: status = " + err.message, "alert-danger", "Error!  ", "remove_audio_jukebox");
 		return false;
 	}
@@ -364,7 +367,7 @@ function update_for_delete_audio_files() {
 		var audio_file_obj = JSON.parse(audio_file_data);
 	}
     catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("update_for_delete_audio_files: Error deleting audio files: status = " + err.message, "alert-danger", "Error!  ", "remove_audio_files");
 		return false;
 	}
@@ -397,7 +400,7 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 		var audio_file_obj = JSON.parse(audio_file_data);
 	}
     catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_audio_files_data: Error getting data for audio files: status = " + err.message, "alert-danger", "Error!  ", category);
 		return;
 	}
@@ -502,7 +505,7 @@ function upload_audio_file() {
 					var result_data = localStorage.getItem("result");
 					var result_obj = JSON.parse(result_data);
 				} catch (err) {
-					console.log(err.message)
+					console.log(err.message);
 					my_identity_profiler_alert("insert_to_audio_jukebox: Problem uploading audio file. Status = " + err.message, "alert-danger", "Severe Error!  ", "audio_jukebox_upload");
 					return;
 				}
@@ -598,7 +601,7 @@ function upload_gallery_image() {
 					var result_data = localStorage.getItem("result");
 					var result_obj = JSON.parse(result_data);
 				} catch (err) {
-					console.log(err.message)
+					console.log(err.message);
 					my_identity_profiler_alert("insert_to_image_gallery: Problem converting image to thumbnail. PNG image not created: status = " + err.message, "alert-danger", "Severe Error!  ", "image_gallery_upload");
 					return;
 				}
@@ -632,7 +635,7 @@ function refresh_image_gallery(identity_profile_id, category) {
 		var image_gallery_data = localStorage.getItem("image_gallery_data");
 		var image_gallery_obj = JSON.parse(image_gallery_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_image_gallery_data: Error getting data for image gallery: status = " + err.message, "alert-danger", "Error!  ", "remove_gallery_image");
 		return;
 	}
@@ -741,7 +744,7 @@ function saveEditImageText() {
         var image_gallery_obj = JSON.parse(image_gallery_data);
     }
     catch (err) {
-        console.log(err.message)
+        console.log(err.message);
         my_identity_profiler_alert("update_profiler_image_date: Error updating gallery image: status = " + err.message, "alert-danger", "Error!  ", "show_full_size_image");
         return false;
     }
@@ -770,7 +773,7 @@ function getImageCategory(image_id) {
         var image_gallery_obj = JSON.parse(image_gallery_data);
     }
     catch (err) {
-        console.log(err.message)
+        console.log(err.message);
         my_identity_profiler_alert("getImageCategory: Error getting image category = " + err.message, "alert-danger", "Error!  ", "show_full_size_image");
         return false;
     }
@@ -804,7 +807,7 @@ function check_for_chosen_gallery_images(category) {
 		var image_gallery_obj = JSON.parse(image_gallery_data);
 	}
     catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_image_gallery_data: Error getting data for image gallery: status = " + err.message, "alert-danger", "Error!  ", "remove_gallery_image");
 		return false;
 	}
@@ -846,7 +849,7 @@ function update_for_delete_gallery_images() {
 		var image_gallery_obj = JSON.parse(image_gallery_data);
 	}
     catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("update_for_delete_gallery_images: Error deleting gallery image: status = " + err.message, "alert-danger", "Error!  ", "remove_gallery_image");
 		return false;
 	}
@@ -875,6 +878,58 @@ function clean_remove_gallery_image_dialog() {
 // ---------------------------------------
 // Text file processing for Profiler
 //
+
+// Text File: Info Dialog
+function more_info_dialog(category) {
+    $('#show_info_text_file').modal();
+    document.getElementById("text_file_info_description").value = "";
+    localStorage.setItem("category", category);
+    my_identity_profiler_alert("", "", "", "text_file_info_update");
+    var identity_profile_id = localStorage.getItem("identity_profile_id");
+
+    var params = "identity_profile_id=" + identity_profile_id + "&category=" + category;
+    processData(params, "get_text_data.php", "text_file_data", false);
+    try {
+        var text_file_data = localStorage.getItem("text_file_data");
+        var text_file_obj = JSON.parse(text_file_data);
+    }
+    catch (err) {
+        console.log(err.message);
+        my_identity_profiler_alert("get_text_data: Error getting text file = " + err.message, "alert-danger", "Error!  ", "text_file_info_update");
+        return;
+    }
+
+    var description = text_file_obj.file[0].text_file_description;
+    document.getElementById("text_file_info_description").value = description;
+}
+
+function save_edited_description_text_file() {
+    var category = localStorage.getItem("category");
+    var identity_profile_id = localStorage.getItem("identity_profile_id");
+    var description = document.getElementById("text_file_info_description").value;
+
+    var params = "identity_profile_id=" + identity_profile_id + "&category=" + category + "&description=" + description;
+    processData(params, "update_text_file_info.php", "result", false);
+    try {
+        var result_data = localStorage.getItem("result");
+        var result_obj = JSON.parse(result_data);
+    } catch (err) {
+        console.log(err.message);
+        my_identity_profiler_alert("update_text_file_info: Error updating text file description= " + err.message, "alert-danger", "Error!  ", "text_file_info_update");
+        return;
+    }
+
+    var ret_code = result_obj.ret_code;
+    if (ret_code === -1)  {
+        my_identity_profiler_alert(result_obj.message, "alert-danger", "Error!  ", "text_file_info_update");
+        return;
+    }
+    if (ret_code === 0) {
+        my_identity_profiler_alert(result_obj.message, "alert-success", "Success!  ", "text_file_info_update");
+    }
+}
+
+// Text File: upload dialog
 function upload_to_text_file_dialog(category) {
 	$('#new_text_file_dialog').modal();
 	document.getElementById("category_id_text").value = category;
@@ -925,7 +980,7 @@ function save_text_file() {
 					var result_data = localStorage.getItem("result");
 					var result_obj = JSON.parse(result_data);
 				} catch (err) {
-					console.log(err.message)
+					console.log(err.message);
 					my_identity_profiler_alert("update_text_file: Error uploading text file = " + err.message, "alert-danger", "Error!  ", "text_file_upload");
 					return;
 				}
@@ -950,8 +1005,9 @@ function refresh_text_file(identity_profile_id, category)  {
 	try {
 		var text_file_data = localStorage.getItem("text_file_data");
 		var text_file_obj = JSON.parse(text_file_data);
-	} catch (err) {
-		console.log(err.message)
+	}
+    catch (err) {
+		console.log(err.message);
 		my_identity_profiler_alert("get_text_data: Error getting text file = " + err.message, "alert-danger", "Error!  ", "text_file_upload");
 		return;
 	}
@@ -1064,7 +1120,7 @@ function refresh_pdf_file(identity_profile_id, category)  {
 		var pdf_file_data = localStorage.getItem("pdf_file_data");
 		var pdf_file_obj = JSON.parse(pdf_file_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_pdf_data: Error getting pdf file = " + err.message, "alert-danger", "Error!  ", "pdf_file_upload");
 		return;
 	}
@@ -1166,7 +1222,7 @@ function update_for_delete_profiler_category() {
 		var profiler_obj = JSON.parse(profiler_data);
 	}
     catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("update_for_delete_profiler_category: Error deleting profiler category data = " + err.message, "alert-danger", "Error!  ", "profiler_category");
         return;
 	}
@@ -1222,7 +1278,7 @@ function loadMediaTypesDropDown() {
 		var media_types_data = localStorage.getItem("media_type");
 		var media_types_obj = JSON.parse(media_types_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("get_media_types: Problem getting media types = " + err.message, "alert-danger", "Error!  ", "categories");
 		return;
 	}
@@ -1271,7 +1327,7 @@ function save_categories() {
 		var messages_data = localStorage.getItem("messages");
 		var messages_obj = JSON.parse(messages_data);
 	} catch (err) {
-		console.log(err.message)
+		console.log(err.message);
 		my_identity_profiler_alert("insert_profile_category: Problem inserting new categories = " + err.message, "alert-danger", "Error!  ", "categories");
 		return;
 	}
@@ -1368,6 +1424,12 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
             return;
         }
     }
+    if (message_type === "text_file_info_update")  {
+        if (message === '') {
+            document.getElementById("edited_text_file_dialog_alerts").innerHTML = message;
+            return;
+        }
+    }
 	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
@@ -1385,4 +1447,5 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
 	if (message_type === "remove_profiler_category") document.getElementById("remove_profiler_category_alert").innerHTML = alert_str;
 	if (message_type === "pdf_file_upload") document.getElementById("pdf_file_dialog_alerts").innerHTML = alert_str;
     if (message_type === "show_full_size_image") document.getElementById("show_full_size_image_alert").innerHTML = alert_str;
+    if (message_type === "text_file_info_update") document.getElementById("edited_text_file_dialog_alerts").innerHTML = alert_str;
 }
