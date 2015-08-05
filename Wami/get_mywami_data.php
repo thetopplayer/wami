@@ -67,7 +67,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     $response["ret_code"] = 1;
-    array_push($response["message"], "My Wami Profile: No Profile Groups found for profile: " .$profile["profile_name"]);
+    array_push($response["message"], "No Profile Groups found for this profile.");
 }
 mysqli_free_result($result);
 
@@ -89,7 +89,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     $response["ret_code"] = 1;
-    array_push($response["message"], "My Wami Profile: No Profile Flashes found for profile: " .$profile["profile_name"]);
+    array_push($response["message"], "No Profile Flashes found for this profile.");
 }
 
 if ($response["ret_code"] > 0) echo json_encode($response);

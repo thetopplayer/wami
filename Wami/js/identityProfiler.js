@@ -32,7 +32,7 @@ function load_profiler_categories (identity_profile_id) {
 		var num_ele = identity_profiler_obj.message.length;
 		alert_str = '';
 		for (var i = 0; i < num_ele; i++) {
-			alert_str = "<br>" + identity_profiler_obj.message[i] + alert_str;
+			alert_str = identity_profiler_obj.message[i] + alert_str;
 		}
 		my_identity_profiler_alert(alert_str, "alert-info", "Info! ", "header");
 	}
@@ -1304,7 +1304,7 @@ function save_categories() {
 function my_identity_profiler_alert (message, message_type_class, message_type_string, message_type, category) {
 	if (message_type === "header")  {
 		if (message === '') {
-			document.getElementById("header_alerts").innerHTML = message;
+			document.getElementById("header2_alerts").innerHTML = message;
 			return;
 		}
 	}
@@ -1371,7 +1371,7 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
 	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
-	if (message_type === "header") document.getElementById("header_alerts").innerHTML = alert_str;
+	if (message_type === "header") document.getElementById("header2_alerts").innerHTML = alert_str;
 	if (message_type === "image_gallery_upload") document.getElementById("new_image_dialog_alerts").innerHTML = alert_str;
 	if (message_type === "image_gallery_dialog") document.getElementById("image_gallery_dialog_alert").innerHTML = alert_str;
 	if (message_type === "image_gallery") document.getElementById("image_gallery_alert" + category).innerHTML = alert_str;

@@ -30,7 +30,8 @@ function loadData(identity_profile_id) {
 	try {
 		var wami_count_obj = JSON.parse(wami_count_data);
 		var wami_count = wami_count_obj.wami_count;
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message);
 		my_wami_alert("Error getting web page: status = " + err.message, "alert-danger", "Severe Error!  ", "header");
 	}
@@ -45,7 +46,8 @@ function loadData(identity_profile_id) {
 	try {
 		var mywami_data = localStorage.getItem("mywami_data");
 		var mywami_obj = JSON.parse(mywami_data);
-	} catch (err) {
+	}
+    catch (err) {
 		console.log(err.message);
 		my_wami_alert("get_mywami_data: Error getting data for profile: status = " + err.message, "alert-danger", "Error!  ", "header");
 		return;
@@ -62,7 +64,7 @@ function loadData(identity_profile_id) {
 		var num_ele = mywami_obj.message.length;
 		alert_str = '';
 		for (var i = 0; i < num_ele; i++) {
-			alert_str = "<br>" + mywami_obj.message[i] + alert_str;
+			alert_str = mywami_obj.message[i] + "  " + alert_str;
 		}
 		my_wami_alert(alert_str, "alert-info", "Info! ", "header");
 	}
@@ -1038,7 +1040,7 @@ function my_wami_alert (message, message_type_class, message_type_string, messag
 		}
 	}
 
-	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
+	var alert_str = "<div style='margin-bottom: 10px ' + class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
 	if (message_type === "header") document.getElementById("header_alerts").innerHTML = alert_str;
