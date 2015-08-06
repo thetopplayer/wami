@@ -150,6 +150,14 @@ hr {
 .list-group-item-wami-news {
 	padding: 7px;
 }
+
+.list-group-item-help {
+    height: 25px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    font-size: 12px;
+}
+
 .wami-margin-b2 {
 	margin-bottom: 2px;
 }
