@@ -49,7 +49,37 @@
 <body class="wami-background" onload="loadForm()">
 <div id="includedNavbar"></div>
 
-<div style="padding-left: 70px; padding-top:20px; width: 1040px">
+
+<!--Account Settings info-->
+<div class="panel-group" id="accordionAccountProfileHelp" style="padding-left: 55px; width: 1055px">
+    <div class="panel panel-primary" style="border-color: #4c4c4c">
+        <div class="panel-heading" style="background-color: #f4f4f4; color: #414141">
+            <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordionAccountProfileHelp" href="#collapseAccountProfileHelp">Web Page Description and Help
+                    <i class="indicator glyphicon glyphicon-plus-sign pull-right"></i>
+                </a>
+            </h3>
+        </div>
+        <div id="collapseAccountProfileHelp" class="panel-collapse collapse out">
+            <div class="panel-body"  style="padding-left: 25px; background-color: #fcfcfc">
+                <div class="row"  style="height: 230px">
+                    <div class="col-md-2" style="width: 950px">
+                        <h5>Use this web page to manage account information. This page does deal with any of thr profiles associated with the account. It only
+                            handles user account information. On this page you can:</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">Change and manage password.</li>
+                            <li class="list-group-item">Change and manage email address.</li>
+                            <li class="list-group-item">Change and manage personal information.</li>
+                            <li class="list-group-item">Fully delete account and all associated profiles.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="padding-left: 70px; width: 1040px">
 
 	<div class="row" style="height: 640px; border: 1px solid #353535; background-color: #fcfcfc ">
 		<form method="post">
@@ -137,7 +167,7 @@
 						<h5>You are about to <strong> <span style="color: #e00004">DELETE </span></strong> your account. Deleting your account will also delete all your profiles and collections.</h5>
 						<h5>Are you sure?</h5>
 					</div>
-					<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 0px">
+					<div class="modal-footer" style="background-color: #D9D9D9; padding-bottom: 20px">
 						<span class="pull-left">
 							<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteAccount()">Delete</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

@@ -37,7 +37,7 @@ function loadData(identity_profile_id) {
 	}
 
 	document.getElementById("total_collected_profiles").innerHTML =
-			"<input readonly class='input-wami' type='text' value='" + wami_count + "' style='margin-bottom: 10px; text-align: center; width: 50px; background-color: #BBBBBB'>";
+			"<input readonly class='input-wami' type='text' value='" + wami_count + "' style='margin-bottom: 10px; text-align: center; width: 50px; background-color: #e5e5e5'>";
 
 // My Wami Data
 	var username = localStorage.getItem("username");
