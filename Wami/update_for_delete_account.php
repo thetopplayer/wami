@@ -24,7 +24,7 @@ if (mysqli_num_rows($result_set) > 0) {
         try {
 
             // Update for delete identity_profile
-            $sql =  "UPDATE identity_profile SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE identity_profile SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -36,7 +36,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //update for delete identity_profile_collection
-            $sql =  "UPDATE identity_profile_collection SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id. "
+            $sql =  "UPDATE identity_profile_collection SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id. "
              OR assign_to_identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
@@ -49,7 +49,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete profile_group
-            $sql =  "UPDATE profile_group SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profile_group SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -61,7 +61,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete profile_group_assign
-            $sql =  "UPDATE profile_group_assign SET delete_ind = 1 WHERE assign_to_identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profile_group_assign SET delete_ind = 1, modified_date = NOW() WHERE assign_to_identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -73,7 +73,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete profile_flash
-            $sql =  "UPDATE profile_flash SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profile_flash SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -85,7 +85,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete identity_profiler
-            $sql =  "UPDATE identity_profiler SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE identity_profiler SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -97,7 +97,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete image media type
-            $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -109,7 +109,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete audio media type
-            $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -121,7 +121,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete text media type
-            $sql =  "UPDATE profiler_text_files SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profiler_text_files SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -133,7 +133,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             //Update for delete pdf media type
-            $sql =  "UPDATE profiler_pdf_files SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+            $sql =  "UPDATE profiler_pdf_files SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;
@@ -145,7 +145,7 @@ if (mysqli_num_rows($result_set) > 0) {
             }
 
             // Update for delete user table
-            $sql =  "UPDATE user SET delete_ind = 1 WHERE user_id = " .$user_id;
+            $sql =  "UPDATE user SET delete_ind = 1, modified_date = NOW() WHERE user_id = " .$user_id;
             $result = mysqli_query($con, $sql) or die(mysqli_error($con));
             if (!$result) {
                 $response["ret_code"] = 1;

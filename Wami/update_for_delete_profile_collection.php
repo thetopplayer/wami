@@ -27,7 +27,7 @@ for ($i = 0; $i < $num_elements; $i++) {
 }
 
 $where = substr($where, 0, -3);
-$sql =  "UPDATE identity_profile_collection SET delete_ind = 1 WHERE assign_to_identity_profile_id = " .$assign_to_identity_profile_id. " AND (" .$where. ")";
+$sql =  "UPDATE identity_profile_collection SET delete_ind = 1, modified_date = NOW() WHERE assign_to_identity_profile_id = " .$assign_to_identity_profile_id. " AND (" .$where. ")";
 
 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
 if (!$result) {

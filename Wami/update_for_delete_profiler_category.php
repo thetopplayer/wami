@@ -21,7 +21,7 @@ $num_elements = count($profiler_id);
 $result = null;
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE identity_profiler SET delete_ind = 1 WHERE identity_profiler_id = " .$profiler_id[$i];
+    $sql =  "UPDATE identity_profiler SET delete_ind = 1, modified_date = NOW() WHERE identity_profiler_id = " .$profiler_id[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
@@ -42,7 +42,7 @@ for ($i = 0; $i < $num_elements; $i++) {
             try {
 
                 //Update for delete image media type
-                $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
+                $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
@@ -54,7 +54,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 }
 
                 //Update for delete audio media type
-                $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
+                $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
@@ -66,7 +66,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 }
 
                 //Update for delete text media type
-                $sql =  "UPDATE profiler_text_files SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
+                $sql =  "UPDATE profiler_text_files SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;
@@ -78,7 +78,7 @@ for ($i = 0; $i < $num_elements; $i++) {
                 }
 
                 //Update for delete pdf media type
-                $sql =  "UPDATE profiler_pdf_files SET delete_ind = 1 WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
+                $sql =  "UPDATE profiler_pdf_files SET delete_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
                 $result = mysqli_query($con, $sql) or die(mysqli_error($con));
                 if (!$result) {
                     $response["ret_code"] = -1;

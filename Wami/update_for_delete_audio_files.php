@@ -20,7 +20,7 @@ $id = explode(",", $audio_file_id);
 $num_elements = count($id);
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1 WHERE profiler_audio_jukebox_id = " .$id[$i];
+    $sql =  "UPDATE profiler_audio_jukebox SET delete_ind = 1, modified_date = NOW() WHERE profiler_audio_jukebox_id = " .$id[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

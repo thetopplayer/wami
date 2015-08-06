@@ -26,7 +26,8 @@ $titles = explode(",", $audio_titles);
 $num_elements = count($ids);
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profiler_audio_jukebox SET audio_file_name = '" .$titles[$i]. "', audio_file_description =  '" .$descriptions[$i]. "' WHERE profiler_audio_jukebox_id = " .$ids[$i];
+    $sql =  "UPDATE profiler_audio_jukebox SET audio_file_name = '" .$titles[$i]. "', audio_file_description =  '" .$descriptions[$i]. "', modified_date = NOW()
+    WHERE profiler_audio_jukebox_id = " .$ids[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

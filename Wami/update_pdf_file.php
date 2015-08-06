@@ -15,15 +15,11 @@ $identity_profile_id = $_POST["identity_profile_id"];
 $profile_name = $_POST["profile_name"];
 $file_name = $_POST["file_name"];
 $pdf_file_description = $_POST["pdf_file_description"];
-$pdf_file_name = $_POST["pdf_file_name"];
 $category = $_POST["category"];
-if ($pdf_file_name === '') {
-    $pdf_file_name = $file_name;
-}
-
 $pdf_file_src = $_POST["pdf_file_src"];
 
 $delete_ind = 0;
+$pdf_file_name = $file_name;
 $file_location = 'assets/pdf_files/' .$profile_name. '/';
 
 $pdf = strstr($pdf_file_src, ',');
@@ -45,7 +41,7 @@ $con = $db->connect();
 $con->autocommit(FALSE);
 
 try {
-    $sql = "UPDATE profiler_pdf_files SET file_name = '" .$file_name. "', pdf_file_name = '" .$pdf_file_name. "', pdf_file_description = '" .$pdf_file_description. "', modified_date = now()
+    $sql = "UPDATE profiler_pdf_files SET file_name = '" .$file_name. "', pdf_file_name = '" .$pdf_file_name. "', pdf_file_description = '" .$pdf_file_description. "', modified_date = NOW()
             WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

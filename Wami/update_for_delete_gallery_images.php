@@ -20,7 +20,7 @@ $image_id = explode(",", $gallery_image_id);
 $num_elements = count($image_id);
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1 WHERE profiler_image_gallery_id = " .$image_id[$i];
+    $sql =  "UPDATE profiler_image_gallery SET delete_ind = 1, modified_date = NOW() WHERE profiler_image_gallery_id = " .$image_id[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

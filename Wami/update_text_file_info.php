@@ -20,7 +20,7 @@ $con = $db->connect();
 $con->autocommit(FALSE);
 
 try {
-    $sql = "UPDATE profiler_text_files SET text_file_description = '" .$text_file_description. "', modified_date = now()
+    $sql = "UPDATE profiler_text_files SET text_file_description = '" .$text_file_description. "', modified_date = NOW()
             WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

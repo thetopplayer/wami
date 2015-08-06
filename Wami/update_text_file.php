@@ -15,11 +15,9 @@ $identity_profile_id = $_POST["identity_profile_id"];
 $profile_name = $_POST["profile_name"];
 $file_name = $_POST["file_name"];
 $text_file_description = $_POST["text_file_description"];
-$text_file_name = $_POST["text_file_name"];
 $category = $_POST["category"];
-if ($text_file_name === '') {
-    $text_file_name = $file_name;
-}
+
+$text_file_name = $file_name;
 $text_file_src = $_POST["text_file_src"];
 $delete_ind = 0;
 $file_location = 'assets/text_files/' .$profile_name. '/';
@@ -37,7 +35,7 @@ $con = $db->connect();
 $con->autocommit(FALSE);
 
 try {
-    $sql = "UPDATE profiler_text_files SET file_name = '" .$file_name. "', text_file_name = '" .$text_file_name. "', text_file_description = '" .$text_file_description. "', modified_date = now()
+    $sql = "UPDATE profiler_text_files SET file_name = '" .$file_name. "', text_file_name = '" .$text_file_name. "', text_file_description = '" .$text_file_description. "', modified_date = NOW()
             WHERE identity_profile_id = " .$identity_profile_id. " AND category = '" .$category. "'";
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

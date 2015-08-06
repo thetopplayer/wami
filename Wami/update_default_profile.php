@@ -20,7 +20,7 @@ $con->autocommit(FALSE);
 
 // First set all default ind to 0
 try {
-    $sql =  "UPDATE identity_profile SET default_profile_ind = 0 WHERE user_id = " .$user_id;
+    $sql =  "UPDATE identity_profile SET default_profile_ind = 0, modified_date = NOW() WHERE user_id = " .$user_id;
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["ret_code"] = -1;
@@ -32,7 +32,7 @@ try {
     }
 
     // Then assign default ind to the correct identity profile
-    $sql =  "UPDATE identity_profile SET default_profile_ind = 1 WHERE identity_profile_id = " .$identity_profile_id;
+    $sql =  "UPDATE identity_profile SET default_profile_ind = 1, modified_date = NOW() WHERE identity_profile_id = " .$identity_profile_id;
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {
         $response["ret_code"] = -1;

@@ -20,7 +20,7 @@ $flash_id = explode("," ,$profile_flash_id);
 $num_elements = count($flash_id);
 
 for ($i = 0; $i < $num_elements; $i++) {
-    $sql =  "UPDATE profile_flash SET delete_ind = 1 WHERE profile_flash_id = " .$flash_id[$i];
+    $sql =  "UPDATE profile_flash SET delete_ind = 1, modified_date = NOW() WHERE profile_flash_id = " .$flash_id[$i];
 
     $result = mysqli_query($con, $sql) or die(mysqli_error($con));
     if (!$result) {

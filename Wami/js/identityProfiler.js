@@ -183,6 +183,7 @@ function load_profiler_categories (identity_profile_id) {
 						'<div class="row" style="padding-left: 10px; width: 1200px">'  +
 							'<div class="col-md-1" style="width: 370px; vertical-align: top;  padding-right: 0px; margin-top: 15px;">' +
 								'<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="upload_to_pdf_file_dialog(\'' + category + '\')">Upload New File </button>' +
+                                '<button type="button" class="btn btn-sm btn-primary" style="margin-left: 20px" onclick="more_info_pdf_dialog(\'' + category + '\')">More Info </button>' +
 							'</div>' +
 							'<div class="col-md-1" style="width: 700px; vertical-align: top; margin-top: 8px; padding-left: 0px">' +
 								'<div class="text-left" id="pdf_file_alert" style="width: 700px"></div>' +
@@ -962,7 +963,7 @@ function save_text_file() {
 	var profile_name = localStorage.getItem("current_profile_name");
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var text_file_description = document.getElementById('text_file_description').value;
-	var text_file_name = document.getElementById('text_file_name').value;
+	//var text_file_name = document.getElementById('text_file_name').value;
 
 	//save to file system and database
 	var byte_reader = new FileReader();
@@ -974,7 +975,7 @@ function save_text_file() {
 				var text_file_src = byte_reader.result;
 				var file_name = file.name;
 				var params = "file_name=" + file_name + "&text_file_src=" + text_file_src + "&identity_profile_id=" + identity_profile_id + "&category=" + category
-						+ "&profile_name=" + profile_name + "&text_file_description=" + text_file_description + "&text_file_name=" + text_file_name;
+						+ "&profile_name=" + profile_name + "&text_file_description=" + text_file_description;
 				processData(params, "update_text_file.php", "result", false);
 				try {
 					var result_data = localStorage.getItem("result");
@@ -1043,6 +1044,56 @@ function cleanup_text_file_dialog () {
 // ---------------------------------------
 // PDF file processing for Profiler
 //
+// PDF File: Info Dialog
+function more_info_pdf_dialog(category) {
+    $('#show_info_pdf_file').modal();
+    document.getElementById("pdf_file_info_description").value = "";
+    localStorage.setItem("category", category);
+    my_identity_profiler_alert("", "", "", "pdf_file_info_update");
+    var identity_profile_id = localStorage.getItem("identity_profile_id");
+
+    var params = "identity_profile_id=" + identity_profile_id + "&category=" + category;
+    processData(params, "get_pdf_data.php", "pdf_file_data", false);
+    try {
+        var pdf_file_data = localStorage.getItem("pdf_file_data");
+        var pdf_file_obj = JSON.parse(pdf_file_data);
+    }
+    catch (err) {
+        console.log(err.message);
+        my_identity_profiler_alert("get_pdf_data: Error getting text file = " + err.message, "alert-danger", "Error!  ", "pdf_file_info_update");
+        return;
+    }
+
+    var description = pdf_file_obj.file[0].pdf_file_description;
+    document.getElementById("pdf_file_info_description").value = description;
+}
+
+function save_edited_description_pdf_file() {
+    var category = localStorage.getItem("category");
+    var identity_profile_id = localStorage.getItem("identity_profile_id");
+    var description = document.getElementById("pdf_file_info_description").value;
+
+    var params = "identity_profile_id=" + identity_profile_id + "&category=" + category + "&description=" + description;
+    processData(params, "update_pdf_info.php", "result", false);
+    try {
+        var result_data = localStorage.getItem("result");
+        var result_obj = JSON.parse(result_data);
+    } catch (err) {
+        console.log(err.message);
+        my_identity_profiler_alert("update_pdf_file_info: Error updating pdf file description= " + err.message, "alert-danger", "Error!  ", "pdf_file_info_update");
+        return;
+    }
+
+    var ret_code = result_obj.ret_code;
+    if (ret_code === -1)  {
+        my_identity_profiler_alert(result_obj.message, "alert-danger", "Error!  ", "pdf_file_info_update");
+        return;
+    }
+    if (ret_code === 0) {
+        my_identity_profiler_alert(result_obj.message, "alert-success", "Success!  ", "pdf_file_info_update");
+    }
+}
+
 function upload_to_pdf_file_dialog(category) {
 	$('#new_pdf_file_dialog').modal();
 	document.getElementById("category_id_pdf").value = category;
@@ -1075,7 +1126,7 @@ function save_pdf_file() {
 	var profile_name = localStorage.getItem("current_profile_name");
 	var identity_profile_id = localStorage.getItem("identity_profile_id");
 	var pdf_file_description = document.getElementById('pdf_file_description').value;
-	var pdf_file_name = document.getElementById('pdf_file_name').value;
+	//var pdf_file_name = document.getElementById('pdf_file_name').value;
 
 // save to file system and database
 	var byte_reader = new FileReader();
@@ -1088,7 +1139,7 @@ function save_pdf_file() {
 				var file_name = file.name;
 
 				var params = "file_name=" + file_name + "&identity_profile_id=" + identity_profile_id + "&category=" + category + "&profile_name=" + profile_name +
-						"&pdf_file_description=" + pdf_file_description + "&pdf_file_name=" + pdf_file_name + "&pdf_file_src=" + pdf_file_src ;
+						"&pdf_file_description=" + pdf_file_description + "&pdf_file_src=" + pdf_file_src ;
 				processData(params, "update_pdf_file.php", "result", false);
 				try {
 					var result_data = localStorage.getItem("result");
@@ -1430,6 +1481,12 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
             return;
         }
     }
+    if (message_type === "pdf_file_info_update")  {
+        if (message === '') {
+            document.getElementById("edited_pdf_file_dialog_alerts").innerHTML = message;
+            return;
+        }
+    }
 	var alert_str = "<div class='alert " + message_type_class + " alert-dismissable'> " +
 			"<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button> " +
 			"<strong>" + message_type_string + "</strong> " + message + "</div>";
@@ -1448,4 +1505,5 @@ function my_identity_profiler_alert (message, message_type_class, message_type_s
 	if (message_type === "pdf_file_upload") document.getElementById("pdf_file_dialog_alerts").innerHTML = alert_str;
     if (message_type === "show_full_size_image") document.getElementById("show_full_size_image_alert").innerHTML = alert_str;
     if (message_type === "text_file_info_update") document.getElementById("edited_text_file_dialog_alerts").innerHTML = alert_str;
+    if (message_type === "pdf_file_info_update") document.getElementById("edited_pdf_file_dialog_alerts").innerHTML = alert_str;
 }
