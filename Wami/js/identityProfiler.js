@@ -91,7 +91,7 @@ function load_profiler_categories (identity_profile_id) {
 
 // Image gallery category
 			if (media_type === 'Image') {
-				decorator_section = '<div class="row" style="padding: 10px; height: 600px;  background-color: #ffffff">';
+				decorator_section = '<div class="row" style="padding: 10px; height: 600px;  background-color: #f7f7f7">';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -99,7 +99,7 @@ function load_profiler_categories (identity_profile_id) {
 				var num_gallery_images = 0;
 				if (images === undefined) {
 					data_section =
-							'<div class="col-md-2" style="width: 1000px; padding-left: 130px">' +
+							'<div class="col-md-2" style="width: 900px; padding-left: 110px">' +
 									'<h3>No Images to display. Use Upload New Image button to populate gallery.</h3>' +
 							'</div>';
 				}
@@ -208,8 +208,8 @@ function load_profiler_categories (identity_profile_id) {
 				var num_audio_files = 0;
 				if (audio_files === undefined) {
 					data_section_audio =
-							'<div class="col-md-2" style="width: 1000px; padding-left: 130px">' +
-									'<h3>No Audio files found. Use Upload New File button to populate Audio Jukebox.</h3>' +
+							'<div class="col-md-2" style="width: 900px; padding-left: 80px">' +
+                                '<h3>No Audio files found. Use Upload New File button to populate Audio Jukebox.</h3>' +
 							'</div>';
 				}
 				else {
