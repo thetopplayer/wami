@@ -64,7 +64,7 @@ function load_profiler_categories (identity_profile_id) {
 									'<div class="row"  style="height: 40px; padding-left: 10px">'  +
 										'<div class="col-md-1" style="width: 360px; vertical-align: top">' +
 											'<strong>Media Type</strong> ' +
-											'<input class="input-wami" type="text" readonly style="background-color: #d1d1d1" value="'  +  media_type + '">' +
+											'<input class="input-wami" type="text" readonly style="background-color: #e5e5e5" value="'  +  media_type + '">' +
 										'</div>' +
 									'</div>' +
 									'<span class="span-scroll-profile" style="height: 555px; width: 965px; margin-left: 10px">' +

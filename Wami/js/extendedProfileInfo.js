@@ -144,7 +144,7 @@ function load_profiler_categories (identity_profile_id) {
 									'<div class="row"  style="height: 40px; padding-left: 10px">' +
 										'<div class="col-md-1" style="width: 360px; vertical-align: top">' +
 											'<strong>Media Type</strong> ' +
-											'<input class="input-wami" type="text" readonly style="background-color: #d1d1d1" value="' + media_type + '">' +
+											'<input class="input-wami" type="text" readonly style="background-color: #e5e5e5" value="' + media_type + '">' +
 										'</div>' +
 									'</div>' +
 									'<span class="span-scroll-profile" style="height: 555px; width: 965px; margin-left: 10px">' +
@@ -253,7 +253,7 @@ function load_profiler_categories (identity_profile_id) {
 									'<audio controls="controls" style="padding-right: 15px"><source type="audio/mpeg" src="' + file_location + '"/></audio> ' +
 									'<label style="padding-left: 5px; padding-bottom: 0px">' + audio_file_name + '</label>' +
 									'<div style="padding-left: 5px;">' +
-										'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #e8e8e8; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
+										'<textarea readonly style="width: 260px; height: 60px; border-style: inset; padding: 4px; font-size: 12px; color: #6c6c6c; background-color: #e5e5e5; resize: none; line-height: 98%">' + audio_description + '</textarea>' +
 									'</div>' +
 								'</div>' + data_section_audio;
 					}
