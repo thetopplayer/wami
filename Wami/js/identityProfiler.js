@@ -91,7 +91,7 @@ function load_profiler_categories (identity_profile_id) {
 
 // Image gallery category
 			if (media_type === 'Image') {
-				decorator_section = '<div class="row" style="padding: 10px; height: 600px;  background-color: #f7f7f7">';
+				decorator_section = '<div class="row" style="padding: 10px; height: 1500px;  width: 980px; background-color: #f7f7f7">';
 
 				var images = [];
 				images = identity_profiler_obj.identity_profiler_data[i].images.images;
@@ -415,9 +415,9 @@ function refresh_audio_jukebox(identity_profile_id, category) {
 	var num_audio_files = 0;
 	if (audio_files === undefined) {
 		data_section_audio =
-				'<div class="col-md-2" style="width: 1000px; padding-left: 130px">' +
-						'<h3>No Audio files found. Use Upload New File button to populate Audio Jukebox.</h3>' +
-				'</div>';
+            '<div class="col-md-2" style="width: 900px; padding-left: 80px">' +
+                '<h3>No Audio files found. Use Upload New File button to populate Audio Jukebox.</h3>' +
+            '</div>';
 	}
 	else {
 		for (var j = 0; j < audio_files.length; j++) {
@@ -650,9 +650,9 @@ function refresh_image_gallery(identity_profile_id, category) {
 	var num_gallery_images = 0;
 	if (gallery_images === undefined) {
 		data_section =
-				'<div class="col-md-2" style="width: 1000px; padding-left: 130px">' +
-						'<h3>No Images to display. Use Upload New Image button to populate gallery.</h3>' +
-				'</div>';
+            '<div class="col-md-2" style="width: 900px; padding-left: 110px">' +
+                '<h3>No Images to display. Use Upload New Image button to populate gallery.</h3>' +
+            '</div>';
 	}
 	else {
 		for (var i = 0; i < gallery_images.length; i++) {
