@@ -90,7 +90,7 @@ function loadData(identity_profile_id) {
 		'<div class="col-sm-7" style="max-width: 950px; min-width: 950px; padding-left: 0px">' +
 			'<div class="panel panel-primary" style="border-color: #4c4c4c">' +
 				'<div class="panel-heading" style="background-color: #f3f3f3; color: #414141">' +
-		'			<h3 class="panel-title">Collection Associated with Selected Profile</h3>' +
+		'			<h3 class="panel-title">Connections Associated with Selected Profile</h3>' +
 		'		</div><span class="span-scroll-wami-list">';
 
 	var num_list_elements = wami_obj.profile_collection.length;
