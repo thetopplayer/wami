@@ -222,7 +222,7 @@ class SearchForProfiles: UIViewController {
     
     
     func doDropDown() {
-        dropdownView.frame = CGRectMake(45, 80, 150, 110)
+        dropdownView.frame = CGRectMake(10, 80, 150, 110)
         dropdownView.backgroundColor = UIColor.whiteColor()
         dropdownView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(1.0).CGColor
         dropdownView.layer.borderWidth = 1.0

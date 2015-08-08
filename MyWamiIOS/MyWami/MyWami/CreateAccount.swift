@@ -267,11 +267,11 @@ class CreateAccount: UIViewController, UITextViewDelegate  {
             self.createAccountView.makeToast(message: "Password is a required field. Please enter a value.", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return false
         }
-        let passwordRegex = NSRegularExpression(pattern: "^(?=.*[0-9-_])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&])(?=\\S+$).{8,20}$", options: nil, error: nil)!
+        let passwordRegex = NSRegularExpression(pattern: "^(?=.*[0-9-_])(?=.*[a-z])(?=.*[A-Z])(?=.*[#!@$%^&])(?=\\S+$).{8,20}$", options: nil, error: nil)!
         nsString = self.passwordTxt.text as NSString
         match = passwordRegex.numberOfMatchesInString(self.passwordTxt.text, options: nil, range: NSMakeRange(0, nsString.length))
         if match == 0 {
-            self.createAccountView.makeToast(message: "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number, and at least 1 of the following characters: ! @ # $ % ^ & \"", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
+            self.createAccountView.makeToast(message: "Password must be at least 8 characters, at least 1 upper case letter, at least 1 lower case letter, at least 1 number, and at least 1 of the following characters: # ! @ $ % ^ & ", duration: HRToastDefaultDuration, position: HRToastPositionCenter)
             return false
         }
         
