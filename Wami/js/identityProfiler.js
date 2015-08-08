@@ -1305,7 +1305,7 @@ function refresh_profiler_categories() {
 // -----------------------------------------------
 // Add Category to Profile Media Info section
 //
-var max_categories = 8;
+var max_categories = 10;
 function add_category() {
     my_identity_profiler_alert('', '', '', "profiler_category");
 	$('#new_category_dialog').modal();

@@ -20,6 +20,7 @@ class ProfilerAudioViewer: UIViewController, UITableViewDelegate, UITableViewDat
     func profilerAudioViewerDialog(profilerAudioView: UIScrollView, audioProfilerModels: [AudioProfilerModel], closeBtn: UIButton) -> UIView {
         self.profilerAudioView = profilerAudioView
         numAudio = audioProfilerModels.count
+        audioTableView = UITableView()
         self.audioProfilerModels = audioProfilerModels
         
         if DeviceType.IS_IPHONE_4_OR_LESS {

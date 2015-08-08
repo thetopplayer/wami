@@ -20,6 +20,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
     func profilerImageViewerDialog(imageScrollView: UIScrollView, imageProfilerModels: [ImageProfilerModel], closeBtn: UIButton) -> UIView {
         self.imageScrollView = imageScrollView
         numImage = imageProfilerModels.count
+        imageTableView = UITableView()
         self.imageProfilerModels = imageProfilerModels
         
         if DeviceType.IS_IPHONE_4_OR_LESS {

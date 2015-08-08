@@ -56,8 +56,18 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     func showAudioViewer () {
         var profilerAudioView = UIScrollView()
         let closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        var audioProfilerModelsSubset = [AudioProfilerModel]()
+        var numItems = audioProfilerModels.count
+        var categoryFromModel = ""
+        for index in 0...numItems - 1 {
+            categoryFromModel = audioProfilerModels[index].getAudioCategory()
+            if (categoryFromModel == self.category) {
+                audioProfilerModelsSubset.append(audioProfilerModels[index])
+            }
+            
+        }
         closeBtn.addTarget(self, action: "closeProfilerAudioViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        self.profilerAudioViewerDialog = profilerAudioViewer.profilerAudioViewerDialog(profilerAudioView, audioProfilerModels: audioProfilerModels, closeBtn: closeBtn)
+        self.profilerAudioViewerDialog = profilerAudioViewer.profilerAudioViewerDialog(profilerAudioView, audioProfilerModels: audioProfilerModelsSubset, closeBtn: closeBtn)
         profilerTableView.addSubview(self.profilerAudioViewerDialog)
 
     }
@@ -70,8 +80,18 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     func showImageViewer() {
         var imageScrollView = UIScrollView()
         var closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        var imageProfilerModelsSubset = [ImageProfilerModel]()
+        var numItems = imageProfilerModels.count
+        var categoryFromModel = ""
+        for index in 0...numItems - 1 {
+            categoryFromModel = imageProfilerModels[index].getImageCategory()
+            if (categoryFromModel == self.category) {
+                imageProfilerModelsSubset.append(imageProfilerModels[index])
+            }
+            
+        }
         closeBtn.addTarget(self, action: "closeProfilerImageViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
-        profilerImageViewerDialog = profilerImageViewer.profilerImageViewerDialog(imageScrollView, imageProfilerModels: imageProfilerModels, closeBtn: closeBtn)
+        profilerImageViewerDialog = profilerImageViewer.profilerImageViewerDialog(imageScrollView, imageProfilerModels: imageProfilerModelsSubset, closeBtn: closeBtn)
         profilerTableView.addSubview(self.profilerImageViewerDialog)
     }
     func closeProfilerImageViewerDialog() {
