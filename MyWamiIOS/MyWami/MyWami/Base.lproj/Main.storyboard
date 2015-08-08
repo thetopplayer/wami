@@ -672,7 +672,7 @@
                         <viewControllerLayoutGuide type="bottom" id="7Rk-VM-HTm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="568" id="lzY-bt-tPb">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HJz-n7-YQA">
@@ -766,6 +766,6 @@
         <image name="next_item_right" width="35" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d8g-yi-ep3"/>
+        <segue reference="J3F-CV-kWh"/>
     </inferredMetricsTieBreakers>
 </document>

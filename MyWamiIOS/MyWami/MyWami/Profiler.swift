@@ -207,7 +207,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         var nav = self.navigationController?.navigationBar
         nav?.barStyle = UIBarStyle.Black
         
-        let titleBar = UIImage(named: "actionbar_profiler.png")
+        let titleBar = UIImage(named: "actionbar_wami_profile_media_info.png")
         let imageView2 = UIImageView(image:titleBar)
         self.navigationItem.titleView = imageView2
         
