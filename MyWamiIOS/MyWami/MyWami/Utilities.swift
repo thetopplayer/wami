@@ -14,6 +14,7 @@ class Utilities {
 //    var ASSETS_IP = "http://192.168.15.6:80/Wami/"
     var ASSETS_IP = "http://192.168.0.102:80/Wami/"
 //    var ASSETS_IP = "http://192.168.254.42:80/Wami/"
+    var MAIN_IMAGE_PATH = "assets/main_image/"
     var EMAIL_IP = "http://www.mywami.com/"
     var DB_NAME = "wamilocal.db"
     var DB_PATH = "/Users/robertlanter/projects/"

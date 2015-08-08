@@ -539,8 +539,17 @@ class ProfileCollectionController: UITableViewController, UITableViewDataSource,
         var contactName = self.firstNames[indexPath.row] + " " + self.lastNames[indexPath.row]
         cell.profileNameTxt.text = self.profileNames[indexPath.row]
         cell.contactNameTxt.text = contactName
-        var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
-        cell.profileImage.image = image
+        
+        
+        var image = UTILITIES.ASSETS_IP + UTILITIES.MAIN_IMAGE_PATH + self.imageUrls[indexPath.row]
+        let url = NSURL(string: image)
+        let data = NSData(contentsOfURL: url!)
+        cell.profileImage.image = UIImage(data: data!)
+//
+        
+        
+//        var image : UIImage = UIImage(named: self.imageUrls[indexPath.row])!
+//        cell.profileImage.image = image
         
         return cell
     }
