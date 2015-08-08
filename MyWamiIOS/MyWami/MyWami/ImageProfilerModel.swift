@@ -14,6 +14,7 @@ public class ImageProfilerModel {
     var imageName = ""
     var imageDescription = ""
     var imageId = 0
+    var imageCategory = ""
     
     func setFileLocation(fileLocation: String) {
         self.fileLocation = fileLocation
@@ -21,6 +22,14 @@ public class ImageProfilerModel {
     
     func getFileLocation() -> String {
         return self.fileLocation
+    }
+    
+    func setImageCategory(imageCategory: String) {
+        self.imageCategory = imageCategory
+    }
+    
+    func getImageCategory() -> String {
+        return self.imageCategory
     }
     
     func setFileName(fileName: String) {

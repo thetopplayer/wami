@@ -157,11 +157,13 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var mediaTypes = [String]()
     var fileLocations = [String]()
     var fileNames = [String]()
+    
     var audioFileLocations = [String]()
     var audioFileNames = [String]()
     var audioSongTitles = [String]()
     var audioFileDescriptions = [String]()
     var audioFileIds = [String]()
+    var audioCategories = [String]()
     var audioProfilerModels = [AudioProfilerModel]()
     
     var imageFileLocations = [String]()
@@ -169,6 +171,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     var imageNames = [String]()
     var imageDescriptions = [String]()
     var imageFileIds = [String]()
+    var imageCategories = [String]()
     var imageProfilerModels = [ImageProfilerModel]()
     
     let menuView = UIView()
@@ -253,6 +256,10 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                                 audioFileDescriptions.append(audioFileDescription)
                                 audioProfilerModel.setAudioFileDescription(audioFileDescription)
                                 
+                                var audioCategory = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["category"].string!
+                                audioCategories.append(audioCategory)
+                                audioProfilerModel.setAudioCategory(audioCategory)
+                                
                                 var audioFileId = jsonData["identity_profiler_data"][index]["file"]["audio"][index2]["profiler_audio_jukebox_id"].string!
                                 audioFileIds.append(audioFileId)
                                 audioProfilerModel.setAudioFileId(audioFileId.toInt()!)
@@ -287,6 +294,10 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                                 var imageDescription = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["image_description"].string!
                                 imageDescriptions.append(imageDescription)
                                 imageProfilerModel.setImageDescription(imageDescription)
+                                
+                                var imageCategory = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["category"].string!
+                                imageCategories.append(imageCategory)
+                                imageProfilerModel.setImageCategory(imageCategory)
                                 
                                 var imageFileId = jsonData["identity_profiler_data"][index]["file"]["image"][index2]["profiler_image_gallery_id"].string!
                                 imageFileIds.append(imageFileId)

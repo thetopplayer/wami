@@ -14,7 +14,16 @@ public class AudioProfilerModel {
     var audioSongTitle = ""
     var audioFileDescription = ""
     var audioFileId = 0
+    var audioCategory = ""
     
+    func setAudioCategory(audioCategory: String) {
+        self.audioCategory = audioCategory
+    }
+    
+    func getAudioCategory() -> String {
+        return self.audioCategory
+    }
+
     func setAudioFileLocation(audioFileLocation: String) {
         self.audioFileLocation = audioFileLocation
     }
