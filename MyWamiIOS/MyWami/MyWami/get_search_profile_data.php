@@ -68,7 +68,7 @@
     }
     else {
         $response["ret_code"] = 1;
-        $response["message"] = "No Profile data found for search string: <strong>" .$search_str. "</strong>";
+        $response["message"] = "No Profile data found for search string: " .$search_str;
         echo json_encode($response);
         exit(-1);
     }

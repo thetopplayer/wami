@@ -37,10 +37,10 @@ class RequestProfileConfirm: UIViewController {
         confirmMsgTxtView.layer.borderColor = UIColor.lightGrayColor().colorWithAlphaComponent(1.0).CGColor
         confirmMsgTxtView.layer.borderWidth = 1.5
         confirmMsgTxtView.editable = false
-        confirmMsgTxtView.text = "You are about to send REQUEST(s) to add the chosen profile(s) to your collection. Are you sure?"
+        confirmMsgTxtView.text = "You are about to send REQUEST(s) to subscribe/connect to the chosen profile(s) adding to your collection. Are you sure?"
         confirmMsgTxtView.textColor = UIColor.blackColor()
         confirmMsgTxtView.backgroundColor = UIColor(red: 0xf0/255, green: 0xf0/255, blue: 0xf0/255, alpha: 1.0)
-        confirmMsgTxtView.frame = CGRectMake(20, 40, 180, 80)
+        confirmMsgTxtView.frame = CGRectMake(20, 40, 180, 90)
         self.confirmView.addSubview(confirmMsgTxtView)
         
         requestBtn.setTitle("Send Request(s)", forState: UIControlState.Normal)
