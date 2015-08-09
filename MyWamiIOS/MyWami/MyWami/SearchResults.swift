@@ -271,9 +271,11 @@ class SearchResults: UIViewController, UITableViewDataSource, UITableViewDelegat
         cell.contactNameTxt.text = contactName
         cell.emailTxt.text = self.emails[indexPath.row]
         cell.wamiCheckBox.isChecked = false
-        if let image = UIImage(named: self.imageUrls[indexPath.row]) {
-            cell.profileImage.image = image
-        }
+        
+        var image = UTILITIES.ASSETS_IP + UTILITIES.MAIN_IMAGE_PATH + self.imageUrls[indexPath.row]
+        let url = NSURL(string: image)
+        let data = NSData(contentsOfURL: url!)
+        cell.profileImage.image = UIImage(data: data!)
         
         return cell
     }

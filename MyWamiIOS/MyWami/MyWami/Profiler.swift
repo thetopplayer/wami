@@ -225,8 +225,10 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         let menuButton = UIBarButtonItem(image: menuIcon, style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         navigationItem.rightBarButtonItem = menuButton
         
-        var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
-        self.profileImageView.image = profileHeaderImage
+        var image = UTILITIES.ASSETS_IP + UTILITIES.MAIN_IMAGE_PATH + self.imageUrl
+        let url = NSURL(string: image)
+        let data = NSData(contentsOfURL: url!)
+        self.profileImageView.image = UIImage(data: data!)
         
         self.profileNameText.text = self.profileName
         self.contactNameText.text = self.firstName + " " + self.lastName

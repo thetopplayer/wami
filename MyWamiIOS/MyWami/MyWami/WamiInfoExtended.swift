@@ -113,13 +113,10 @@ class WamiInfoExtended: UIViewController, MFMailComposeViewControllerDelegate {
         self.profileNameHdrTxt.text = self.profileName
         self.contactNameHdrTxt.text = self.contactName
         
-//        var image = UTILITIES.ASSETS_IP + UTILITIES.MAIN_IMAGE_PATH + self.imageUrls[indexPath.row]
-//        let url = NSURL(string: image)
-//        let data = NSData(contentsOfURL: url!)
-//        cell.profileImage.image = UIImage(data: data!)
-        
-        var profileHeaderImage = UIImage(named: self.imageUrl) as UIImage?
-        self.profileImageView.image = profileHeaderImage
+        var image = UTILITIES.ASSETS_IP + UTILITIES.MAIN_IMAGE_PATH + self.imageUrl
+        let url = NSURL(string: image)
+        let data = NSData(contentsOfURL: url!)
+        self.profileImageView.image = UIImage(data: data!)
         
         var nextItem  = UIImage(named: "next_item_right")
         showProfilerBtn.setImage(nextItem, forState: .Normal)
