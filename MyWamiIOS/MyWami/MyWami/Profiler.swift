@@ -228,6 +228,7 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         var image = UTILITIES.ASSETS_IP + UTILITIES.MAIN_IMAGE_PATH + self.imageUrl
         let url = NSURL(string: image)
         let data = NSData(contentsOfURL: url!)
+        var h = UIImage(data: data!)?.size.height
         self.profileImageView.image = UIImage(data: data!)
         
         self.profileNameText.text = self.profileName

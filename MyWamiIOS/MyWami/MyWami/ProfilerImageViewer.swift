@@ -24,9 +24,9 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         self.imageProfilerModels = imageProfilerModels
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.imageScrollView.frame = CGRectMake(2, 2, 316, 300)
-            imageTableView.frame = CGRectMake(2, 3, 309, 247)
-            closeBtn.frame = CGRectMake(135, 260, 60, 20)
+            self.imageScrollView.frame = CGRectMake(0, 2, 317, 310)
+            imageTableView.frame = CGRectMake(0, 0, 311, 255)
+            closeBtn.frame = CGRectMake(135, 270, 60, 20)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.imageScrollView.frame = CGRectMake(2, 2, 312, 385)
@@ -161,41 +161,72 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
     var scrollWebView = UIScrollView()
     func showInWebViewer (inFile: String) {
         var closeBtn = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        var maxWidth: CGFloat = 0.0
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
             scrollWebView.frame = CGRectMake(1, 2, 312, 290)
             webView.frame = CGRectMake(2, 1, 308, 247)
             closeBtn.frame = CGRectMake(134, 258, 60, 20)
+            maxWidth = 308.0
         }
         else if DeviceType.IS_IPHONE_5 {
             scrollWebView.frame = CGRectMake(1, 2, 312, 385)
             webView.frame = CGRectMake(2, 1, 308, 322)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
+            maxWidth = 308.0
         }
         else if DeviceType.IS_IPHONE_6 {
             scrollWebView.frame = CGRectMake(1, 2, 367, 485)
             webView.frame = CGRectMake(2, 1, 363, 422)
             closeBtn.frame = CGRectMake(154, 446, 60, 20)
+            maxWidth = 363.0
         }
         else if DeviceType.IS_IPHONE_6P {
             scrollWebView.frame = CGRectMake(1, 2, 407, 565)
             webView.frame = CGRectMake(2, 1, 403, 502)
             closeBtn.frame = CGRectMake(179, 518, 60, 20)
+            maxWidth = 403.0
         }
         else if DeviceType.IS_IPAD {
             scrollWebView.frame = CGRectMake(1, 2, 312, 385)
             webView.frame = CGRectMake(2, 1, 308, 322)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
+            maxWidth = 308.0
         }
         else {
             scrollWebView.frame = CGRectMake(1, 2, 312, 385)
             webView.frame = CGRectMake(2, 1, 308, 322)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
+            maxWidth = 308.0
         }
         
         webView.layer.borderColor = UIColor.lightGrayColor().CGColor
         webView.layer.borderWidth = 1.5
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: inFile)!))
+        
+        let url = NSURL(string: inFile)
+        let data = NSData(contentsOfURL: url!)
+        var origHeight = UIImage(data: data!)?.size.height
+        var origWidth = UIImage(data: data!)?.size.width
+        
+        var height = ""
+        var width = ""
+        var ratio: CGFloat = min(maxWidth / origWidth!, maxWidth / origHeight!)
+        if (origHeight > maxWidth) {
+            height = String(stringInterpolationSegment: origHeight! * ratio)
+        }
+        else {
+            height = String(stringInterpolationSegment: origHeight!)
+        }
+        if (origWidth > maxWidth) {
+            width = String(stringInterpolationSegment: origWidth! * ratio)
+        }
+        else {
+            width = String(stringInterpolationSegment: origWidth!)
+        }
+        
+        var imageHTMLString =  "<img src='" + inFile + "' width='" + width + "' height='" + height + "' >"
+        webView.loadHTMLString(imageHTMLString, baseURL: nil)
+        
         webView.delegate = self
         scrollWebView.addSubview(webView)
         
