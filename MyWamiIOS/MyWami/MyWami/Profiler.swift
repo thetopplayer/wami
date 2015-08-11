@@ -296,7 +296,9 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                             fileLocations.append("")
                         }
                         else {
-                           self.numAudio = 0
+                            fileNames.append("audio")
+                            fileLocations.append("")
+                            self.numAudio = 0
                         }
                     }
                     if mediaType == "Image" {
@@ -335,6 +337,8 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
                             fileLocations.append("")
                         }
                         else {
+                            fileNames.append("image")
+                            fileLocations.append("")
                             self.numImage = 0
                         }
                     }

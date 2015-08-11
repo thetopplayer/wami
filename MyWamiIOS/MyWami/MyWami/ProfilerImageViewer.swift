@@ -29,8 +29,8 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
             closeBtn.frame = CGRectMake(135, 265, 60, 20)
         }
         else if DeviceType.IS_IPHONE_5 {
-            self.imageScrollView.frame = CGRectMake(2, 2, 312, 385)
-            imageTableView.frame = CGRectMake(3, 3, 307, 320)
+            self.imageScrollView.frame = CGRectMake(2, 2, 312, 393)
+            imageTableView.frame = CGRectMake(3, 3, 307, 328)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
         }
         else if DeviceType.IS_IPHONE_6 {
@@ -169,8 +169,8 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
             maxWidth = 308.0
         }
         else if DeviceType.IS_IPHONE_5 {
-            scrollWebView.frame = CGRectMake(1, 2, 312, 385)
-            webView.frame = CGRectMake(2, 1, 308, 322)
+            scrollWebView.frame = CGRectMake(1, 2, 312, 393)
+            webView.frame = CGRectMake(2, 1, 308, 328)
             closeBtn.frame = CGRectMake(135, 348, 60, 20)
             maxWidth = 308.0
         }
