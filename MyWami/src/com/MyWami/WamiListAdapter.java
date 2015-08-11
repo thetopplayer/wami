@@ -12,7 +12,13 @@ import com.MyWami.model.TransmitModel;
 import com.MyWami.model.WamiListModel;
 import com.MyWami.dialogs.TransmitWami;
 import com.MyWami.util.AddToContacts;
+import com.MyWami.util.Constants;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -76,9 +82,23 @@ public WamiListAdapter(Context context, int layoutResourceId, WamiListModel[] wa
 		}
 
     String imageUrl = wamiListModel[position].getImageUrl();
-    Drawable imageUrlId;
-    imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
-		viewHolder.listImage.setImageDrawable(imageUrlId);
+    String imagePath = Constants.ASSETS_IP + Constants.MAIN_IMAGE_PATH + imageUrl + ".png";
+    Picasso.with(getContext()).load(imagePath).into(viewHolder.listImage);
+
+//    InputStream inputStream = null;
+//    Drawable imageUrlId = null;
+//    try {
+//      inputStream = (InputStream) new URL(imagePath).getContent();
+//      imageUrlId = Drawable.createFromStream(inputStream, "src name");
+//    }
+//    catch (IOException e) {
+//      e.printStackTrace();
+//    }
+
+
+//    Drawable imageUrlId;
+//    imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
+//		viewHolder.listImage.setImageDrawable(imageUrlId);
 
     String contactName = wamiListModel[position].getFirstName() +  " " + wamiListModel[position].getLastName();
     viewHolder.listTextName.setText(contactName);

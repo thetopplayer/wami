@@ -20,6 +20,7 @@ import com.MyWami.model.TransmitModel;
 import com.MyWami.util.AddToContacts;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
+import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -221,10 +222,14 @@ public class WamiInfoExtended extends Activity {
 		}
 		else Toast.makeText(this, "Error: Problem getting Identity Profile data!" , Toast.LENGTH_LONG).show();
 
-		Drawable imageUrlId;
-		imageUrlId = this.getResources().getDrawable(this.getResources().getIdentifier(imageUrl, "drawable", this.getPackageName()));
-		ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
-		imageView.setImageDrawable(imageUrlId);
+    ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
+    String imagePath = Constants.ASSETS_IP + Constants.MAIN_IMAGE_PATH + imageUrl + ".png";
+    Picasso.with(this).load(imagePath).into(imageView);
+
+//		Drawable imageUrlId;
+//		imageUrlId = this.getResources().getDrawable(this.getResources().getIdentifier(imageUrl, "drawable", this.getPackageName()));
+//		ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
+//		imageView.setImageDrawable(imageUrlId);
 
 		RelativeLayout rlWamiInfoExtended = (RelativeLayout) findViewById(R.id.wami_info_extended);
 		rlWamiInfoExtended.setOnClickListener(new View.OnClickListener() {
