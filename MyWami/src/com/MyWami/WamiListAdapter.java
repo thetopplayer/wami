@@ -83,7 +83,8 @@ public WamiListAdapter(Context context, int layoutResourceId, WamiListModel[] wa
 
     String imageUrl = wamiListModel[position].getImageUrl();
     String imagePath = Constants.ASSETS_IP + Constants.MAIN_IMAGE_PATH + imageUrl + ".png";
-    Picasso.with(getContext()).load(imagePath).into(viewHolder.listImage);
+    Picasso.with(context).invalidate(imagePath);
+    Picasso.with(context).load(imagePath).into(viewHolder.listImage);
 
 //    InputStream inputStream = null;
 //    Drawable imageUrlId = null;

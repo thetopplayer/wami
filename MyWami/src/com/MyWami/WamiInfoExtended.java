@@ -224,6 +224,7 @@ public class WamiInfoExtended extends Activity {
 
     ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
     String imagePath = Constants.ASSETS_IP + Constants.MAIN_IMAGE_PATH + imageUrl + ".png";
+    Picasso.with(this).invalidate(imagePath);
     Picasso.with(this).load(imagePath).into(imageView);
 
 //		Drawable imageUrlId;
