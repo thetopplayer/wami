@@ -24,9 +24,9 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         self.imageProfilerModels = imageProfilerModels
         
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            self.imageScrollView.frame = CGRectMake(0, 2, 317, 310)
-            imageTableView.frame = CGRectMake(0, 0, 311, 255)
-            closeBtn.frame = CGRectMake(135, 270, 60, 20)
+            self.imageScrollView.frame = CGRectMake(0, 2, 317, 300)
+            imageTableView.frame = CGRectMake(0, 3, 311, 247)
+            closeBtn.frame = CGRectMake(135, 265, 60, 20)
         }
         else if DeviceType.IS_IPHONE_5 {
             self.imageScrollView.frame = CGRectMake(2, 2, 312, 385)
@@ -70,10 +70,9 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         closeBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         closeBtn.backgroundColor = UIColor(red: 0x66/255, green: 0xcc/255, blue: 0xcc/255, alpha: 1.0)
         closeBtn.showsTouchWhenHighlighted = true
-        self.imageScrollView.addSubview(closeBtn)
-        
+        self.imageScrollView.addSubview(closeBtn)        
         self.imageTableView.rowHeight = 70.0
-        
+    
         return self.imageScrollView
     }
     
@@ -166,7 +165,7 @@ class ProfilerImageViewer: UIViewController, UITableViewDelegate, UITableViewDat
         if DeviceType.IS_IPHONE_4_OR_LESS {
             scrollWebView.frame = CGRectMake(1, 2, 312, 290)
             webView.frame = CGRectMake(2, 1, 308, 247)
-            closeBtn.frame = CGRectMake(134, 258, 60, 20)
+            closeBtn.frame = CGRectMake(134, 262, 60, 20)
             maxWidth = 308.0
         }
         else if DeviceType.IS_IPHONE_5 {

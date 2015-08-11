@@ -92,6 +92,9 @@ class Profiler: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
         closeBtn.addTarget(self, action: "closeProfilerImageViewerDialog", forControlEvents: UIControlEvents.TouchUpInside)
         profilerImageViewerDialog = profilerImageViewer.profilerImageViewerDialog(imageScrollView, imageProfilerModels: imageProfilerModelsSubset, closeBtn: closeBtn)
+ 
+        profilerTableView.contentOffset = CGPoint(x:0, y:0)
+        
         profilerTableView.addSubview(self.profilerImageViewerDialog)
     }
     func closeProfilerImageViewerDialog() {
