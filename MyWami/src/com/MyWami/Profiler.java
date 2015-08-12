@@ -28,6 +28,7 @@ import com.MyWami.model.ProfilerModel;
 import com.MyWami.model.TransmitModel;
 import com.MyWami.util.Constants;
 import com.MyWami.webservice.JsonGetData;
+import com.squareup.picasso.Picasso;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -104,10 +105,15 @@ public class Profiler extends ListActivity {
     }
 		textView.setText(firstName + " " + lastName);
 
-		Drawable imageUrlId;
-		imageUrlId = this.getResources().getDrawable(this.getResources().getIdentifier(imageUrl, "drawable", this.getPackageName()));
-		ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
-		imageView.setImageDrawable(imageUrlId);
+//		Drawable imageUrlId;
+//		imageUrlId = this.getResources().getDrawable(this.getResources().getIdentifier(imageUrl, "drawable", this.getPackageName()));
+//		ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
+//		imageView.setImageDrawable(imageUrlId);
+
+    ImageView imageView = (ImageView) findViewById(R.id.wami_heading_image);
+    String imagePath = Constants.ASSETS_IP + Constants.MAIN_IMAGE_PATH + imageUrl + ".png";
+    Picasso.with(this).invalidate(imagePath);
+    Picasso.with(this).load(imagePath).into(imageView);
 
 		header.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

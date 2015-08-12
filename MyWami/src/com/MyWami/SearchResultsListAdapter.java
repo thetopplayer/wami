@@ -72,16 +72,10 @@ public SearchResultsListAdapter(Context context, int layoutResourceId, SearchLis
 			viewHolder = (ViewHolder) row.getTag();
 		}
 
-//    String imageUrl = searchListModel[position].getImageUrl();
-//    Drawable imageUrlId;
-//    imageUrlId = context.getResources().getDrawable(context.getResources().getIdentifier(imageUrl, "drawable", context.getPackageName()));
-//		viewHolder.listImage.setImageDrawable(imageUrlId);
-
     String imageUrl = searchListModel[position].getImageUrl();
     String imagePath = Constants.ASSETS_IP + Constants.MAIN_IMAGE_PATH + imageUrl + ".png";
     Picasso.with(context).invalidate(imagePath);
     Picasso.with(context).load(imagePath).into(viewHolder.listImage);
-
 
     String contactName = searchListModel[position].getFirstName() + searchListModel[position].getLastName();
     viewHolder.listTextName.setText(contactName);
